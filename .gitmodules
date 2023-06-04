@@ -1,0 +1,6 @@
+[submodule "TeamCode/src/main/java/TrcCommonLib"]
+	path = TeamCode/src/main/java/TrcCommonLib
+	url = https://github.com/trc492/TrcCommonLib
+[submodule "TeamCode/src/main/java/TrcFtcLib"]
+	path = TeamCode/src/main/java/TrcFtcLib
+	url = https://github.com/trc492/TrcFtcLib
