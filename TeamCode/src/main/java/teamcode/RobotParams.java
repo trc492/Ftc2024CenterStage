@@ -28,7 +28,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import TrcCommonLib.trclib.TrcHomographyMapper;
 import TrcCommonLib.trclib.TrcPidController;
-import TrcCommonLib.trclib.TrcPose2D;
 import TrcFtcLib.ftclib.FtcGamepad;
 
 /**
@@ -44,29 +43,23 @@ public class RobotParams
         // Miscellaneous
         public static boolean useTraceLog = true;
         public static boolean useLoopPerformanceMonitor = true;
-        public static boolean useBlinkin = true;
+        public static boolean useBlinkin = false;
         public static boolean useBatteryMonitor = false;
         // Vision
         public static boolean useVuforia = false;
         public static boolean showVuforiaView = false;
         public static boolean useTensorFlow = false;
         public static boolean showTensorFlowView = false;
-        public static boolean useEasyOpenCV = true;
-        public static boolean showEasyOpenCvView = true;
+        public static boolean useEasyOpenCV = false;
+        public static boolean showEasyOpenCvView = false;
         // Robot
         public static boolean noRobot = false;
-        public static boolean swerveRobot = false;
+        public static boolean swerveRobot = true;
         // Drive Base
-        public static boolean useExternalOdometry = true;
+        public static boolean useExternalOdometry = false;
         public static boolean useVelocityControl = false;
         // Subsystems
-        public static boolean initSubsystems = true;
-        public static boolean useTurret = true;
-        public static boolean hasTurretSensor = true;
-        public static boolean useElevator = true;
-        public static boolean useArm = true;
-        public static boolean useGrabber = true;
-        public static boolean hasGrabberSensor = true;
+        public static boolean initSubsystems = false;
     }   //class Preferences
 
     public static final String ROBOT_NAME                       = "Robot3543";
@@ -95,10 +88,7 @@ public class RobotParams
     public static final String HWNAME_RBSTEER_SERVO1            = "rbSteerServo1";
     public static final String HWNAME_RBSTEER_SERVO2            = "rbSteerServo2";
     // Subsystems.
-    public static final String HWNAME_TURRET                    = "turret";
-    public static final String HWNAME_ELEVATOR                  = "elevator";
-    public static final String HWNAME_ARM                       = "arm";
-    public static final String HWNAME_GRABBER                   = "grabber";
+
     //
     // Field dimensions.
     //
@@ -115,89 +105,7 @@ public class RobotParams
     //
     // Game positions.
     //
-    public static final double STARTPOS_FROM_FIELDCENTER_X      = 1.5 * FULL_TILE_INCHES;
-    public static final double STARTPOS_FROM_FIELDCENTER_Y      = HALF_FIELD_INCHES - ROBOT_LENGTH/2.0;
-    // Robot start positions in inches.
-    public static final TrcPose2D STARTPOS_RED_LEFT = new TrcPose2D(
-        -STARTPOS_FROM_FIELDCENTER_X, -STARTPOS_FROM_FIELDCENTER_Y, 0.0);
-    public static final TrcPose2D STARTPOS_RED_RIGHT = new TrcPose2D(
-        STARTPOS_FROM_FIELDCENTER_X, -STARTPOS_FROM_FIELDCENTER_Y, 0.0);
-    public static final TrcPose2D STARTPOS_BLUE_LEFT = new TrcPose2D(
-        STARTPOS_FROM_FIELDCENTER_X, STARTPOS_FROM_FIELDCENTER_Y, 180.0);
-    public static final TrcPose2D STARTPOS_BLUE_RIGHT = new TrcPose2D(
-        -STARTPOS_FROM_FIELDCENTER_X, STARTPOS_FROM_FIELDCENTER_Y, 180.0);
-    // Robot park positions in tile units.
-    public static final double PARKPOS_REDLEFT_P1_X             = -2.5;
-    public static final double PARKPOS_REDLEFT_P2_X             = -1.5;
-    public static final double PARKPOS_REDLEFT_P3_X             = -0.5;
-    public static final double PARKPOS_REDFAR_Y                 = -0.5;
-    public static final double PARKPOS_REDNEAR_Y                = -1.5;
-    public static final TrcPose2D PARKPOS_REDLEFT_P1_FAR = new TrcPose2D(
-        PARKPOS_REDLEFT_P1_X, PARKPOS_REDFAR_Y, -90.0);
-    public static final TrcPose2D PARKPOS_REDLEFT_P1_NEAR = new TrcPose2D(
-        PARKPOS_REDLEFT_P1_X, PARKPOS_REDNEAR_Y, -90.0);
-    public static final TrcPose2D PARKPOS_REDLEFT_P2_FAR = new TrcPose2D(
-        PARKPOS_REDLEFT_P2_X, PARKPOS_REDFAR_Y, -90.0);
-    public static final TrcPose2D PARKPOS_REDLEFT_P2_NEAR = new TrcPose2D(
-        PARKPOS_REDLEFT_P2_X, PARKPOS_REDNEAR_Y, -90.0);
-    public static final TrcPose2D PARKPOS_REDLEFT_P3_FAR = new TrcPose2D(
-        PARKPOS_REDLEFT_P3_X, PARKPOS_REDFAR_Y, -90.0);
-    public static final TrcPose2D PARKPOS_REDLEFT_P3_NEAR = new TrcPose2D(
-        PARKPOS_REDLEFT_P3_X, PARKPOS_REDNEAR_Y, -90.0);
-    // Array of park positions indexed by signal value.
-    public static final TrcPose2D[] PARKPOS_REDLEFT_NEAR = {
-        PARKPOS_REDLEFT_P1_NEAR,
-        PARKPOS_REDLEFT_P2_NEAR,
-        PARKPOS_REDLEFT_P3_NEAR
-    };
-    public static final TrcPose2D[] PARKPOS_REDLEFT_FAR = {
-        PARKPOS_REDLEFT_P1_FAR,
-        PARKPOS_REDLEFT_P2_FAR,
-        PARKPOS_REDLEFT_P3_FAR
-    };
 
-    // Auto-Assist navigation locations in tile units.
-    public static final TrcPose2D AUTONAV_CONESTACK_RED_LEFT    = new TrcPose2D(-1.5, -0.5, -90.0);
-    public static final TrcPose2D AUTONAV_CONESTACK_RED_RIGHT   = new TrcPose2D(1.5, -0.5, 90.0);
-    public static final TrcPose2D AUTONAV_CONESTACK_BLUE_LEFT   = new TrcPose2D(1.5, 0.5, 90.0);
-    public static final TrcPose2D AUTONAV_CONESTACK_BLUE_RIGHT  = new TrcPose2D(-1.5, 0.5, -90.0);
-
-    public static final TrcPose2D AUTONAV_SUBSTATION_RED_LEFT   = new TrcPose2D(-0.5, -2.2, 180.0);
-    public static final TrcPose2D AUTONAV_SUBSTATION_RED_RIGHT  = new TrcPose2D(0.5, -2.2, 180.0);
-    public static final TrcPose2D AUTONAV_SUBSTATION_BLUE_LEFT  = new TrcPose2D(0.5, 2.2, 0.0);
-    public static final TrcPose2D AUTONAV_SUBSTATION_BLUE_RIGHT = new TrcPose2D(-0.5, 2.2, 0.0);
-
-    public static final TrcPose2D HIGHPOLE_SUBSTATION_RED       = new TrcPose2D (0.0, -1.0, 0.0);
-    public static final TrcPose2D HIGHPOLE_SUBSTATION_BLUE      = new TrcPose2D (0.0, 1.0, 0.0);
-    public static final TrcPose2D HIGHPOLE_AUDIENCE             = new TrcPose2D (-1.0, 0.0, 0.0);
-    public static final TrcPose2D HIGHPOLE_REFEREE              = new TrcPose2D (1.0, 0.0, 0.0);
-
-    public static final TrcPose2D[] AUTONAV_PICKUP_RED = {
-        AUTONAV_SUBSTATION_RED_LEFT,
-        AUTONAV_SUBSTATION_RED_RIGHT,
-        AUTONAV_CONESTACK_RED_LEFT,
-        AUTONAV_CONESTACK_RED_RIGHT
-    };
-    public static final TrcPose2D[] AUTONAV_PICKUP_BLUE = {
-        AUTONAV_SUBSTATION_BLUE_LEFT,
-        AUTONAV_SUBSTATION_BLUE_RIGHT,
-        AUTONAV_CONESTACK_BLUE_LEFT,
-        AUTONAV_CONESTACK_BLUE_RIGHT
-    };
-    public static final int AUTONAV_LEFT_SUBSTATION_INDEX       = 0;
-    public static final int AUTONAV_RIGHT_SUBSTATION_INDEX      = 1;
-    public static final int AUTONAV_LEFT_CONESTACK_INDEX        = 2;
-    public static final int AUTONAV_RIGHT_CONESTACK_INDEX       = 3;
-
-    public static final TrcPose2D[] AUTONAV_HIGHPOLES = {
-        HIGHPOLE_SUBSTATION_RED,
-        HIGHPOLE_SUBSTATION_BLUE,
-        HIGHPOLE_AUDIENCE,
-        HIGHPOLE_REFEREE
-    };
-    // In tile units.
-    public static final TrcPose2D CONE_STACK_RED_LEFT           = new TrcPose2D(-2.4, -0.55, -90.0);
-    public static final TrcPose2D LOOK_FOR_CONE_POS_REDLEFT     = new TrcPose2D(-2.0, -0.55, -90.0);
     //
     // Vision subsystem.
     //
@@ -341,173 +249,5 @@ public class RobotParams
     public static final double PPD_FOLLOWING_DISTANCE           = 6.0;
     public static final double PPD_POS_TOLERANCE                = 2.0;
     public static final double PPD_TURN_TOLERANCE               = 1.0;
-    //
-    // Grid Drive parameters
-    //
-    public static final double GRIDDRIVE_CELL_SIZE              = FULL_TILE_INCHES;
-    //
-    // Turret subsystem.
-    //
-    // Motor parameters.
-    public static final boolean TURRET_MOTOR_INVERTED           = true;
-    public static final boolean TURRET_HAS_LOWER_LIMIT_SWITCH   = true;
-    public static final boolean TURRET_LOWER_LIMIT_INVERTED     = true;
-    public static final boolean TURRET_HAS_UPPER_LIMIT_SWITCH   = false;
-    public static final boolean TURRET_UPPER_LIMIT_INVERTED     = false;
-    public static final boolean TURRET_DIR_SWITCH_INVERTED      = false;
-    // PID Actuator parameters.
-    public static final double TURRET_KP                        = 0.04;
-    public static final double TURRET_KI                        = 0.0;
-    public static final double TURRET_KD                        = 0.0;
-    public static final double TURRET_TOLERANCE                 = 1.0;
-    // Rev Core Hex Motor (https://www.revrobotics.com/rev-41-1300/)
-    public static final double TURRET_ENCODER_PPR               = 288.0;
-    public static final double TURRET_GEAR_RATIO                = 100.0/60.0;
-    public static final double TURRET_DEG_PER_COUNT             = 360.0/(TURRET_ENCODER_PPR*TURRET_GEAR_RATIO);
-    public static final double TURRET_OFFSET                    = 0.0;
-    public static final double TURRET_MIN_POS                   = 0.0;
-    public static final double TURRET_MAX_POS                   = 325.0;
-    public static final double TURRET_STALL_MIN_POWER           = 0.5;
-    public static final double TURRET_STALL_TOLERANCE           = 1.0;
-    public static final double TURRET_STALL_TIMEOUT             = 1.0;
-    public static final double TURRET_RESET_TIMEOUT             = 0.5;
-    // Power settings.
-    public static final double TURRET_CAL_POWER                 = -0.3;
-    public static final double TURRET_POWER_SCALE_TELEOP        = 0.6;
-    // Preset positions.
-    public static final double TURRET_BACK                      = 0.0;
-    public static final double TURRET_RIGHT                     = 90.0;
-    public static final double TURRET_FRONT                     = 180.0;
-    public static final double TURRET_LEFT                      = 270.0;
-    public static final double TURRET_PRESET_TOLERANCE          = 10.0;
-    public static final double[] TURRET_PRESET_LEVELS           = new double[] {
-        TURRET_BACK,    // Slot 0
-        TURRET_RIGHT,   // Slot 1
-        TURRET_FRONT,   // Slot 2
-        TURRET_LEFT     // Slot 3
-    };
-    // Distance sensor parameters.
-    public static final double TURRET_SENSOR_LOWER_THRESHOLD    = 4.0;  // in inches
-    public static final double TURRET_SENSOR_UPPER_THRESHOLD    = 12.0; // in inches
-    public static final double TURRET_SENSOR_SETTLING_PERIOD    = 0.20; // in seconds
-    // Auto-Assist Scoring parameters
-    public static final double TURRET_SCAN_OFFSET               = 20.0;
-    public static final double TURRET_SCAN_POWER                = 0.30;
-    public static final double TURRET_TELEOP_SCAN_POWER         = 0.30;
-    public static final double TURRET_SCAN_DURATION             = 5.0;
-    //
-    // Elevator Subsystem
-    //
-    // Motor parameters.
-    public static final boolean ELEVATOR_MOTOR_INVERTED         = false;
-    public static final boolean ELEVATOR_HAS_LOWER_LIMIT_SWITCH = true;
-    public static final boolean ELEVATOR_LOWER_LIMIT_INVERTED   = false;
-    public static final boolean ELEVATOR_HAS_UPPER_LIMIT_SWITCH = false;
-    public static final boolean ELEVATOR_UPPER_LIMIT_INVERTED   = false;
-    // PID Actuator parameters.
-    public static final double ELEVATOR_KP                      = 0.30;
-    public static final double ELEVATOR_KI                      = 0;//0.5;
-    public static final double ELEVATOR_KD                      = 0.025;
-    public static final double ELEVATOR_TOLERANCE               = 2.0;
-    public static final double ELEVATOR_IZONE                   = 10.0;
-    public static final double ELEVATOR_ENCODER_PPR             = GOBILDA_5203_435_ENCODER_PPR;
-    public static final double ELEVATOR_PULLEY_DIAMETER         = 1.5*1.0465;       // in inches
-    public static final double ELEVATOR_PULLEY_CIRCUMFERENCE    = Math.PI*ELEVATOR_PULLEY_DIAMETER;
-    public static final double ELEVATOR_INCHES_PER_COUNT        =
-    ELEVATOR_PULLEY_CIRCUMFERENCE/ELEVATOR_ENCODER_PPR;
-    public static final double ELEVATOR_OFFSET                  = 7.8;              // in inches
-    public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
-    public static final double ELEVATOR_MAX_POS                 = 34.0;
-    public static final double ELEVATOR_STALL_MIN_POWER         = 0.75;
-    public static final double ELEVATOR_STALL_TOLERANCE         = 0.0;
-    public static final double ELEVATOR_STALL_TIMEOUT           = 1.0;
-    public static final double ELEVATOR_RESET_TIMEOUT           = 0.5;
-    // Power settings.
-    public static final double ELEVATOR_CAL_POWER               = -0.1;
-    public static final double ELEVATOR_POWER_COMPENSATION      = 0.1;
-    public static final double ELEVATOR_DOWN_POWER_SCALE        = 0.3;
-    // Preset positions.
-    public static final double LOW_JUNCTION_SCORING_HEIGHT      = 10.8;
-    public static final double MID_JUNCTION_SCORING_HEIGHT      = 21.0;
-    public static final double HIGH_JUNCTION_SCORING_HEIGHT     = 32.5;
-    public static final double ELEVATOR_PRESET_TOLERANCE        = 2.0;
-    public static final double[] ELEVATOR_PRESET_LEVELS         = new double[] {
-        ELEVATOR_MIN_POS,
-        LOW_JUNCTION_SCORING_HEIGHT,
-        MID_JUNCTION_SCORING_HEIGHT,
-        HIGH_JUNCTION_SCORING_HEIGHT
-    };
-    //
-    // Arm subsystem.
-    //
-    // Motor parameters.
-    public static final boolean ARM_MOTOR_INVERTED              = false;
-    public static final boolean ARM_HAS_LOWER_LIMIT_SWITCH      = true;
-    public static final boolean ARM_LOWER_LIMIT_INVERTED        = false;
-    public static final boolean ARM_HAS_UPPER_LIMIT_SWITCH      = false;
-    public static final boolean ARM_UPPER_LIMIT_INVERTED        = false;
-    // PID Actuator parameters.
-    public static final double ARM_KP                           = 0.1;
-    public static final double ARM_KI                           = 0.0;
-    public static final double ARM_KD                           = 0.0;
-    public static final double ARM_TOLERANCE                    = 0.5;
-    public static final double ARM_ENCODER_PPR                  = GOBILDA_5203_435_ENCODER_PPR;
-    // https://www.gobilda.com/super-duty-worm-drive-pan-kit-28-1-ratio/
-    public static final double ARM_GEAR_RATIO                   = 28.0;
-    public static final double ARM_DEG_PER_COUNT                = (360.0/(ARM_ENCODER_PPR*ARM_GEAR_RATIO));
-    public static final double ARM_OFFSET                       = -8.0;
-    // Arm Zero-Calibrated to Up Position. Arm Max Position is Down.
-    public static final double ARM_MIN_POS                      = ARM_OFFSET;
-    public static final double ARM_MAX_POS                      = 140.0;
-    public static final double ARM_STALL_MIN_POWER              = 0.75;
-    public static final double ARM_STALL_TOLERANCE              = 0.0;
-    public static final double ARM_STALL_TIMEOUT                = 1.0;
-    public static final double ARM_RESET_TIMEOUT                = 0.5;
-    // Power settings.
-    public static final double ARM_CAL_POWER                    = -0.5;
-    // Preset positions.
-    public static final double ARM_UP_POS                       = 0.0;
-    public static final double ARM_SAFE_POS                     = 10.0;
-    public static final double ARM_SINGLE_CONE_POS              = 135.0;
-    public static final double ARM_STACK_2_POS                  = 120.0;
-    public static final double ARM_STACK_3_CONES_POS            = 100.0;
-    public static final double ARM_STACK_4_CONES_POS            = 90.0;
-    public static final double ARM_STACK_5_CONES_POS            = 85.0;
-    public static final double ARM_PRESET_TOLERANCE             = 2.0;
-    // Index 0 is a placeholder so index 1 is 1 cone, 2 is 2 cones, etc.
-    public static final double[] ARM_PICKUP_PRESETS             = new double[] {
-        0.0,
-        ARM_SINGLE_CONE_POS,
-        ARM_STACK_2_POS,
-        ARM_STACK_3_CONES_POS,
-        ARM_STACK_4_CONES_POS,
-        ARM_STACK_5_CONES_POS
-    };
-    // Parameters for calculating angle for aligning grabber on top of the pole.
-    public static final double ARM_JOINT_LENGTH                 = 7.098;    // in inches
-    public static final double ARM_ANGLE_OFFSET                 = -11.94;   // in degrees
-    public static final double CLAW_DISTANCE_ADUSTMENT          = -2.7;    // in inches
-    //
-    // Grabber subsystem.
-    //
-    // Servo Grabber parameters.
-    public static final double GRABBER_MAX_STEPRATE             = 1.0;
-    public static final double GRABBER_MIN_POS                  = 0.0;
-    public static final double GRABBER_MAX_POS                  = 0.2;
-    public static final boolean GRABBER_LSERVO_INVERTED         = false;
-    public static final boolean GRABBER_RSERVO_INVERTED         = true;
-    public static final boolean GRABBER_TRIGGER_INVERTED        = true;
-    public static final double GRABBER_TRIGGER_THRESHOLD        = 1.5;  // in inches
-    public static final double GRABBER_HAS_OBJECT_THRESHOLD     = 2.5;  // in inches
-    public static final double GRABBER_OPEN_POS                 = GRABBER_MAX_POS;
-    public static final double GRABBER_OPEN_TIME                = 0.5;
-    public static final double GRABBER_CLOSE_POS                = GRABBER_MIN_POS;
-    public static final double GRABBER_CLOSE_TIME               = 0.5;
-    public static final double GRABBER_DEF_CONE_DISTANCE        = 8.0;
-    //
-    // Miscellaneous.
-    //
-    public static final double CYCLE_TIME                       = 10.0; // in seconds
-    public static final double PARK_TIME                        = 1.0;  // in seconds
 
 }   //class RobotParams

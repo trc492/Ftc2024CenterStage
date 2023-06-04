@@ -23,7 +23,6 @@
 package teamcode.drivebases;
 
 import TrcCommonLib.trclib.TrcDriveBaseOdometry;
-import TrcCommonLib.trclib.TrcGridDrive;
 import TrcCommonLib.trclib.TrcMecanumDriveBase;
 import TrcCommonLib.trclib.TrcPidController;
 import TrcCommonLib.trclib.TrcPidDrive;
@@ -37,7 +36,7 @@ import teamcode.RobotParams;
  */
 public class MecanumDrive extends RobotDrive
 {
-    private static final boolean logPoseEvents = true;
+    private static final boolean logPoseEvents = false;
     private static final boolean tracePidInfo = false;
 
     /**
@@ -112,8 +111,6 @@ public class MecanumDrive extends RobotDrive
             RobotParams.xPosPidCoeff, RobotParams.yPosPidCoeff, RobotParams.turnPidCoeff, RobotParams.velPidCoeff);
         purePursuitDrive.setFastModeEnabled(true);
         purePursuitDrive.setMsgTracer(robot.globalTracer, logPoseEvents, tracePidInfo);
-        gridDrive = new TrcGridDrive(driveBase, purePursuitDrive, RobotParams.GRIDDRIVE_CELL_SIZE);
-        gridDrive.setMsgTracer(robot.globalTracer);
     }   //MecanumDrive
 
 }   //class MecanumDrive

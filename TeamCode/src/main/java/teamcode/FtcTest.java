@@ -931,29 +931,29 @@ public class FtcTest extends FtcTeleOp
     {
         if (robot.vision != null)
         {
-            TrcVisionTargetInfo<?> signalInfo = robot.vision.getDetectedSignalInfo();
-            if (signalInfo != null)
-            {
-                int signalPos = robot.vision.determineDetectedSignal(signalInfo);
-                robot.dashboard.displayPrintf(10, "Signal: %s (pos=%d)", signalInfo, signalPos);
-            }
-            else
-            {
-                robot.dashboard.displayPrintf(10, "Signal: Not found.");
-            }
-
-            TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> coneInfo =
-                robot.vision.getDetectedConeInfo();
-            if (coneInfo != null)
-            {
-                EocvVision.ObjectType objectType = robot.vision.eocvVision.getDetectObjectType();
-                robot.dashboard.displayPrintf(
-                    11, "%s Cone: %s", objectType == EocvVision.ObjectType.RED_CONE? "Red": "Blue", coneInfo);
-            }
-            else
-            {
-                robot.dashboard.displayPrintf(11, "Cone: Not found.");
-            }
+//            TrcVisionTargetInfo<?> signalInfo = robot.vision.getDetectedSignalInfo();
+//            if (signalInfo != null)
+//            {
+//                int signalPos = robot.vision.determineDetectedSignal(signalInfo);
+//                robot.dashboard.displayPrintf(10, "Signal: %s (pos=%d)", signalInfo, signalPos);
+//            }
+//            else
+//            {
+//                robot.dashboard.displayPrintf(10, "Signal: Not found.");
+//            }
+//
+//            TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> coneInfo =
+//                robot.vision.getDetectedConeInfo();
+//            if (coneInfo != null)
+//            {
+//                EocvVision.ObjectType objectType = robot.vision.eocvVision.getDetectObjectType();
+//                robot.dashboard.displayPrintf(
+//                    11, "%s Cone: %s", objectType == EocvVision.ObjectType.RED_CONE? "Red": "Blue", coneInfo);
+//            }
+//            else
+//            {
+//                robot.dashboard.displayPrintf(11, "Cone: Not found.");
+//            }
 
             if (robot.vision.vuforiaVision != null)
             {

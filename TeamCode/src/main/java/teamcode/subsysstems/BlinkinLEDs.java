@@ -32,13 +32,6 @@ import TrcFtcLib.ftclib.FtcRevBlinkin;
 public class BlinkinLEDs extends FtcRevBlinkin
 {
     // LED pattern names.
-    public static final String LABEL_BOLT = "1 Bolt";
-    public static final String LABEL_BULB = "2 Bulb";
-    public static final String LABEL_PANEL = "3 Panel";
-    public static final String GOT_RED_CONE = "GotRedCone";
-    public static final String GOT_BLUE_CONE = "GotBlueCone";
-    public static final String GOT_YELLOW_POLE = "GotYellowPole";
-    public static final String AUTOASSIST_GRABBER_ON = "AutoAssistGrabberOn";
     public static final String IMAGE1_NAME = "Red Audience Wall";
     public static final String IMAGE2_NAME = "Red Rear Wall";
     public static final String IMAGE3_NAME = "Blue Audience Wall";
@@ -58,13 +51,6 @@ public class BlinkinLEDs extends FtcRevBlinkin
         // LED Patterns are sorted in decreasing priority order.
         final TrcRevBlinkin.Pattern[] ledPatternPriorities = {
             // Highest priority.
-            new TrcRevBlinkin.Pattern(LABEL_BOLT, TrcRevBlinkin.RevLedPattern.SolidRed),
-            new TrcRevBlinkin.Pattern(LABEL_BULB, TrcRevBlinkin.RevLedPattern.SolidGreen),
-            new TrcRevBlinkin.Pattern(LABEL_PANEL, TrcRevBlinkin.RevLedPattern.SolidBlue),
-            new TrcRevBlinkin.Pattern(GOT_RED_CONE, TrcRevBlinkin.RevLedPattern.FixedStrobeRed),
-            new TrcRevBlinkin.Pattern(GOT_BLUE_CONE, TrcRevBlinkin.RevLedPattern.FixedStrobeBlue),
-            new TrcRevBlinkin.Pattern(GOT_YELLOW_POLE, RevLedPattern.FixedStrobeGold),
-            new TrcRevBlinkin.Pattern(AUTOASSIST_GRABBER_ON, TrcRevBlinkin.RevLedPattern.FixedStrobeWhite),
             new TrcRevBlinkin.Pattern(IMAGE1_NAME, RevLedPattern.FixedLightChaseRed),
             new TrcRevBlinkin.Pattern(IMAGE2_NAME, RevLedPattern.FixedLightChaseBlue),
             new TrcRevBlinkin.Pattern(IMAGE3_NAME, RevLedPattern.FixedBreathRed),

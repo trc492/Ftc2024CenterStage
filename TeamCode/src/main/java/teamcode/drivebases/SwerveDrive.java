@@ -39,7 +39,6 @@ import TrcCommonLib.trclib.TrcSwerveModule;
 import TrcFtcLib.ftclib.FtcServo;
 import teamcode.Robot;
 import teamcode.RobotParams;
-import teamcode.drivebases.RobotDrive;
 
 /**
  * This class creates the RobotDrive subsystem that consists of wheel motors and related objects for driving the
@@ -62,8 +61,8 @@ public class SwerveDrive extends RobotDrive
     //
     // Swerve steering motors and modules.
     //
-    public final FtcServo lfSteerServo1, lfSteerServo2, lbSteerServo1, lbSteerServo2;
-    public final FtcServo rfSteerServo1, rfSteerServo2, rbSteerServo1, rbSteerServo2;
+    public final FtcServo lfSteerServo1, rfSteerServo1, lbSteerServo1, rbSteerServo1;
+//    public final FtcServo lfSteerServo2, rfSteerServo2, lbSteerServo2, rbSteerServo2;
     public final TrcSwerveModule lfSwerveModule, lbSwerveModule, rfSwerveModule, rbSwerveModule;
 
     /**
@@ -85,34 +84,34 @@ public class SwerveDrive extends RobotDrive
         lfSteerServo1 = createSteerServo(
             RobotParams.HWNAME_LFSTEER_SERVO1, servoPositions[0][0], servoPositions[0][1],
             RobotParams.LFSTEER_INVERTED);
-        lfSteerServo2 = createSteerServo(
-            RobotParams.HWNAME_LFSTEER_SERVO2, servoPositions[0][0], servoPositions[0][1],
-            RobotParams.LFSTEER_INVERTED);
-        lfSteerServo1.addFollower(lfSteerServo2);
+//        lfSteerServo2 = createSteerServo(
+//            RobotParams.HWNAME_LFSTEER_SERVO2, servoPositions[0][0], servoPositions[0][1],
+//            RobotParams.LFSTEER_INVERTED);
+//        lfSteerServo1.addFollower(lfSteerServo2);
 
         lbSteerServo1 = createSteerServo(
             RobotParams.HWNAME_LBSTEER_SERVO1, servoPositions[1][0], servoPositions[1][1],
             RobotParams.LBSTEER_INVERTED);
-        lbSteerServo2 = createSteerServo(
-            RobotParams.HWNAME_LBSTEER_SERVO2, servoPositions[1][0], servoPositions[1][1],
-            RobotParams.LBSTEER_INVERTED);
-        lbSteerServo1.addFollower(lbSteerServo2);
+//        lbSteerServo2 = createSteerServo(
+//            RobotParams.HWNAME_LBSTEER_SERVO2, servoPositions[1][0], servoPositions[1][1],
+//            RobotParams.LBSTEER_INVERTED);
+//        lbSteerServo1.addFollower(lbSteerServo2);
 
         rfSteerServo1 = createSteerServo(
             RobotParams.HWNAME_RFSTEER_SERVO1, servoPositions[2][0], servoPositions[2][1],
             RobotParams.RFSTEER_INVERTED);
-        rfSteerServo2 = createSteerServo(
-            RobotParams.HWNAME_RFSTEER_SERVO2, servoPositions[2][0], servoPositions[2][1],
-            RobotParams.RFSTEER_INVERTED);
-        rfSteerServo1.addFollower(rfSteerServo2);
+//        rfSteerServo2 = createSteerServo(
+//            RobotParams.HWNAME_RFSTEER_SERVO2, servoPositions[2][0], servoPositions[2][1],
+//            RobotParams.RFSTEER_INVERTED);
+//        rfSteerServo1.addFollower(rfSteerServo2);
 
         rbSteerServo1 = createSteerServo(
             RobotParams.HWNAME_RBSTEER_SERVO1, servoPositions[3][0], servoPositions[3][1],
             RobotParams.RBSTEER_INVERTED);
-        rbSteerServo2 = createSteerServo(
-            RobotParams.HWNAME_RBSTEER_SERVO2, servoPositions[3][0], servoPositions[3][1],
-            RobotParams.RBSTEER_INVERTED);
-        rbSteerServo1.addFollower(rbSteerServo2);
+//        rbSteerServo2 = createSteerServo(
+//            RobotParams.HWNAME_RBSTEER_SERVO2, servoPositions[3][0], servoPositions[3][1],
+//            RobotParams.RBSTEER_INVERTED);
+//        rbSteerServo1.addFollower(rbSteerServo2);
 
         lfSwerveModule = new TrcSwerveModule("lfSwerveModule", lfDriveMotor, lfSteerServo1);
         lbSwerveModule = new TrcSwerveModule("lbSwerveModule", lbDriveMotor, lbSteerServo1);
@@ -262,16 +261,16 @@ public class SwerveDrive extends RobotDrive
 
         pos = getSteeringServoPosition(0, posIndex);
         lfSteerServo1.setLogicalPosition(pos);
-        lfSteerServo2.setLogicalPosition(pos);
+//        lfSteerServo2.setLogicalPosition(pos);
         pos = getSteeringServoPosition(1, posIndex);
         rfSteerServo1.setLogicalPosition(pos);
-        rfSteerServo2.setLogicalPosition(pos);
+//        rfSteerServo2.setLogicalPosition(pos);
         pos = getSteeringServoPosition(2, posIndex);
         lbSteerServo1.setLogicalPosition(pos);
-        lbSteerServo2.setLogicalPosition(pos);
+//        lbSteerServo2.setLogicalPosition(pos);
         pos = getSteeringServoPosition(3, posIndex);
         rbSteerServo1.setLogicalPosition(pos);
-        rbSteerServo2.setLogicalPosition(pos);
+//        rbSteerServo2.setLogicalPosition(pos);
     }  //setSteeringServoPosition
 
     /**

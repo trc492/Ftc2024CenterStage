@@ -29,9 +29,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcHomographyMapper;
-import TrcCommonLib.trclib.TrcOpenCvColorBlobPipeline;
 import TrcFtcLib.ftclib.FtcEocvAprilTagPipeline;
-import TrcFtcLib.ftclib.FtcEocvColorBlobPipeline;
 import TrcFtcLib.ftclib.FtcEocvDetector;
 import teamcode.RobotParams;
 
@@ -41,14 +39,14 @@ import teamcode.RobotParams;
  */
 public class EocvVision extends FtcEocvDetector
 {
-    private static final int colorConversion = Imgproc.COLOR_BGRA2BGR;
-    private static final double[] colorThresholdsRedCone = {100.0, 255.0, 0.0, 100.0, 0.0, 60.0};
-    private static final double[] colorThresholdsBlueCone = {0.0, 60.0, 0.0, 100.0, 100, 255.0};
-    private static final double[] colorThresholdsYellowPole = {128.0, 255.0, 128.0, 255.0, 0.0, 120.0};
+//    private static final int colorConversion = Imgproc.COLOR_BGRA2BGR;
+//    private static final double[] colorThresholdsRedCone = {100.0, 255.0, 0.0, 100.0, 0.0, 60.0};
+//    private static final double[] colorThresholdsBlueCone = {0.0, 60.0, 0.0, 100.0, 100, 255.0};
+//    private static final double[] colorThresholdsYellowPole = {128.0, 255.0, 128.0, 255.0, 0.0, 120.0};
 
     public enum ObjectType
     {
-        APRIL_TAG, RED_CONE, BLUE_CONE, YELLOW_POLE, NONE;
+        APRIL_TAG, NONE;    //, RED_CONE, BLUE_CONE, YELLOW_POLE, NONE;
 
         static ObjectType nextObjectType(ObjectType objType)
         {
@@ -57,20 +55,20 @@ public class EocvVision extends FtcEocvDetector
             switch (objType)
             {
                 case APRIL_TAG:
-                    nextObjType = RED_CONE;
-                    break;
-
-                case RED_CONE:
-                    nextObjType = BLUE_CONE;
-                    break;
-
-                case BLUE_CONE:
-                    nextObjType = YELLOW_POLE;
-                    break;
-
-                case YELLOW_POLE:
                     nextObjType = NONE;
                     break;
+
+//                case RED_CONE:
+//                    nextObjType = BLUE_CONE;
+//                    break;
+//
+//                case BLUE_CONE:
+//                    nextObjType = YELLOW_POLE;
+//                    break;
+//
+//                case YELLOW_POLE:
+//                    nextObjType = NONE;
+//                    break;
 
                 default:
                 case NONE:
@@ -84,9 +82,9 @@ public class EocvVision extends FtcEocvDetector
 
     private final TrcDbgTrace tracer;
     private final FtcEocvAprilTagPipeline aprilTagPipeline;
-    private final FtcEocvColorBlobPipeline redConePipeline;
-    private final FtcEocvColorBlobPipeline blueConePipeline;
-    private final FtcEocvColorBlobPipeline yellowPolePipeline;
+//    private final FtcEocvColorBlobPipeline redConePipeline;
+//    private final FtcEocvColorBlobPipeline blueConePipeline;
+//    private final FtcEocvColorBlobPipeline yellowPolePipeline;
     private ObjectType objectType = null;
 
     /**
@@ -109,47 +107,47 @@ public class EocvVision extends FtcEocvDetector
         super(instanceName, imageWidth, imageHeight, cameraRect, worldRect, openCvCam, cameraRotation, tracer);
 
         this.tracer = tracer;
-        TrcOpenCvColorBlobPipeline.FilterContourParams redConeFilterContourParams =
-            new TrcOpenCvColorBlobPipeline.FilterContourParams()
-                .setMinArea(10000.0)
-                .setMinPerimeter(200.0)
-                .setWidthRange(100.0, 1000.0)
-                .setHeightRange(100.0, 1000.0)
-                .setSolidityRange(0.0, 100.0)
-                .setVerticesRange(0.0, 1000.0)
-                .setAspectRatioRange(0.0, 1000.0);
-        TrcOpenCvColorBlobPipeline.FilterContourParams blueConeFilterContourParams =
-            new TrcOpenCvColorBlobPipeline.FilterContourParams()
-                .setMinArea(10000.0)
-                .setMinPerimeter(200.0)
-                .setWidthRange(100.0, 1000.0)
-                .setHeightRange(100.0, 1000.0)
-                .setSolidityRange(0.0, 100.0)
-                .setVerticesRange(0.0, 1000.0)
-                .setAspectRatioRange(0.0, 1000.0);
-        TrcOpenCvColorBlobPipeline.FilterContourParams poleFilterContourParams =
-            new TrcOpenCvColorBlobPipeline.FilterContourParams()
-                .setMinArea(5000.0)
-                .setMinPerimeter(500.0)
-                .setWidthRange(100.0, 1000.0)
-                .setHeightRange(250.0, 10000.0)
-                .setSolidityRange(0.0, 100.0)
-                .setVerticesRange(0.0, 1000.0)
-                .setAspectRatioRange(0.0, 1000.0);
+//        TrcOpenCvColorBlobPipeline.FilterContourParams redConeFilterContourParams =
+//            new TrcOpenCvColorBlobPipeline.FilterContourParams()
+//                .setMinArea(10000.0)
+//                .setMinPerimeter(200.0)
+//                .setWidthRange(100.0, 1000.0)
+//                .setHeightRange(100.0, 1000.0)
+//                .setSolidityRange(0.0, 100.0)
+//                .setVerticesRange(0.0, 1000.0)
+//                .setAspectRatioRange(0.0, 1000.0);
+//        TrcOpenCvColorBlobPipeline.FilterContourParams blueConeFilterContourParams =
+//            new TrcOpenCvColorBlobPipeline.FilterContourParams()
+//                .setMinArea(10000.0)
+//                .setMinPerimeter(200.0)
+//                .setWidthRange(100.0, 1000.0)
+//                .setHeightRange(100.0, 1000.0)
+//                .setSolidityRange(0.0, 100.0)
+//                .setVerticesRange(0.0, 1000.0)
+//                .setAspectRatioRange(0.0, 1000.0);
+//        TrcOpenCvColorBlobPipeline.FilterContourParams poleFilterContourParams =
+//            new TrcOpenCvColorBlobPipeline.FilterContourParams()
+//                .setMinArea(5000.0)
+//                .setMinPerimeter(500.0)
+//                .setWidthRange(100.0, 1000.0)
+//                .setHeightRange(250.0, 10000.0)
+//                .setSolidityRange(0.0, 100.0)
+//                .setVerticesRange(0.0, 1000.0)
+//                .setAspectRatioRange(0.0, 1000.0);
 
         aprilTagPipeline = new FtcEocvAprilTagPipeline(
             AprilTagDetectorJNI.TagFamily.TAG_36h11, RobotParams.APRILTAG_SIZE,
             RobotParams.WEBCAM_FX, RobotParams.WEBCAM_FY, RobotParams.WEBCAM_CX, RobotParams.WEBCAM_CY, tracer);
         aprilTagPipeline.setVideoOutput(0, true);
-        redConePipeline = new FtcEocvColorBlobPipeline(
-            "redConePipeline", colorConversion, colorThresholdsRedCone, redConeFilterContourParams, tracer);
-        redConePipeline.setVideoOutput(0, true);
-        blueConePipeline = new FtcEocvColorBlobPipeline(
-            "blueConePipeline", colorConversion, colorThresholdsBlueCone, blueConeFilterContourParams, tracer);
-        blueConePipeline.setVideoOutput(0, true);
-        yellowPolePipeline = new FtcEocvColorBlobPipeline(
-            "yellowPolePipeline", colorConversion, colorThresholdsYellowPole, poleFilterContourParams, tracer);
-        yellowPolePipeline.setVideoOutput(0, true);
+//        redConePipeline = new FtcEocvColorBlobPipeline(
+//            "redConePipeline", colorConversion, colorThresholdsRedCone, redConeFilterContourParams, tracer);
+//        redConePipeline.setVideoOutput(0, true);
+//        blueConePipeline = new FtcEocvColorBlobPipeline(
+//            "blueConePipeline", colorConversion, colorThresholdsBlueCone, blueConeFilterContourParams, tracer);
+//        blueConePipeline.setVideoOutput(0, true);
+//        yellowPolePipeline = new FtcEocvColorBlobPipeline(
+//            "yellowPolePipeline", colorConversion, colorThresholdsYellowPole, poleFilterContourParams, tracer);
+//        yellowPolePipeline.setVideoOutput(0, true);
         // Set default pipeline and enable it.
         setDetectObjectType(ObjectType.APRIL_TAG);
     }   //EocvVision
@@ -170,17 +168,17 @@ public class EocvVision extends FtcEocvDetector
                 setPipeline(aprilTagPipeline);
                 break;
 
-            case RED_CONE:
-                setPipeline(redConePipeline);
-                break;
-
-            case BLUE_CONE:
-                setPipeline(blueConePipeline);
-                break;
-
-            case YELLOW_POLE:
-                setPipeline(yellowPolePipeline);
-                break;
+//            case RED_CONE:
+//                setPipeline(redConePipeline);
+//                break;
+//
+//            case BLUE_CONE:
+//                setPipeline(blueConePipeline);
+//                break;
+//
+//            case YELLOW_POLE:
+//                setPipeline(yellowPolePipeline);
+//                break;
 
             case NONE:
                 setPipeline(null);

@@ -35,7 +35,6 @@ import TrcFtcLib.ftclib.FtcMatchInfo;
 import TrcFtcLib.ftclib.FtcMenu;
 import TrcFtcLib.ftclib.FtcOpMode;
 import TrcFtcLib.ftclib.FtcValueMenu;
-import teamcode.autocommands.CmdAutoHigh;
 import teamcode.vision.EocvVision;
 
 /**
@@ -58,20 +57,10 @@ public class FtcAuto extends FtcOpMode
 
     public enum AutoStrategy
     {
-        CYCLE_HIGH,
-        CYCLE_HIGH_PRELOAD_ONLY,
-        PARKING_ONLY,
         PID_DRIVE,
         TIMED_DRIVE,
         DO_NOTHING
     }   //enum AutoStrategy
-
-    public enum Parking
-    {
-        NEAR_TILE,
-        FAR_TILE,
-        NO_PARKING
-    }   //enum Parking
 
     /**
      * This class stores the autonomous menu choices.
@@ -82,7 +71,6 @@ public class FtcAuto extends FtcOpMode
         public Alliance alliance = Alliance.RED_ALLIANCE;
         public StartPos startPos = StartPos.LEFT;
         public AutoStrategy strategy = AutoStrategy.DO_NOTHING;
-        public Parking parking = Parking.NEAR_TILE;
         public double xTarget = 0.0;
         public double yTarget = 0.0;
         public double turnTarget = 0.0;
@@ -97,14 +85,12 @@ public class FtcAuto extends FtcOpMode
                 "alliance=\"%s\" " +
                 "startPos=\"%s\" " +
                 "strategy=\"%s\" " +
-                "parking=\"%s\" " +
                 "xTarget=%.1f " +
                 "yTarget=%.1f " +
                 "turnTarget=%.0f " +
                 "driveTime=%.0f " +
                 "drivePower=%.1f",
-                startDelay, alliance, startPos, strategy, parking,
-                xTarget, yTarget, turnTarget, driveTime, drivePower);
+                startDelay, alliance, startPos, strategy, xTarget, yTarget, turnTarget, driveTime, drivePower);
         }   //toString
 
     }   //class AutoChoices
@@ -149,16 +135,6 @@ public class FtcAuto extends FtcOpMode
         //
         switch (autoChoices.strategy)
         {
-            //same constructor for cycle high, preload only, and parking only 
-            case CYCLE_HIGH:
-            case CYCLE_HIGH_PRELOAD_ONLY:
-            case PARKING_ONLY:
-                if (!RobotParams.Preferences.noRobot)
-                {
-                    autoCommand = new CmdAutoHigh(robot, autoChoices);
-                }
-                break;
-
             case PID_DRIVE:
                 if (!RobotParams.Preferences.noRobot)
                 {
@@ -200,11 +176,6 @@ public class FtcAuto extends FtcOpMode
         }
 
         robot.zeroCalibrate();
-
-        if (robot.grabber != null)
-        {
-            robot.setGrabberAutoAssistOn(true);
-        }
     }   //initRobot
 
     //
@@ -218,11 +189,6 @@ public class FtcAuto extends FtcOpMode
     @Override
     public void initPeriodic()
     {
-        // Use vision to detect objects before the match starts.
-        if (robot.vision != null && (robot.vision.tensorFlowVision != null || robot.vision.eocvVision != null))
-        {
-            robot.vision.getDetectedSignal();
-        }
     }   //initPeriodic
 
     /**
@@ -340,7 +306,6 @@ public class FtcAuto extends FtcOpMode
         FtcChoiceMenu<Alliance> allianceMenu = new FtcChoiceMenu<>("Alliance:", startDelayMenu);
         FtcChoiceMenu<StartPos> startPosMenu = new FtcChoiceMenu<>("Start Position:", allianceMenu);
         FtcChoiceMenu<AutoStrategy> strategyMenu = new FtcChoiceMenu<>("Auto Strategies:", startPosMenu);
-        FtcChoiceMenu<Parking> parkingMenu = new FtcChoiceMenu<>("Parking:", strategyMenu);
 
         FtcValueMenu xTargetMenu = new FtcValueMenu(
             "xTarget:", strategyMenu, -12.0, 12.0, 0.5, 4.0, " %.1f ft");
@@ -367,16 +332,10 @@ public class FtcAuto extends FtcOpMode
         startPosMenu.addChoice("Start Position Left", StartPos.LEFT, true, strategyMenu);
         startPosMenu.addChoice("Start Position Right", StartPos.RIGHT, false, strategyMenu);
 
-        strategyMenu.addChoice("Cycle High", AutoStrategy.CYCLE_HIGH, true, parkingMenu);
-        strategyMenu.addChoice("Cycle High Preload Only", AutoStrategy.CYCLE_HIGH_PRELOAD_ONLY, false, parkingMenu);
-        strategyMenu.addChoice("Park Only", AutoStrategy.PARKING_ONLY, false, parkingMenu);
         strategyMenu.addChoice("PID Drive", AutoStrategy.PID_DRIVE, false, xTargetMenu);
         strategyMenu.addChoice("Timed Drive", AutoStrategy.TIMED_DRIVE, false, driveTimeMenu);
         strategyMenu.addChoice("Do nothing", AutoStrategy.DO_NOTHING, false);
 
-        parkingMenu.addChoice("Parking Near Tile", Parking.NEAR_TILE, false);
-        parkingMenu.addChoice("Parking Far Tile", Parking.FAR_TILE, true);
-        parkingMenu.addChoice("No Parking", Parking.NO_PARKING, false);
         //
         // Traverse menus.
         //
@@ -388,7 +347,6 @@ public class FtcAuto extends FtcOpMode
         autoChoices.alliance = allianceMenu.getCurrentChoiceObject();
         autoChoices.startPos = startPosMenu.getCurrentChoiceObject();
         autoChoices.strategy = strategyMenu.getCurrentChoiceObject();
-        autoChoices.parking = parkingMenu.getCurrentChoiceObject();
         autoChoices.xTarget = xTargetMenu.getCurrentValue();
         autoChoices.yTarget = yTargetMenu.getCurrentValue();
         autoChoices.turnTarget = turnTargetMenu.getCurrentValue();

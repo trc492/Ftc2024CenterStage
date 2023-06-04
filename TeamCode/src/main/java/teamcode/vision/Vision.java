@@ -29,16 +29,13 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-import TrcCommonLib.trclib.TrcOpenCvColorBlobPipeline;
 import TrcCommonLib.trclib.TrcOpenCvDetector;
 import TrcCommonLib.trclib.TrcVisionTargetInfo;
-import TrcFtcLib.ftclib.FtcEocvAprilTagPipeline;
 import TrcFtcLib.ftclib.FtcOpMode;
 import TrcFtcLib.ftclib.FtcTensorFlow;
 import TrcFtcLib.ftclib.FtcVuforia;
 import teamcode.Robot;
 import teamcode.RobotParams;
-import teamcode.subsysstems.BlinkinLEDs;
 
 /**
  * This class implements Vuforia/TensorFlow/Grip/Eocv Vision for the game season. It creates and initializes all the
@@ -49,7 +46,7 @@ public class Vision
 {
     public static final String OPENCV_NATIVE_LIBRARY_NAME = "EasyOpenCV";
     public static final String[] TARGET_LABELS = {
-        BlinkinLEDs.LABEL_BOLT, BlinkinLEDs.LABEL_BULB, BlinkinLEDs.LABEL_PANEL
+//        BlinkinLEDs.LABEL_BOLT, BlinkinLEDs.LABEL_BULB, BlinkinLEDs.LABEL_PANEL
     };
 
     private final Robot robot;
@@ -143,169 +140,12 @@ public class Vision
     {
         if (label != null && robot.blinkin != null)
         {
-            robot.blinkin.setPatternState(BlinkinLEDs.LABEL_BOLT, false);
-            robot.blinkin.setPatternState(BlinkinLEDs.LABEL_BULB, false);
-            robot.blinkin.setPatternState(BlinkinLEDs.LABEL_PANEL, false);
+//            robot.blinkin.setPatternState(BlinkinLEDs.LABEL_BOLT, false);
+//            robot.blinkin.setPatternState(BlinkinLEDs.LABEL_BULB, false);
+//            robot.blinkin.setPatternState(BlinkinLEDs.LABEL_PANEL, false);
             robot.blinkin.setPatternState(label, true, 1.0);
         }
     }   //updateVisionLEDs
-
-    /**
-     * This method calls vision to detect the signal and returns the detected info.
-     *
-     * @return detected signal info, null if none detected.
-     */
-    public TrcVisionTargetInfo<?> getDetectedSignalInfo()
-    {
-        TrcVisionTargetInfo<?>[] targets = null;
-        String label = null;
-
-        if (tensorFlowVision != null && tensorFlowVision.isEnabled())
-        {
-            targets = tensorFlowVision.getDetectedTargetsInfo(
-                null, null, this::compareConfidence,
-                RobotParams.APRILTAG_HEIGHT_OFFSET, RobotParams.WEBCAM_HEIGHT_OFFSET);
-            if (targets != null)
-            {
-                label = ((TrcVisionTargetInfo<FtcTensorFlow.DetectedObject>) targets[0]).detectedObj.label;
-            }
-        }
-        else if (eocvVision != null && eocvVision.getPipeline() != null &&
-                 eocvVision.getDetectObjectType() == EocvVision.ObjectType.APRIL_TAG)
-        {
-            targets = eocvVision.getDetectedTargetsInfo(
-                null, null, RobotParams.APRILTAG_HEIGHT_OFFSET, RobotParams.WEBCAM_HEIGHT_OFFSET);
-            if (targets != null)
-            {
-                label = TARGET_LABELS[
-                    ((FtcEocvAprilTagPipeline.DetectedObject) targets[0].detectedObj).object.id - 1];
-            }
-        }
-        updateVisionLEDs(label);
-
-        return targets != null? targets[0]: null;
-    }   //getDetectedSignalInfo
-
-    /**
-     * This method determines the signal value from the detected object info.
-     *
-     * @return signal value of the detected object, 0 if no detected object.
-     */
-    public int determineDetectedSignal(TrcVisionTargetInfo<?> target)
-    {
-        int detectedSignal = 0;
-
-        if (target != null)
-        {
-            if (tensorFlowVision != null)
-            {
-                FtcTensorFlow.DetectedObject detectedObj = (FtcTensorFlow.DetectedObject) target.detectedObj;
-
-                switch (detectedObj.label)
-                {
-                    case BlinkinLEDs.LABEL_BOLT:
-                        detectedSignal = 1;
-                        break;
-
-                    case BlinkinLEDs.LABEL_BULB:
-                        detectedSignal = 2;
-                        break;
-
-                    case BlinkinLEDs.LABEL_PANEL:
-                        detectedSignal = 3;
-                        break;
-                }
-            }
-            else if (eocvVision != null && eocvVision.getPipeline() instanceof FtcEocvAprilTagPipeline)
-            {
-                FtcEocvAprilTagPipeline.DetectedObject detectedObj =
-                    (FtcEocvAprilTagPipeline.DetectedObject) target.detectedObj;
-
-                detectedSignal = detectedObj.object.id;
-            }
-        }
-
-        if (detectedSignal != 0)
-        {
-            lastSignal = detectedSignal;
-            if (robot.blinkin != null)
-            {
-                // Turn off previous detection indication.
-                robot.blinkin.setPatternState(BlinkinLEDs.LABEL_BOLT, false);
-                robot.blinkin.setPatternState(BlinkinLEDs.LABEL_BULB, false);
-                robot.blinkin.setPatternState(BlinkinLEDs.LABEL_PANEL, false);
-
-                switch (detectedSignal)
-                {
-                    case 1:
-                        robot.blinkin.setPatternState(BlinkinLEDs.LABEL_BOLT, true, 1.0);
-                        break;
-
-                    case 2:
-                        robot.blinkin.setPatternState(BlinkinLEDs.LABEL_BULB, true, 1.0);
-                        break;
-
-                    case 3:
-                        robot.blinkin.setPatternState(BlinkinLEDs.LABEL_PANEL, true, 1.0);
-                        break;
-                }
-                robot.dashboard.displayPrintf(15, "Found the signal at %d", detectedSignal);
-            }
-        }
-
-        return detectedSignal;
-    }   //determineDetectedSignal
-
-    /**
-     * This method calls the appropriate vision detection to detect the signal position.
-     *
-     * @return detected signal position, 0 if none detected.
-     */
-    public int getDetectedSignal()
-    {
-        return determineDetectedSignal(getDetectedSignalInfo());
-    }   //getDetectedSignal
-
-    /**
-     * This method does not initiate detection. It simply returns the signal detected by the last call to
-     * getDetectedSignal. This is typically used to get the last detected signal during the init period.
-     *
-     * @return last detected signal.
-     */
-    public int getLastSignal()
-    {
-        return lastSignal;
-    }   //getLastSignal
-
-    /**
-     * This method calls vision to detect the cone and returns the detected info.
-     *
-     * @return detected cone info, null if none detected.
-     */
-    public TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> getDetectedConeInfo()
-    {
-        TrcVisionTargetInfo<?>[] targets = null;
-
-        if (eocvVision != null && eocvVision.getPipeline() != null)
-        {
-            EocvVision.ObjectType detectObjType = eocvVision.getDetectObjectType();
-
-            if (detectObjType == EocvVision.ObjectType.RED_CONE || detectObjType == EocvVision.ObjectType.BLUE_CONE)
-            {
-                targets = eocvVision.getDetectedTargetsInfo(null, this::compareBottomY, 0.0, 0.0);
-
-                if (targets != null && robot.blinkin != null)
-                {
-                    robot.blinkin.setPatternState(
-                        detectObjType == EocvVision.ObjectType.RED_CONE?
-                            BlinkinLEDs.GOT_RED_CONE: BlinkinLEDs.GOT_BLUE_CONE,
-                        true, 1.0);
-                }
-            }
-        }
-
-        return targets != null? (TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject>) targets[0]: null;
-    }   //getDetectedConeInfo
 
     /**
      * This method is called by the Arrays.sort to sort the target object by decreasing confidence.

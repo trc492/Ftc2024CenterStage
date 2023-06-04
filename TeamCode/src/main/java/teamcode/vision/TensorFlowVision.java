@@ -33,7 +33,6 @@ import TrcFtcLib.ftclib.FtcOpMode;
 import TrcFtcLib.ftclib.FtcTensorFlow;
 import TrcFtcLib.ftclib.FtcVuforia;
 import teamcode.RobotParams;
-import teamcode.vision.Vision;
 
 /**
  * This class implements TensorFlow Vision that provides the capability to detect learned objects and return their
