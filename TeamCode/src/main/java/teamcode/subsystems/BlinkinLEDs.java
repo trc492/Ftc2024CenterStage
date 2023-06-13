@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package teamcode.subsysstems;
+package teamcode.subsystems;
 
 import TrcCommonLib.trclib.TrcRevBlinkin;
 import TrcFtcLib.ftclib.FtcRevBlinkin;

@@ -37,7 +37,7 @@ import TrcCommonLib.trclib.TrcUtil;
 import TrcFtcLib.ftclib.FtcRevBlinkin;
 import TrcFtcLib.ftclib.FtcVuforia;
 import teamcode.RobotParams;
-import teamcode.subsysstems.BlinkinLEDs;
+import teamcode.subsystems.BlinkinLEDs;
 
 /**
  * This class implements Vuforia Vision that provides the capability of using images to locate the robot position

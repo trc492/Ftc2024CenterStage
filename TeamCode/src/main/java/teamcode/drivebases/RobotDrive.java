@@ -96,13 +96,14 @@ public class RobotDrive
 
         driveMotor.motor.setMode(RobotParams.DRIVE_MOTOR_MODE);
         driveMotor.setVelocityPidCoefficients(RobotParams.DRIVE_VELPID_COEFFS);
-        driveMotor.setPidCoefficients(RobotParams.DRIVE_POSPID_COEFFS);
+        driveMotor.setPositionPidCoefficients(RobotParams.DRIVE_POSPID_COEFFS);
         driveMotor.setBrakeModeEnabled(RobotParams.DRIVE_WHEEL_BRAKE_MODE_ON);
         driveMotor.setMotorInverted(inverted);
 
         if (RobotParams.Preferences.useVelocityControl)
         {
-            driveMotor.enableVelocityMode(RobotParams.DRIVE_MOTOR_MAX_VELOCITY_PPS);
+            // TODO: pidCoeff must not be null.
+//            driveMotor.enableVelocityMode(RobotParams.DRIVE_MOTOR_MAX_VELOCITY_PPS, null, false);
         }
 
         return driveMotor;

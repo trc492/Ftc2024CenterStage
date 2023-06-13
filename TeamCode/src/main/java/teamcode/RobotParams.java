@@ -81,12 +81,16 @@ public class RobotParams
     public static final String HWNAME_RBDRIVE_MOTOR             = "rbDriveMotor";
     public static final String HWNAME_LFSTEER_SERVO1            = "lfSteerServo1";
     public static final String HWNAME_LFSTEER_SERVO2            = "lfSteerServo2";
+    public static final String HWNAME_LFSTEER_ENCODER           = "lfSteerEncoder";
     public static final String HWNAME_RFSTEER_SERVO1            = "rfSteerServo1";
     public static final String HWNAME_RFSTEER_SERVO2            = "rfSteerServo2";
+    public static final String HWNAME_RFSTEER_ENCODER           = "rfSteerEncoder";
     public static final String HWNAME_LBSTEER_SERVO1            = "lbSteerServo1";
     public static final String HWNAME_LBSTEER_SERVO2            = "lbSteerServo2";
+    public static final String HWNAME_LBSTEER_ENCODER           = "lbSteerEncoder";
     public static final String HWNAME_RBSTEER_SERVO1            = "rbSteerServo1";
     public static final String HWNAME_RBSTEER_SERVO2            = "rbSteerServo2";
+    public static final String HWNAME_RBSTEER_ENCODER           = "rbSteerEncoder";
     // Subsystems.
 
     //

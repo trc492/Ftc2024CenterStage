@@ -38,7 +38,7 @@ import TrcFtcLib.ftclib.FtcRobotBattery;
 import teamcode.drivebases.MecanumDrive;
 import teamcode.drivebases.RobotDrive;
 import teamcode.drivebases.SwerveDrive;
-import teamcode.subsysstems.BlinkinLEDs;
+import teamcode.subsystems.BlinkinLEDs;
 import teamcode.vision.EocvVision;
 import teamcode.vision.Vision;
 
@@ -97,7 +97,7 @@ public class Robot
              RobotParams.Preferences.useTensorFlow ||
              RobotParams.Preferences.useEasyOpenCV))
         {
-            // Don't need to enable vision for TeleOp because we are not doing auto-assist cone pickup (yet).
+            // Don't need to enable vision for TeleOp because we are not doing auto-assist involving vision.
             vision = new Vision(this);
         }
         //
@@ -164,7 +164,7 @@ public class Robot
                 robotDrive.gyro.setEnabled(true);
             }
             //
-            // Enable odometry for all opmodes. We need odometry in TeleOp for GridDrive.
+            // Enable odometry for all opmodes. We may need odometry in TeleOp for auto-assist drive.
             //
             robotDrive.driveBase.setOdometryEnabled(true);
             if (runMode != TrcRobot.RunMode.AUTO_MODE)

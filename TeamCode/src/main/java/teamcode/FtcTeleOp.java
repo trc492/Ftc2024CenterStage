@@ -31,7 +31,7 @@ import TrcCommonLib.trclib.TrcGameController;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcFtcLib.ftclib.FtcGamepad;
 import TrcFtcLib.ftclib.FtcOpMode;
-import teamcode.subsysstems.BlinkinLEDs;
+import teamcode.subsystems.BlinkinLEDs;
 
 @TeleOp(name="FtcTeleOp", group="Ftc3543")
 public class FtcTeleOp extends FtcOpMode
