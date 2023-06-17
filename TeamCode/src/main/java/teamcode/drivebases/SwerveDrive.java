@@ -52,8 +52,8 @@ public class SwerveDrive extends RobotDrive
     private static final boolean tracePidInfo = false;
 
     public static final String[] servoNames = {
-        RobotParams.HWNAME_LFSTEER_SERVO1, RobotParams.HWNAME_RFSTEER_SERVO1,
-        RobotParams.HWNAME_LBSTEER_SERVO1, RobotParams.HWNAME_RBSTEER_SERVO1};
+        RobotParams.HWNAME_LFSTEER_SERVO, RobotParams.HWNAME_RFSTEER_SERVO,
+        RobotParams.HWNAME_LBSTEER_SERVO, RobotParams.HWNAME_RBSTEER_SERVO};
     public double[][] servoPositions = {
         {RobotParams.LFSTEER_MINUS90, RobotParams.LFSTEER_PLUS90},
         {RobotParams.RFSTEER_MINUS90, RobotParams.RFSTEER_PLUS90},
@@ -64,8 +64,8 @@ public class SwerveDrive extends RobotDrive
     // Swerve steering motors and modules.
     //
     public final FtcAnalogEncoder lfSteerEncoder, rfSteerEncoder, lbSteerEncoder, rbSteerEncoder;
-    public final FtcServo lfSteerServo1, rfSteerServo1, lbSteerServo1, rbSteerServo1;
-    public final FtcServo lfSteerServo2, rfSteerServo2, lbSteerServo2, rbSteerServo2;
+    public final FtcServo lfSteerServo, rfSteerServo, lbSteerServo, rbSteerServo;
+//    public final FtcServo lfSteerServo2, rfSteerServo2, lbSteerServo2, rbSteerServo2;
     public final TrcSwerveModule lfSwerveModule, rfSwerveModule, lbSwerveModule, rbSwerveModule;
 
     /**
@@ -89,46 +89,46 @@ public class SwerveDrive extends RobotDrive
         lbSteerEncoder = new FtcAnalogEncoder(RobotParams.HWNAME_LBSTEER_ENCODER);
         rbSteerEncoder = new FtcAnalogEncoder(RobotParams.HWNAME_RBSTEER_ENCODER);
 
-        lfSteerServo1 = createSteerServo(
-            RobotParams.HWNAME_LFSTEER_SERVO1, lfSteerEncoder, servoPositions[0][0], servoPositions[0][1],
+        lfSteerServo = createSteerServo(
+            RobotParams.HWNAME_LFSTEER_SERVO, lfSteerEncoder, servoPositions[0][0], servoPositions[0][1],
             RobotParams.LFSTEER_INVERTED);
-        lfSteerServo2 = null;
+//        lfSteerServo2 = null;
 //        lfSteerServo2 = createSteerServo(
 //            RobotParams.HWNAME_LFSTEER_SERVO2, null, servoPositions[0][0], servoPositions[0][1],
 //            RobotParams.LFSTEER_INVERTED);
 //        lfSteerServo1.addFollower(lfSteerServo2);
 
-        rfSteerServo1 = createSteerServo(
-            RobotParams.HWNAME_RFSTEER_SERVO1, rfSteerEncoder, servoPositions[1][0], servoPositions[1][1],
+        rfSteerServo = createSteerServo(
+            RobotParams.HWNAME_RFSTEER_SERVO, rfSteerEncoder, servoPositions[1][0], servoPositions[1][1],
             RobotParams.RFSTEER_INVERTED);
-        rfSteerServo2 = null;
+//        rfSteerServo2 = null;
 //        rfSteerServo2 = createSteerServo(
 //            RobotParams.HWNAME_RFSTEER_SERVO2, null, servoPositions[1][0], servoPositions[1][1],
 //            RobotParams.RFSTEER_INVERTED);
 //        rfSteerServo1.addFollower(rfSteerServo2);
 
-        lbSteerServo1 = createSteerServo(
-            RobotParams.HWNAME_LBSTEER_SERVO1, lbSteerEncoder, servoPositions[2][0], servoPositions[2][1],
+        lbSteerServo = createSteerServo(
+            RobotParams.HWNAME_LBSTEER_SERVO, lbSteerEncoder, servoPositions[2][0], servoPositions[2][1],
             RobotParams.LBSTEER_INVERTED);
-        lbSteerServo2 = null;
+//        lbSteerServo2 = null;
 //        lbSteerServo2 = createSteerServo(
 //            RobotParams.HWNAME_LBSTEER_SERVO2, null, servoPositions[2][0], servoPositions[2][1],
 //            RobotParams.LBSTEER_INVERTED);
 //        lbSteerServo1.addFollower(lbSteerServo2);
 
-        rbSteerServo1 = createSteerServo(
-            RobotParams.HWNAME_RBSTEER_SERVO1, rbSteerEncoder, servoPositions[3][0], servoPositions[3][1],
+        rbSteerServo = createSteerServo(
+            RobotParams.HWNAME_RBSTEER_SERVO, rbSteerEncoder, servoPositions[3][0], servoPositions[3][1],
             RobotParams.RBSTEER_INVERTED);
-        rbSteerServo2 = null;
+//        rbSteerServo2 = null;
 //        rbSteerServo2 = createSteerServo(
 //            RobotParams.HWNAME_RBSTEER_SERVO2, null, servoPositions[3][0], servoPositions[3][1],
 //            RobotParams.RBSTEER_INVERTED);
 //        rbSteerServo1.addFollower(rbSteerServo2);
 
-        lfSwerveModule = new TrcSwerveModule("lfSwerveModule", lfDriveMotor, lfSteerServo1);
-        rfSwerveModule = new TrcSwerveModule("rfSwerveModule", rfDriveMotor, rfSteerServo1);
-        lbSwerveModule = new TrcSwerveModule("lbSwerveModule", lbDriveMotor, lbSteerServo1);
-        rbSwerveModule = new TrcSwerveModule("rbSwerveModule", rbDriveMotor, rbSteerServo1);
+        lfSwerveModule = new TrcSwerveModule("lfSwerveModule", lfDriveMotor, lfSteerServo);
+        rfSwerveModule = new TrcSwerveModule("rfSwerveModule", rfDriveMotor, rfSteerServo);
+        lbSwerveModule = new TrcSwerveModule("lbSwerveModule", lbDriveMotor, lbSteerServo);
+        rbSwerveModule = new TrcSwerveModule("rbSwerveModule", rbDriveMotor, rbSteerServo);
 //        lfSwerveModule.setSteeringLimits(RobotParams.STEER_LOW_LIMIT, RobotParams.STEER_HIGH_LIMIT);
 //        rfSwerveModule.setSteeringLimits(RobotParams.STEER_LOW_LIMIT, RobotParams.STEER_HIGH_LIMIT);
 //        lbSwerveModule.setSteeringLimits(RobotParams.STEER_LOW_LIMIT, RobotParams.STEER_HIGH_LIMIT);
@@ -273,16 +273,16 @@ public class SwerveDrive extends RobotDrive
         double pos;
 
         pos = getSteeringServoPosition(0, posIndex);
-        lfSteerServo1.setLogicalPosition(pos);
+        lfSteerServo.setLogicalPosition(pos);
 //        lfSteerServo2.setLogicalPosition(pos);
         pos = getSteeringServoPosition(1, posIndex);
-        rfSteerServo1.setLogicalPosition(pos);
+        rfSteerServo.setLogicalPosition(pos);
 //        rfSteerServo2.setLogicalPosition(pos);
         pos = getSteeringServoPosition(2, posIndex);
-        lbSteerServo1.setLogicalPosition(pos);
+        lbSteerServo.setLogicalPosition(pos);
 //        lbSteerServo2.setLogicalPosition(pos);
         pos = getSteeringServoPosition(3, posIndex);
-        rbSteerServo1.setLogicalPosition(pos);
+        rbSteerServo.setLogicalPosition(pos);
 //        rbSteerServo2.setLogicalPosition(pos);
     }  //setSteeringServoPosition
 

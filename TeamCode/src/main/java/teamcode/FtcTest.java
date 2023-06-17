@@ -902,6 +902,7 @@ public class FtcTest extends FtcTeleOp
      */
     private void doSensorsTest()
     {
+        int lineNum = 8;
         //
         // Read all sensors and display on the dashboard.
         // Drive the robot around to sample different locations of the field.
@@ -909,16 +910,27 @@ public class FtcTest extends FtcTeleOp
         if (!RobotParams.Preferences.noRobot)
         {
             robot.dashboard.displayPrintf(
-                8, "Enc: lf=%.0f,rf=%.0f,lb=%.0f,rb=%.0f",
+                lineNum++, "DriveEnc: lf=%.0f,rf=%.0f,lb=%.0f,rb=%.0f",
                 robot.robotDrive.lfDriveMotor.getPosition(), robot.robotDrive.rfDriveMotor.getPosition(),
                 robot.robotDrive.lbDriveMotor.getPosition(), robot.robotDrive.rbDriveMotor.getPosition());
+
+            if (robot.robotDrive instanceof SwerveDrive)
+            {
+                SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
+                robot.dashboard.displayPrintf(
+                    lineNum++, "SteerEnc: lf=%.2f, rf=%.2f, lb=%.2f, rb=%.2f",
+                    swerveDrive.lfSteerEncoder.getPosition(), swerveDrive.rfSteerEncoder.getPosition(),
+                    swerveDrive.lbSteerEncoder.getPosition(), swerveDrive.rbSteerEncoder.getPosition());
+            }
         }
 
         if (robot.robotDrive.gyro != null)
         {
             robot.dashboard.displayPrintf(
-                9, "Gyro: Rate=%.3f,Heading=%.1f",
-                robot.robotDrive.gyro.getZRotationRate().value, robot.robotDrive.gyro.getZHeading().value);
+                lineNum++, "Gyro(x,y,z): Heading=(%.1f,%.1f,%.1f), Rate=(%.3f,%.3f,%.3f)",
+                robot.robotDrive.gyro.getXHeading().value, robot.robotDrive.gyro.getYHeading().value,
+                robot.robotDrive.gyro.getZHeading().value, robot.robotDrive.gyro.getXRotationRate().value,
+                robot.robotDrive.gyro.getYRotationRate().value, robot.robotDrive.gyro.getZRotationRate().value);
         }
     }   //doSensorsTest
 

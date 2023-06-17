@@ -22,15 +22,16 @@
 
 package teamcode.drivebases;
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+
 import org.opencv.core.Point;
 
 import TrcCommonLib.trclib.TrcDriveBase;
-import TrcCommonLib.trclib.TrcGyro;
 import TrcCommonLib.trclib.TrcPidDrive;
 import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcPurePursuitDrive;
-import TrcFtcLib.ftclib.FtcBNO055Imu;
 import TrcFtcLib.ftclib.FtcDcMotor;
+import TrcFtcLib.ftclib.FtcImu;
 import teamcode.FtcAuto;
 import teamcode.RobotParams;
 
@@ -42,8 +43,7 @@ public class RobotDrive
     //
     // Sensors.
     //
-    public final FtcBNO055Imu imu;
-    public final TrcGyro gyro;
+    public final FtcImu gyro;
 
     //
     // Subclass needs to initialize the following variables.
@@ -61,8 +61,9 @@ public class RobotDrive
      */
     public RobotDrive()
     {
-        imu = new FtcBNO055Imu(RobotParams.HWNAME_IMU);
-        gyro = imu.gyro;
+        gyro = new FtcImu(
+            RobotParams.HWNAME_IMU, RevHubOrientationOnRobot.LogoFacingDirection.UP,
+            RevHubOrientationOnRobot.UsbFacingDirection.LEFT);
     }   //RobotDrive
 
     /**
