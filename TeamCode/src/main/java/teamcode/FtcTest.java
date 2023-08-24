@@ -45,7 +45,6 @@ import TrcFtcLib.ftclib.FtcMenu;
 import TrcFtcLib.ftclib.FtcPidCoeffCache;
 import TrcFtcLib.ftclib.FtcValueMenu;
 import teamcode.drivebases.SwerveDrive;
-import teamcode.vision.EocvVision;
 
 /**
  * This class contains the Test Mode program. It extends FtcTeleOp so that we can teleop control the robot for
@@ -238,8 +237,8 @@ public class FtcTest extends FtcTeleOp
         //
         if (robot.vision != null && robot.vision.tensorFlowVision != null && testChoices.test != Test.VISION_TEST)
         {
-            robot.globalTracer.traceInfo("TestInit", "Shutting down TensorFlow.");
-            robot.vision.tensorFlowShutdown();
+            robot.globalTracer.traceInfo("TestInit", "Disabling TensorFlowVision.");
+            robot.vision.setTensorFlowVisionEnabled(false);
         }
     }   //initRobot
 
@@ -268,21 +267,28 @@ public class FtcTest extends FtcTeleOp
                     //
                     // Vision generally will impact performance, so we only enable it if it's needed.
                     //
-                    if (robot.vision.vuforiaVision != null)
+                    if (robot.vision.aprilTagVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling Vuforia.");
-                        robot.vision.vuforiaVision.setEnabled(true);
+                        robot.globalTracer.traceInfo(funcName, "Enabling AprilTagVision.");
+                        robot.vision.setAprilTagVisionEnabled(true);
                     }
 
-                    if (robot.vision.eocvVision != null)
+                    if (robot.vision.redConeVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling EocvVision.");
-                        robot.vision.eocvVision.setDetectObjectType(EocvVision.ObjectType.APRIL_TAG);
+                        robot.globalTracer.traceInfo(funcName, "Enabling RedConeVision.");
+                        robot.vision.setRedConeVisionEnabled(true);
                     }
-                    else if (robot.vision.tensorFlowVision != null)
+
+                    if (robot.vision.blueConeVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling TensorFlow.");
-                        robot.vision.tensorFlowVision.setEnabled(true);
+                        robot.globalTracer.traceInfo(funcName, "Enabling BlueConeVision.");
+                        robot.vision.setBlueConeVisionEnabled(true);
+                    }
+
+                    if (robot.vision.tensorFlowVision != null)
+                    {
+                        robot.globalTracer.traceInfo(funcName, "Enabling TensorFlowVison.");
+                        robot.vision.setTensorFlowVisionEnabled(true);
                     }
                 }
                 break;
@@ -479,7 +485,7 @@ public class FtcTest extends FtcTeleOp
                 //
                 // Allow TeleOp to run so we can control the robot in subsystem test or drive speed test modes.
                 //
-                super.periodic(elapsedTime, slowPeriodicLoop);
+                super.periodic(elapsedTime, true);
             }
 
             switch (testChoices.test)
@@ -551,25 +557,25 @@ public class FtcTest extends FtcTeleOp
                     break;
 
                 case FtcGamepad.GAMEPAD_B:
-                    if (testChoices.test == Test.VISION_TEST)
-                    {
-                        if (pressed && robot.vision != null && robot.vision.eocvVision != null)
-                        {
-                            robot.vision.eocvVision.setNextObjectType();
-                        }
-                        processed = true;
-                    }
+//                    if (testChoices.test == Test.VISION_TEST)
+//                    {
+//                        if (pressed && robot.vision != null && robot.vision.eocvVision != null)
+//                        {
+//                            robot.vision.eocvVision.setNextObjectType();
+//                        }
+//                        processed = true;
+//                    }
                     break;
 
                 case FtcGamepad.GAMEPAD_X:
-                    if (testChoices.test == Test.VISION_TEST)
-                    {
-                        if (pressed && robot.vision != null && robot.vision.eocvVision != null)
-                        {
-                            robot.vision.eocvVision.setNextVideoOutput();
-                        }
-                        processed = true;
-                    }
+//                    if (testChoices.test == Test.VISION_TEST)
+//                    {
+//                        if (pressed && robot.vision != null && robot.vision.eocvVision != null)
+//                        {
+//                            robot.vision.eocvVision.setNextVideoOutput();
+//                        }
+//                        processed = true;
+//                    }
                     break;
 
                 case FtcGamepad.GAMEPAD_Y:
@@ -964,20 +970,6 @@ public class FtcTest extends FtcTeleOp
 //            {
 //                robot.dashboard.displayPrintf(11, "Cone: Not found.");
 //            }
-
-            if (robot.vision.vuforiaVision != null)
-            {
-                TrcPose2D robotPose = robot.vision.vuforiaVision.getRobotPose(null, false);
-                if (robotPose != null)
-                {
-                    robot.dashboard.displayPrintf(
-                        13, "RobotLoc %s: %s", robot.vision.vuforiaVision.getLastSeenImageName(), robotPose);
-                }
-                else
-                {
-                    robot.dashboard.displayPrintf(13, "RobotLoc: Unknown");
-                }
-            }
         }
     }   //doVisionTest
 

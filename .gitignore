@@ -9,8 +9,9 @@
 # Files for the ART/Dalvik VM
 *.dex
 
-# Java class files
+# Java/JDK files
 *.class
+*.hprof
 
 # Generated files
 bin/

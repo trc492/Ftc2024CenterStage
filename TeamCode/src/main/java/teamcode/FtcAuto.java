@@ -35,7 +35,6 @@ import TrcFtcLib.ftclib.FtcMatchInfo;
 import TrcFtcLib.ftclib.FtcMenu;
 import TrcFtcLib.ftclib.FtcOpMode;
 import TrcFtcLib.ftclib.FtcValueMenu;
-import teamcode.vision.EocvVision;
 
 /**
  * This class contains the Autonomous Mode program.
@@ -163,15 +162,28 @@ public class FtcAuto extends FtcOpMode
         if (robot.vision != null)
         {
             // Enabling vision early so we can detect signal position before match starts.
-            if (robot.vision.eocvVision != null)
+            if (robot.vision.aprilTagVision != null)
             {
-                robot.globalTracer.traceInfo(funcName, "Enabling EocvVision to detect AprilTag.");
-                robot.vision.eocvVision.setDetectObjectType(EocvVision.ObjectType.APRIL_TAG);
+                robot.globalTracer.traceInfo(funcName, "Enabling AprilTagVision.");
+                robot.vision.setAprilTagVisionEnabled(true);
             }
-            else if (robot.vision.tensorFlowVision != null)
+
+            if (robot.vision.redConeVision != null)
             {
-                robot.globalTracer.traceInfo(funcName, "Enabling TensorFlowVision to detect Signal.");
-                robot.vision.tensorFlowVision.setEnabled(true);
+                robot.globalTracer.traceInfo(funcName, "Enabling RedConeVision.");
+                robot.vision.setRedConeVisionEnabled(true);
+            }
+
+            if (robot.vision.blueConeVision != null)
+            {
+                robot.globalTracer.traceInfo(funcName, "Enabling BlueConeVision.");
+                robot.vision.setBlueConeVisionEnabled(true);
+            }
+
+            if (robot.vision.tensorFlowVision != null)
+            {
+                robot.globalTracer.traceInfo(funcName, "Enabling TensorFlowVision.");
+                robot.vision.setTensorFlowVisionEnabled(true);
             }
         }
 
@@ -225,8 +237,8 @@ public class FtcAuto extends FtcOpMode
             // We are done with detecting signal with TensorFlow, shut it down.
             if (robot.vision.tensorFlowVision != null)
             {
-                robot.globalTracer.traceInfo(funcName, "Shutting down TensorFlow.");
-                robot.vision.tensorFlowShutdown();
+                robot.globalTracer.traceInfo(funcName, "Disabling TensorFlowVision.");
+                robot.vision.setTensorFlowVisionEnabled(false);
             }
         }
 

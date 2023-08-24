@@ -31,7 +31,6 @@ import java.util.Scanner;
 
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcDriveBaseOdometry;
-import TrcCommonLib.trclib.TrcEncoder;
 import TrcCommonLib.trclib.TrcPidController;
 import TrcCommonLib.trclib.TrcPidDrive;
 import TrcCommonLib.trclib.TrcPurePursuitDrive;
@@ -208,13 +207,17 @@ public class SwerveDrive extends RobotDrive
      * @return created steering servo.
      */
     private FtcServo createSteerServo(
-        String servoName, TrcEncoder encoder, double steerMinus90, double steerPlus90, boolean inverted)
+        String servoName, FtcAnalogEncoder encoder, double steerMinus90, double steerPlus90, boolean inverted)
     {
         FtcServo servo = new FtcServo(servoName, true, encoder);
 
         servo.setInverted(inverted);
         servo.setPhysicalRange(-90.0, 90.0);
         servo.setLogicalRange(steerMinus90, steerPlus90);
+
+        encoder.setScaleAndOffset(180.0, 0.0);
+        // Enable Cartesian converter.
+        encoder.setEnabled(true);
 
         return servo;
     }   //createSteerServo

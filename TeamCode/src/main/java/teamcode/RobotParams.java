@@ -46,12 +46,12 @@ public class RobotParams
         public static boolean useBlinkin = false;
         public static boolean useBatteryMonitor = false;
         // Vision
-        public static boolean useVuforia = false;
-        public static boolean showVuforiaView = false;
-        public static boolean useTensorFlow = false;
-        public static boolean showTensorFlowView = false;
-        public static boolean useEasyOpenCV = false;
-        public static boolean showEasyOpenCvView = false;
+        public static boolean useWebCam = true;
+        public static boolean useBuiltinCamBack = false;
+        public static boolean useAprilTagVision = false;
+        public static boolean useColorBlobVision = false;
+        public static boolean useTensorFlowVision = false;
+        public static boolean showVisionView = true;
         // Robot
         public static boolean noRobot = false;
         public static boolean swerveRobot = true;
@@ -109,18 +109,14 @@ public class RobotParams
     //
     // Vision subsystem.
     //
-    public static final int WEBCAM_PERMISSION_TIMEOUT           = 5000;     // in msec
-    public static final int FRAME_QUEUE_CAPACITY                = 2;
-    public static final double APRILTAG_SIZE                    = 0.043;// in meters
-    public static final double APRILTAG_HEIGHT_OFFSET           = 1.5;  // in inches
+    public static final int CAM_IMAGE_WIDTH                     = 640;
+    public static final int CAM_IMAGE_HEIGHT                    = 480;
+    public static final double CAM_FRONT_OFFSET                 = 2.000;//Camera offset from front of robot in inches
+    public static final double CAM_LEFT_OFFSET                  = 7.125;//Camera offset from left of robot in inches
+    public static final double CAM_HEIGHT_OFFSET                = 3.750;//Camera offset from floor in inches
+    public static final double CAM_TILT_DOWN                    = 15.00;//Camera tilt down angle from horizontal in deg
     // Camera location on robot.
-    public static final double WEBCAM_FRONT_OFFSET              = 2.000;//Camera offset from front of robot in inches
-    public static final double WEBCAM_LEFT_OFFSET               = 7.125;//Camera offset from left of robot in inches
-    public static final double WEBCAM_HEIGHT_OFFSET             = 3.750;//Camera offset from floor in inches
-    public static final double WEBCAM_TILT_DOWN                 = 15.00;//Camera tilt down angle from horizontal in deg
     // Camera: Logitech C310
-    public static final int WEBCAM_IMAGE_WIDTH                  = 640;
-    public static final int WEBCAM_IMAGE_HEIGHT                 = 480;
     public static final double WEBCAM_FX                        = 821.993;  // in pixels
     public static final double WEBCAM_FY                        = 821.993;  // in pixels
     public static final double WEBCAM_CX                        = 330.489;  // in pixels
@@ -129,21 +125,21 @@ public class RobotParams
     // Measurement unit: pixels
     public static final double HOMOGRAPHY_CAMERA_TOPLEFT_X      = 0.0;
     public static final double HOMOGRAPHY_CAMERA_TOPLEFT_Y      = 120.0;
-    public static final double HOMOGRAPHY_CAMERA_TOPRIGHT_X     = WEBCAM_IMAGE_WIDTH - 1;
+    public static final double HOMOGRAPHY_CAMERA_TOPRIGHT_X     = CAM_IMAGE_WIDTH - 1;
     public static final double HOMOGRAPHY_CAMERA_TOPRIGHT_Y     = 120.0;
     public static final double HOMOGRAPHY_CAMERA_BOTTOMLEFT_X   = 0.0;
-    public static final double HOMOGRAPHY_CAMERA_BOTTOMLEFT_Y   = WEBCAM_IMAGE_HEIGHT - 1;
-    public static final double HOMOGRAPHY_CAMERA_BOTTOMRIGHT_X  = WEBCAM_IMAGE_WIDTH - 1;
-    public static final double HOMOGRAPHY_CAMERA_BOTTOMRIGHT_Y  = WEBCAM_IMAGE_HEIGHT - 1;
+    public static final double HOMOGRAPHY_CAMERA_BOTTOMLEFT_Y   = CAM_IMAGE_HEIGHT - 1;
+    public static final double HOMOGRAPHY_CAMERA_BOTTOMRIGHT_X  = CAM_IMAGE_WIDTH - 1;
+    public static final double HOMOGRAPHY_CAMERA_BOTTOMRIGHT_Y  = CAM_IMAGE_HEIGHT - 1;
     // Measurement unit: inches
     public static final double HOMOGRAPHY_WORLD_TOPLEFT_X       = -12.5625;
-    public static final double HOMOGRAPHY_WORLD_TOPLEFT_Y       = 48.0 - ROBOT_LENGTH + WEBCAM_FRONT_OFFSET;
+    public static final double HOMOGRAPHY_WORLD_TOPLEFT_Y       = 48.0 - ROBOT_LENGTH + CAM_FRONT_OFFSET;
     public static final double HOMOGRAPHY_WORLD_TOPRIGHT_X      = 11.4375;
-    public static final double HOMOGRAPHY_WORLD_TOPRIGHT_Y      = 44.75 - ROBOT_LENGTH + WEBCAM_FRONT_OFFSET;
+    public static final double HOMOGRAPHY_WORLD_TOPRIGHT_Y      = 44.75 - ROBOT_LENGTH + CAM_FRONT_OFFSET;
     public static final double HOMOGRAPHY_WORLD_BOTTOMLEFT_X    = -2.5625;
-    public static final double HOMOGRAPHY_WORLD_BOTTOMLEFT_Y    = 21.0 - ROBOT_LENGTH + WEBCAM_FRONT_OFFSET;
+    public static final double HOMOGRAPHY_WORLD_BOTTOMLEFT_Y    = 21.0 - ROBOT_LENGTH + CAM_FRONT_OFFSET;
     public static final double HOMOGRAPHY_WORLD_BOTTOMRIGHT_X   = 2.5626;
-    public static final double HOMOGRAPHY_WORLD_BOTTOMRIGHT_Y   = 21.0 - ROBOT_LENGTH + WEBCAM_FRONT_OFFSET;
+    public static final double HOMOGRAPHY_WORLD_BOTTOMRIGHT_Y   = 21.0 - ROBOT_LENGTH + CAM_FRONT_OFFSET;
 
     public static final TrcHomographyMapper.Rectangle cameraRect = new TrcHomographyMapper.Rectangle(
         RobotParams.HOMOGRAPHY_CAMERA_TOPLEFT_X, RobotParams.HOMOGRAPHY_CAMERA_TOPLEFT_Y,

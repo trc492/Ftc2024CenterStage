@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Titan Robotics Club (http://www.titanrobotics.com)
+ * Copyright (c) 2023 Titan Robotics Club (http://www.titanrobotics.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,27 @@
 
 package teamcode.vision;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.opencv.core.Rect;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvWebcam;
+import android.util.Size;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
+
+import TrcCommonLib.trclib.TrcDbgTrace;
+import TrcCommonLib.trclib.TrcOpenCvColorBlobPipeline;
 import TrcCommonLib.trclib.TrcOpenCvDetector;
 import TrcCommonLib.trclib.TrcVisionTargetInfo;
+import TrcFtcLib.ftclib.FtcEocvColorBlobProcessor;
 import TrcFtcLib.ftclib.FtcOpMode;
-import TrcFtcLib.ftclib.FtcTensorFlow;
-import TrcFtcLib.ftclib.FtcVuforia;
+import TrcFtcLib.ftclib.FtcVisionAprilTag;
+import TrcFtcLib.ftclib.FtcVisionEocvColorBlob;
+import TrcFtcLib.ftclib.FtcVisionTensorFlow;
 import teamcode.Robot;
 import teamcode.RobotParams;
 
@@ -44,17 +53,44 @@ import teamcode.RobotParams;
  */
 public class Vision
 {
-    public static final String OPENCV_NATIVE_LIBRARY_NAME = "EasyOpenCV";
+    private static final String moduleName = "Vision";
+    private static final int colorConversion = Imgproc.COLOR_BGRA2BGR;
+    private static final double[] redConeColorThresholds = {100.0, 255.0, 0.0, 100.0, 0.0, 60.0};
+    private static final double[] blueConeColorThresholds = {0.0, 60.0, 0.0, 100.0, 100, 255.0};
+    private static final TrcOpenCvColorBlobPipeline.FilterContourParams redConeFilterContourParams =
+        new TrcOpenCvColorBlobPipeline.FilterContourParams()
+            .setMinArea(10000.0)
+            .setMinPerimeter(200.0)
+            .setWidthRange(100.0, 1000.0)
+            .setHeightRange(100.0, 1000.0)
+            .setSolidityRange(0.0, 100.0)
+            .setVerticesRange(0.0, 1000.0)
+            .setAspectRatioRange(0.0, 1000.0);
+    private static final TrcOpenCvColorBlobPipeline.FilterContourParams blueConeFilterContourParams =
+        new TrcOpenCvColorBlobPipeline.FilterContourParams()
+            .setMinArea(10000.0)
+            .setMinPerimeter(200.0)
+            .setWidthRange(100.0, 1000.0)
+            .setHeightRange(100.0, 1000.0)
+            .setSolidityRange(0.0, 100.0)
+            .setVerticesRange(0.0, 1000.0)
+            .setAspectRatioRange(0.0, 1000.0);
+    private static final String TFOD_MODEL_ASSET = "PowerPlay.tflite";
+    private static final float TFOD_MIN_CONFIDENCE = 0.75f;
     public static final String[] TARGET_LABELS = {
 //        BlinkinLEDs.LABEL_BOLT, BlinkinLEDs.LABEL_BULB, BlinkinLEDs.LABEL_PANEL
     };
 
     private final Robot robot;
-    public VuforiaVision vuforiaVision;
-    public TensorFlowVision tensorFlowVision;
-    public EocvVision eocvVision;
-
-    private int lastSignal = 0;
+    public FtcVisionAprilTag aprilTagVision;
+    private AprilTagProcessor aprilTagProcessor;
+    public FtcVisionEocvColorBlob redConeVision;
+    private FtcEocvColorBlobProcessor redConeProcessor;
+    public FtcVisionEocvColorBlob blueConeVision;
+    private FtcEocvColorBlobProcessor blueConeProcessor;
+    public FtcVisionTensorFlow tensorFlowVision;
+    private TfodProcessor tensorFlowProcessor;
+    private final VisionPortal visionPortal;
 
     /**
      * Constructor: Create an instance of the object. Vision is required by both Vuforia and TensorFlow and must be
@@ -62,74 +98,154 @@ public class Vision
      * them by calling the initVuforia or initTensorFlow methods respectively.
      *
      * @param robot specifies the robot object.
+     * @param tracer specifies the tracer for trace info, null if none provided.
      */
-    public Vision(Robot robot)
+    public Vision(Robot robot, TrcDbgTrace tracer)
     {
         FtcOpMode opMode = FtcOpMode.getInstance();
-        int cameraViewId = opMode.hardwareMap.appContext.getResources().getIdentifier(
-                "cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
 
         this.robot = robot;
-        if (RobotParams.Preferences.useEasyOpenCV)
+        if (RobotParams.Preferences.useAprilTagVision)
         {
-            OpenCvWebcam webcam;
-
-            if (RobotParams.Preferences.showEasyOpenCvView)
-            {
-                webcam = OpenCvCameraFactory.getInstance().createWebcam(
-                    opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM), cameraViewId);
-                webcam.showFpsMeterOnViewport(false);
-            }
-            else
-            {
-                webcam = OpenCvCameraFactory.getInstance().createWebcam(
-                    opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM));
-            }
-            // EOCV sometimes timed out on opening the camera. The default timeout was 2 seconds. It seems setting
-            // it to 5 seconds would do wonder here.
-            webcam.setMillisecondsPermissionTimeout(RobotParams.WEBCAM_PERMISSION_TIMEOUT);
-
-            robot.globalTracer.traceInfo("Vision", "Starting EocvVision...");
-            eocvVision = new EocvVision(
-                "eocvVision", RobotParams.WEBCAM_IMAGE_WIDTH, RobotParams.WEBCAM_IMAGE_HEIGHT,
-                RobotParams.cameraRect, RobotParams.worldRect, webcam, OpenCvCameraRotation.UPRIGHT, null);
+            robot.globalTracer.traceInfo(moduleName, "Starting AprilTagVision...");
+            FtcVisionAprilTag.Parameters aprilTagParams = new FtcVisionAprilTag.Parameters()
+                .setDrawTagIdEnabled(true)
+                .setDrawTagOutlineEnabled(true)
+                .setDrawAxesEnabled(false)
+                .setDrawCubeProjectionEnabled(false)
+                .setLensIntrinsics(
+                    RobotParams.WEBCAM_FX, RobotParams.WEBCAM_FY, RobotParams.WEBCAM_CX, RobotParams.WEBCAM_CY)
+                .setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES);
+            aprilTagVision = new FtcVisionAprilTag(aprilTagParams, AprilTagProcessor.TagFamily.TAG_36h11, tracer);
+            aprilTagProcessor = aprilTagVision.getVisionProcessor();
         }
-        else if (RobotParams.Preferences.useVuforia || RobotParams.Preferences.useTensorFlow)
+
+        if (RobotParams.Preferences.useColorBlobVision)
         {
-            final String VUFORIA_LICENSE_KEY =
-                "ARbBwjf/////AAABmZijKPKUWEY+uNSzCuTOUFgm7Gr5irDO55gtIOjsOXmhLzLEILJp45qdPrwMfoBV2Yh7F+Wh8iEjnSA" +
-                "NnnRKiJNHy1T9Pr2uufETE40YJth10Twv0sTNSEqxDPhg2t4PJXwRImMaEsTE53fmcm08jT9qMso2+1h9eNk2b4x6DVKgBt" +
-                "Tv5wocDs949Gkh6lRt5rAxATYYO9esmyKyfyzfFLMMpfq7/uvQQrSibNBqa13hJRmmHoM2v0Gfk8TCTTfP044/XsOm54u8k" +
-                "dv0HfeMBC91uQ/NvWHVV5XCh8pZAzmL5sry1YwG8FSRNVlSAZ1zN/m6jAe98q6IxpwQxP0da/TpJoqDI7x4RGjOs1Areunf";
-            //
-            // If no camera view ID, do not activate camera monitor view to save power.
-            //
-            VuforiaLocalizer.Parameters vuforiaParams =
-                RobotParams.Preferences.showVuforiaView?
-                    new VuforiaLocalizer.Parameters(cameraViewId): new VuforiaLocalizer.Parameters();
-
-            vuforiaParams.vuforiaLicenseKey = VUFORIA_LICENSE_KEY;
-            vuforiaParams.cameraName = opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM);
-            vuforiaParams.useExtendedTracking = false;
-            vuforiaParams.cameraMonitorFeedback = VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
-            FtcVuforia vuforia = new FtcVuforia(vuforiaParams);
-
-            vuforiaVision = RobotParams.Preferences.useVuforia? new VuforiaVision(vuforia, robot.blinkin): null;
-            tensorFlowVision = RobotParams.Preferences.useTensorFlow? new TensorFlowVision(vuforia, null): null;
+            robot.globalTracer.traceInfo(moduleName, "Starting ColorBlobVision...");
+            redConeVision = new FtcVisionEocvColorBlob(
+                "RedCone", colorConversion, redConeColorThresholds, redConeFilterContourParams,
+                RobotParams.cameraRect, RobotParams.worldRect, tracer);
+            redConeProcessor = redConeVision.getVisionProcessor();
+            blueConeVision = new FtcVisionEocvColorBlob(
+                "BlueCone", colorConversion, blueConeColorThresholds, blueConeFilterContourParams,
+                RobotParams.cameraRect, RobotParams.worldRect, tracer);
+            blueConeProcessor = blueConeVision.getVisionProcessor();
         }
+
+        if (RobotParams.Preferences.useTensorFlowVision)
+        {
+            robot.globalTracer.traceInfo(moduleName, "Starting TensorFlowVision...");
+            tensorFlowVision = new FtcVisionTensorFlow(
+                null, TFOD_MODEL_ASSET, TARGET_LABELS, RobotParams.cameraRect, RobotParams.worldRect, tracer);
+            tensorFlowVision.getVisionProcessor().setMinResultConfidence(TFOD_MIN_CONFIDENCE);
+            tensorFlowProcessor = tensorFlowVision.getVisionProcessor();
+        }
+
+        VisionPortal.Builder builder = new VisionPortal.Builder();
+        // Set the camera (webcam vs. built-in RC phone camera).
+        if (RobotParams.Preferences.useWebCam)
+        {
+            builder.setCamera(opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM));
+        }
+        else
+        {
+            builder.setCamera(
+                RobotParams.Preferences.useBuiltinCamBack? BuiltinCameraDirection.BACK: BuiltinCameraDirection.FRONT);
+        }
+        builder.setCameraResolution(new Size(RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT));
+
+        if (RobotParams.Preferences.showVisionView)
+        {
+            builder.enableCameraMonitoring(true);
+            builder.setAutoStopLiveView(true);
+            //Set the stream format; MJPEG uses less bandwidth than default YUY2.
+            //  builder.setStreamFormat(VisionPortal.StreamFormat.YUY2);
+        }
+        else
+        {
+            builder.enableCameraMonitoring(false);
+        }
+
+        if (aprilTagProcessor != null)
+        {
+            builder.addProcessor(aprilTagProcessor);
+        }
+
+        if (redConeProcessor != null)
+        {
+            builder.addProcessor(redConeProcessor);
+        }
+
+        if (blueConeProcessor != null)
+        {
+            builder.addProcessor(blueConeProcessor);
+        }
+
+        if (tensorFlowProcessor != null)
+        {
+            builder.addProcessor(tensorFlowProcessor);
+        }
+        // Build the Vision Portal, using the above settings.
+        visionPortal = builder.build();
+        // Disable all vision processor until they are needed.
+        setAprilTagVisionEnabled(false);
+        setRedConeVisionEnabled(false);
+        setBlueConeVisionEnabled(false);
+        setTensorFlowVisionEnabled(false);
     }   //Vision
 
-    /**
-     * This method shuts down TensorFlow.
-     */
-    public void tensorFlowShutdown()
+    public void setAprilTagVisionEnabled(boolean enabled)
     {
-        if (tensorFlowVision != null)
+        if (aprilTagProcessor != null)
         {
-            tensorFlowVision.shutdown();
-            tensorFlowVision = null;
+            visionPortal.setProcessorEnabled(aprilTagProcessor, enabled);
         }
-    }   //tensorFlowShutdown
+    }   //setAprilTagVisionEnabled
+
+    public void setRedConeVisionEnabled(boolean enabled)
+    {
+        if (redConeProcessor != null)
+        {
+            visionPortal.setProcessorEnabled(redConeProcessor, enabled);
+        }
+    }   //setRedConeVisionEnabled
+
+    public void setBlueConeVisionEnabled(boolean enabled)
+    {
+        if (redConeProcessor != null)
+        {
+            visionPortal.setProcessorEnabled(blueConeProcessor, enabled);
+        }
+    }   //setBlueConeVisionEnabled
+
+    public void setTensorFlowVisionEnabled(boolean enabled)
+    {
+        if (tensorFlowProcessor != null)
+        {
+            visionPortal.setProcessorEnabled(tensorFlowProcessor, enabled);
+        }
+    }   //setTensorFlowVisionEnabled
+
+    public boolean isAprilTagVisionEabled()
+    {
+        return aprilTagProcessor != null && visionPortal.getProcessorEnabled(aprilTagProcessor);
+    }   //isAprilTagVisionEnabled
+
+    public boolean isRedConeVisionEabled()
+    {
+        return redConeProcessor != null && visionPortal.getProcessorEnabled(redConeProcessor);
+    }   //isRedConeVisionEnabled
+
+    public boolean isBlueConeVisionEabled()
+    {
+        return blueConeProcessor != null && visionPortal.getProcessorEnabled(blueConeProcessor);
+    }   //isBlueConeVisionEnabled
+
+    public boolean isTensorFlowVisionEabled()
+    {
+        return tensorFlowProcessor != null && visionPortal.getProcessorEnabled(tensorFlowProcessor);
+    }   //isTensorFlowVisionEnabled
 
     /**
      * This method updates the LED state to show the vision detected object.
@@ -156,7 +272,7 @@ public class Vision
      *         if a has lower confidence than b.
      */
     private int compareConfidence(
-        TrcVisionTargetInfo<FtcTensorFlow.DetectedObject> a, TrcVisionTargetInfo<FtcTensorFlow.DetectedObject> b)
+        TrcVisionTargetInfo<FtcVisionTensorFlow.DetectedObject> a, TrcVisionTargetInfo<FtcVisionTensorFlow.DetectedObject> b)
     {
         return (int)((b.detectedObj.confidence - a.detectedObj.confidence)*100);
     }   //compareConfidence
