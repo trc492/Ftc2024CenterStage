@@ -167,6 +167,15 @@ public class FtcTeleOp extends FtcOpMode
                 robot.dashboard.displayPrintf(
                     1, "Pose:%s,x=%.2f,y=%.2f,rot=%.2f",
                     robot.robotDrive.driveBase.getFieldPosition(), inputs[0], inputs[1], inputs[2]);
+//                double power = driverGamepad.getRightTrigger(true) - driverGamepad.getLeftTrigger(true);
+//                SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
+//                for (int i = 0; i < swerveDrive.steerServos.length; i++)
+//                {
+//                    swerveDrive.driveMotors[i].setPower(power);
+////                    swerveDrive.steerServos[i].setPower(power);
+////                    robot.dashboard.displayPrintf(2 + i, "%s: pos=%.1f", swerveDrive.steerServos[i],
+////                                                  swerveDrive.steerServos[i].getPosition());
+//                }
             }
             //
             // Other subsystems.

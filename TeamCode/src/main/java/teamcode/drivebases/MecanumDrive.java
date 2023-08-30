@@ -22,12 +22,12 @@
 
 package teamcode.drivebases;
 
+import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcDriveBaseOdometry;
 import TrcCommonLib.trclib.TrcMecanumDriveBase;
 import TrcCommonLib.trclib.TrcPidController;
 import TrcCommonLib.trclib.TrcPidDrive;
 import TrcCommonLib.trclib.TrcPurePursuitDrive;
-import teamcode.Robot;
 import teamcode.RobotParams;
 
 /**
@@ -41,10 +41,8 @@ public class MecanumDrive extends RobotDrive
 
     /**
      * Constructor: Create an instance of the object.
-     *
-     * @param robot specifies the robot object.
      */
-    public MecanumDrive(Robot robot)
+    public MecanumDrive()
     {
         super();
 
@@ -83,6 +81,7 @@ public class MecanumDrive extends RobotDrive
         //
         // Create and initialize PID controllers.
         //
+        TrcDbgTrace tracer = TrcDbgTrace.getGlobalTracer();
         TrcPidController.PidParameters xPosPidParams = new TrcPidController.PidParameters(
             RobotParams.xPosPidCoeff, RobotParams.XPOS_TOLERANCE, driveBase::getXPosition);
         TrcPidController.PidParameters yPosPidParams = new TrcPidController.PidParameters(
@@ -104,14 +103,14 @@ public class MecanumDrive extends RobotDrive
         // AbsoluteTargetMode eliminates cumulative errors on multi-segment runs because drive base is keeping track
         // of the absolute target position.
         pidDrive.setAbsoluteTargetModeEnabled(true);
-        pidDrive.setMsgTracer(robot.globalTracer, logPoseEvents, tracePidInfo);
+        pidDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
 
         purePursuitDrive = new TrcPurePursuitDrive(
             "purePursuitDrive", driveBase,
             RobotParams.PPD_FOLLOWING_DISTANCE, RobotParams.PPD_POS_TOLERANCE, RobotParams.PPD_TURN_TOLERANCE,
             RobotParams.xPosPidCoeff, RobotParams.yPosPidCoeff, RobotParams.turnPidCoeff, RobotParams.velPidCoeff);
         purePursuitDrive.setFastModeEnabled(true);
-        purePursuitDrive.setMsgTracer(robot.globalTracer, logPoseEvents, tracePidInfo);
+        purePursuitDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
     }   //MecanumDrive
 
 }   //class MecanumDrive

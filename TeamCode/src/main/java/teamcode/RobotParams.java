@@ -83,8 +83,8 @@ public class RobotParams
     public static final String HWNAME_RFSTEER_SERVO             = "rfSteerServo";
     public static final String HWNAME_LBSTEER_SERVO             = "lbSteerServo";
     public static final String HWNAME_RBSTEER_SERVO             = "rbSteerServo";
-    public static final String HWNAME_LODO_DEPLOYER             = "lOdoServo";
-    public static final String HWNAME_RODO_DEPLOYER             = "rOdoServo";
+    public static final String HWNAME_LODO_SERVO                = "lOdoServo";
+    public static final String HWNAME_RODO_SERVO                = "rOdoServo";
     public static final String HWNAME_LFSTEER_ENCODER           = "lfSteerEncoder";
     public static final String HWNAME_RFSTEER_ENCODER           = "rfSteerEncoder";
     public static final String HWNAME_LBSTEER_ENCODER           = "lbSteerEncoder";
@@ -174,19 +174,20 @@ public class RobotParams
     public static final double LBSTEER_ZERO_POS                 = 0.022;
     public static final double RBSTEER_ZERO_POS                 = 0.268;
 
-    public static final boolean LFDRIVE_INVERTED                = false;
-    public static final boolean RFDRIVE_INVERTED                = false;
-    public static final boolean LBDRIVE_INVERTED                = false;
+    public static final boolean LFDRIVE_INVERTED                = true;
+    public static final boolean RFDRIVE_INVERTED                = true;
+    public static final boolean LBDRIVE_INVERTED                = true;
     public static final boolean RBDRIVE_INVERTED                = false;
-    public static final boolean LFSTEER_INVERTED                = false;
-    public static final boolean RFSTEER_INVERTED                = false;
-    public static final boolean LBSTEER_INVERTED                = false;
-    public static final boolean RBSTEER_INVERTED                = false;
-    public static final double STEER_SERVO_KP                   = 1.0;
-    public static final double STEER_SERVO_KI                   = 0.0;
-    public static final double STEER_SERVO_KD                   = 0.0;
+    public static final boolean LFSTEER_INVERTED                = true;
+    public static final boolean RFSTEER_INVERTED                = true;
+    public static final boolean LBSTEER_INVERTED                = true;
+    public static final boolean RBSTEER_INVERTED                = true;
+    public static final double STEER_SERVO_KP                   = 0.01;
+    public static final double STEER_SERVO_KI                   = 0.01;
+    public static final double STEER_SERVO_KD                   = 0.01;
     public static final double STEER_SERVO_KF                   = 0.0;
-    public static final double STEER_SERVO_TOLERANCE            = 0.2;
+    public static final double STEER_SERVO_IZONE                = 15.0;
+    public static final double STEER_SERVO_TOLERANCE            = 0.5;
 
     public static final DcMotor.RunMode DRIVE_MOTOR_MODE        = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
     public static final TrcPidController.PidCoefficients DRIVE_POSPID_COEFFS =

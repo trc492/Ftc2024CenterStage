@@ -39,7 +39,6 @@ import TrcCommonLib.trclib.TrcSwerveModule;
 import TrcFtcLib.ftclib.FtcAnalogEncoder;
 import TrcFtcLib.ftclib.FtcCRServo;
 import TrcFtcLib.ftclib.FtcDcMotor;
-import teamcode.Robot;
 import teamcode.RobotParams;
 
 /**
@@ -48,9 +47,11 @@ import teamcode.RobotParams;
  */
 public class SwerveDrive extends RobotDrive
 {
+    private static final boolean debugEnabled = false;
     private static final boolean logPoseEvents = false;
     private static final boolean tracePidInfo = false;
 
+    private final TrcDbgTrace tracer = TrcDbgTrace.getGlobalTracer();
     private final String[] steerEncoderNames = {
         RobotParams.HWNAME_LFSTEER_ENCODER, RobotParams.HWNAME_RFSTEER_ENCODER,
         RobotParams.HWNAME_LBSTEER_ENCODER, RobotParams.HWNAME_RBSTEER_ENCODER};
@@ -74,10 +75,8 @@ public class SwerveDrive extends RobotDrive
 
     /**
      * Constructor: Create an instance of the object.
-     *
-     * @param robot specifies the robot object.
      */
-    public SwerveDrive(Robot robot)
+    public SwerveDrive()
     {
         super();
 
@@ -144,14 +143,14 @@ public class SwerveDrive extends RobotDrive
         // AbsoluteTargetMode eliminates cumulative errors on multi-segment runs because drive base is keeping track
         // of the absolute target position.
         pidDrive.setAbsoluteTargetModeEnabled(true);
-        pidDrive.setMsgTracer(robot.globalTracer, logPoseEvents, tracePidInfo);
+        pidDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
 
         purePursuitDrive = new TrcPurePursuitDrive(
             "purePursuitDrive", driveBase,
             RobotParams.PPD_FOLLOWING_DISTANCE, RobotParams.PPD_POS_TOLERANCE, RobotParams.PPD_TURN_TOLERANCE,
             RobotParams.xPosPidCoeff, RobotParams.yPosPidCoeff, RobotParams.turnPidCoeff, RobotParams.velPidCoeff);
         purePursuitDrive.setFastModeEnabled(true);
-        purePursuitDrive.setMsgTracer(robot.globalTracer, logPoseEvents, tracePidInfo);
+        purePursuitDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
     }   //SwerveDrive
 
     /**
@@ -193,10 +192,15 @@ public class SwerveDrive extends RobotDrive
         {
             servos[i] = new FtcCRServo(servoNames[i], encoders[i]);
             servos[i].setMotorInverted(inverted[i]);
+            servos[i].setSoftwarePidEnabled(true);
             servos[i].setPositionPidCoefficients(
                 RobotParams.STEER_SERVO_KP, RobotParams.STEER_SERVO_KI,
-                RobotParams.STEER_SERVO_KD, RobotParams.STEER_SERVO_KF);
+                RobotParams.STEER_SERVO_KD, RobotParams.STEER_SERVO_KF, RobotParams.STEER_SERVO_IZONE);
             servos[i].setPositionPidTolerance(RobotParams.STEER_SERVO_TOLERANCE);
+            if (debugEnabled && servos[i].toString().startsWith("lf"))
+            {
+                servos[i].setMsgTracer(tracer, true, null);
+            }
         }
 
         return servos;
@@ -232,9 +236,9 @@ public class SwerveDrive extends RobotDrive
      */
     public void setSteerAngle(double angle, boolean optimize, boolean hold)
     {
-        for (int i = 0; i < swerveModules.length; i++)
+        for (TrcSwerveModule module: swerveModules)
         {
-            swerveModules[i].setSteerAngle(angle, optimize, hold);
+            module.setSteerAngle(angle, optimize, hold);
         }
     }   //setSteerAngle
 
