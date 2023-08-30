@@ -174,16 +174,21 @@ public class RobotParams
     public static final double LBSTEER_ZERO_POS                 = 0.022;
     public static final double RBSTEER_ZERO_POS                 = 0.268;
 
-    public static final boolean LFDRIVE_INVERTED                = true;
-    public static final boolean RFDRIVE_INVERTED                = true;
-    public static final boolean LBDRIVE_INVERTED                = true;
-    public static final boolean RBDRIVE_INVERTED                = true;
+    public static final boolean LFDRIVE_INVERTED                = false;
+    public static final boolean RFDRIVE_INVERTED                = false;
+    public static final boolean LBDRIVE_INVERTED                = false;
+    public static final boolean RBDRIVE_INVERTED                = false;
     public static final boolean LFSTEER_INVERTED                = false;
     public static final boolean RFSTEER_INVERTED                = false;
     public static final boolean LBSTEER_INVERTED                = false;
     public static final boolean RBSTEER_INVERTED                = false;
+    public static final double STEER_SERVO_KP                   = 1.0;
+    public static final double STEER_SERVO_KI                   = 0.0;
+    public static final double STEER_SERVO_KD                   = 0.0;
+    public static final double STEER_SERVO_KF                   = 0.0;
+    public static final double STEER_SERVO_TOLERANCE            = 0.2;
 
-    public static final DcMotor.RunMode DRIVE_MOTOR_MODE        = DcMotor.RunMode.RUN_USING_ENCODER;
+    public static final DcMotor.RunMode DRIVE_MOTOR_MODE        = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
     public static final TrcPidController.PidCoefficients DRIVE_POSPID_COEFFS =
         new TrcPidController.PidCoefficients(0.0, 0.0, 0.0, 1.0);
     public static final TrcPidController.PidCoefficients DRIVE_VELPID_COEFFS =

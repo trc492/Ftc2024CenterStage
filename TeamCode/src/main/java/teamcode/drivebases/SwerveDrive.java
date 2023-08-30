@@ -193,6 +193,10 @@ public class SwerveDrive extends RobotDrive
         {
             servos[i] = new FtcCRServo(servoNames[i], encoders[i]);
             servos[i].setMotorInverted(inverted[i]);
+            servos[i].setPositionPidCoefficients(
+                RobotParams.STEER_SERVO_KP, RobotParams.STEER_SERVO_KI,
+                RobotParams.STEER_SERVO_KD, RobotParams.STEER_SERVO_KF);
+            servos[i].setPositionPidTolerance(RobotParams.STEER_SERVO_TOLERANCE);
         }
 
         return servos;
@@ -215,13 +219,24 @@ public class SwerveDrive extends RobotDrive
         {
             modules[i] = new TrcSwerveModule(moduleNames[i], driveMotors[i], steerServos[i]);
         }
-//        lfSwerveModule.setSteeringLimits(RobotParams.STEER_LOW_LIMIT, RobotParams.STEER_HIGH_LIMIT);
-//        rfSwerveModule.setSteeringLimits(RobotParams.STEER_LOW_LIMIT, RobotParams.STEER_HIGH_LIMIT);
-//        lbSwerveModule.setSteeringLimits(RobotParams.STEER_LOW_LIMIT, RobotParams.STEER_HIGH_LIMIT);
-//        rbSwerveModule.setSteeringLimits(RobotParams.STEER_LOW_LIMIT, RobotParams.STEER_HIGH_LIMIT);
 
         return modules;
     }   //createSwerveModules
+
+    /**
+     * This method sets the steering angle of all swerve modules.
+     *
+     * @param angle specifies the steer angle.
+     * @param optimize specifies true to optimize (only turns within +/- 90 degrees), false otherwse.
+     * @param hold specifies true to hold the angle, false otherwise.
+     */
+    public void setSteerAngle(double angle, boolean optimize, boolean hold)
+    {
+        for (int i = 0; i < swerveModules.length; i++)
+        {
+            swerveModules[i].setSteerAngle(angle, optimize, hold);
+        }
+    }   //setSteerAngle
 
     /**
      * This method checks if anti-defense mode is enabled.
@@ -302,7 +317,9 @@ public class SwerveDrive extends RobotDrive
                 out.printf("%s: %f\n", steerServoNames[i], zeroPositions[i]);
             }
             out.close();
-            TrcDbgTrace.getGlobalTracer().traceInfo(funcName, "Saved steering calibration data!");
+            TrcDbgTrace.getGlobalTracer().traceInfo(
+                funcName, "SteeringCalibrationData%s=%s",
+                Arrays.toString(steerServoNames), Arrays.toString(zeroPositions));
         }
         catch (FileNotFoundException e)
         {
@@ -336,9 +353,6 @@ public class SwerveDrive extends RobotDrive
                 }
 
                 zeroPositions[i] = Double.parseDouble(line.substring(colonPos + 1));
-
-                tracer.traceInfo(
-                    funcName, "SteeringCalibrationData[%s]: %f", steerServoNames[i], zeroPositions[i]);
             }
         }
         catch (FileNotFoundException e)
@@ -353,6 +367,9 @@ public class SwerveDrive extends RobotDrive
         {
             tracer.traceErr(funcName, "Invalid servo name in line %s", line);
         }
+
+        tracer.traceInfo(
+            funcName, "SteeringCalibrationData%s=%s", Arrays.toString(steerServoNames), Arrays.toString(zeroPositions));
     }   //readSteeringCalibrationData
 
 }   //class SwerveDrive

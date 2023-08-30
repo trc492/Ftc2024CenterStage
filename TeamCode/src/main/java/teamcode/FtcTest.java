@@ -585,15 +585,47 @@ public class FtcTest extends FtcTeleOp
                     break;
 
                 case FtcGamepad.GAMEPAD_DPAD_UP:
+                    if (testChoices.test == Test.SUBSYSTEMS_TEST)
+                    {
+                        if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
+                        {
+                            SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
+                            swerveDrive.setSteerAngle(0.0, true, true);
+                        }
+                    }
                     break;
 
                 case FtcGamepad.GAMEPAD_DPAD_DOWN:
+                    if (testChoices.test == Test.SUBSYSTEMS_TEST)
+                    {
+                        if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
+                        {
+                            SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
+                            swerveDrive.setSteerAngle(180.0, true, true);
+                        }
+                    }
                     break;
 
                 case FtcGamepad.GAMEPAD_DPAD_LEFT:
+                    if (testChoices.test == Test.SUBSYSTEMS_TEST)
+                    {
+                        if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
+                        {
+                            SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
+                            swerveDrive.setSteerAngle(270.0, true, true);
+                        }
+                    }
                     break;
 
                 case FtcGamepad.GAMEPAD_DPAD_RIGHT:
+                    if (testChoices.test == Test.SUBSYSTEMS_TEST)
+                    {
+                        if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
+                        {
+                            SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
+                            swerveDrive.setSteerAngle(90.0, true, true);
+                        }
+                    }
                     break;
             }
             //
