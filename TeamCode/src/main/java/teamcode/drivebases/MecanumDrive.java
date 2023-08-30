@@ -48,12 +48,11 @@ public class MecanumDrive extends RobotDrive
     {
         super();
 
-        lfDriveMotor = createDriveMotor(RobotParams.HWNAME_LFDRIVE_MOTOR, RobotParams.LEFT_WHEEL_INVERTED);
-        lbDriveMotor = createDriveMotor(RobotParams.HWNAME_LBDRIVE_MOTOR, RobotParams.LEFT_WHEEL_INVERTED);
-        rfDriveMotor = createDriveMotor(RobotParams.HWNAME_RFDRIVE_MOTOR, RobotParams.RIGHT_WHEEL_INVERTED);
-        rbDriveMotor = createDriveMotor(RobotParams.HWNAME_RBDRIVE_MOTOR, RobotParams.RIGHT_WHEEL_INVERTED);
+        driveMotors = createDriveMotors(driveMotorNames, driveMotorInverted);
 
-        driveBase = new TrcMecanumDriveBase(lfDriveMotor, lbDriveMotor, rfDriveMotor, rbDriveMotor, gyro);
+        driveBase = new TrcMecanumDriveBase(
+            driveMotors[INDEX_LEFT_FRONT], driveMotors[INDEX_LEFT_BACK],
+            driveMotors[INDEX_RIGHT_FRONT], driveMotors[INDEX_RIGHT_BACK], gyro);
 
         if (RobotParams.Preferences.useExternalOdometry)
         {
@@ -63,10 +62,12 @@ public class MecanumDrive extends RobotDrive
             // odometry.
             //
             TrcDriveBaseOdometry driveBaseOdometry = new TrcDriveBaseOdometry(
-                new TrcDriveBaseOdometry.AxisSensor(rbDriveMotor, RobotParams.X_ODOMETRY_WHEEL_OFFSET),
+                new TrcDriveBaseOdometry.AxisSensor(driveMotors[INDEX_RIGHT_BACK], RobotParams.X_ODOMETRY_WHEEL_OFFSET),
                 new TrcDriveBaseOdometry.AxisSensor[] {
-                    new TrcDriveBaseOdometry.AxisSensor(lfDriveMotor, RobotParams.Y_LEFT_ODOMETRY_WHEEL_OFFSET),
-                    new TrcDriveBaseOdometry.AxisSensor(rfDriveMotor, RobotParams.Y_RIGHT_ODOMETRY_WHEEL_OFFSET)},
+                    new TrcDriveBaseOdometry.AxisSensor(
+                        driveMotors[INDEX_LEFT_FRONT], RobotParams.Y_LEFT_ODOMETRY_WHEEL_OFFSET),
+                    new TrcDriveBaseOdometry.AxisSensor(
+                        driveMotors[INDEX_RIGHT_FRONT], RobotParams.Y_RIGHT_ODOMETRY_WHEEL_OFFSET)},
                 gyro);
             //
             // Set the drive base to use the external odometry device overriding the built-in one.

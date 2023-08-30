@@ -59,7 +59,7 @@ public class RobotParams
         public static boolean useExternalOdometry = false;
         public static boolean useVelocityControl = false;
         // Subsystems
-        public static boolean initSubsystems = false;
+        public static boolean useSubsystems = false;
     }   //class Preferences
 
     public static final String ROBOT_NAME                       = "Robot3543";
@@ -83,6 +83,8 @@ public class RobotParams
     public static final String HWNAME_RFSTEER_SERVO             = "rfSteerServo";
     public static final String HWNAME_LBSTEER_SERVO             = "lbSteerServo";
     public static final String HWNAME_RBSTEER_SERVO             = "rbSteerServo";
+    public static final String HWNAME_LODO_DEPLOYER             = "lOdoServo";
+    public static final String HWNAME_RODO_DEPLOYER             = "rOdoServo";
     public static final String HWNAME_LFSTEER_ENCODER           = "lfSteerEncoder";
     public static final String HWNAME_RFSTEER_ENCODER           = "rfSteerEncoder";
     public static final String HWNAME_LBSTEER_ENCODER           = "lbSteerEncoder";
@@ -167,16 +169,10 @@ public class RobotParams
     //
     // DriveBase subsystem.
     //
-    public static final double STEER_LOW_LIMIT                  = -90.0;
-    public static final double STEER_HIGH_LIMIT                 = 90.0;
-    public static final double LFSTEER_MINUS90                  = 0.20;
-    public static final double LFSTEER_PLUS90                   = 0.85;
-    public static final double RFSTEER_MINUS90                  = 0.21;
-    public static final double RFSTEER_PLUS90                   = 0.87;
-    public static final double LBSTEER_MINUS90                  = 0.26;
-    public static final double LBSTEER_PLUS90                   = 0.94;
-    public static final double RBSTEER_MINUS90                  = 0.18;
-    public static final double RBSTEER_PLUS90                   = 0.85;
+    public static final double LFSTEER_ZERO_POS                 = 0.538;
+    public static final double RFSTEER_ZERO_POS                 = 0.046;
+    public static final double LBSTEER_ZERO_POS                 = 0.022;
+    public static final double RBSTEER_ZERO_POS                 = 0.268;
 
     public static final boolean LFDRIVE_INVERTED                = true;
     public static final boolean RFDRIVE_INVERTED                = true;
@@ -193,14 +189,17 @@ public class RobotParams
     public static final TrcPidController.PidCoefficients DRIVE_VELPID_COEFFS =
         new TrcPidController.PidCoefficients(1.0, 0.0, 0.0, 0.0);
     public static final boolean DRIVE_WHEEL_BRAKE_MODE_ON       = true;
-    public static final boolean LEFT_WHEEL_INVERTED             = true;
+    public static final boolean LEFT_WHEEL_INVERTED             = false;
     public static final boolean RIGHT_WHEEL_INVERTED            = false;
     public static final double TURN_POWER_LIMIT                 = 0.5;
-    public static final double SLOW_DRIVE_POWER_SCALE           = 0.5;
+    public static final double DRIVE_POWER_SCALE_SLOW           = 0.5;
+    public static final double DRIVE_POWER_SCALE_NORMAL         = 1.0;
+    public static final double TURN_POWER_SCALE_SLOW            = 0.5;
+    public static final double TURN_POWER_SCALE_NORMAL          = 1.0;
     public static final double X_ODOMETRY_WHEEL_OFFSET          = ROBOT_LENGTH/2.0 - (3.875 + 9.5); //behind centroid
     public static final double Y_LEFT_ODOMETRY_WHEEL_OFFSET     = -15.25/2.0;
     public static final double Y_RIGHT_ODOMETRY_WHEEL_OFFSET    = 15.25/2.0;
-    public static final FtcGamepad.DriveMode ROBOT_DRIVE_MODE   = FtcGamepad.DriveMode.ARCADE_MODE;
+    public static final FtcGamepad.DriveMode ROBOT_DRIVE_MODE   = FtcGamepad.DriveMode.HOLONOMIC_MODE;
     //
     // Velocity controlled constants.
     //

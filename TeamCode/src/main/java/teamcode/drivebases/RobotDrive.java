@@ -40,6 +40,16 @@ import teamcode.RobotParams;
  */
 public class RobotDrive
 {
+    public static final int INDEX_LEFT_FRONT = 0;
+    public static final int INDEX_RIGHT_FRONT = 1;
+    public static final int INDEX_LEFT_BACK = 2;
+    public static final int INDEX_RIGHT_BACK = 3;
+    protected final String[] driveMotorNames = {
+        RobotParams.HWNAME_LFDRIVE_MOTOR, RobotParams.HWNAME_RFDRIVE_MOTOR,
+        RobotParams.HWNAME_LBDRIVE_MOTOR, RobotParams.HWNAME_RBDRIVE_MOTOR};
+    protected final boolean[] driveMotorInverted = {
+        RobotParams.LFDRIVE_INVERTED, RobotParams.RFDRIVE_INVERTED,
+        RobotParams.LBDRIVE_INVERTED, RobotParams.RBDRIVE_INVERTED};
     //
     // Sensors.
     //
@@ -49,7 +59,7 @@ public class RobotDrive
     // Subclass needs to initialize the following variables.
     //
     // Drive motors.
-    public FtcDcMotor lfDriveMotor, lbDriveMotor, rfDriveMotor, rbDriveMotor;
+    public FtcDcMotor[] driveMotors;
     // Drive Base.
     public TrcDriveBase driveBase;
     // Drive Controllers.
@@ -85,30 +95,32 @@ public class RobotDrive
     }   //cancel
 
     /**
-     * This method creates and configures a drive motor.
+     * This method creates and configures all drive motors.
      *
-     * @param name specifies the hardware name of the drive motor to be created.
-     * @param inverted specifies true to configure the motor inverted, false otherwise.
-     * @return created drive motor.
+     * @param motorNames specifies an array of names for each drive motor.
+     * @param inverted specifies an array of boolean indicating if the drive motor needs to be inverted.
+     * @return an array of created drive motors.
      */
-    protected FtcDcMotor createDriveMotor(String name, boolean inverted)
+    protected FtcDcMotor[] createDriveMotors(String[] motorNames, boolean[] inverted)
     {
-        FtcDcMotor driveMotor = new FtcDcMotor(name);
+        FtcDcMotor[] motors = new FtcDcMotor[motorNames.length];
 
-        driveMotor.motor.setMode(RobotParams.DRIVE_MOTOR_MODE);
-        driveMotor.setVelocityPidCoefficients(RobotParams.DRIVE_VELPID_COEFFS);
-        driveMotor.setPositionPidCoefficients(RobotParams.DRIVE_POSPID_COEFFS);
-        driveMotor.setBrakeModeEnabled(RobotParams.DRIVE_WHEEL_BRAKE_MODE_ON);
-        driveMotor.setMotorInverted(inverted);
-
-        if (RobotParams.Preferences.useVelocityControl)
+        for (int i = 0; i < motorNames.length; i++)
         {
-            // TODO: pidCoeff must not be null.
-//            driveMotor.enableVelocityMode(RobotParams.DRIVE_MOTOR_MAX_VELOCITY_PPS, null, false);
+            motors[i] = new FtcDcMotor(motorNames[i]);
+            motors[i].setVelocityPidCoefficients(RobotParams.DRIVE_VELPID_COEFFS);
+            motors[i].setPositionPidCoefficients(RobotParams.DRIVE_POSPID_COEFFS);
+            motors[i].setBrakeModeEnabled(RobotParams.DRIVE_WHEEL_BRAKE_MODE_ON);
+            motors[i].setMotorInverted(inverted[i]);
         }
 
-        return driveMotor;
-    }   //createDriveMotor
+        return motors;
+//        if (RobotParams.Preferences.useVelocityControl)
+//        {
+//            // TODO: pidCoeff must not be null.
+//            driveMotor.enableVelocityMode(RobotParams.DRIVE_MOTOR_MAX_VELOCITY_PPS, null, false);
+//        }
+    }   //createDriveMotors
 
     /**
      * This method creates a TrcPose2D point in the target path for PurePursuitDrive.

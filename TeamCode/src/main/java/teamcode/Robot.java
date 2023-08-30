@@ -124,7 +124,7 @@ public class Robot
             //
             // Create and initialize other subsystems.
             //
-            if (RobotParams.Preferences.initSubsystems)
+            if (RobotParams.Preferences.useSubsystems)
             {
             }
         }
