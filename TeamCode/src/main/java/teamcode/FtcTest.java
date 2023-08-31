@@ -124,6 +124,7 @@ public class FtcTest extends FtcTeleOp
     private double prevVelocity = 0.0;
 
     private boolean steerCalibrating = false;
+    private boolean teleOpControlEnabled = true;
 
     //
     // Overrides FtcOpMode abstract method.
@@ -554,8 +555,8 @@ public class FtcTest extends FtcTeleOp
                                 // Stop steer calibration.
                                 swerveDrive.stopSteeringCalibration();
                             }
-                            processed = true;
                         }
+                        processed = true;
                     }
                     break;
 
@@ -590,8 +591,10 @@ public class FtcTest extends FtcTeleOp
                         if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
                         {
                             SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
-                            swerveDrive.setSteerAngle(0.0, true, true);
+                            swerveDrive.setSteerAngle(0.0, false, true);
                         }
+                        teleOpControlEnabled = !pressed;
+                        processed = true;
                     }
                     break;
 
@@ -601,8 +604,10 @@ public class FtcTest extends FtcTeleOp
                         if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
                         {
                             SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
-                            swerveDrive.setSteerAngle(180.0, true, true);
+                            swerveDrive.setSteerAngle(180.0, false, true);
                         }
+                        teleOpControlEnabled = !pressed;
+                        processed = true;
                     }
                     break;
 
@@ -612,8 +617,10 @@ public class FtcTest extends FtcTeleOp
                         if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
                         {
                             SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
-                            swerveDrive.setSteerAngle(270.0, true, true);
+                            swerveDrive.setSteerAngle(270.0, false, true);
                         }
+                        teleOpControlEnabled = !pressed;
+                        processed = true;
                     }
                     break;
 
@@ -623,8 +630,10 @@ public class FtcTest extends FtcTeleOp
                         if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
                         {
                             SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
-                            swerveDrive.setSteerAngle(90.0, true, true);
+                            swerveDrive.setSteerAngle(90.0, false, true);
                         }
+                        teleOpControlEnabled = !pressed;
+                        processed = true;
                     }
                     break;
             }
@@ -979,7 +988,7 @@ public class FtcTest extends FtcTeleOp
      */
     private boolean allowTeleOp()
     {
-        return !RobotParams.Preferences.noRobot &&
+        return teleOpControlEnabled && !RobotParams.Preferences.noRobot &&
                (testChoices.test == Test.SUBSYSTEMS_TEST || testChoices.test == Test.DRIVE_SPEED_TEST);
     }   //allowTeleOp
 
