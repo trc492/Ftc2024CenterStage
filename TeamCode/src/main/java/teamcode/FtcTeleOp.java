@@ -41,7 +41,6 @@ public class FtcTeleOp extends FtcOpMode
     protected Robot robot;
     protected FtcGamepad driverGamepad;
     protected FtcGamepad operatorGamepad;
-    private TrcDriveBase.DriveOrientation driveOrientation = TrcDriveBase.DriveOrientation.ROBOT;
     private double drivePowerScale = RobotParams.DRIVE_POWER_SCALE_NORMAL;
     private double turnPowerScale = RobotParams.TURN_POWER_SCALE_NORMAL;
     private boolean manualOverride = false;
@@ -158,7 +157,7 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     robot.robotDrive.driveBase.holonomicDrive(
                         null, inputs[0], inputs[1], inputs[2],
-                        robot.robotDrive.driveBase.getDriveGyroAngle(driveOrientation));
+                        robot.robotDrive.driveBase.getDriveGyroAngle());
                 }
                 else
                 {
@@ -193,12 +192,14 @@ public class FtcTeleOp extends FtcOpMode
      */
     private void updateDriveModeLEDs()
     {
-        if (robot.blinkin != null)
+        if (robot.blinkin != null && robot.robotDrive != null)
         {
+            TrcDriveBase.DriveOrientation orientation = robot.robotDrive.driveBase.getDriveOrientation();
+
             robot.blinkin.setPatternState(BlinkinLEDs.DRIVE_ORIENTATION_FIELD, false);
             robot.blinkin.setPatternState(BlinkinLEDs.DRIVE_ORIENTATION_ROBOT, false);
             robot.blinkin.setPatternState(BlinkinLEDs.DRIVE_ORIENTATION_INVERTED, false);
-            switch (driveOrientation)
+            switch (orientation)
             {
                 case FIELD:
                     robot.blinkin.setPatternState(BlinkinLEDs.DRIVE_ORIENTATION_FIELD, true);
@@ -229,7 +230,10 @@ public class FtcTeleOp extends FtcOpMode
     public void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
         robot.dashboard.displayPrintf(7, "%s: %04x->%s", gamepad, button, pressed? "Pressed": "Released");
-        robot.dashboard.displayPrintf(8, "Drive Mode:%s", driveOrientation);
+        if (robot.robotDrive != null)
+        {
+            robot.dashboard.displayPrintf(8, "Drive Mode:%s", robot.robotDrive.driveBase.getDriveOrientation());
+        }
 
         switch (button)
         {
@@ -251,10 +255,19 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_LBUMPER:
-                if (pressed)
+                // Toggle between field or robot oriented driving.
+                if (pressed && robot.robotDrive != null && robot.robotDrive.driveBase.supportsHolonomicDrive())
                 {
-                    // Cycle through different Drive Modes.
-                    driveOrientation = TrcDriveBase.DriveOrientation.nextDriveOrientation(driveOrientation);
+                    TrcDriveBase.DriveOrientation orientation = robot.robotDrive.driveBase.getDriveOrientation();
+                    if (orientation != TrcDriveBase.DriveOrientation.FIELD)
+                    {
+                        orientation = TrcDriveBase.DriveOrientation.FIELD;
+                    }
+                    else
+                    {
+                        orientation = TrcDriveBase.DriveOrientation.ROBOT;
+                    }
+                    robot.robotDrive.driveBase.setDriveOrientation(orientation, true);
                     updateDriveModeLEDs();
                 }
                 break;
@@ -278,6 +291,10 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_BACK:
+                if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
+                {
+                    ((SwerveDrive) robot.robotDrive).setSteerAngle(0.0, false, false);
+                }
                 break;
         }
     }   //driverButtonEvent

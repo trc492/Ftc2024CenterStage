@@ -92,6 +92,7 @@ public class SwerveDrive extends RobotDrive
             swerveModules[INDEX_LEFT_FRONT], swerveModules[INDEX_LEFT_BACK],
             swerveModules[INDEX_RIGHT_FRONT], swerveModules[INDEX_RIGHT_BACK],
             gyro, RobotParams.DRIVE_BASE_WIDTH, RobotParams.DRIVE_BASE_LENGTH);
+        driveBase.setDriveOrientation(RobotParams.DEF_DRIVE_ORIENTATION, true);
 
          if (RobotParams.Preferences.useExternalOdometry)
          {
