@@ -58,6 +58,7 @@ public class RobotParams
         // Drive Base
         public static boolean useExternalOdometry = false;
         public static boolean useVelocityControl = false;
+        public static boolean doSwervePhysicalAlignment = false;
         // Subsystems
         public static boolean useSubsystems = false;
     }   //class Preferences
@@ -169,10 +170,10 @@ public class RobotParams
     //
     // DriveBase subsystem.
     //
-    public static final double LFSTEER_ZERO_POS                 = 0.538;
-    public static final double RFSTEER_ZERO_POS                 = 0.046;
-    public static final double LBSTEER_ZERO_POS                 = 0.022;
-    public static final double RBSTEER_ZERO_POS                 = 0.268;
+    public static final double LFSTEER_ZERO_POS                 = 0.468515;
+    public static final double RFSTEER_ZERO_POS                 = 0.471726;
+    public static final double LBSTEER_ZERO_POS                 = 0.534445;
+    public static final double RBSTEER_ZERO_POS                 = 0.542605;
 
     public static final boolean LFDRIVE_INVERTED                = true;
     public static final boolean RFDRIVE_INVERTED                = true;
@@ -182,11 +183,11 @@ public class RobotParams
     public static final boolean RFSTEER_INVERTED                = true;
     public static final boolean LBSTEER_INVERTED                = true;
     public static final boolean RBSTEER_INVERTED                = true;
-    public static final double STEER_SERVO_KP                   = 0.01;
-    public static final double STEER_SERVO_KI                   = 0.01;
-    public static final double STEER_SERVO_KD                   = 0.01;
+    public static final double STEER_SERVO_KP                   = 0.015;    //0.01;
+    public static final double STEER_SERVO_KI                   = 0.0;      //0.01;
+    public static final double STEER_SERVO_KD                   = 0.0015;   //0.01;
     public static final double STEER_SERVO_KF                   = 0.0;
-    public static final double STEER_SERVO_IZONE                = 15.0;
+    public static final double STEER_SERVO_IZONE                = 0.0;      //15.0;
     public static final double STEER_SERVO_TOLERANCE            = 0.5;
 
     public static final DcMotor.RunMode DRIVE_MOTOR_MODE        = DcMotor.RunMode.RUN_WITHOUT_ENCODER;

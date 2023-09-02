@@ -82,7 +82,9 @@ public class SwerveDrive extends RobotDrive
 
         readSteeringCalibrationData();
         driveMotors = createDriveMotors(driveMotorNames, driveMotorInverted);
-        steerEncoders = createSteerEncoders(steerEncoderNames, zeroPositions);
+        steerEncoders = createSteerEncoders(
+            steerEncoderNames,
+            RobotParams.Preferences.doSwervePhysicalAlignment ? new double[] {0.0, 0.0, 0.0, 0.0} : zeroPositions);
         steerServos = createSteerServos(steerServoNames, steerServoInverted, steerEncoders);
         swerveModules = createSwerveModules(swerveModuleNames, driveMotors, steerServos);
 

@@ -935,6 +935,12 @@ public class FtcTest extends FtcTeleOp
                     swerveDrive.steerEncoders[RobotDrive.INDEX_RIGHT_FRONT].getPosition(),
                     swerveDrive.steerEncoders[RobotDrive.INDEX_LEFT_BACK].getPosition(),
                     swerveDrive.steerEncoders[RobotDrive.INDEX_RIGHT_BACK].getPosition());
+                robot.dashboard.displayPrintf(
+                    lineNum++, "SteerRaw: lf=%.2f, rf=%.2f, lb=%.2f, rb=%.2f",
+                    swerveDrive.steerEncoders[RobotDrive.INDEX_LEFT_FRONT].getRawPosition(),
+                    swerveDrive.steerEncoders[RobotDrive.INDEX_RIGHT_FRONT].getRawPosition(),
+                    swerveDrive.steerEncoders[RobotDrive.INDEX_LEFT_BACK].getRawPosition(),
+                    swerveDrive.steerEncoders[RobotDrive.INDEX_RIGHT_BACK].getRawPosition());
             }
         }
 
