@@ -135,12 +135,12 @@ public class FtcTest extends FtcTeleOp
      * Station is pressed.
      */
     @Override
-    public void initRobot()
+    public void robotInit()
     {
         //
         // TeleOp initialization.
         //
-        super.initRobot();
+        super.robotInit();
         if (RobotParams.Preferences.useLoopPerformanceMonitor)
         {
             elapsedTimer = new TrcElapsedTimer("TestLoopMonitor", 2.0);
@@ -233,7 +233,7 @@ public class FtcTest extends FtcTeleOp
             robot.globalTracer.traceInfo("TestInit", "Disabling TensorFlowVision.");
             robot.vision.setTensorFlowVisionEnabled(false);
         }
-    }   //initRobot
+    }   //robotInit
 
     //
     // Overrides TrcRobot.RobotMode methods.

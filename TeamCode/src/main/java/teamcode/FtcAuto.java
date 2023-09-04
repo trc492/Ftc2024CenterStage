@@ -108,9 +108,9 @@ public class FtcAuto extends FtcOpMode
      * Station is pressed.
      */
     @Override
-    public void initRobot()
+    public void robotInit()
     {
-        final String funcName = "initRobot";
+        final String funcName = "robotInit";
         //
         // Create and initialize robot object.
         //
@@ -188,14 +188,14 @@ public class FtcAuto extends FtcOpMode
         }
 
         robot.zeroCalibrate();
-    }   //initRobot
+    }   //robotInit
 
     //
     // Overrides TrcRobot.RobotMode methods.
     //
 
     /**
-     * This method is called periodically after initRobot() is called but before competition starts. For this season,
+     * This method is called periodically after robotInit() is called but before competition starts. For this season,
      * we are detecting the duck's barcode position before the match starts.
      */
     @Override

@@ -54,7 +54,7 @@ public class FtcTeleOp extends FtcOpMode
      * Station is pressed.
      */
     @Override
-    public void initRobot()
+    public void robotInit()
     {
         //
         // Create and initialize robot object.
@@ -77,7 +77,7 @@ public class FtcTeleOp extends FtcOpMode
         operatorGamepad = new FtcGamepad("OperatorGamepad", gamepad2, this::operatorButtonEvent);
         driverGamepad.setYInverted(true);
         operatorGamepad.setYInverted(true);
-    }   //initRobot
+    }   //robotInit
 
     //
     // Overrides TrcRobot.RobotMode methods.

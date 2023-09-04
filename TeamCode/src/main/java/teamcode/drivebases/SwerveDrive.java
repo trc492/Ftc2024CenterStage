@@ -200,11 +200,6 @@ public class SwerveDrive extends RobotDrive
                 RobotParams.STEER_SERVO_KP, RobotParams.STEER_SERVO_KI,
                 RobotParams.STEER_SERVO_KD, RobotParams.STEER_SERVO_KF, RobotParams.STEER_SERVO_IZONE);
             servos[i].setPositionPidTolerance(RobotParams.STEER_SERVO_TOLERANCE);
-            // TODO: remove after tuning.
-            if (debugEnabled && servos[i].toString().startsWith("lf"))
-            {
-                servos[i].setMsgTracer(globalTracer, true, null);
-            }
         }
         return servos;
     }   //createSteerServos

@@ -75,7 +75,7 @@ public class FtcTeleOpShooter extends FtcOpMode
      * Station is pressed.
      */
     @Override
-    public void initRobot()
+    public void robotInit()
     {
         dashboard = FtcDashboard.getInstance();
 
@@ -90,7 +90,7 @@ public class FtcTeleOpShooter extends FtcOpMode
         motor2.setPositionSensorScaleAndOffset(MOTOR_SCALE, MOTOR_OFFSET);
 //        motor2.setVelocityPidCoefficients(MOTOR_VEL_KP, MOTOR_VEL_KI, MOTOR_VEL_KD, MOTOR_VEL_KF);
 //        motor2.followMotor(motor1);
-    }   //initRobot
+    }   //robotInit
 
     private void setMotorValue(boolean velMode, double value)
     {
