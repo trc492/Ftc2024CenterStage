@@ -185,9 +185,9 @@ public class RobotParams
     public static final boolean RFSTEER_INVERTED                = true;
     public static final boolean LBSTEER_INVERTED                = true;
     public static final boolean RBSTEER_INVERTED                = true;
-    public static final double STEER_SERVO_KP                   = 0.01;
+    public static final double STEER_SERVO_KP                   = 0.005;
     public static final double STEER_SERVO_KI                   = 0.0;
-    public static final double STEER_SERVO_KD                   = 0.001;
+    public static final double STEER_SERVO_KD                   = 0.0;
     public static final double STEER_SERVO_KF                   = 0.0;
     public static final double STEER_SERVO_IZONE                = 0.0;
     public static final double STEER_SERVO_TOLERANCE            = 0.5;

@@ -51,7 +51,7 @@ public class SwerveDrive extends RobotDrive
     private static final boolean logPoseEvents = false;
     private static final boolean tracePidInfo = false;
 
-    private final TrcDbgTrace tracer = TrcDbgTrace.getGlobalTracer();
+    private final TrcDbgTrace globalTracer = TrcDbgTrace.getGlobalTracer();
     private final String[] steerEncoderNames = {
         RobotParams.HWNAME_LFSTEER_ENCODER, RobotParams.HWNAME_RFSTEER_ENCODER,
         RobotParams.HWNAME_LBSTEER_ENCODER, RobotParams.HWNAME_RBSTEER_ENCODER};
@@ -146,14 +146,14 @@ public class SwerveDrive extends RobotDrive
         // AbsoluteTargetMode eliminates cumulative errors on multi-segment runs because drive base is keeping track
         // of the absolute target position.
         pidDrive.setAbsoluteTargetModeEnabled(true);
-        pidDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
+        pidDrive.setMsgTracer(globalTracer, logPoseEvents, tracePidInfo);
 
         purePursuitDrive = new TrcPurePursuitDrive(
             "purePursuitDrive", driveBase,
             RobotParams.PPD_FOLLOWING_DISTANCE, RobotParams.PPD_POS_TOLERANCE, RobotParams.PPD_TURN_TOLERANCE,
             RobotParams.xPosPidCoeff, RobotParams.yPosPidCoeff, RobotParams.turnPidCoeff, RobotParams.velPidCoeff);
         purePursuitDrive.setFastModeEnabled(true);
-        purePursuitDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
+        purePursuitDrive.setMsgTracer(globalTracer, logPoseEvents, tracePidInfo);
     }   //SwerveDrive
 
     /**
@@ -200,12 +200,12 @@ public class SwerveDrive extends RobotDrive
                 RobotParams.STEER_SERVO_KP, RobotParams.STEER_SERVO_KI,
                 RobotParams.STEER_SERVO_KD, RobotParams.STEER_SERVO_KF, RobotParams.STEER_SERVO_IZONE);
             servos[i].setPositionPidTolerance(RobotParams.STEER_SERVO_TOLERANCE);
+            // TODO: remove after tuning.
             if (debugEnabled && servos[i].toString().startsWith("lf"))
             {
-                servos[i].setMsgTracer(tracer, true, null);
+                servos[i].setMsgTracer(globalTracer, true, null);
             }
         }
-
         return servos;
     }   //createSteerServos
 
@@ -229,6 +229,31 @@ public class SwerveDrive extends RobotDrive
 
         return modules;
     }   //createSwerveModules
+
+    /**
+     * This method enables/disables performance monitoring of all steering servo motors.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
+    public void setSteerPerformanceMonitorEnabled(boolean enabled)
+    {
+        for (FtcCRServo servo: steerServos)
+        {
+            servo.setPerformanceMonitorEnabled(enabled);
+        }
+    }   //setSteerPerformanceMonitorEnabled
+
+    /**
+     *
+     * @param tracer
+     */
+    public void printSteerPerformanceInfo(TrcDbgTrace tracer)
+    {
+        for (FtcCRServo servo : steerServos)
+        {
+            servo.printPidControlTaskPerformance(tracer);
+        }
+    }   //printSteerPerformanceInfo
 
     /**
      * This method sets the steering angle of all swerve modules.
