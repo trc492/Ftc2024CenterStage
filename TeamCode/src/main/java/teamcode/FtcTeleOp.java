@@ -34,6 +34,9 @@ import TrcFtcLib.ftclib.FtcOpMode;
 import teamcode.drivebases.SwerveDrive;
 import teamcode.subsystems.BlinkinLEDs;
 
+/**
+ * This class contains the TeleOp Mode program.
+ */
 @TeleOp(name="FtcTeleOp", group="Ftc3543")
 public class FtcTeleOp extends FtcOpMode
 {
@@ -166,24 +169,13 @@ public class FtcTeleOp extends FtcOpMode
                 robot.dashboard.displayPrintf(
                     1, "Pose:%s,x=%.2f,y=%.2f,rot=%.2f",
                     robot.robotDrive.driveBase.getFieldPosition(), inputs[0], inputs[1], inputs[2]);
-//                double power = driverGamepad.getRightTrigger(true) - driverGamepad.getLeftTrigger(true);
-//                SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
-//                for (int i = 0; i < swerveDrive.steerServos.length; i++)
-//                {
-//                    swerveDrive.driveMotors[i].setPower(power);
-////                    swerveDrive.steerServos[i].setPower(power);
-////                    robot.dashboard.displayPrintf(2 + i, "%s: pos=%.1f", swerveDrive.steerServos[i],
-////                                                  swerveDrive.steerServos[i].getPosition());
-//                }
             }
             //
             // Other subsystems.
             //
             if (RobotParams.Preferences.useSubsystems)
             {
-
             }
-
         }
     }   //periodic
 
@@ -240,7 +232,7 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_A:
                 if (pressed && robot.robotDrive != null)
                 {
-                    // Cancel all auto-assist driving including GridDrive and AutoNav.
+                    // Cancel all auto-assist driving.
                     robot.robotDrive.cancel();
                 }
                 break;
@@ -255,7 +247,13 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_LBUMPER:
-                // Toggle between field or robot oriented driving.
+                // Press and hold for slow drive.
+                drivePowerScale = pressed? RobotParams.DRIVE_POWER_SCALE_SLOW: RobotParams.DRIVE_POWER_SCALE_NORMAL;
+                turnPowerScale = pressed? RobotParams.TURN_POWER_SCALE_SLOW: RobotParams.TURN_POWER_SCALE_NORMAL;
+                break;
+
+            case FtcGamepad.GAMEPAD_RBUMPER:
+                // Toggle between field or robot oriented driving, only applicable for holonomic drive base.
                 if (pressed && robot.robotDrive != null && robot.robotDrive.driveBase.supportsHolonomicDrive())
                 {
                     TrcDriveBase.DriveOrientation orientation = robot.robotDrive.driveBase.getDriveOrientation();
@@ -270,12 +268,6 @@ public class FtcTeleOp extends FtcOpMode
                     robot.robotDrive.driveBase.setDriveOrientation(orientation, true);
                     updateDriveModeLEDs();
                 }
-                break;
-
-            case FtcGamepad.GAMEPAD_RBUMPER:
-                // Press and hold for slow drive.
-                drivePowerScale = pressed? RobotParams.DRIVE_POWER_SCALE_SLOW: RobotParams.DRIVE_POWER_SCALE_NORMAL;
-                turnPowerScale = pressed? RobotParams.TURN_POWER_SCALE_SLOW: RobotParams.TURN_POWER_SCALE_NORMAL;
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_UP:
@@ -325,10 +317,10 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_LBUMPER:
-                manualOverride = pressed;
                 break;
 
             case FtcGamepad.GAMEPAD_RBUMPER:
+                manualOverride = pressed;
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_UP:

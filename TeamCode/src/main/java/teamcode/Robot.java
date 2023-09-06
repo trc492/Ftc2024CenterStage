@@ -22,8 +22,6 @@
 
 package teamcode;
 
-import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
-
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcDigitalInput;
 import TrcCommonLib.trclib.TrcMotor;
@@ -72,7 +70,7 @@ public class Robot
      * Constructor: Create an instance of the object.
      *
      * @param runMode specifies robot running mode (Auto, TeleOp, Test), can be used to create and initialize mode
-     *                specific sensors and subsystems if necessary.
+     *        specific sensors and subsystems if necessary.
      */
     public Robot(TrcRobot.RunMode runMode)
     {
@@ -82,9 +80,6 @@ public class Robot
         opMode = FtcOpMode.getInstance();
         opMode.hardwareMap.logDevices();
         dashboard = FtcDashboard.getInstance();
-        dashboard.setTextView(
-            ((FtcRobotControllerActivity)opMode.hardwareMap.appContext)
-                .findViewById(com.qualcomm.ftcrobotcontroller.R.id.textOpMode));
         globalTracer = TrcDbgTrace.getGlobalTracer();
 
         speak("Init starting");
@@ -238,16 +233,16 @@ public class Robot
                 vision.setAprilTagVisionEnabled(false);
             }
 
-            if (vision.redConeVision != null)
+            if (vision.redBlobVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling RedConeVision.");
-                vision.setRedConeVisionEnabled(false);
+                globalTracer.traceInfo(funcName, "Disabling RedBlobVision.");
+                vision.setRedBlobVisionEnabled(false);
             }
 
-            if (vision.blueConeVision != null)
+            if (vision.blueBlobVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling BlueConeVision.");
-                vision.setBlueConeVisionEnabled(false);
+                globalTracer.traceInfo(funcName, "Disabling BlueBlobVision.");
+                vision.setBlueBlobVisionEnabled(false);
             }
 
             if (vision.tensorFlowVision != null)
@@ -280,8 +275,7 @@ public class Robot
     }   //stopMode
 
     /**
-     * This method zero calibrates all subsystems. We zero calibrate the arm and elevator first before the turret
-     * because if the arm is down, it will hit the drive motors when turning the turret.
+     * This method zero calibrates all subsystems.
      */
     public void zeroCalibrate()
     {

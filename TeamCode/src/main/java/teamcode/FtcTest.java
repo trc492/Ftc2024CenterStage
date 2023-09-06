@@ -24,7 +24,6 @@ package teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 import TrcCommonLib.command.CmdDriveMotorsTest;
@@ -266,16 +265,16 @@ public class FtcTest extends FtcTeleOp
                         robot.vision.setAprilTagVisionEnabled(true);
                     }
 
-                    if (robot.vision.redConeVision != null)
+                    if (robot.vision.redBlobVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling RedConeVision.");
-                        robot.vision.setRedConeVisionEnabled(true);
+                        robot.globalTracer.traceInfo(funcName, "Enabling RedBlobVision.");
+                        robot.vision.setRedBlobVisionEnabled(true);
                     }
 
-                    if (robot.vision.blueConeVision != null)
+                    if (robot.vision.blueBlobVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling BlueConeVision.");
-                        robot.vision.setBlueConeVisionEnabled(true);
+                        robot.globalTracer.traceInfo(funcName, "Enabling BlueBlobVision.");
+                        robot.vision.setBlueBlobVisionEnabled(true);
                     }
 
                     if (robot.vision.tensorFlowVision != null)

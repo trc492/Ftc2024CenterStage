@@ -32,10 +32,10 @@ import TrcFtcLib.ftclib.FtcRevBlinkin;
 public class BlinkinLEDs extends FtcRevBlinkin
 {
     // LED pattern names.
-    public static final String IMAGE1_NAME = "Red Audience Wall";
-    public static final String IMAGE2_NAME = "Red Rear Wall";
-    public static final String IMAGE3_NAME = "Blue Audience Wall";
-    public static final String IMAGE4_NAME = "Blue Rear Wall";
+    public static final String IMAGE1_NAME = "Image1";
+    public static final String IMAGE2_NAME = "Image2";
+    public static final String IMAGE3_NAME = "Image3";
+    public static final String IMAGE4_NAME = "Image4";
     public static final String DRIVE_ORIENTATION_FIELD = "FieldMode";
     public static final String DRIVE_ORIENTATION_ROBOT = "RobotMode";
     public static final String DRIVE_ORIENTATION_INVERTED = "InvertedMode";

@@ -75,6 +75,7 @@ public class FtcAuto extends FtcOpMode
         public double turnTarget = 0.0;
         public double driveTime = 0.0;
         public double drivePower = 0.0;
+
         @Override
         public String toString()
         {
@@ -168,16 +169,16 @@ public class FtcAuto extends FtcOpMode
                 robot.vision.setAprilTagVisionEnabled(true);
             }
 
-            if (robot.vision.redConeVision != null)
+            if (robot.vision.redBlobVision != null)
             {
-                robot.globalTracer.traceInfo(funcName, "Enabling RedConeVision.");
-                robot.vision.setRedConeVisionEnabled(true);
+                robot.globalTracer.traceInfo(funcName, "Enabling RedBlobVision.");
+                robot.vision.setRedBlobVisionEnabled(true);
             }
 
-            if (robot.vision.blueConeVision != null)
+            if (robot.vision.blueBlobVision != null)
             {
-                robot.globalTracer.traceInfo(funcName, "Enabling BlueConeVision.");
-                robot.vision.setBlueConeVisionEnabled(true);
+                robot.globalTracer.traceInfo(funcName, "Enabling BlueBlobVision.");
+                robot.vision.setBlueBlobVisionEnabled(true);
             }
 
             if (robot.vision.tensorFlowVision != null)
@@ -347,7 +348,6 @@ public class FtcAuto extends FtcOpMode
         strategyMenu.addChoice("PID Drive", AutoStrategy.PID_DRIVE, false, xTargetMenu);
         strategyMenu.addChoice("Timed Drive", AutoStrategy.TIMED_DRIVE, false, driveTimeMenu);
         strategyMenu.addChoice("Do nothing", AutoStrategy.DO_NOTHING, false);
-
         //
         // Traverse menus.
         //

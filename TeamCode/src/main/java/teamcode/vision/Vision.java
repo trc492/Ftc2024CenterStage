@@ -47,7 +47,7 @@ import teamcode.Robot;
 import teamcode.RobotParams;
 
 /**
- * This class implements Vuforia/TensorFlow/Grip/Eocv Vision for the game season. It creates and initializes all the
+ * This class implements AprilTag/TensorFlow/Grip/Eocv Vision for the game season. It creates and initializes all the
  * vision target info as well as providing info for the robot, camera and the field. It also provides methods to get
  * the location of the robot and detected targets.
  */
@@ -55,9 +55,9 @@ public class Vision
 {
     private static final String moduleName = "Vision";
     private static final int colorConversion = Imgproc.COLOR_BGRA2BGR;
-    private static final double[] redConeColorThresholds = {100.0, 255.0, 0.0, 100.0, 0.0, 60.0};
-    private static final double[] blueConeColorThresholds = {0.0, 60.0, 0.0, 100.0, 100, 255.0};
-    private static final TrcOpenCvColorBlobPipeline.FilterContourParams redConeFilterContourParams =
+    private static final double[] redBlobColorThresholds = {100.0, 255.0, 0.0, 100.0, 0.0, 60.0};
+    private static final double[] blueBlobColorThresholds = {0.0, 60.0, 0.0, 100.0, 100, 255.0};
+    private static final TrcOpenCvColorBlobPipeline.FilterContourParams redBlobFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
             .setMinArea(10000.0)
             .setMinPerimeter(200.0)
@@ -66,7 +66,7 @@ public class Vision
             .setSolidityRange(0.0, 100.0)
             .setVerticesRange(0.0, 1000.0)
             .setAspectRatioRange(0.0, 1000.0);
-    private static final TrcOpenCvColorBlobPipeline.FilterContourParams blueConeFilterContourParams =
+    private static final TrcOpenCvColorBlobPipeline.FilterContourParams blueBlobFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
             .setMinArea(10000.0)
             .setMinPerimeter(200.0)
@@ -84,10 +84,10 @@ public class Vision
     private final Robot robot;
     public FtcVisionAprilTag aprilTagVision;
     private AprilTagProcessor aprilTagProcessor;
-    public FtcVisionEocvColorBlob redConeVision;
-    private FtcEocvColorBlobProcessor redConeProcessor;
-    public FtcVisionEocvColorBlob blueConeVision;
-    private FtcEocvColorBlobProcessor blueConeProcessor;
+    public FtcVisionEocvColorBlob redBlobVision;
+    private FtcEocvColorBlobProcessor redBlobProcessor;
+    public FtcVisionEocvColorBlob blueBlobVision;
+    private FtcEocvColorBlobProcessor blueBlobProcessor;
     public FtcVisionTensorFlow tensorFlowVision;
     private TfodProcessor tensorFlowProcessor;
     private final VisionPortal visionPortal;
@@ -123,14 +123,14 @@ public class Vision
         if (RobotParams.Preferences.useColorBlobVision)
         {
             robot.globalTracer.traceInfo(moduleName, "Starting ColorBlobVision...");
-            redConeVision = new FtcVisionEocvColorBlob(
-                "RedCone", colorConversion, redConeColorThresholds, redConeFilterContourParams,
+            redBlobVision = new FtcVisionEocvColorBlob(
+                "RedBlob", colorConversion, redBlobColorThresholds, redBlobFilterContourParams,
                 RobotParams.cameraRect, RobotParams.worldRect, tracer);
-            redConeProcessor = redConeVision.getVisionProcessor();
-            blueConeVision = new FtcVisionEocvColorBlob(
-                "BlueCone", colorConversion, blueConeColorThresholds, blueConeFilterContourParams,
+            redBlobProcessor = redBlobVision.getVisionProcessor();
+            blueBlobVision = new FtcVisionEocvColorBlob(
+                "BlueBlob", colorConversion, blueBlobColorThresholds, blueBlobFilterContourParams,
                 RobotParams.cameraRect, RobotParams.worldRect, tracer);
-            blueConeProcessor = blueConeVision.getVisionProcessor();
+            blueBlobProcessor = blueBlobVision.getVisionProcessor();
         }
 
         if (RobotParams.Preferences.useTensorFlowVision)
@@ -172,14 +172,14 @@ public class Vision
             builder.addProcessor(aprilTagProcessor);
         }
 
-        if (redConeProcessor != null)
+        if (redBlobProcessor != null)
         {
-            builder.addProcessor(redConeProcessor);
+            builder.addProcessor(redBlobProcessor);
         }
 
-        if (blueConeProcessor != null)
+        if (blueBlobProcessor != null)
         {
-            builder.addProcessor(blueConeProcessor);
+            builder.addProcessor(blueBlobProcessor);
         }
 
         if (tensorFlowProcessor != null)
@@ -190,8 +190,8 @@ public class Vision
         visionPortal = builder.build();
         // Disable all vision processor until they are needed.
         setAprilTagVisionEnabled(false);
-        setRedConeVisionEnabled(false);
-        setBlueConeVisionEnabled(false);
+        setRedBlobVisionEnabled(false);
+        setBlueBlobVisionEnabled(false);
         setTensorFlowVisionEnabled(false);
     }   //Vision
 
@@ -203,21 +203,21 @@ public class Vision
         }
     }   //setAprilTagVisionEnabled
 
-    public void setRedConeVisionEnabled(boolean enabled)
+    public void setRedBlobVisionEnabled(boolean enabled)
     {
-        if (redConeProcessor != null)
+        if (redBlobProcessor != null)
         {
-            visionPortal.setProcessorEnabled(redConeProcessor, enabled);
+            visionPortal.setProcessorEnabled(redBlobProcessor, enabled);
         }
-    }   //setRedConeVisionEnabled
+    }   //setRedBlobVisionEnabled
 
-    public void setBlueConeVisionEnabled(boolean enabled)
+    public void setBlueBlobVisionEnabled(boolean enabled)
     {
-        if (redConeProcessor != null)
+        if (blueBlobProcessor != null)
         {
-            visionPortal.setProcessorEnabled(blueConeProcessor, enabled);
+            visionPortal.setProcessorEnabled(blueBlobProcessor, enabled);
         }
-    }   //setBlueConeVisionEnabled
+    }   //setBlueBlobVisionEnabled
 
     public void setTensorFlowVisionEnabled(boolean enabled)
     {
@@ -232,15 +232,15 @@ public class Vision
         return aprilTagProcessor != null && visionPortal.getProcessorEnabled(aprilTagProcessor);
     }   //isAprilTagVisionEnabled
 
-    public boolean isRedConeVisionEabled()
+    public boolean isRedBlobVisionEabled()
     {
-        return redConeProcessor != null && visionPortal.getProcessorEnabled(redConeProcessor);
-    }   //isRedConeVisionEnabled
+        return redBlobProcessor != null && visionPortal.getProcessorEnabled(redBlobProcessor);
+    }   //isRedBlobVisionEnabled
 
-    public boolean isBlueConeVisionEabled()
+    public boolean isBlueBlobVisionEabled()
     {
-        return blueConeProcessor != null && visionPortal.getProcessorEnabled(blueConeProcessor);
-    }   //isBlueConeVisionEnabled
+        return blueBlobProcessor != null && visionPortal.getProcessorEnabled(blueBlobProcessor);
+    }   //isBlueBlobVisionEnabled
 
     public boolean isTensorFlowVisionEabled()
     {

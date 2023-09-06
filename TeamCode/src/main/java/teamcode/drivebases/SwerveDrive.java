@@ -47,11 +47,9 @@ import teamcode.RobotParams;
  */
 public class SwerveDrive extends RobotDrive
 {
-    private static final boolean debugEnabled = false;
     private static final boolean logPoseEvents = false;
     private static final boolean tracePidInfo = false;
 
-    private final TrcDbgTrace globalTracer = TrcDbgTrace.getGlobalTracer();
     private final String[] steerEncoderNames = {
         RobotParams.HWNAME_LFSTEER_ENCODER, RobotParams.HWNAME_RFSTEER_ENCODER,
         RobotParams.HWNAME_LBSTEER_ENCODER, RobotParams.HWNAME_RBSTEER_ENCODER};
@@ -80,6 +78,7 @@ public class SwerveDrive extends RobotDrive
     {
         super();
 
+        final TrcDbgTrace globalTracer = TrcDbgTrace.getGlobalTracer();
         readSteeringCalibrationData();
         driveMotors = createDriveMotors(driveMotorNames, driveMotorInverted);
         steerEncoders = createSteerEncoders(
@@ -239,8 +238,9 @@ public class SwerveDrive extends RobotDrive
     }   //setSteerPerformanceMonitorEnabled
 
     /**
+     * This method prints the performance info to the trace log.
      *
-     * @param tracer
+     * @param tracer specifies the tracer to be used to print the info.
      */
     public void printSteerPerformanceInfo(TrcDbgTrace tracer)
     {
