@@ -155,7 +155,7 @@ public class FtcTeleOp extends FtcOpMode
                 double[] inputs = driverGamepad.getDriveInputs(
                     RobotParams.ROBOT_DRIVE_MODE, true, drivePowerScale, turnPowerScale);
 
-                if (RobotParams.ROBOT_DRIVE_MODE == FtcGamepad.DriveMode.HOLONOMIC_MODE &&
+                if (RobotParams.ROBOT_DRIVE_MODE == TrcDriveBase.DriveMode.HOLONOMIC_MODE &&
                     robot.robotDrive.driveBase.supportsHolonomicDrive())
                 {
                     robot.robotDrive.driveBase.holonomicDrive(

@@ -26,10 +26,10 @@ import android.os.Environment;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import TrcCommonLib.trclib.TrcDriveBase;
 import TrcCommonLib.trclib.TrcDriveBase.DriveOrientation;
 import TrcCommonLib.trclib.TrcHomographyMapper;
 import TrcCommonLib.trclib.TrcPidController;
-import TrcFtcLib.ftclib.FtcGamepad;
 
 /**
  * This class contains robot and subsystem constants and parameters.
@@ -208,7 +208,7 @@ public class RobotParams
     public static final double X_ODOMETRY_WHEEL_OFFSET          = ROBOT_LENGTH/2.0 - (3.875 + 9.5); //behind centroid
     public static final double Y_LEFT_ODOMETRY_WHEEL_OFFSET     = -15.25/2.0;
     public static final double Y_RIGHT_ODOMETRY_WHEEL_OFFSET    = 15.25/2.0;
-    public static final FtcGamepad.DriveMode ROBOT_DRIVE_MODE   = FtcGamepad.DriveMode.HOLONOMIC_MODE;
+    public static final TrcDriveBase.DriveMode ROBOT_DRIVE_MODE   = TrcDriveBase.DriveMode.HOLONOMIC_MODE;
     //
     // Velocity controlled constants.
     //
