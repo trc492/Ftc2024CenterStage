@@ -78,20 +78,30 @@ public class RobotDrive
 
     /**
      * This method cancels any PIDDrive operation still in progress.
+     *
+     * @param owner specifies the owner that requested the cancel.
+     */
+    public void cancel(String owner)
+    {
+        if (pidDrive != null && pidDrive.isActive())
+        {
+            pidDrive.cancel(owner);
+        }
+
+        if (purePursuitDrive != null && purePursuitDrive.isActive())
+        {
+            purePursuitDrive.cancel(owner);
+        }
+
+        driveBase.stop(owner);
+    }   //cancel
+
+    /**
+     * This method cancels any PIDDrive operation still in progress.
      */
     public void cancel()
     {
-        if (pidDrive.isActive())
-        {
-            pidDrive.cancel();
-        }
-
-        if (purePursuitDrive.isActive())
-        {
-            purePursuitDrive.cancel();
-        }
-
-        driveBase.stop();
+        cancel(null);
     }   //cancel
 
     /**

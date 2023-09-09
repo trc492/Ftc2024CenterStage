@@ -157,14 +157,15 @@ public class Vision
 
         if (RobotParams.Preferences.showVisionView)
         {
-            builder.enableCameraMonitoring(true);
+
+            builder.enableLiveView(true);
             builder.setAutoStopLiveView(true);
             //Set the stream format; MJPEG uses less bandwidth than default YUY2.
             //  builder.setStreamFormat(VisionPortal.StreamFormat.YUY2);
         }
         else
         {
-            builder.enableCameraMonitoring(false);
+            builder.enableLiveView(false);
         }
 
         if (aprilTagProcessor != null)
