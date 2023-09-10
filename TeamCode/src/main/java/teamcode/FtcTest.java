@@ -33,16 +33,19 @@ import TrcCommonLib.command.CmdTimedDrive;
 
 import TrcCommonLib.trclib.TrcElapsedTimer;
 import TrcCommonLib.trclib.TrcGameController;
+import TrcCommonLib.trclib.TrcOpenCvColorBlobPipeline;
 import TrcCommonLib.trclib.TrcPidController;
 import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcTimer;
 import TrcCommonLib.trclib.TrcUtil;
+import TrcCommonLib.trclib.TrcVisionTargetInfo;
 import TrcFtcLib.ftclib.FtcChoiceMenu;
 import TrcFtcLib.ftclib.FtcGamepad;
 import TrcFtcLib.ftclib.FtcMenu;
 import TrcFtcLib.ftclib.FtcPidCoeffCache;
 import TrcFtcLib.ftclib.FtcValueMenu;
+import TrcFtcLib.ftclib.FtcVisionAprilTag;
 import teamcode.drivebases.RobotDrive;
 import teamcode.drivebases.SwerveDrive;
 
@@ -560,25 +563,9 @@ public class FtcTest extends FtcTeleOp
                     break;
 
                 case FtcGamepad.GAMEPAD_B:
-//                    if (testChoices.test == Test.VISION_TEST)
-//                    {
-//                        if (pressed && robot.vision != null && robot.vision.eocvVision != null)
-//                        {
-//                            robot.vision.eocvVision.setNextObjectType();
-//                        }
-//                        processed = true;
-//                    }
                     break;
 
                 case FtcGamepad.GAMEPAD_X:
-//                    if (testChoices.test == Test.VISION_TEST)
-//                    {
-//                        if (pressed && robot.vision != null && robot.vision.eocvVision != null)
-//                        {
-//                            robot.vision.eocvVision.setNextVideoOutput();
-//                        }
-//                        processed = true;
-//                    }
                     break;
 
                 case FtcGamepad.GAMEPAD_Y:
@@ -960,29 +947,33 @@ public class FtcTest extends FtcTeleOp
     {
         if (robot.vision != null)
         {
-//            TrcVisionTargetInfo<?> signalInfo = robot.vision.getDetectedSignalInfo();
-//            if (signalInfo != null)
-//            {
-//                int signalPos = robot.vision.determineDetectedSignal(signalInfo);
-//                robot.dashboard.displayPrintf(10, "Signal: %s (pos=%d)", signalInfo, signalPos);
-//            }
-//            else
-//            {
-//                robot.dashboard.displayPrintf(10, "Signal: Not found.");
-//            }
-//
-//            TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> coneInfo =
-//                robot.vision.getDetectedConeInfo();
-//            if (coneInfo != null)
-//            {
-//                EocvVision.ObjectType objectType = robot.vision.eocvVision.getDetectObjectType();
-//                robot.dashboard.displayPrintf(
-//                    11, "%s Cone: %s", objectType == EocvVision.ObjectType.RED_CONE? "Red": "Blue", coneInfo);
-//            }
-//            else
-//            {
-//                robot.dashboard.displayPrintf(11, "Cone: Not found.");
-//            }
+            int lineNum = 9;
+
+            if (robot.vision.aprilTagVision != null)
+            {
+                TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
+                    robot.vision.aprilTagVision.getBestDetectedTargetInfo(null);
+                robot.dashboard.displayPrintf(
+                    lineNum++, "AprilTag: %s", aprilTagInfo != null? aprilTagInfo: "Not found.");
+            }
+
+            if (robot.vision.redBlobVision != null)
+            {
+                // TODO: figure out obj height and offset.
+                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> redBlobInfo =
+                    robot.vision.redBlobVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                robot.dashboard.displayPrintf(
+                    lineNum++, "RedBlob: %s", redBlobInfo != null? redBlobInfo: "Not found.");
+            }
+
+            if (robot.vision.blueBlobVision != null)
+            {
+                // TODO: figure out obj height and offset.
+                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> blueBlobInfo =
+                    robot.vision.blueBlobVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                robot.dashboard.displayPrintf(
+                    lineNum++, "BlueBlob: %s", blueBlobInfo != null? blueBlobInfo: "Not found.");
+            }
         }
     }   //doVisionTest
 
