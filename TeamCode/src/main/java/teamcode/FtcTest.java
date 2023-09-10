@@ -46,6 +46,7 @@ import TrcFtcLib.ftclib.FtcMenu;
 import TrcFtcLib.ftclib.FtcPidCoeffCache;
 import TrcFtcLib.ftclib.FtcValueMenu;
 import TrcFtcLib.ftclib.FtcVisionAprilTag;
+import TrcFtcLib.ftclib.FtcVisionTensorFlow;
 import teamcode.drivebases.RobotDrive;
 import teamcode.drivebases.SwerveDrive;
 
@@ -272,12 +273,14 @@ public class FtcTest extends FtcTeleOp
                     {
                         robot.globalTracer.traceInfo(funcName, "Enabling RedBlobVision.");
                         robot.vision.setRedBlobVisionEnabled(true);
+                        robot.vision.setRedBlobAnnotateEnabled(true);
                     }
 
                     if (robot.vision.blueBlobVision != null)
                     {
                         robot.globalTracer.traceInfo(funcName, "Enabling BlueBlobVision.");
                         robot.vision.setBlueBlobVisionEnabled(true);
+                        robot.vision.setBlueBlobAnnotateEnabled(true);
                     }
 
                     if (robot.vision.tensorFlowVision != null)
@@ -973,6 +976,14 @@ public class FtcTest extends FtcTeleOp
                     robot.vision.blueBlobVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
                     lineNum++, "BlueBlob: %s", blueBlobInfo != null? blueBlobInfo: "Not found.");
+            }
+
+            if (robot.vision.tensorFlowVision != null)
+            {
+                TrcVisionTargetInfo<FtcVisionTensorFlow.DetectedObject> tensorFlowInfo =
+                    robot.vision.tensorFlowVision.getBestDetectedTargetInfo(null, null, null, 0.0, 0.0);
+                robot.dashboard.displayPrintf(
+                    lineNum++, "TensorFlow: %s", tensorFlowInfo != null? tensorFlowInfo: "Not found.");
             }
         }
     }   //doVisionTest

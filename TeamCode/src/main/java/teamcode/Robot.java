@@ -92,7 +92,7 @@ public class Robot
              RobotParams.Preferences.useTensorFlowVision))
         {
             // Don't need to enable vision for TeleOp because we are not doing auto-assist involving vision.
-            vision = new Vision(this, globalTracer);
+            vision = new Vision(this, null);
         }
         //
         // If noRobot is true, the robot controller is disconnected from the robot for testing vision.

@@ -75,7 +75,7 @@ public class Vision
             .setSolidityRange(0.0, 100.0)
             .setVerticesRange(0.0, 1000.0)
             .setAspectRatioRange(0.0, 1000.0);
-    private static final String TFOD_MODEL_ASSET = "PowerPlay.tflite";
+    private static final String TFOD_MODEL_ASSET = "CenterStage.tflite";
     private static final float TFOD_MIN_CONFIDENCE = 0.75f;
     public static final String[] TARGET_LABELS = {
 //        BlinkinLEDs.LABEL_BOLT, BlinkinLEDs.LABEL_BULB, BlinkinLEDs.LABEL_PANEL
@@ -212,6 +212,14 @@ public class Vision
         }
     }   //setRedBlobVisionEnabled
 
+    public void setRedBlobAnnotateEnabled(boolean enabled)
+    {
+        if (redBlobProcessor != null)
+        {
+            redBlobProcessor.setAnnotateEnabled(enabled);
+        }
+    }   //setRedBlobAnnotateEnabled
+
     public void setBlueBlobVisionEnabled(boolean enabled)
     {
         if (blueBlobProcessor != null)
@@ -219,6 +227,14 @@ public class Vision
             visionPortal.setProcessorEnabled(blueBlobProcessor, enabled);
         }
     }   //setBlueBlobVisionEnabled
+
+    public void setBlueBlobAnnotateEnabled(boolean enabled)
+    {
+        if (blueBlobProcessor != null)
+        {
+            blueBlobProcessor.setAnnotateEnabled(enabled);
+        }
+    }   //setBlueBlobAnnotateEnabled
 
     public void setTensorFlowVisionEnabled(boolean enabled)
     {
