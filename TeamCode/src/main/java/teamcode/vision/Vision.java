@@ -47,7 +47,7 @@ import teamcode.Robot;
 import teamcode.RobotParams;
 
 /**
- * This class implements AprilTag/TensorFlow/Grip/Eocv Vision for the game season. It creates and initializes all the
+ * This class implements AprilTag/TensorFlow/Eocv Vision for the game season. It creates and initializes all the
  * vision target info as well as providing info for the robot, camera and the field. It also provides methods to get
  * the location of the robot and detected targets.
  */
@@ -77,9 +77,7 @@ public class Vision
             .setAspectRatioRange(0.0, 1000.0);
     private static final String TFOD_MODEL_ASSET = "CenterStage.tflite";
     private static final float TFOD_MIN_CONFIDENCE = 0.75f;
-    public static final String[] TARGET_LABELS = {
-//        BlinkinLEDs.LABEL_BOLT, BlinkinLEDs.LABEL_BULB, BlinkinLEDs.LABEL_PANEL
-    };
+    public static final String[] TARGET_LABELS = {};
 
     private final Robot robot;
     public FtcVisionAprilTag aprilTagVision;

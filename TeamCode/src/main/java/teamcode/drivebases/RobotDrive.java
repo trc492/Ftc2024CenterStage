@@ -125,11 +125,6 @@ public class RobotDrive
         }
 
         return motors;
-//        if (RobotParams.Preferences.useVelocityControl)
-//        {
-//            // TODO: pidCoeff must not be null.
-//            driveMotor.enableVelocityMode(RobotParams.DRIVE_MOTOR_MAX_VELOCITY_PPS, null, false);
-//        }
     }   //createDriveMotors
 
     /**

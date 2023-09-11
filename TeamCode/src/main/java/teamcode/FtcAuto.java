@@ -349,7 +349,7 @@ public class FtcAuto extends FtcOpMode
 
         strategyMenu.addChoice("PID Drive", AutoStrategy.PID_DRIVE, false, xTargetMenu);
         strategyMenu.addChoice("Timed Drive", AutoStrategy.TIMED_DRIVE, false, driveTimeMenu);
-        strategyMenu.addChoice("Do nothing", AutoStrategy.DO_NOTHING, false);
+        strategyMenu.addChoice("Do nothing", AutoStrategy.DO_NOTHING, true);
         //
         // Traverse menus.
         //
