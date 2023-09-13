@@ -78,7 +78,6 @@ public class Robot
         // Initialize global objects.
         //
         opMode = FtcOpMode.getInstance();
-        opMode.hardwareMap.logDevices();
         dashboard = FtcDashboard.getInstance();
         globalTracer = TrcDbgTrace.getGlobalTracer();
 
@@ -86,12 +85,10 @@ public class Robot
         //
         // Initialize vision subsystems.
         //
-        if (runMode != TrcRobot.RunMode.TELEOP_MODE &&
-            (RobotParams.Preferences.useAprilTagVision ||
-             RobotParams.Preferences.useColorBlobVision ||
-             RobotParams.Preferences.useTensorFlowVision))
+        if (RobotParams.Preferences.useAprilTagVision ||
+            RobotParams.Preferences.useColorBlobVision ||
+            RobotParams.Preferences.useTensorFlowVision)
         {
-            // Don't need to enable vision for TeleOp because we are not doing auto-assist involving vision.
             vision = new Vision(this, null);
         }
         //
