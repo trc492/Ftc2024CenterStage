@@ -123,11 +123,11 @@ public class Vision
             robot.globalTracer.traceInfo(moduleName, "Starting ColorBlobVision...");
             redBlobVision = new FtcVisionEocvColorBlob(
                 "RedBlob", colorConversion, redBlobColorThresholds, redBlobFilterContourParams,
-                RobotParams.cameraRect, RobotParams.worldRect, tracer);
+                RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
             redBlobProcessor = redBlobVision.getVisionProcessor();
             blueBlobVision = new FtcVisionEocvColorBlob(
                 "BlueBlob", colorConversion, blueBlobColorThresholds, blueBlobFilterContourParams,
-                RobotParams.cameraRect, RobotParams.worldRect, tracer);
+                RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
             blueBlobProcessor = blueBlobVision.getVisionProcessor();
         }
 
@@ -136,8 +136,8 @@ public class Vision
             robot.globalTracer.traceInfo(moduleName, "Starting TensorFlowVision...");
             tensorFlowVision = new FtcVisionTensorFlow(
                 null, TFOD_MODEL_ASSET, TARGET_LABELS, RobotParams.cameraRect, RobotParams.worldRect, tracer);
-            tensorFlowVision.getVisionProcessor().setMinResultConfidence(TFOD_MIN_CONFIDENCE);
             tensorFlowProcessor = tensorFlowVision.getVisionProcessor();
+            tensorFlowProcessor.setMinResultConfidence(TFOD_MIN_CONFIDENCE);
         }
 
         VisionPortal.Builder builder = new VisionPortal.Builder();
@@ -210,14 +210,6 @@ public class Vision
         }
     }   //setRedBlobVisionEnabled
 
-    public void setRedBlobAnnotateEnabled(boolean enabled)
-    {
-        if (redBlobProcessor != null)
-        {
-            redBlobProcessor.setAnnotateEnabled(enabled);
-        }
-    }   //setRedBlobAnnotateEnabled
-
     public void setBlueBlobVisionEnabled(boolean enabled)
     {
         if (blueBlobProcessor != null)
@@ -225,14 +217,6 @@ public class Vision
             visionPortal.setProcessorEnabled(blueBlobProcessor, enabled);
         }
     }   //setBlueBlobVisionEnabled
-
-    public void setBlueBlobAnnotateEnabled(boolean enabled)
-    {
-        if (blueBlobProcessor != null)
-        {
-            blueBlobProcessor.setAnnotateEnabled(enabled);
-        }
-    }   //setBlueBlobAnnotateEnabled
 
     public void setTensorFlowVisionEnabled(boolean enabled)
     {
@@ -271,9 +255,6 @@ public class Vision
     {
         if (label != null && robot.blinkin != null)
         {
-//            robot.blinkin.setPatternState(BlinkinLEDs.LABEL_BOLT, false);
-//            robot.blinkin.setPatternState(BlinkinLEDs.LABEL_BULB, false);
-//            robot.blinkin.setPatternState(BlinkinLEDs.LABEL_PANEL, false);
             robot.blinkin.setPatternState(label, true, 1.0);
         }
     }   //updateVisionLEDs
@@ -287,27 +268,10 @@ public class Vision
      *         if a has lower confidence than b.
      */
     private int compareConfidence(
-        TrcVisionTargetInfo<FtcVisionTensorFlow.DetectedObject> a, TrcVisionTargetInfo<FtcVisionTensorFlow.DetectedObject> b)
+        TrcVisionTargetInfo<FtcVisionTensorFlow.DetectedObject> a,
+        TrcVisionTargetInfo<FtcVisionTensorFlow.DetectedObject> b)
     {
         return (int)((b.detectedObj.confidence - a.detectedObj.confidence)*100);
     }   //compareConfidence
-
-    /**
-     * This method is called by the Arrays.sort to sort the target object by decreasing bottom Y.
-     *
-     * @param a specifies the first target
-     * @param b specifies the second target.
-     * @return negative value if a has smaller bottom Y than b, 0 if a and b have equal bottom Y,
-     *         positive value if a has larger bottom Y than b.
-     */
-    private int compareBottomY(
-            TrcVisionTargetInfo<TrcOpenCvDetector.DetectedObject<?>> a,
-            TrcVisionTargetInfo<TrcOpenCvDetector.DetectedObject<?>> b)
-    {
-        Rect aRect = a.detectedObj.getRect();
-        Rect bRect = b.detectedObj.getRect();
-
-        return (bRect.y + bRect.height) - (aRect.y + aRect.height);
-    }   //compareBottomY
 
 }   //class Vision
