@@ -77,7 +77,7 @@ public class Vision
             .setAspectRatioRange(0.0, 1000.0);
     private static final String TFOD_MODEL_ASSET = "CenterStage.tflite";
     private static final float TFOD_MIN_CONFIDENCE = 0.75f;
-    public static final String[] TARGET_LABELS = {};
+    public static final String[] TARGET_LABELS = {"Pixel"};
 
     private final Robot robot;
     public FtcVisionAprilTag aprilTagVision;
