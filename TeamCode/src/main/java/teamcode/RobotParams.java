@@ -51,7 +51,7 @@ public class RobotParams
         public static boolean useBuiltinCamBack = false;
         public static boolean useAprilTagVision = true;
         public static boolean useColorBlobVision = true;
-        public static boolean useTensorFlowVision = true;
+        public static boolean useTensorFlowVision = false;
         public static boolean showVisionView = true;
         // Robot
         public static boolean noRobot = true;
