@@ -57,7 +57,7 @@ public class Vision
 //    private static final double[] yellowPixelColorThresholds = {109.0, 255.0, 92.0, 215.0, 0.0, 59.0};
     private static final double[] yellowPixelColorThresholds = {0.0, 59.0, 92.0, 215.0, 109.0, 255.0};
     private static final double[] greenPixelColorThresholds = {100.0, 255.0, 0.0, 100.0, 0.0, 60.0};
-    private static final double[] purplePixelColorThresholds = {0.0, 60.0, 0.0, 100.0, 100, 255.0};
+    private static final double[] purplePixelColorThresholds = {197.0, 255.0, 89.0, 193.0, 140, 255.0};
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams pixelFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
             .setMinArea(10000.0)
