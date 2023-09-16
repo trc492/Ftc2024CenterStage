@@ -53,11 +53,10 @@ public class Vision
 {
     private static final String moduleName = "Vision";
     private static final int colorConversion = Imgproc.COLOR_BGRA2BGR;
-    private static final double[] whitePixelColorThresholds = {100.0, 255.0, 0.0, 100.0, 0.0, 60.0};
-//    private static final double[] yellowPixelColorThresholds = {109.0, 255.0, 92.0, 215.0, 0.0, 59.0};
+    private static final double[] whitePixelColorThresholds = {162.0, 255.0, 178.0, 255.0, 147.0, 214.0};
     private static final double[] yellowPixelColorThresholds = {0.0, 59.0, 92.0, 215.0, 109.0, 255.0};
     private static final double[] greenPixelColorThresholds = {0.0, 138.0, 112.0, 255.0, 0.0, 98.0};
-    private static final double[] purplePixelColorThresholds = {0.0, 60.0, 0.0, 100.0, 100, 255.0};
+    private static final double[] purplePixelColorThresholds = {197.0, 255.0, 89.0, 193.0, 140, 255.0};
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams pixelFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
             .setMinArea(10000.0)
