@@ -95,6 +95,11 @@ public class BlinkinLEDs extends FtcRevBlinkin
         }
     }   //setDriveOrientation
 
+    /**
+     * This method sets the LED to indicate the vision detected object.
+     *
+     * @param objLabel specifies the detected object label.
+     */
     public void setVisionDetectedObject(String objLabel)
     {
         setPatternState(PURPLE_PIXEL, false);
