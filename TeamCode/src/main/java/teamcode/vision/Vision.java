@@ -175,6 +175,11 @@ public class Vision
         setTensorFlowVisionEnabled(false);
     }   //Vision
 
+    /**
+     * This method enables/disables AprilTag vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
     public void setAprilTagVisionEnabled(boolean enabled)
     {
         if (aprilTagProcessor != null)
@@ -183,6 +188,11 @@ public class Vision
         }
     }   //setAprilTagVisionEnabled
 
+    /**
+     * This method enables/disables WhitePixel vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
     public void setWhitePixelVisionEnabled(boolean enabled)
     {
         if (whitePixelProcessor != null)
@@ -191,6 +201,11 @@ public class Vision
         }
     }   //setWhitePixelVisionEnabled
 
+    /**
+     * This method enables/disables YellowPixel vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
     public void setYellowPixelVisionEnabled(boolean enabled)
     {
         if (yellowPixelProcessor != null)
@@ -199,6 +214,11 @@ public class Vision
         }
     }   //setYellowVisionEnabled
 
+    /**
+     * This method enables/disables GreenPixel vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
     public void setGreenPixelVisionEnabled(boolean enabled)
     {
         if (greenPixelProcessor != null)
@@ -207,6 +227,11 @@ public class Vision
         }
     }   //setGreenPixelVisionEnabled
 
+    /**
+     * This method enables/disables PurplePixel vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
     public void setPurplePixelVisionEnabled(boolean enabled)
     {
         if (purplePixelProcessor != null)
@@ -215,6 +240,11 @@ public class Vision
         }
     }   //setPurplePixelVisionEnabled
 
+    /**
+     * This method enables/disables TensorFlow vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
     public void setTensorFlowVisionEnabled(boolean enabled)
     {
         if (tensorFlowProcessor != null)
@@ -223,31 +253,61 @@ public class Vision
         }
     }   //setTensorFlowVisionEnabled
 
+    /**
+     * This method checks if AprilTag vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
     public boolean isAprilTagVisionEnabled()
     {
         return aprilTagProcessor != null && vision.isVisionProcessorEnabled(aprilTagProcessor);
     }   //isAprilTagVisionEnabled
 
+    /**
+     * This method checks if WhitePixel vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
     public boolean isWhitePixelVisionEnabled()
     {
         return whitePixelProcessor != null && vision.isVisionProcessorEnabled(whitePixelProcessor);
     }   //isWhitePixelVisionEnabled
 
+    /**
+     * This method checks if YellowPixel vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
     public boolean isYellowPixelVisionEnabled()
     {
         return yellowPixelProcessor != null && vision.isVisionProcessorEnabled(yellowPixelProcessor);
     }   //isYellowPixelVisionEnabled
 
+    /**
+     * This method checks if GreenPixel vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
     public boolean isGreenPixelVisionEnabled()
     {
         return greenPixelProcessor != null && vision.isVisionProcessorEnabled(greenPixelProcessor);
     }   //isGreenPixelVisionEnabled
 
+    /**
+     * This method checks if PurplePixel vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
     public boolean isPurplePixelVisionEnabled()
     {
         return purplePixelProcessor != null && vision.isVisionProcessorEnabled(purplePixelProcessor);
     }   //isPurplePixelVisionEnabled
 
+    /**
+     * This method checks if TensorFlow vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
     public boolean isTensorFlowVisionEnabled()
     {
         return tensorFlowProcessor != null && vision.isVisionProcessorEnabled(tensorFlowProcessor);
