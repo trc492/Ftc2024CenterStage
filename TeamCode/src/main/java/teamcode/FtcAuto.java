@@ -169,16 +169,28 @@ public class FtcAuto extends FtcOpMode
                 robot.vision.setAprilTagVisionEnabled(true);
             }
 
-            if (robot.vision.redBlobVision != null)
+            if (robot.vision.whitePixelVision != null)
             {
-                robot.globalTracer.traceInfo(funcName, "Enabling RedBlobVision.");
-                robot.vision.setRedBlobVisionEnabled(true);
+                robot.globalTracer.traceInfo(funcName, "Enabling WhitePixelVision.");
+                robot.vision.setWhitePixelVisionEnabled(true);
             }
 
-            if (robot.vision.blueBlobVision != null)
+            if (robot.vision.yellowPixelVision != null)
             {
-                robot.globalTracer.traceInfo(funcName, "Enabling BlueBlobVision.");
-                robot.vision.setBlueBlobVisionEnabled(true);
+                robot.globalTracer.traceInfo(funcName, "Enabling YellowPixelVision.");
+                robot.vision.setYellowPixelVisionEnabled(true);
+            }
+
+            if (robot.vision.greenPixelVision != null)
+            {
+                robot.globalTracer.traceInfo(funcName, "Enabling GreenPixelVision.");
+                robot.vision.setGreenPixelVisionEnabled(true);
+            }
+
+            if (robot.vision.purplePixelVision != null)
+            {
+                robot.globalTracer.traceInfo(funcName, "Enabling PurplePixelVision.");
+                robot.vision.setPurplePixelVisionEnabled(true);
             }
 
             if (robot.vision.tensorFlowVision != null)

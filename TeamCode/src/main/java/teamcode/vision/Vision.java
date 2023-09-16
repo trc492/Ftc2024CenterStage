@@ -31,12 +31,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
-import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcOpenCvColorBlobPipeline;
-import TrcCommonLib.trclib.TrcOpenCvDetector;
 import TrcCommonLib.trclib.TrcVisionTargetInfo;
 import TrcFtcLib.ftclib.FtcEocvColorBlobProcessor;
 import TrcFtcLib.ftclib.FtcOpMode;
@@ -55,18 +53,11 @@ public class Vision
 {
     private static final String moduleName = "Vision";
     private static final int colorConversion = Imgproc.COLOR_BGRA2BGR;
-    private static final double[] redBlobColorThresholds = {100.0, 255.0, 0.0, 100.0, 0.0, 60.0};
-    private static final double[] blueBlobColorThresholds = {0.0, 60.0, 0.0, 100.0, 100, 255.0};
-    private static final TrcOpenCvColorBlobPipeline.FilterContourParams redBlobFilterContourParams =
-        new TrcOpenCvColorBlobPipeline.FilterContourParams()
-            .setMinArea(10000.0)
-            .setMinPerimeter(200.0)
-            .setWidthRange(100.0, 1000.0)
-            .setHeightRange(100.0, 1000.0)
-            .setSolidityRange(0.0, 100.0)
-            .setVerticesRange(0.0, 1000.0)
-            .setAspectRatioRange(0.0, 1000.0);
-    private static final TrcOpenCvColorBlobPipeline.FilterContourParams blueBlobFilterContourParams =
+    private static final double[] whitePixelColorThresholds = {100.0, 255.0, 0.0, 100.0, 0.0, 60.0};
+    private static final double[] yellowPixelColorThresholds = {100.0, 255.0, 0.0, 100.0, 0.0, 60.0};
+    private static final double[] greenPixelColorThresholds = {100.0, 255.0, 0.0, 100.0, 0.0, 60.0};
+    private static final double[] purplePixelColorThresholds = {0.0, 60.0, 0.0, 100.0, 100, 255.0};
+    private static final TrcOpenCvColorBlobPipeline.FilterContourParams pixelFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
             .setMinArea(10000.0)
             .setMinPerimeter(200.0)
@@ -76,16 +67,20 @@ public class Vision
             .setVerticesRange(0.0, 1000.0)
             .setAspectRatioRange(0.0, 1000.0);
     private static final String TFOD_MODEL_ASSET = "CenterStage.tflite";
-    private static final float TFOD_MIN_CONFIDENCE = 0.75f;
+    private static final float TFOD_MIN_CONFIDENCE = 0.90f;
     public static final String[] TARGET_LABELS = {"Pixel"};
 
     private final Robot robot;
     public FtcVisionAprilTag aprilTagVision;
     private AprilTagProcessor aprilTagProcessor;
-    public FtcVisionEocvColorBlob redBlobVision;
-    private FtcEocvColorBlobProcessor redBlobProcessor;
-    public FtcVisionEocvColorBlob blueBlobVision;
-    private FtcEocvColorBlobProcessor blueBlobProcessor;
+    public FtcVisionEocvColorBlob whitePixelVision;
+    private FtcEocvColorBlobProcessor whitePixelProcessor;
+    public FtcVisionEocvColorBlob yellowPixelVision;
+    private FtcEocvColorBlobProcessor yellowPixelProcessor;
+    public FtcVisionEocvColorBlob greenPixelVision;
+    private FtcEocvColorBlobProcessor greenPixelProcessor;
+    public FtcVisionEocvColorBlob purplePixelVision;
+    private FtcEocvColorBlobProcessor purplePixelProcessor;
     public FtcVisionTensorFlow tensorFlowVision;
     private TfodProcessor tensorFlowProcessor;
     private final VisionPortal visionPortal;
@@ -121,14 +116,22 @@ public class Vision
         if (RobotParams.Preferences.useColorBlobVision)
         {
             robot.globalTracer.traceInfo(moduleName, "Starting ColorBlobVision...");
-            redBlobVision = new FtcVisionEocvColorBlob(
-                "RedBlob", colorConversion, redBlobColorThresholds, redBlobFilterContourParams,
+            whitePixelVision = new FtcVisionEocvColorBlob(
+                "WhitePixel", colorConversion, whitePixelColorThresholds, pixelFilterContourParams,
                 RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
-            redBlobProcessor = redBlobVision.getVisionProcessor();
-            blueBlobVision = new FtcVisionEocvColorBlob(
-                "BlueBlob", colorConversion, blueBlobColorThresholds, blueBlobFilterContourParams,
+            whitePixelProcessor = whitePixelVision.getVisionProcessor();
+            yellowPixelVision = new FtcVisionEocvColorBlob(
+                "YellowPixel", colorConversion, yellowPixelColorThresholds, pixelFilterContourParams,
                 RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
-            blueBlobProcessor = blueBlobVision.getVisionProcessor();
+            yellowPixelProcessor = yellowPixelVision.getVisionProcessor();
+            greenPixelVision = new FtcVisionEocvColorBlob(
+                "GreenPixel", colorConversion, greenPixelColorThresholds, pixelFilterContourParams,
+                RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
+            greenPixelProcessor = greenPixelVision.getVisionProcessor();
+            purplePixelVision = new FtcVisionEocvColorBlob(
+                "PurplePixel", colorConversion, purplePixelColorThresholds, pixelFilterContourParams,
+                RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
+            purplePixelProcessor = purplePixelVision.getVisionProcessor();
         }
 
         if (RobotParams.Preferences.useTensorFlowVision)
@@ -171,14 +174,24 @@ public class Vision
             builder.addProcessor(aprilTagProcessor);
         }
 
-        if (redBlobProcessor != null)
+        if (whitePixelProcessor != null)
         {
-            builder.addProcessor(redBlobProcessor);
+            builder.addProcessor(whitePixelProcessor);
         }
 
-        if (blueBlobProcessor != null)
+        if (yellowPixelProcessor != null)
         {
-            builder.addProcessor(blueBlobProcessor);
+            builder.addProcessor(yellowPixelProcessor);
+        }
+
+        if (greenPixelProcessor != null)
+        {
+            builder.addProcessor(greenPixelProcessor);
+        }
+
+        if (purplePixelProcessor != null)
+        {
+            builder.addProcessor(purplePixelProcessor);
         }
 
         if (tensorFlowProcessor != null)
@@ -189,8 +202,10 @@ public class Vision
         visionPortal = builder.build();
         // Disable all vision processor until they are needed.
         setAprilTagVisionEnabled(false);
-        setRedBlobVisionEnabled(false);
-        setBlueBlobVisionEnabled(false);
+        setWhitePixelVisionEnabled(false);
+        setYellowPixelVisionEnabled(false);
+        setGreenPixelVisionEnabled(false);
+        setPurplePixelVisionEnabled(false);
         setTensorFlowVisionEnabled(false);
     }   //Vision
 
@@ -202,21 +217,37 @@ public class Vision
         }
     }   //setAprilTagVisionEnabled
 
-    public void setRedBlobVisionEnabled(boolean enabled)
+    public void setWhitePixelVisionEnabled(boolean enabled)
     {
-        if (redBlobProcessor != null)
+        if (whitePixelProcessor != null)
         {
-            visionPortal.setProcessorEnabled(redBlobProcessor, enabled);
+            visionPortal.setProcessorEnabled(whitePixelProcessor, enabled);
         }
-    }   //setRedBlobVisionEnabled
+    }   //setWhitePixelVisionEnabled
 
-    public void setBlueBlobVisionEnabled(boolean enabled)
+    public void setYellowPixelVisionEnabled(boolean enabled)
     {
-        if (blueBlobProcessor != null)
+        if (yellowPixelProcessor != null)
         {
-            visionPortal.setProcessorEnabled(blueBlobProcessor, enabled);
+            visionPortal.setProcessorEnabled(yellowPixelProcessor, enabled);
         }
-    }   //setBlueBlobVisionEnabled
+    }   //setYellowVisionEnabled
+
+    public void setGreenPixelVisionEnabled(boolean enabled)
+    {
+        if (greenPixelProcessor != null)
+        {
+            visionPortal.setProcessorEnabled(greenPixelProcessor, enabled);
+        }
+    }   //setGreenPixelVisionEnabled
+
+    public void setPurplePixelVisionEnabled(boolean enabled)
+    {
+        if (purplePixelProcessor != null)
+        {
+            visionPortal.setProcessorEnabled(purplePixelProcessor, enabled);
+        }
+    }   //setPurplePixelVisionEnabled
 
     public void setTensorFlowVisionEnabled(boolean enabled)
     {
@@ -231,15 +262,25 @@ public class Vision
         return aprilTagProcessor != null && visionPortal.getProcessorEnabled(aprilTagProcessor);
     }   //isAprilTagVisionEnabled
 
-    public boolean isRedBlobVisionEabled()
+    public boolean isWhitePixelVisionEabled()
     {
-        return redBlobProcessor != null && visionPortal.getProcessorEnabled(redBlobProcessor);
-    }   //isRedBlobVisionEnabled
+        return whitePixelProcessor != null && visionPortal.getProcessorEnabled(whitePixelProcessor);
+    }   //isWhitePixelVisionEnabled
 
-    public boolean isBlueBlobVisionEabled()
+    public boolean isYellowPixelVisionEabled()
     {
-        return blueBlobProcessor != null && visionPortal.getProcessorEnabled(blueBlobProcessor);
-    }   //isBlueBlobVisionEnabled
+        return yellowPixelProcessor != null && visionPortal.getProcessorEnabled(yellowPixelProcessor);
+    }   //isYellowPixelVisionEnabled
+
+    public boolean isGreenPixelVisionEabled()
+    {
+        return greenPixelProcessor != null && visionPortal.getProcessorEnabled(greenPixelProcessor);
+    }   //isGreenPixelVisionEnabled
+
+    public boolean isPurplePixelVisionEabled()
+    {
+        return purplePixelProcessor != null && visionPortal.getProcessorEnabled(purplePixelProcessor);
+    }   //isPurplePixelVisionEnabled
 
     public boolean isTensorFlowVisionEabled()
     {

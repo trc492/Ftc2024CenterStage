@@ -269,16 +269,28 @@ public class FtcTest extends FtcTeleOp
                         robot.vision.setAprilTagVisionEnabled(true);
                     }
 
-                    if (robot.vision.redBlobVision != null)
+                    if (robot.vision.whitePixelVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling RedBlobVision.");
-                        robot.vision.setRedBlobVisionEnabled(true);
+                        robot.globalTracer.traceInfo(funcName, "Enabling WhitePixelVision.");
+                        robot.vision.setWhitePixelVisionEnabled(true);
                     }
 
-                    if (robot.vision.blueBlobVision != null)
+                    if (robot.vision.yellowPixelVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling BlueBlobVision.");
-                        robot.vision.setBlueBlobVisionEnabled(true);
+                        robot.globalTracer.traceInfo(funcName, "Enabling YellowPixelVision.");
+                        robot.vision.setYellowPixelVisionEnabled(true);
+                    }
+
+                    if (robot.vision.greenPixelVision != null)
+                    {
+                        robot.globalTracer.traceInfo(funcName, "Enabling GreenPixelVision.");
+                        robot.vision.setGreenPixelVisionEnabled(true);
+                    }
+
+                    if (robot.vision.purplePixelVision != null)
+                    {
+                        robot.globalTracer.traceInfo(funcName, "Enabling PurplePixelVision.");
+                        robot.vision.setPurplePixelVisionEnabled(true);
                     }
 
                     if (robot.vision.tensorFlowVision != null)
@@ -958,22 +970,40 @@ public class FtcTest extends FtcTeleOp
                     lineNum++, "AprilTag: %s", aprilTagInfo != null? aprilTagInfo: "Not found.");
             }
 
-            if (robot.vision.redBlobVision != null)
+            if (robot.vision.whitePixelVision != null)
             {
                 // TODO: figure out obj height and offset.
-                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> redBlobInfo =
-                    robot.vision.redBlobVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> whitePixelInfo =
+                    robot.vision.whitePixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
-                    lineNum++, "RedBlob: %s", redBlobInfo != null? redBlobInfo: "Not found.");
+                    lineNum++, "WhitePixel: %s", whitePixelInfo != null? whitePixelInfo: "Not found.");
             }
 
-            if (robot.vision.blueBlobVision != null)
+            if (robot.vision.yellowPixelVision != null)
             {
                 // TODO: figure out obj height and offset.
-                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> blueBlobInfo =
-                    robot.vision.blueBlobVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> yellowPixelInfo =
+                    robot.vision.yellowPixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
-                    lineNum++, "BlueBlob: %s", blueBlobInfo != null? blueBlobInfo: "Not found.");
+                    lineNum++, "YellowPixel: %s", yellowPixelInfo != null? yellowPixelInfo: "Not found.");
+            }
+
+            if (robot.vision.greenPixelVision != null)
+            {
+                // TODO: figure out obj height and offset.
+                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> greenPixelInfo =
+                    robot.vision.greenPixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                robot.dashboard.displayPrintf(
+                    lineNum++, "GreenPixel: %s", greenPixelInfo != null? greenPixelInfo: "Not found.");
+            }
+
+            if (robot.vision.purplePixelVision != null)
+            {
+                // TODO: figure out obj height and offset.
+                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> purplePixelInfo =
+                    robot.vision.purplePixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                robot.dashboard.displayPrintf(
+                    lineNum++, "PurplePixel: %s", purplePixelInfo != null? purplePixelInfo: "Not found.");
             }
 
             if (robot.vision.tensorFlowVision != null)

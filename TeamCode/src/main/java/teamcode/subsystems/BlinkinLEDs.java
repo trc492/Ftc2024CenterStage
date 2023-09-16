@@ -22,6 +22,7 @@
 
 package teamcode.subsystems;
 
+import TrcCommonLib.trclib.TrcDriveBase;
 import TrcCommonLib.trclib.TrcRevBlinkin;
 import TrcFtcLib.ftclib.FtcRevBlinkin;
 
@@ -32,13 +33,14 @@ import TrcFtcLib.ftclib.FtcRevBlinkin;
 public class BlinkinLEDs extends FtcRevBlinkin
 {
     // LED pattern names.
-    public static final String IMAGE1_NAME = "Image1";
-    public static final String IMAGE2_NAME = "Image2";
-    public static final String IMAGE3_NAME = "Image3";
-    public static final String IMAGE4_NAME = "Image4";
+    public static final String PURPLE_PIXEL = "PurplePixel";
+    public static final String GREEN_PIXEL = "GreenPixel";
+    public static final String YELLOW_PIXEL = "YellowPixel";
+    public static final String WHITE_PIXEL = "WhitePixel";
     public static final String DRIVE_ORIENTATION_FIELD = "FieldMode";
     public static final String DRIVE_ORIENTATION_ROBOT = "RobotMode";
     public static final String DRIVE_ORIENTATION_INVERTED = "InvertedMode";
+    public static final String OFF_PATTERN = "Off";
 
     /**
      * Constructor: Create an instance of the object.
@@ -51,16 +53,55 @@ public class BlinkinLEDs extends FtcRevBlinkin
         // LED Patterns are sorted in decreasing priority order.
         final TrcRevBlinkin.Pattern[] ledPatternPriorities = {
             // Highest priority.
-            new TrcRevBlinkin.Pattern(IMAGE1_NAME, RevLedPattern.FixedLightChaseRed),
-            new TrcRevBlinkin.Pattern(IMAGE2_NAME, RevLedPattern.FixedLightChaseBlue),
-            new TrcRevBlinkin.Pattern(IMAGE3_NAME, RevLedPattern.FixedBreathRed),
-            new TrcRevBlinkin.Pattern(IMAGE4_NAME, RevLedPattern.FixedBreathBlue),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_FIELD, TrcRevBlinkin.RevLedPattern.SolidViolet),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_ROBOT, TrcRevBlinkin.RevLedPattern.SolidWhite),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_INVERTED, TrcRevBlinkin.RevLedPattern.SolidGray)
+            new TrcRevBlinkin.Pattern(PURPLE_PIXEL, TrcRevBlinkin.RevLedPattern.SolidViolet),
+            new TrcRevBlinkin.Pattern(GREEN_PIXEL, TrcRevBlinkin.RevLedPattern.SolidGreen),
+            new TrcRevBlinkin.Pattern(YELLOW_PIXEL, TrcRevBlinkin.RevLedPattern.SolidYellow),
+            new TrcRevBlinkin.Pattern(WHITE_PIXEL, TrcRevBlinkin.RevLedPattern.SolidWhite),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_FIELD, TrcRevBlinkin.RevLedPattern.SolidAqua),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_ROBOT, TrcRevBlinkin.RevLedPattern.SolidRed),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_INVERTED, TrcRevBlinkin.RevLedPattern.SolidBlue),
+            new TrcRevBlinkin.Pattern(OFF_PATTERN, RevLedPattern.SolidBlack)
             // Lowest priority.
         };
         setPatternPriorities(ledPatternPriorities);
     }   //BlinkinLEDs
+
+    /**
+     * This method sets the LED to indicate the drive orientation mode of the robot.
+     *
+     * @param orientation specifies the drive orientation mode.
+     */
+    public void setDriveOrientation(TrcDriveBase.DriveOrientation orientation)
+    {
+        switch (orientation)
+        {
+            case INVERTED:
+                setPatternState(DRIVE_ORIENTATION_INVERTED, true);
+                setPatternState(DRIVE_ORIENTATION_ROBOT, false);
+                setPatternState(DRIVE_ORIENTATION_FIELD, false);
+                break;
+
+            case ROBOT:
+                setPatternState(DRIVE_ORIENTATION_INVERTED, false);
+                setPatternState(DRIVE_ORIENTATION_ROBOT, true);
+                setPatternState(DRIVE_ORIENTATION_FIELD, false);
+                break;
+
+            case FIELD:
+                setPatternState(DRIVE_ORIENTATION_INVERTED, false);
+                setPatternState(DRIVE_ORIENTATION_ROBOT, false);
+                setPatternState(DRIVE_ORIENTATION_FIELD, true);
+                break;
+        }
+    }   //setDriveOrientation
+
+    public void setVisionDetectedObject(String objLabel)
+    {
+        setPatternState(PURPLE_PIXEL, false);
+        setPatternState(GREEN_PIXEL, false);
+        setPatternState(YELLOW_PIXEL, false);
+        setPatternState(WHITE_PIXEL, false);
+        setPatternState(objLabel, true);
+    }   //setVisionDetectedObject
 
 }   //class BlinkinLEDs

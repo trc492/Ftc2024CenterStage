@@ -230,16 +230,28 @@ public class Robot
                 vision.setAprilTagVisionEnabled(false);
             }
 
-            if (vision.redBlobVision != null)
+            if (vision.whitePixelVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling RedBlobVision.");
-                vision.setRedBlobVisionEnabled(false);
+                globalTracer.traceInfo(funcName, "Disabling WhitePixelVision.");
+                vision.setWhitePixelVisionEnabled(false);
             }
 
-            if (vision.blueBlobVision != null)
+            if (vision.yellowPixelVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling BlueBlobVision.");
-                vision.setBlueBlobVisionEnabled(false);
+                globalTracer.traceInfo(funcName, "Disabling YellowPixelVision.");
+                vision.setYellowPixelVisionEnabled(false);
+            }
+
+            if (vision.greenPixelVision != null)
+            {
+                globalTracer.traceInfo(funcName, "Disabling GreenPixelVision.");
+                vision.setGreenPixelVisionEnabled(false);
+            }
+
+            if (vision.purplePixelVision != null)
+            {
+                globalTracer.traceInfo(funcName, "Disabling PurplePixelVision.");
+                vision.setPurplePixelVisionEnabled(false);
             }
 
             if (vision.tensorFlowVision != null)
