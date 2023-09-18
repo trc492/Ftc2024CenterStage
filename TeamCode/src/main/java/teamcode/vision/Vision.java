@@ -53,11 +53,11 @@ import teamcode.RobotParams;
 public class Vision
 {
     private static final String moduleName = "Vision";
-    private static final int colorConversion = Imgproc.COLOR_RGBA2RGB;
-    private static final double[] whitePixelColorThresholds = {160.0, 255.0, 175.0, 255.0, 150.0, 225.0};
-    private static final double[] yellowPixelColorThresholds = {120.0, 255.0, 100.0, 225.0, 0.0, 60.0};
-    private static final double[] greenPixelColorThresholds = {0.0, 100.0, 120.0, 255.0, 0.0, 140.0};
+    private static final int colorConversion = Imgproc.COLOR_BGRA2BGR;
     private static final double[] purplePixelColorThresholds = {120.0, 255.0, 0.0, 200.0, 200.0, 255.0};
+    private static final double[] greenPixelColorThresholds = {0.0, 100.0, 120.0, 255.0, 0.0, 140.0};
+    private static final double[] yellowPixelColorThresholds = {120.0, 255.0, 100.0, 225.0, 0.0, 60.0};
+    private static final double[] whitePixelColorThresholds = {160.0, 255.0, 175.0, 255.0, 150.0, 225.0};
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams pixelFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
             .setMinArea(1000.0)
@@ -69,19 +69,18 @@ public class Vision
             .setAspectRatioRange(1.0, 10.0);
     private static final String TFOD_MODEL_ASSET = "CenterStage.tflite";
     private static final float TFOD_MIN_CONFIDENCE = 0.90f;
-
-    public static final String[] TARGET_LABELS = {"Pixel"};
+    public static final String[] TFOD_TARGET_LABELS = {"Pixel"};
 
     public FtcVisionAprilTag aprilTagVision;
     private AprilTagProcessor aprilTagProcessor;
-    public FtcVisionEocvColorBlob whitePixelVision;
-    private FtcEocvColorBlobProcessor whitePixelProcessor;
-    public FtcVisionEocvColorBlob yellowPixelVision;
-    private FtcEocvColorBlobProcessor yellowPixelProcessor;
-    public FtcVisionEocvColorBlob greenPixelVision;
-    private FtcEocvColorBlobProcessor greenPixelProcessor;
     public FtcVisionEocvColorBlob purplePixelVision;
     private FtcEocvColorBlobProcessor purplePixelProcessor;
+    public FtcVisionEocvColorBlob greenPixelVision;
+    private FtcEocvColorBlobProcessor greenPixelProcessor;
+    public FtcVisionEocvColorBlob yellowPixelVision;
+    private FtcEocvColorBlobProcessor yellowPixelProcessor;
+    public FtcVisionEocvColorBlob whitePixelVision;
+    private FtcEocvColorBlobProcessor whitePixelProcessor;
     public FtcVisionTensorFlow tensorFlowVision;
     private TfodProcessor tensorFlowProcessor;
     private final FtcVision vision;
@@ -119,17 +118,11 @@ public class Vision
         {
             robot.globalTracer.traceInfo(moduleName, "Starting ColorBlobVision...");
 
-            whitePixelVision = new FtcVisionEocvColorBlob(
-                "WhitePixel", colorConversion, whitePixelColorThresholds, pixelFilterContourParams,
+            purplePixelVision = new FtcVisionEocvColorBlob(
+                "PurplePixel", colorConversion, purplePixelColorThresholds, pixelFilterContourParams,
                 RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
-            whitePixelProcessor = whitePixelVision.getVisionProcessor();
-            visionProcessorList.add(whitePixelProcessor);
-
-            yellowPixelVision = new FtcVisionEocvColorBlob(
-                "YellowPixel", colorConversion, yellowPixelColorThresholds, pixelFilterContourParams,
-                RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
-            yellowPixelProcessor = yellowPixelVision.getVisionProcessor();
-            visionProcessorList.add(yellowPixelProcessor);
+            purplePixelProcessor = purplePixelVision.getVisionProcessor();
+            visionProcessorList.add(purplePixelProcessor);
 
             greenPixelVision = new FtcVisionEocvColorBlob(
                 "GreenPixel", colorConversion, greenPixelColorThresholds, pixelFilterContourParams,
@@ -137,18 +130,24 @@ public class Vision
             greenPixelProcessor = greenPixelVision.getVisionProcessor();
             visionProcessorList.add(greenPixelProcessor);
 
-            purplePixelVision = new FtcVisionEocvColorBlob(
-                "PurplePixel", colorConversion, purplePixelColorThresholds, pixelFilterContourParams,
+            yellowPixelVision = new FtcVisionEocvColorBlob(
+                "YellowPixel", colorConversion, yellowPixelColorThresholds, pixelFilterContourParams,
                 RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
-            purplePixelProcessor = purplePixelVision.getVisionProcessor();
-            visionProcessorList.add(purplePixelProcessor);
+            yellowPixelProcessor = yellowPixelVision.getVisionProcessor();
+            visionProcessorList.add(yellowPixelProcessor);
+
+            whitePixelVision = new FtcVisionEocvColorBlob(
+                "WhitePixel", colorConversion, whitePixelColorThresholds, pixelFilterContourParams,
+                RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
+            whitePixelProcessor = whitePixelVision.getVisionProcessor();
+            visionProcessorList.add(whitePixelProcessor);
         }
 
         if (RobotParams.Preferences.useTensorFlowVision)
         {
             robot.globalTracer.traceInfo(moduleName, "Starting TensorFlowVision...");
             tensorFlowVision = new FtcVisionTensorFlow(
-                null, TFOD_MODEL_ASSET, TARGET_LABELS, RobotParams.cameraRect, RobotParams.worldRect, tracer);
+                null, TFOD_MODEL_ASSET, TFOD_TARGET_LABELS, RobotParams.cameraRect, RobotParams.worldRect, tracer);
             tensorFlowProcessor = tensorFlowVision.getVisionProcessor();
             tensorFlowProcessor.setMinResultConfidence(TFOD_MIN_CONFIDENCE);
             visionProcessorList.add(tensorFlowProcessor);
@@ -168,10 +167,10 @@ public class Vision
                         RobotParams.Preferences.showVisionView, visionProcessors);
         // Disable all vision processors until they are needed.
         setAprilTagVisionEnabled(false);
-        setWhitePixelVisionEnabled(false);
-        setYellowPixelVisionEnabled(false);
-        setGreenPixelVisionEnabled(false);
         setPurplePixelVisionEnabled(false);
+        setGreenPixelVisionEnabled(false);
+        setYellowPixelVisionEnabled(false);
+        setWhitePixelVisionEnabled(false);
         setTensorFlowVisionEnabled(false);
     }   //Vision
 
@@ -189,30 +188,17 @@ public class Vision
     }   //setAprilTagVisionEnabled
 
     /**
-     * This method enables/disables WhitePixel vision.
+     * This method enables/disables PurplePixel vision.
      *
      * @param enabled specifies true to enable, false to disable.
      */
-    public void setWhitePixelVisionEnabled(boolean enabled)
+    public void setPurplePixelVisionEnabled(boolean enabled)
     {
-        if (whitePixelProcessor != null)
+        if (purplePixelProcessor != null)
         {
-            vision.setProcessorEnabled(whitePixelProcessor, enabled);
+            vision.setProcessorEnabled(purplePixelProcessor, enabled);
         }
-    }   //setWhitePixelVisionEnabled
-
-    /**
-     * This method enables/disables YellowPixel vision.
-     *
-     * @param enabled specifies true to enable, false to disable.
-     */
-    public void setYellowPixelVisionEnabled(boolean enabled)
-    {
-        if (yellowPixelProcessor != null)
-        {
-            vision.setProcessorEnabled(yellowPixelProcessor, enabled);
-        }
-    }   //setYellowVisionEnabled
+    }   //setPurplePixelVisionEnabled
 
     /**
      * This method enables/disables GreenPixel vision.
@@ -228,17 +214,30 @@ public class Vision
     }   //setGreenPixelVisionEnabled
 
     /**
-     * This method enables/disables PurplePixel vision.
+     * This method enables/disables YellowPixel vision.
      *
      * @param enabled specifies true to enable, false to disable.
      */
-    public void setPurplePixelVisionEnabled(boolean enabled)
+    public void setYellowPixelVisionEnabled(boolean enabled)
     {
-        if (purplePixelProcessor != null)
+        if (yellowPixelProcessor != null)
         {
-            vision.setProcessorEnabled(purplePixelProcessor, enabled);
+            vision.setProcessorEnabled(yellowPixelProcessor, enabled);
         }
-    }   //setPurplePixelVisionEnabled
+    }   //setYellowVisionEnabled
+
+    /**
+     * This method enables/disables WhitePixel vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
+    public void setWhitePixelVisionEnabled(boolean enabled)
+    {
+        if (whitePixelProcessor != null)
+        {
+            vision.setProcessorEnabled(whitePixelProcessor, enabled);
+        }
+    }   //setWhitePixelVisionEnabled
 
     /**
      * This method enables/disables TensorFlow vision.
@@ -264,24 +263,14 @@ public class Vision
     }   //isAprilTagVisionEnabled
 
     /**
-     * This method checks if WhitePixel vision is enabled.
+     * This method checks if PurplePixel vision is enabled.
      *
      * @return true if enabled, false if disabled.
      */
-    public boolean isWhitePixelVisionEnabled()
+    public boolean isPurplePixelVisionEnabled()
     {
-        return whitePixelProcessor != null && vision.isVisionProcessorEnabled(whitePixelProcessor);
-    }   //isWhitePixelVisionEnabled
-
-    /**
-     * This method checks if YellowPixel vision is enabled.
-     *
-     * @return true if enabled, false if disabled.
-     */
-    public boolean isYellowPixelVisionEnabled()
-    {
-        return yellowPixelProcessor != null && vision.isVisionProcessorEnabled(yellowPixelProcessor);
-    }   //isYellowPixelVisionEnabled
+        return purplePixelProcessor != null && vision.isVisionProcessorEnabled(purplePixelProcessor);
+    }   //isPurplePixelVisionEnabled
 
     /**
      * This method checks if GreenPixel vision is enabled.
@@ -294,14 +283,24 @@ public class Vision
     }   //isGreenPixelVisionEnabled
 
     /**
-     * This method checks if PurplePixel vision is enabled.
+     * This method checks if YellowPixel vision is enabled.
      *
      * @return true if enabled, false if disabled.
      */
-    public boolean isPurplePixelVisionEnabled()
+    public boolean isYellowPixelVisionEnabled()
     {
-        return purplePixelProcessor != null && vision.isVisionProcessorEnabled(purplePixelProcessor);
-    }   //isPurplePixelVisionEnabled
+        return yellowPixelProcessor != null && vision.isVisionProcessorEnabled(yellowPixelProcessor);
+    }   //isYellowPixelVisionEnabled
+
+    /**
+     * This method checks if WhitePixel vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
+    public boolean isWhitePixelVisionEnabled()
+    {
+        return whitePixelProcessor != null && vision.isVisionProcessorEnabled(whitePixelProcessor);
+    }   //isWhitePixelVisionEnabled
 
     /**
      * This method checks if TensorFlow vision is enabled.

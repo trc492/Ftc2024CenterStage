@@ -33,10 +33,12 @@ import TrcFtcLib.ftclib.FtcRevBlinkin;
 public class BlinkinLEDs extends FtcRevBlinkin
 {
     // LED pattern names.
+    public static final String APRIL_TAG = "AprilTag";
     public static final String PURPLE_PIXEL = "PurplePixel";
     public static final String GREEN_PIXEL = "GreenPixel";
     public static final String YELLOW_PIXEL = "YellowPixel";
     public static final String WHITE_PIXEL = "WhitePixel";
+    public static final String TENSOR_FLOW = "TensorFlow";
     public static final String DRIVE_ORIENTATION_FIELD = "FieldMode";
     public static final String DRIVE_ORIENTATION_ROBOT = "RobotMode";
     public static final String DRIVE_ORIENTATION_INVERTED = "InvertedMode";
@@ -53,13 +55,15 @@ public class BlinkinLEDs extends FtcRevBlinkin
         // LED Patterns are sorted in decreasing priority order.
         final TrcRevBlinkin.Pattern[] ledPatternPriorities = {
             // Highest priority.
-            new TrcRevBlinkin.Pattern(PURPLE_PIXEL, TrcRevBlinkin.RevLedPattern.SolidViolet),
-            new TrcRevBlinkin.Pattern(GREEN_PIXEL, TrcRevBlinkin.RevLedPattern.SolidGreen),
-            new TrcRevBlinkin.Pattern(YELLOW_PIXEL, TrcRevBlinkin.RevLedPattern.SolidYellow),
-            new TrcRevBlinkin.Pattern(WHITE_PIXEL, TrcRevBlinkin.RevLedPattern.SolidWhite),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_FIELD, TrcRevBlinkin.RevLedPattern.SolidAqua),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_ROBOT, TrcRevBlinkin.RevLedPattern.SolidRed),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_INVERTED, TrcRevBlinkin.RevLedPattern.SolidBlue),
+            new TrcRevBlinkin.Pattern(APRIL_TAG, RevLedPattern.SolidAqua),
+            new TrcRevBlinkin.Pattern(PURPLE_PIXEL, RevLedPattern.SolidViolet),
+            new TrcRevBlinkin.Pattern(GREEN_PIXEL, RevLedPattern.SolidGreen),
+            new TrcRevBlinkin.Pattern(YELLOW_PIXEL, RevLedPattern.SolidYellow),
+            new TrcRevBlinkin.Pattern(WHITE_PIXEL, RevLedPattern.SolidWhite),
+            new TrcRevBlinkin.Pattern(TENSOR_FLOW, RevLedPattern.SolidBlue),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_FIELD, RevLedPattern.SolidRed),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_ROBOT, RevLedPattern.SolidDarkRed),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_INVERTED, RevLedPattern.SolidGray),
             new TrcRevBlinkin.Pattern(OFF_PATTERN, RevLedPattern.SolidBlack)
             // Lowest priority.
         };
@@ -94,19 +98,5 @@ public class BlinkinLEDs extends FtcRevBlinkin
                 break;
         }
     }   //setDriveOrientation
-
-    /**
-     * This method sets the LED to indicate the vision detected object.
-     *
-     * @param objLabel specifies the detected object label.
-     */
-    public void setVisionDetectedObject(String objLabel)
-    {
-        setPatternState(PURPLE_PIXEL, false);
-        setPatternState(GREEN_PIXEL, false);
-        setPatternState(YELLOW_PIXEL, false);
-        setPatternState(WHITE_PIXEL, false);
-        setPatternState(objLabel, true);
-    }   //setVisionDetectedObject
 
 }   //class BlinkinLEDs

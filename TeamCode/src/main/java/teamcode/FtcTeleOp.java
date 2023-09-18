@@ -32,7 +32,6 @@ import TrcCommonLib.trclib.TrcRobot;
 import TrcFtcLib.ftclib.FtcGamepad;
 import TrcFtcLib.ftclib.FtcOpMode;
 import teamcode.drivebases.SwerveDrive;
-import teamcode.subsystems.BlinkinLEDs;
 
 /**
  * This class contains the TeleOp Mode program.
@@ -80,6 +79,7 @@ public class FtcTeleOp extends FtcOpMode
         operatorGamepad = new FtcGamepad("OperatorGamepad", gamepad2, this::operatorButtonEvent);
         driverGamepad.setYInverted(true);
         operatorGamepad.setYInverted(true);
+        setDriveOrientation(TrcDriveBase.DriveOrientation.ROBOT);
     }   //robotInit
 
     //
@@ -107,7 +107,6 @@ public class FtcTeleOp extends FtcOpMode
         // Tell robot object opmode is about to start so it can do the necessary start initialization for the mode.
         //
         robot.startMode(nextMode);
-        updateDriveModeLEDs();
     }   //startMode
 
     /**
@@ -180,33 +179,22 @@ public class FtcTeleOp extends FtcOpMode
     }   //periodic
 
     /**
-     * This method updates the blinkin LEDs to show the drive orientation mode.
+     * This method sets the drive orientation mode and updates the LED to indicate so.
+     *
+     * @param orientation specifies the drive orientation (FIELD, ROBOT, INVERTED).
      */
-    private void updateDriveModeLEDs()
+    public void setDriveOrientation(TrcDriveBase.DriveOrientation orientation)
     {
-        if (robot.blinkin != null && robot.robotDrive != null)
+        if (robot.robotDrive != null)
         {
-            TrcDriveBase.DriveOrientation orientation = robot.robotDrive.driveBase.getDriveOrientation();
-
-            robot.blinkin.setPatternState(BlinkinLEDs.DRIVE_ORIENTATION_FIELD, false);
-            robot.blinkin.setPatternState(BlinkinLEDs.DRIVE_ORIENTATION_ROBOT, false);
-            robot.blinkin.setPatternState(BlinkinLEDs.DRIVE_ORIENTATION_INVERTED, false);
-            switch (orientation)
+            robot.robotDrive.driveBase.setDriveOrientation(
+                orientation, orientation == TrcDriveBase.DriveOrientation.FIELD);
+            if (robot.blinkin != null)
             {
-                case FIELD:
-                    robot.blinkin.setPatternState(BlinkinLEDs.DRIVE_ORIENTATION_FIELD, true);
-                    break;
-
-                case ROBOT:
-                    robot.blinkin.setPatternState(BlinkinLEDs.DRIVE_ORIENTATION_ROBOT, true);
-                    break;
-
-                case INVERTED:
-                    robot.blinkin.setPatternState(BlinkinLEDs.DRIVE_ORIENTATION_INVERTED, true);
-                    break;
+                robot.blinkin.setDriveOrientation(orientation);
             }
         }
-    }   //updateDriveModeLEDs
+    }   //setDriveOrientation
 
     //
     // Implements TrcGameController.ButtonHandler interface.
@@ -222,10 +210,6 @@ public class FtcTeleOp extends FtcOpMode
     public void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
         robot.dashboard.displayPrintf(7, "%s: %04x->%s", gamepad, button, pressed? "Pressed": "Released");
-        if (robot.robotDrive != null)
-        {
-            robot.dashboard.displayPrintf(8, "Drive Mode:%s", robot.robotDrive.driveBase.getDriveOrientation());
-        }
 
         switch (button)
         {
@@ -256,17 +240,14 @@ public class FtcTeleOp extends FtcOpMode
                 // Toggle between field or robot oriented driving, only applicable for holonomic drive base.
                 if (pressed && robot.robotDrive != null && robot.robotDrive.driveBase.supportsHolonomicDrive())
                 {
-                    TrcDriveBase.DriveOrientation orientation = robot.robotDrive.driveBase.getDriveOrientation();
-                    if (orientation != TrcDriveBase.DriveOrientation.FIELD)
+                    if (robot.robotDrive.driveBase.getDriveOrientation() != TrcDriveBase.DriveOrientation.FIELD)
                     {
-                        orientation = TrcDriveBase.DriveOrientation.FIELD;
+                        setDriveOrientation(TrcDriveBase.DriveOrientation.FIELD);
                     }
                     else
                     {
-                        orientation = TrcDriveBase.DriveOrientation.ROBOT;
+                        setDriveOrientation(TrcDriveBase.DriveOrientation.ROBOT);
                     }
-                    robot.robotDrive.driveBase.setDriveOrientation(orientation, true);
-                    updateDriveModeLEDs();
                 }
                 break;
 

@@ -49,6 +49,7 @@ import TrcFtcLib.ftclib.FtcVisionAprilTag;
 import TrcFtcLib.ftclib.FtcVisionTensorFlow;
 import teamcode.drivebases.RobotDrive;
 import teamcode.drivebases.SwerveDrive;
+import teamcode.subsystems.BlinkinLEDs;
 
 /**
  * This class contains the Test Mode program. It extends FtcTeleOp so that we can teleop control the robot for
@@ -968,6 +969,10 @@ public class FtcTest extends FtcTeleOp
                     robot.vision.aprilTagVision.getBestDetectedTargetInfo(null);
                 robot.dashboard.displayPrintf(
                     lineNum++, "AprilTag: %s", aprilTagInfo != null? aprilTagInfo: "Not found.");
+                if (robot.blinkin != null)
+                {
+                    robot.blinkin.setPatternState(BlinkinLEDs.APRIL_TAG, aprilTagInfo != null);
+                }
             }
 
             if (robot.vision.whitePixelVision != null)
@@ -977,6 +982,10 @@ public class FtcTest extends FtcTeleOp
                     robot.vision.whitePixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
                     lineNum++, "WhitePixel: %s", whitePixelInfo != null? whitePixelInfo: "Not found.");
+                if (robot.blinkin != null)
+                {
+                    robot.blinkin.setPatternState(BlinkinLEDs.WHITE_PIXEL, whitePixelInfo != null);
+                }
             }
 
             if (robot.vision.yellowPixelVision != null)
@@ -986,6 +995,10 @@ public class FtcTest extends FtcTeleOp
                     robot.vision.yellowPixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
                     lineNum++, "YellowPixel: %s", yellowPixelInfo != null? yellowPixelInfo: "Not found.");
+                if (robot.blinkin != null)
+                {
+                    robot.blinkin.setPatternState(BlinkinLEDs.YELLOW_PIXEL, yellowPixelInfo != null);
+                }
             }
 
             if (robot.vision.greenPixelVision != null)
@@ -995,6 +1008,10 @@ public class FtcTest extends FtcTeleOp
                     robot.vision.greenPixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
                     lineNum++, "GreenPixel: %s", greenPixelInfo != null? greenPixelInfo: "Not found.");
+                if (robot.blinkin != null)
+                {
+                    robot.blinkin.setPatternState(BlinkinLEDs.GREEN_PIXEL, greenPixelInfo != null);
+                }
             }
 
             if (robot.vision.purplePixelVision != null)
@@ -1004,6 +1021,10 @@ public class FtcTest extends FtcTeleOp
                     robot.vision.purplePixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
                     lineNum++, "PurplePixel: %s", purplePixelInfo != null? purplePixelInfo: "Not found.");
+                if (robot.blinkin != null)
+                {
+                    robot.blinkin.setPatternState(BlinkinLEDs.PURPLE_PIXEL, purplePixelInfo != null);
+                }
             }
 
             if (robot.vision.tensorFlowVision != null)

@@ -31,7 +31,6 @@ import TrcCommonLib.trclib.TrcServo;
 import TrcFtcLib.ftclib.FtcDashboard;
 import TrcFtcLib.ftclib.FtcMatchInfo;
 import TrcFtcLib.ftclib.FtcOpMode;
-import TrcFtcLib.ftclib.FtcRevBlinkin;
 import TrcFtcLib.ftclib.FtcRobotBattery;
 import teamcode.drivebases.MecanumDrive;
 import teamcode.drivebases.RobotDrive;
@@ -59,7 +58,7 @@ public class Robot
     //
     // Sensors and indicators.
     //
-    public FtcRevBlinkin blinkin;
+    public BlinkinLEDs blinkin;
     public FtcRobotBattery battery;
     //
     // Subsystems.
