@@ -60,10 +60,10 @@ public class Vision
     private static final double[] whitePixelColorThresholds = {160.0, 255.0, 175.0, 255.0, 150.0, 225.0};
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams pixelFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
-            .setMinArea(1000.0)
-            .setMinPerimeter(100.0)
-            .setWidthRange(10.0, 1000.0)
-            .setHeightRange(10.0, 1000.0)
+            .setMinArea(5000.0)
+            .setMinPerimeter(200.0)
+            .setWidthRange(50.0, 1000.0)
+            .setHeightRange(50.0, 1000.0)
             .setSolidityRange(0.0, 100.0)
             .setVerticesRange(0.0, 1000.0)
             .setAspectRatioRange(1.0, 10.0);
@@ -86,9 +86,7 @@ public class Vision
     private final FtcVision vision;
 
     /**
-     * Constructor: Create an instance of the object. Vision is required by both Vuforia and TensorFlow and must be
-     * instantiated if either is used. However, to use either Vuforia or TensorFlow, one must explicitly initialize
-     * them by calling the initVuforia or initTensorFlow methods respectively.
+     * Constructor: Create an instance of the object.
      *
      * @param robot specifies the robot object.
      * @param tracer specifies the tracer for trace info, null if none provided.
