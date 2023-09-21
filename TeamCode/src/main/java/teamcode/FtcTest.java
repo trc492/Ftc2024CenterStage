@@ -1166,6 +1166,10 @@ public class FtcTest extends FtcTeleOp
                     robot.vision.tensorFlowVision.getBestDetectedTargetInfo(null, null, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
                     lineNum++, "TensorFlow: %s", tensorFlowInfo != null? tensorFlowInfo: "Not found.");
+                if (robot.blinkin != null)
+                {
+                    robot.blinkin.setPatternState(BlinkinLEDs.TENSOR_FLOW, tensorFlowInfo != null);
+                }
             }
         }
     }   //doVisionTest

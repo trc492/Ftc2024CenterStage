@@ -226,7 +226,7 @@ public class Robot
         {
             if (vision.rawColorBlobVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling FtcRawEocvVision.");
+                globalTracer.traceInfo(funcName, "Disabling RawColorBlobVision.");
                 vision.setRawColorBlobVisionEnabled(false);
             }
 

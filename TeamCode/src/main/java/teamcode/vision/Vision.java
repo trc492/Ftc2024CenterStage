@@ -163,7 +163,7 @@ public class Vision
 
             if (RobotParams.Preferences.useColorBlobVision)
             {
-                robot.globalTracer.traceInfo(moduleName, "Starting FtcRawEocvVision...");
+                robot.globalTracer.traceInfo(moduleName, "Starting ColorBlobVision...");
 
                 purplePixelVision = new FtcVisionEocvColorBlob(
                     "PurplePixel", colorConversion, purplePixelColorThresholds, pixelFilterContourParams,
