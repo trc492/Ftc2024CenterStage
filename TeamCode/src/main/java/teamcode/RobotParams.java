@@ -26,6 +26,8 @@ import android.os.Environment;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.openftc.easyopencv.OpenCvCameraRotation;
+
 import TrcCommonLib.trclib.TrcDriveBase.DriveOrientation;
 import TrcCommonLib.trclib.TrcHomographyMapper;
 import TrcCommonLib.trclib.TrcPidController;
@@ -49,9 +51,11 @@ public class RobotParams
         // Vision
         public static boolean useWebCam = true;
         public static boolean useBuiltinCamBack = false;
+        public static boolean tuneColorBlobVision = false;
         public static boolean useAprilTagVision = true;
         public static boolean useColorBlobVision = true;
         public static boolean useTensorFlowVision = false;
+        public static boolean useTfodModelAsset = false;
         public static boolean showVisionView = true;
         // Robot
         public static boolean noRobot = true;
@@ -115,6 +119,7 @@ public class RobotParams
     //
     public static final int CAM_IMAGE_WIDTH                     = 640;
     public static final int CAM_IMAGE_HEIGHT                    = 480;
+    public static final OpenCvCameraRotation CAM_ORIENTATION    = OpenCvCameraRotation.UPRIGHT;
     // Camera location on robot.
     public static final double CAM_FRONT_OFFSET                 = 2.000;//Camera offset from front of robot in inches
     public static final double CAM_LEFT_OFFSET                  = 7.125;//Camera offset from left of robot in inches

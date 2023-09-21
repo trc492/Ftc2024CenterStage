@@ -84,7 +84,8 @@ public class Robot
         //
         // Initialize vision subsystems.
         //
-        if (RobotParams.Preferences.useAprilTagVision ||
+        if (RobotParams.Preferences.tuneColorBlobVision ||
+            RobotParams.Preferences.useAprilTagVision ||
             RobotParams.Preferences.useColorBlobVision ||
             RobotParams.Preferences.useTensorFlowVision)
         {
@@ -223,6 +224,12 @@ public class Robot
         //
         if (vision != null)
         {
+            if (vision.rawColorBlobVision != null)
+            {
+                globalTracer.traceInfo(funcName, "Disabling FtcRawEocvVision.");
+                vision.setRawColorBlobVisionEnabled(false);
+            }
+
             if (vision.aprilTagVision != null)
             {
                 globalTracer.traceInfo(funcName, "Disabling AprilTagVision.");

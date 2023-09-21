@@ -3,6 +3,7 @@
     <Webcam name="Webcam 1" serialNumber="B6C92370" />
     <!--
     <Webcam name="Webcam 1" serialNumber="UC762" />
+    <Webcam name="Webcam 1" serialNumber="VendorProduct:vendor=0x045e|product=0x0779|connection="/>
     -->
     <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
         <LynxModule name="Control Hub" port="173">
