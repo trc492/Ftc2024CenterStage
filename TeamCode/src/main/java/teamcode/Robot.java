@@ -28,14 +28,19 @@ import TrcCommonLib.trclib.TrcMotor;
 import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcServo;
+import TrcCommonLib.trclib.TrcServoGrabber;
 import TrcFtcLib.ftclib.FtcDashboard;
+import TrcFtcLib.ftclib.FtcDcMotor;
+import TrcFtcLib.ftclib.FtcDigitalInput;
 import TrcFtcLib.ftclib.FtcMatchInfo;
+import TrcFtcLib.ftclib.FtcMotorActuator;
 import TrcFtcLib.ftclib.FtcOpMode;
 import TrcFtcLib.ftclib.FtcRobotBattery;
 import teamcode.drivebases.MecanumDrive;
 import teamcode.drivebases.RobotDrive;
 import teamcode.drivebases.SwerveDrive;
 import teamcode.subsystems.BlinkinLEDs;
+import teamcode.subsystems.Grabber;
 import teamcode.vision.Vision;
 
 /**
@@ -64,6 +69,9 @@ public class Robot
     // Subsystems.
     //
     public RobotDrive robotDrive;
+    public FtcDcMotor elevator;
+    public FtcDcMotor arm;
+    public TrcServoGrabber grabber = null;
 
     /**
      * Constructor: Create an instance of the object.
@@ -118,6 +126,51 @@ public class Robot
             //
             if (RobotParams.Preferences.useSubsystems)
             {
+                if (RobotParams.Preferences.useElevator)
+                {
+                    FtcMotorActuator.MotorParams motorParams = new FtcMotorActuator.MotorParams()
+                        .setMotorInverted(RobotParams.ELEVATOR_MOTOR_INVERTED)
+                        .setLowerLimitSwitchEnabled(RobotParams.ELEVATOR_HAS_LOWER_LIMIT_SWITCH,
+                                                    RobotParams.ELEVATOR_LOWER_LIMIT_INVERTED)
+                        .setUpperLimitSwitchEnabled(RobotParams.ELEVATOR_HAS_UPPER_LIMIT_SWITCH,
+                                                    RobotParams.ELEVATOR_UPPER_LIMIT_INVERTED)
+                        .setPositionScaleAndOffset(RobotParams.ELEVATOR_INCHES_PER_COUNT, RobotParams.ELEVATOR_OFFSET)
+                        .setPositionPresets(RobotParams.ELEVATOR_PRESET_TOLERANCE, RobotParams.ELEVATOR_PRESETS);
+                    elevator = new FtcMotorActuator(
+                        RobotParams.HWNAME_ELEVATOR, motorParams, globalTracer, false).getMotor();
+//                    final TrcPidActuator.Parameters elevatorParams = new TrcPidActuator.Parameters()
+//                        .setPosRange(RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS)
+//                        .setPidParams(new TrcPidController.PidParameters(
+//                            RobotParams.ELEVATOR_KP, RobotParams.ELEVATOR_KI, RobotParams.ELEVATOR_KD,
+//                            RobotParams.ELEVATOR_TOLERANCE, null))
+//                        .setPowerCompensation(this::getElevatorPowerCompensation)
+//                        .setStallProtectionParams(
+//                            RobotParams.ELEVATOR_STALL_MIN_POWER, RobotParams.ELEVATOR_STALL_TOLERANCE,
+//                            RobotParams.ELEVATOR_STALL_TIMEOUT, RobotParams.ELEVATOR_RESET_TIMEOUT)
+//                        .setZeroCalibratePower(RobotParams.ELEVATOR_CAL_POWER)
+//                        .setPosPresets(RobotParams.ELEVATOR_PRESET_TOLERANCE, RobotParams.ELEVATOR_PRESET_LEVELS);
+                    // Set asymmetric power limits so down power is smaller since it's helped by gravity.
+//                    elevator.getPidController().setOutputRange(-RobotParams.ELEVATOR_DOWN_POWER_SCALE, 1.0);
+                }
+
+                if (RobotParams.Preferences.useArm)
+                {
+                    FtcMotorActuator.MotorParams motorParams = new FtcMotorActuator.MotorParams()
+                        .setMotorInverted(RobotParams.ARM_MOTOR_INVERTED)
+                        .setLowerLimitSwitchEnabled(RobotParams.ARM_HAS_LOWER_LIMIT_SWITCH,
+                                                    RobotParams.ARM_LOWER_LIMIT_INVERTED)
+                        .setUpperLimitSwitchEnabled(RobotParams.ARM_HAS_UPPER_LIMIT_SWITCH,
+                                                    RobotParams.ARM_UPPER_LIMIT_INVERTED)
+                        .setPositionScaleAndOffset(RobotParams.ARM_DEG_PER_COUNT, RobotParams.ARM_OFFSET)
+                        .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS);
+                    elevator = new FtcMotorActuator(
+                        RobotParams.HWNAME_ARM, motorParams, globalTracer, false).getMotor();
+                }
+
+                if (RobotParams.Preferences.useGrabber)
+                {
+                    grabber = new Grabber(RobotParams.HWNAME_GRABBER, globalTracer).getServoGrabber();
+                }
             }
         }
 
