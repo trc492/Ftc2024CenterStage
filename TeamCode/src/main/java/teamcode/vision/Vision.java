@@ -62,7 +62,7 @@ public class Vision
     private static final int colorConversion = Imgproc.COLOR_BGR2HSV_FULL;
     private static final double[] purplePixelColorThresholds = {220.0, 255.0, 60.0, 255.0, 100.0, 255.0};
     private static final double[] greenPixelColorThresholds = {60.0, 120.0, 60.0, 255.0, 60.0, 255.0};
-    private static final double[] yellowPixelColorThresholds = {90.0, 135.0, 150.0, 225.0, 120.0, 255.0};
+    private static final double[] yellowPixelColorThresholds = {110.0, 140.0, 150.0, 225.0, 120.0, 255.0};
     private static final double[] whitePixelColorThresholds = {0.0, 60.0, 0.0, 60.0, 230.0, 255.0};
 //    // RGB Color Space.
 //    private static final int colorConversion = Imgproc.COLOR_BGRA2BGR;
@@ -72,13 +72,13 @@ public class Vision
 //    private static final double[] whitePixelColorThresholds = {160.0, 255.0, 175.0, 255.0, 150.0, 225.0};
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams pixelFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
-            .setMinArea(5000.0)
-            .setMinPerimeter(200.0)
+            .setMinArea(1000.0)
+            .setMinPerimeter(120.0)
             .setWidthRange(50.0, 1000.0)
-            .setHeightRange(50.0, 1000.0)
+            .setHeightRange(10.0, 1000.0)
             .setSolidityRange(0.0, 100.0)
             .setVerticesRange(0.0, 1000.0)
-            .setAspectRatioRange(1.0, 10.0);
+            .setAspectRatioRange(0.2, 5.0);
     private static final String TFOD_MODEL_ASSET = "CenterStage.tflite";
     private static final String TFOD_MODEL_FILENAME = "TrcCenterStage.tflite";
     private static final float TFOD_MIN_CONFIDENCE = 0.90f;

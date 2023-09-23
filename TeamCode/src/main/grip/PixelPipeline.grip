@@ -1,35 +1,35 @@
 <grip:Pipeline>
   <sources>
     <grip:ImageFile>
-      <property name="path" value="C:\Users\Michael\Documents\GitHub\Trc492\Ftc2023PowerPlay\TeamCode\src\main\grip\Cones.jpg"/>
+      <property name="path" value="C:\Temp\Pixels.jpg"/>
     </grip:ImageFile>
   </sources>
   <steps>
     <grip:Step name="CV cvtColor">
       <grip:Input step="0" socket="0"/>
       <grip:Input step="0" socket="1">
-        <value>COLOR_RGBA2RGB</value>
+        <value>COLOR_BGR2HSV</value>
       </grip:Input>
       <grip:Output step="0" socket="0" previewed="true"/>
     </grip:Step>
-    <grip:Step name="RGB Threshold">
+    <grip:Step name="HSV Threshold">
       <grip:Input step="1" socket="0"/>
       <grip:Input step="1" socket="1">
         <value>
-          <double>100.0</double>
-          <double>255.0</double>
+          <double>140.01798561151077</double>
+          <double>180.0</double>
         </value>
       </grip:Input>
       <grip:Input step="1" socket="2">
         <value>
-          <double>0.0</double>
-          <double>100.0</double>
+          <double>50.0</double>
+          <double>200.0</double>
         </value>
       </grip:Input>
       <grip:Input step="1" socket="3">
         <value>
-          <double>0.0</double>
-          <double>60.0</double>
+          <double>150.0</double>
+          <double>255.0</double>
         </value>
       </grip:Input>
       <grip:Output step="1" socket="0" previewed="true"/>
@@ -37,26 +37,26 @@
     <grip:Step name="Find Contours">
       <grip:Input step="2" socket="0"/>
       <grip:Input step="2" socket="1">
-        <value>false</value>
+        <value>true</value>
       </grip:Input>
       <grip:Output step="2" socket="0" previewed="true"/>
     </grip:Step>
     <grip:Step name="Filter Contours">
       <grip:Input step="3" socket="0"/>
       <grip:Input step="3" socket="1">
-        <value>10000.0</value>
+        <value>1000.0</value>
       </grip:Input>
       <grip:Input step="3" socket="2">
-        <value>200.0</value>
+        <value>120.0</value>
       </grip:Input>
       <grip:Input step="3" socket="3">
-        <value>100.0</value>
+        <value>50.0</value>
       </grip:Input>
       <grip:Input step="3" socket="4">
         <value>1000.0</value>
       </grip:Input>
       <grip:Input step="3" socket="5">
-        <value>100.0</value>
+        <value>10.0</value>
       </grip:Input>
       <grip:Input step="3" socket="6">
         <value>1000.0</value>
@@ -74,30 +74,30 @@
         <value>0.0</value>
       </grip:Input>
       <grip:Input step="3" socket="10">
-        <value>0.0</value>
+        <value>0.2</value>
       </grip:Input>
       <grip:Input step="3" socket="11">
-        <value>1000.0</value>
+        <value>5.0</value>
       </grip:Input>
       <grip:Output step="3" socket="0" previewed="true"/>
     </grip:Step>
   </steps>
   <connections>
     <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="true"/>
-      <grip:Input step="0" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output step="1" socket="0" previewed="true"/>
-      <grip:Input step="2" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
       <grip:Output step="2" socket="0" previewed="true"/>
       <grip:Input step="3" socket="0"/>
     </grip:Connection>
     <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="true"/>
+      <grip:Input step="0" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
       <grip:Output step="0" socket="0" previewed="true"/>
       <grip:Input step="1" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="1" socket="0" previewed="true"/>
+      <grip:Input step="2" socket="0"/>
     </grip:Connection>
   </connections>
   <settings>
@@ -111,9 +111,9 @@
   </settings>
   <codeGenerationSettings>
     <language>Java</language>
-    <className>RedGripPipeline</className>
+    <className>PurplePixelPipeline</className>
     <implementWpilibPipeline>false</implementWpilibPipeline>
-    <saveDir>C:\Users\Michael\Documents\GitHub\Trc492\Ftc2023PowerPlay\TeamCode\src\main\java\teamcode</saveDir>
+    <saveDir>C:\Users\Michael\GRIP</saveDir>
     <packageName>teamcode</packageName>
     <moduleName>grip</moduleName>
   </codeGenerationSettings>
