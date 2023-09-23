@@ -73,8 +73,8 @@ public class BlinkinLEDs extends FtcRevBlinkin
             new TrcRevBlinkin.Pattern(BLUE_CONE_POS_2, RevLedPattern.FixedStrobeBlue),
             new TrcRevBlinkin.Pattern(BLUE_CONE_POS_3, RevLedPattern.FixedLightChaseBlue),
             new TrcRevBlinkin.Pattern(TENSOR_FLOW, RevLedPattern.SolidGray),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_FIELD, RevLedPattern.FixedStrobeRed),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_ROBOT, RevLedPattern.FixedStrobeBlue),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_FIELD, RevLedPattern.SolidGold),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_ROBOT, RevLedPattern.FixedStrobeGold),
             new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_INVERTED, RevLedPattern.FixedStrobeWhite),
             new TrcRevBlinkin.Pattern(OFF_PATTERN, RevLedPattern.SolidBlack)
             // Lowest priority.

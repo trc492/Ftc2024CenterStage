@@ -46,7 +46,7 @@ public class RobotParams
         // Miscellaneous
         public static boolean useTraceLog = true;
         public static boolean useLoopPerformanceMonitor = true;
-        public static boolean useBlinkin = false;
+        public static boolean useBlinkin = true;
         public static boolean useBatteryMonitor = false;
         // Vision
         public static boolean useWebCam = true;
@@ -58,14 +58,14 @@ public class RobotParams
         public static boolean useTfodModelAsset = false;
         public static boolean showVisionView = true;
         // Robot
-        public static boolean noRobot = true;
-        public static boolean swerveRobot = true;
+        public static boolean noRobot = false;
+        public static boolean swerveRobot = false;
         // Drive Base
-        public static boolean useExternalOdometry = false;
+        public static boolean useExternalOdometry = true;
         public static boolean useVelocityControl = false;
         public static boolean doSwervePhysicalAlignment = false;
         // Subsystems
-        public static boolean useSubsystems = false;
+        public static boolean useSubsystems = true;
         public static boolean useElevator = true;
         public static boolean useArm = true;
         public static boolean useGrabber = true;
@@ -194,7 +194,7 @@ public class RobotParams
     public static final double RBSTEER_ZERO_POS                 = 0.538126;
 
     public static final boolean LFDRIVE_INVERTED                = true;
-    public static final boolean RFDRIVE_INVERTED                = true;
+    public static final boolean RFDRIVE_INVERTED                = false;//true;
     public static final boolean LBDRIVE_INVERTED                = true;
     public static final boolean RBDRIVE_INVERTED                = false;
     public static final boolean LFSTEER_INVERTED                = true;

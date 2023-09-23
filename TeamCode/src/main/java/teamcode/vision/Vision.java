@@ -549,13 +549,13 @@ public class Vision
         if (robot.blinkin != null)
         {
             // Turn off previous detection indication.
-            robot.blinkin.setPatternState(BlinkinLEDs.RED_CONE_POS_1, false);
-            robot.blinkin.setPatternState(BlinkinLEDs.RED_CONE_POS_2, false);
-            robot.blinkin.setPatternState(BlinkinLEDs.RED_CONE_POS_3, false);
-            robot.blinkin.setPatternState(BlinkinLEDs.BLUE_CONE_POS_1, false);
-            robot.blinkin.setPatternState(BlinkinLEDs.BLUE_CONE_POS_2, false);
-            robot.blinkin.setPatternState(BlinkinLEDs.BLUE_CONE_POS_3, false);
-            robot.blinkin.setPatternState(ledLabel, true);
+//            robot.blinkin.setPatternState(BlinkinLEDs.RED_CONE_POS_1, false);
+//            robot.blinkin.setPatternState(BlinkinLEDs.RED_CONE_POS_2, false);
+//            robot.blinkin.setPatternState(BlinkinLEDs.RED_CONE_POS_3, false);
+//            robot.blinkin.setPatternState(BlinkinLEDs.BLUE_CONE_POS_1, false);
+//            robot.blinkin.setPatternState(BlinkinLEDs.BLUE_CONE_POS_2, false);
+//            robot.blinkin.setPatternState(BlinkinLEDs.BLUE_CONE_POS_3, false);
+            robot.blinkin.setPatternState(ledLabel, true, 0.5);
         }
 
         if (pos != 0)
