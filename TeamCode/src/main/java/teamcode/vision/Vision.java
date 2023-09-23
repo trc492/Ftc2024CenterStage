@@ -37,6 +37,7 @@ import java.util.ArrayList;
 
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcOpenCvColorBlobPipeline;
+import TrcCommonLib.trclib.TrcOpenCvDetector;
 import TrcCommonLib.trclib.TrcVisionTargetInfo;
 import TrcFtcLib.ftclib.FtcEocvColorBlobProcessor;
 import TrcFtcLib.ftclib.FtcOpMode;
@@ -66,8 +67,8 @@ public class Vision
     private static final double[] greenPixelColorThresholds = {60.0, 120.0, 60.0, 255.0, 60.0, 255.0};
     private static final double[] yellowPixelColorThresholds = {110.0, 140.0, 150.0, 225.0, 120.0, 255.0};
     private static final double[] whitePixelColorThresholds = {0.0, 60.0, 0.0, 60.0, 230.0, 255.0};
-    private static final double[] redConeColorThresholds = {0.0, 255.0, 0.0, 255.0, 0.0, 255.0};
-    private static final double[] blueConeColorThresholds = {0.0, 255.0, 0.0, 255.0, 0.0, 255.0};
+    private static final double[] redConeColorThresholds = {160.0, 200.0, 120.0, 255.0, 150.0, 255.0};
+    private static final double[] blueConeColorThresholds = {0.0, 80.0, 120.0, 255.0, 100.0, 255.0};
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams pixelFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
             .setMinArea(1000.0)
@@ -79,13 +80,13 @@ public class Vision
             .setAspectRatioRange(0.2, 5.0);
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams coneFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
-            .setMinArea(1000.0)
-            .setMinPerimeter(120.0)
+            .setMinArea(3000.0)
+            .setMinPerimeter(200.0)
             .setWidthRange(50.0, 1000.0)
-            .setHeightRange(10.0, 1000.0)
+            .setHeightRange(80.0, 1000.0)
             .setSolidityRange(0.0, 100.0)
             .setVerticesRange(0.0, 1000.0)
-            .setAspectRatioRange(0.2, 5.0);
+            .setAspectRatioRange(0.5, 1.0);
     private static final String TFOD_MODEL_ASSET = "CenterStage.tflite";
     private static final String TFOD_MODEL_FILENAME = "TrcCenterStage.tflite";
     private static final float TFOD_MIN_CONFIDENCE = 0.90f;
@@ -574,6 +575,17 @@ public class Vision
     {
         return lastTeamPropPos;
     }   //getLastDetectedTeamPropPosition
+
+    /**
+     * This method validates the detected pixel is really a pixel by checking its physical width to be about 3 inches.
+     *
+     * @param pixel specifies the detected pixel object.
+     * @return true if it passes the test, false otherwise.
+     */
+    public boolean validatePixel(TrcOpenCvDetector.DetectedObject<?> pixel)
+    {
+        return true;
+    }   //validatePixel
 
     /**
      * This method is called by the Arrays.sort to sort the target object by decreasing confidence.

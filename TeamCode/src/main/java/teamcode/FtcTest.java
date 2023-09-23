@@ -278,16 +278,10 @@ public class FtcTest extends FtcTeleOp
                         robot.vision.setAprilTagVisionEnabled(true);
                     }
 
-                    if (robot.vision.whitePixelVision != null)
+                    if (robot.vision.purplePixelVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling WhitePixelVision.");
-                        robot.vision.setWhitePixelVisionEnabled(true);
-                    }
-
-                    if (robot.vision.yellowPixelVision != null)
-                    {
-                        robot.globalTracer.traceInfo(funcName, "Enabling YellowPixelVision.");
-                        robot.vision.setYellowPixelVisionEnabled(true);
+                        robot.globalTracer.traceInfo(funcName, "Enabling PurplePixelVision.");
+                        robot.vision.setPurplePixelVisionEnabled(true);
                     }
 
                     if (robot.vision.greenPixelVision != null)
@@ -296,10 +290,28 @@ public class FtcTest extends FtcTeleOp
                         robot.vision.setGreenPixelVisionEnabled(true);
                     }
 
-                    if (robot.vision.purplePixelVision != null)
+                    if (robot.vision.yellowPixelVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling PurplePixelVision.");
-                        robot.vision.setPurplePixelVisionEnabled(true);
+                        robot.globalTracer.traceInfo(funcName, "Enabling YellowPixelVision.");
+                        robot.vision.setYellowPixelVisionEnabled(true);
+                    }
+
+                    if (robot.vision.whitePixelVision != null)
+                    {
+                        robot.globalTracer.traceInfo(funcName, "Enabling WhitePixelVision.");
+                        robot.vision.setWhitePixelVisionEnabled(true);
+                    }
+
+                    if (robot.vision.redConeVision != null)
+                    {
+                        robot.globalTracer.traceInfo(funcName, "Enabling RedConeVision.");
+                        robot.vision.setRedConeVisionEnabled(true);
+                    }
+
+                    if (robot.vision.blueConeVision != null)
+                    {
+                        robot.globalTracer.traceInfo(funcName, "Enabling BlueConeVision.");
+                        robot.vision.setBlueConeVisionEnabled(true);
                     }
 
                     if (robot.vision.tensorFlowVision != null)
@@ -1112,7 +1124,8 @@ public class FtcTest extends FtcTeleOp
             {
                 // TODO: figure out obj height and offset.
                 TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> purplePixelInfo =
-                    robot.vision.purplePixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                    robot.vision.purplePixelVision.getBestDetectedTargetInfo(
+                        robot.vision::validatePixel, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
                     lineNum++, "PurplePixel: %s", purplePixelInfo != null? purplePixelInfo: "Not found.");
                 if (robot.blinkin != null)
@@ -1125,7 +1138,8 @@ public class FtcTest extends FtcTeleOp
             {
                 // TODO: figure out obj height and offset.
                 TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> greenPixelInfo =
-                    robot.vision.greenPixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                    robot.vision.greenPixelVision.getBestDetectedTargetInfo(
+                        robot.vision::validatePixel, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
                     lineNum++, "GreenPixel: %s", greenPixelInfo != null? greenPixelInfo: "Not found.");
                 if (robot.blinkin != null)
@@ -1138,7 +1152,8 @@ public class FtcTest extends FtcTeleOp
             {
                 // TODO: figure out obj height and offset.
                 TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> yellowPixelInfo =
-                    robot.vision.yellowPixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                    robot.vision.yellowPixelVision.getBestDetectedTargetInfo(
+                        robot.vision::validatePixel, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
                     lineNum++, "YellowPixel: %s", yellowPixelInfo != null? yellowPixelInfo: "Not found.");
                 if (robot.blinkin != null)
@@ -1151,7 +1166,8 @@ public class FtcTest extends FtcTeleOp
             {
                 // TODO: figure out obj height and offset.
                 TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> whitePixelInfo =
-                    robot.vision.whitePixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                    robot.vision.whitePixelVision.getBestDetectedTargetInfo(
+                        robot.vision::validatePixel, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
                     lineNum++, "WhitePixel: %s", whitePixelInfo != null? whitePixelInfo: "Not found.");
                 if (robot.blinkin != null)
