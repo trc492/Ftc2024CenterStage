@@ -162,41 +162,22 @@ public class FtcAuto extends FtcOpMode
 
         if (robot.vision != null)
         {
-            // Enabling vision early so we can detect signal position before match starts.
-            if (robot.vision.aprilTagVision != null)
+            // Enabling vision early so we can detect team prop position before match starts.
+            if (autoChoices.alliance == Alliance.RED_ALLIANCE)
             {
-                robot.globalTracer.traceInfo(funcName, "Enabling AprilTagVision.");
-                robot.vision.setAprilTagVisionEnabled(true);
+                if (robot.vision.redConeVision != null)
+                {
+                    robot.globalTracer.traceInfo(funcName, "Enabling RedConeVision.");
+                    robot.vision.setRedConeVisionEnabled(true);
+                }
             }
-
-            if (robot.vision.whitePixelVision != null)
+            else
             {
-                robot.globalTracer.traceInfo(funcName, "Enabling WhitePixelVision.");
-                robot.vision.setWhitePixelVisionEnabled(true);
-            }
-
-            if (robot.vision.yellowPixelVision != null)
-            {
-                robot.globalTracer.traceInfo(funcName, "Enabling YellowPixelVision.");
-                robot.vision.setYellowPixelVisionEnabled(true);
-            }
-
-            if (robot.vision.greenPixelVision != null)
-            {
-                robot.globalTracer.traceInfo(funcName, "Enabling GreenPixelVision.");
-                robot.vision.setGreenPixelVisionEnabled(true);
-            }
-
-            if (robot.vision.purplePixelVision != null)
-            {
-                robot.globalTracer.traceInfo(funcName, "Enabling PurplePixelVision.");
-                robot.vision.setPurplePixelVisionEnabled(true);
-            }
-
-            if (robot.vision.tensorFlowVision != null)
-            {
-                robot.globalTracer.traceInfo(funcName, "Enabling TensorFlowVision.");
-                robot.vision.setTensorFlowVisionEnabled(true);
+                if (robot.vision.blueConeVision != null)
+                {
+                    robot.globalTracer.traceInfo(funcName, "Enabling BlueConeVision.");
+                    robot.vision.setBlueConeVisionEnabled(true);
+                }
             }
         }
 
@@ -209,11 +190,15 @@ public class FtcAuto extends FtcOpMode
 
     /**
      * This method is called periodically after robotInit() is called but before competition starts. For this season,
-     * we are detecting the duck's barcode position before the match starts.
+     * we are detecting the team prop's position before the match starts.
      */
     @Override
     public void initPeriodic()
     {
+        if (robot.vision != null)
+        {
+            robot.vision.getDetectedTeamPropPosition(autoChoices.alliance, -1);
+        }
     }   //initPeriodic
 
     /**

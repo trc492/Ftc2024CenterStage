@@ -1108,29 +1108,16 @@ public class FtcTest extends FtcTeleOp
                 }
             }
 
-            if (robot.vision.whitePixelVision != null)
+            if (robot.vision.purplePixelVision != null)
             {
                 // TODO: figure out obj height and offset.
-                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> whitePixelInfo =
-                    robot.vision.whitePixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> purplePixelInfo =
+                    robot.vision.purplePixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
-                    lineNum++, "WhitePixel: %s", whitePixelInfo != null? whitePixelInfo: "Not found.");
+                    lineNum++, "PurplePixel: %s", purplePixelInfo != null? purplePixelInfo: "Not found.");
                 if (robot.blinkin != null)
                 {
-                    robot.blinkin.setPatternState(BlinkinLEDs.WHITE_PIXEL, whitePixelInfo != null);
-                }
-            }
-
-            if (robot.vision.yellowPixelVision != null)
-            {
-                // TODO: figure out obj height and offset.
-                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> yellowPixelInfo =
-                    robot.vision.yellowPixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
-                robot.dashboard.displayPrintf(
-                    lineNum++, "YellowPixel: %s", yellowPixelInfo != null? yellowPixelInfo: "Not found.");
-                if (robot.blinkin != null)
-                {
-                    robot.blinkin.setPatternState(BlinkinLEDs.YELLOW_PIXEL, yellowPixelInfo != null);
+                    robot.blinkin.setPatternState(BlinkinLEDs.PURPLE_PIXEL, purplePixelInfo != null);
                 }
             }
 
@@ -1147,17 +1134,40 @@ public class FtcTest extends FtcTeleOp
                 }
             }
 
-            if (robot.vision.purplePixelVision != null)
+            if (robot.vision.yellowPixelVision != null)
             {
                 // TODO: figure out obj height and offset.
-                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> purplePixelInfo =
-                    robot.vision.purplePixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> yellowPixelInfo =
+                    robot.vision.yellowPixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
                 robot.dashboard.displayPrintf(
-                    lineNum++, "PurplePixel: %s", purplePixelInfo != null? purplePixelInfo: "Not found.");
+                    lineNum++, "YellowPixel: %s", yellowPixelInfo != null? yellowPixelInfo: "Not found.");
                 if (robot.blinkin != null)
                 {
-                    robot.blinkin.setPatternState(BlinkinLEDs.PURPLE_PIXEL, purplePixelInfo != null);
+                    robot.blinkin.setPatternState(BlinkinLEDs.YELLOW_PIXEL, yellowPixelInfo != null);
                 }
+            }
+
+            if (robot.vision.whitePixelVision != null)
+            {
+                // TODO: figure out obj height and offset.
+                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> whitePixelInfo =
+                    robot.vision.whitePixelVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                robot.dashboard.displayPrintf(
+                    lineNum++, "WhitePixel: %s", whitePixelInfo != null? whitePixelInfo: "Not found.");
+                if (robot.blinkin != null)
+                {
+                    robot.blinkin.setPatternState(BlinkinLEDs.WHITE_PIXEL, whitePixelInfo != null);
+                }
+            }
+
+            if (robot.vision.redConeVision != null)
+            {
+                robot.vision.getDetectedTeamPropPosition(FtcAuto.Alliance.RED_ALLIANCE, lineNum++);
+            }
+
+            if (robot.vision.blueConeVision != null)
+            {
+                robot.vision.getDetectedTeamPropPosition(FtcAuto.Alliance.BLUE_ALLIANCE, lineNum++);
             }
 
             if (robot.vision.tensorFlowVision != null)

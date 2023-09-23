@@ -289,16 +289,10 @@ public class Robot
                 vision.setAprilTagVisionEnabled(false);
             }
 
-            if (vision.whitePixelVision != null)
+            if (vision.purplePixelVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling WhitePixelVision.");
-                vision.setWhitePixelVisionEnabled(false);
-            }
-
-            if (vision.yellowPixelVision != null)
-            {
-                globalTracer.traceInfo(funcName, "Disabling YellowPixelVision.");
-                vision.setYellowPixelVisionEnabled(false);
+                globalTracer.traceInfo(funcName, "Disabling PurplePixelVision.");
+                vision.setPurplePixelVisionEnabled(false);
             }
 
             if (vision.greenPixelVision != null)
@@ -307,10 +301,28 @@ public class Robot
                 vision.setGreenPixelVisionEnabled(false);
             }
 
-            if (vision.purplePixelVision != null)
+            if (vision.yellowPixelVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling PurplePixelVision.");
-                vision.setPurplePixelVisionEnabled(false);
+                globalTracer.traceInfo(funcName, "Disabling YellowPixelVision.");
+                vision.setYellowPixelVisionEnabled(false);
+            }
+
+            if (vision.whitePixelVision != null)
+            {
+                globalTracer.traceInfo(funcName, "Disabling WhitePixelVision.");
+                vision.setWhitePixelVisionEnabled(false);
+            }
+
+            if (vision.redConeVision != null)
+            {
+                globalTracer.traceInfo(funcName, "Disabling RedConeVision.");
+                vision.setRedConeVisionEnabled(false);
+            }
+
+            if (vision.blueConeVision != null)
+            {
+                globalTracer.traceInfo(funcName, "Disabling BlueConeVision.");
+                vision.setBlueConeVisionEnabled(false);
             }
 
             if (vision.tensorFlowVision != null)

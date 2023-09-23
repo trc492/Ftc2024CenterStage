@@ -46,8 +46,10 @@ import TrcFtcLib.ftclib.FtcVision;
 import TrcFtcLib.ftclib.FtcVisionAprilTag;
 import TrcFtcLib.ftclib.FtcVisionEocvColorBlob;
 import TrcFtcLib.ftclib.FtcVisionTensorFlow;
+import teamcode.FtcAuto;
 import teamcode.Robot;
 import teamcode.RobotParams;
+import teamcode.subsystems.BlinkinLEDs;
 
 /**
  * This class implements AprilTag/TensorFlow/Eocv Vision for the game season. It creates and initializes all the
@@ -64,13 +66,18 @@ public class Vision
     private static final double[] greenPixelColorThresholds = {60.0, 120.0, 60.0, 255.0, 60.0, 255.0};
     private static final double[] yellowPixelColorThresholds = {110.0, 140.0, 150.0, 225.0, 120.0, 255.0};
     private static final double[] whitePixelColorThresholds = {0.0, 60.0, 0.0, 60.0, 230.0, 255.0};
-//    // RGB Color Space.
-//    private static final int colorConversion = Imgproc.COLOR_BGRA2BGR;
-//    private static final double[] purplePixelColorThresholds = {120.0, 255.0, 0.0, 200.0, 200.0, 255.0};
-//    private static final double[] greenPixelColorThresholds = {0.0, 100.0, 120.0, 255.0, 0.0, 140.0};
-//    private static final double[] yellowPixelColorThresholds = {120.0, 255.0, 100.0, 225.0, 0.0, 60.0};
-//    private static final double[] whitePixelColorThresholds = {160.0, 255.0, 175.0, 255.0, 150.0, 225.0};
+    private static final double[] redConeColorThresholds = {0.0, 255.0, 0.0, 255.0, 0.0, 255.0};
+    private static final double[] blueConeColorThresholds = {0.0, 255.0, 0.0, 255.0, 0.0, 255.0};
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams pixelFilterContourParams =
+        new TrcOpenCvColorBlobPipeline.FilterContourParams()
+            .setMinArea(1000.0)
+            .setMinPerimeter(120.0)
+            .setWidthRange(50.0, 1000.0)
+            .setHeightRange(10.0, 1000.0)
+            .setSolidityRange(0.0, 100.0)
+            .setVerticesRange(0.0, 1000.0)
+            .setAspectRatioRange(0.2, 5.0);
+    private static final TrcOpenCvColorBlobPipeline.FilterContourParams coneFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
             .setMinArea(1000.0)
             .setMinPerimeter(120.0)
@@ -85,6 +92,7 @@ public class Vision
     public static final String[] TFOD_FIRST_LABELS = {"Pixel"};
     public static final String[] TFOD_TRC_LABELS = {"Yellow Pixel", "Purple Pixel", "White Pixel", "Green Pixel"};
 
+    private final Robot robot;
     private FtcRawEocvColorBlobPipeline rawColorBlobPipeline;
     public FtcRawEocvVision rawColorBlobVision = null;
     public FtcVisionAprilTag aprilTagVision;
@@ -97,9 +105,14 @@ public class Vision
     private FtcEocvColorBlobProcessor yellowPixelProcessor;
     public FtcVisionEocvColorBlob whitePixelVision;
     private FtcEocvColorBlobProcessor whitePixelProcessor;
+    public FtcVisionEocvColorBlob redConeVision;
+    private FtcEocvColorBlobProcessor redConeProcessor;
+    public FtcVisionEocvColorBlob blueConeVision;
+    private FtcEocvColorBlobProcessor blueConeProcessor;
     public FtcVisionTensorFlow tensorFlowVision;
     private TfodProcessor tensorFlowProcessor;
     private FtcVision vision = null;
+    private int lastTeamPropPos = 0;
 
     /**
      * Constructor: Create an instance of the object.
@@ -111,6 +124,7 @@ public class Vision
     {
         FtcOpMode opMode = FtcOpMode.getInstance();
 
+        this.robot = robot;
         if (RobotParams.Preferences.tuneColorBlobVision)
         {
             OpenCvCamera webcam;
@@ -188,6 +202,18 @@ public class Vision
                     RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
                 whitePixelProcessor = whitePixelVision.getVisionProcessor();
                 visionProcessorsList.add(whitePixelProcessor);
+
+                redConeVision = new FtcVisionEocvColorBlob(
+                    "RedCone", colorConversion, redConeColorThresholds, coneFilterContourParams,
+                    RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
+                redConeProcessor = redConeVision.getVisionProcessor();
+                visionProcessorsList.add(redConeProcessor);
+
+                blueConeVision = new FtcVisionEocvColorBlob(
+                    "BlueCone", colorConversion, blueConeColorThresholds, coneFilterContourParams,
+                    RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
+                blueConeProcessor = blueConeVision.getVisionProcessor();
+                visionProcessorsList.add(blueConeProcessor);
             }
 
             if (RobotParams.Preferences.useTensorFlowVision)
@@ -221,6 +247,8 @@ public class Vision
             setGreenPixelVisionEnabled(false);
             setYellowPixelVisionEnabled(false);
             setWhitePixelVisionEnabled(false);
+            setRedConeVisionEnabled(false);
+            setBlueConeVisionEnabled(false);
             setTensorFlowVisionEnabled(false);
         }
     }   //Vision
@@ -328,6 +356,32 @@ public class Vision
     }   //setWhitePixelVisionEnabled
 
     /**
+     * This method enables/disables RedCone vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
+    public void setRedConeVisionEnabled(boolean enabled)
+    {
+        if (redConeProcessor != null)
+        {
+            vision.setProcessorEnabled(redConeProcessor, enabled);
+        }
+    }   //setRedConeVisionEnabled
+
+    /**
+     * This method enables/disables BlueCone vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
+    public void setBlueConeVisionEnabled(boolean enabled)
+    {
+        if (blueConeProcessor != null)
+        {
+            vision.setProcessorEnabled(blueConeProcessor, enabled);
+        }
+    }   //setBlueConeVisionEnabled
+
+    /**
      * This method enables/disables TensorFlow vision.
      *
      * @param enabled specifies true to enable, false to disable.
@@ -401,6 +455,26 @@ public class Vision
     }   //isWhitePixelVisionEnabled
 
     /**
+     * This method checks if RedCone vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
+    public boolean isRedConeVisionEnabled()
+    {
+        return redConeProcessor != null && vision.isVisionProcessorEnabled(redConeProcessor);
+    }   //isRedConeVisionEnabled
+
+    /**
+     * This method checks if BlueCone vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
+    public boolean isBlueConeVisionEnabled()
+    {
+        return blueConeProcessor != null && vision.isVisionProcessorEnabled(blueConeProcessor);
+    }   //isBlueConeVisionEnabled
+
+    /**
      * This method checks if TensorFlow vision is enabled.
      *
      * @return true if enabled, false if disabled.
@@ -409,6 +483,97 @@ public class Vision
     {
         return tensorFlowProcessor != null && vision.isVisionProcessorEnabled(tensorFlowProcessor);
     }   //isTensorFlowVisionEnabled
+
+    /**
+     * This method detects the team prop and determine its position.
+     *
+     * @param alliance specifies the alliance color to look for team prop.
+     * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
+     * @return team prop position 1, 2, or 3, 0 if not found.
+     */
+    public int getDetectedTeamPropPosition(FtcAuto.Alliance alliance, int lineNum)
+    {
+        int pos = 0;
+        TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> teamPropInfo = null;
+        String ledLabel = null;
+
+        if (alliance == FtcAuto.Alliance.RED_ALLIANCE)
+        {
+            if (redConeVision != null)
+            {
+                teamPropInfo = redConeVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+            }
+        }
+        else
+        {
+            if (blueConeVision != null)
+            {
+                teamPropInfo = blueConeVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+            }
+        }
+
+        if (teamPropInfo != null)
+        {
+            double teamPropXPos = teamPropInfo.rect.x + teamPropInfo.rect.width/2.0;
+            double oneThirdScreenWidth = RobotParams.CAM_IMAGE_WIDTH/3.0;
+
+            if (teamPropXPos < oneThirdScreenWidth)
+            {
+                pos = 1;
+                ledLabel = alliance == FtcAuto.Alliance.RED_ALLIANCE?
+                    BlinkinLEDs.RED_CONE_POS_1: BlinkinLEDs.BLUE_CONE_POS_1;
+            }
+            else if (teamPropXPos < oneThirdScreenWidth*2)
+            {
+                pos = 2;
+                ledLabel = alliance == FtcAuto.Alliance.RED_ALLIANCE?
+                    BlinkinLEDs.RED_CONE_POS_2: BlinkinLEDs.BLUE_CONE_POS_2;
+            }
+            else
+            {
+                pos = 3;
+                ledLabel = alliance == FtcAuto.Alliance.RED_ALLIANCE?
+                    BlinkinLEDs.RED_CONE_POS_3: BlinkinLEDs.BLUE_CONE_POS_3;
+            }
+        }
+
+        if (lineNum != -1)
+        {
+            robot.dashboard.displayPrintf(
+                lineNum, "%s: %s",
+                alliance == FtcAuto.Alliance.RED_ALLIANCE? "RedCone": "BlueCone",
+                teamPropInfo != null? teamPropInfo: "Not found");
+        }
+
+        if (robot.blinkin != null)
+        {
+            // Turn off previous detection indication.
+            robot.blinkin.setPatternState(BlinkinLEDs.RED_CONE_POS_1, false);
+            robot.blinkin.setPatternState(BlinkinLEDs.RED_CONE_POS_2, false);
+            robot.blinkin.setPatternState(BlinkinLEDs.RED_CONE_POS_3, false);
+            robot.blinkin.setPatternState(BlinkinLEDs.BLUE_CONE_POS_1, false);
+            robot.blinkin.setPatternState(BlinkinLEDs.BLUE_CONE_POS_2, false);
+            robot.blinkin.setPatternState(BlinkinLEDs.BLUE_CONE_POS_3, false);
+            robot.blinkin.setPatternState(ledLabel, true);
+        }
+
+        if (pos != 0)
+        {
+            lastTeamPropPos = pos;
+        }
+
+        return pos;
+    }   //getDetectedTeamPropPosition
+
+    /**
+     * This method returns the last detected team prop position.
+     *
+     * @return last team prop position, 0 if never detected it.
+     */
+    public int getLastDetectedTeamPropPosition()
+    {
+        return lastTeamPropPos;
+    }   //getLastDetectedTeamPropPosition
 
     /**
      * This method is called by the Arrays.sort to sort the target object by decreasing confidence.
