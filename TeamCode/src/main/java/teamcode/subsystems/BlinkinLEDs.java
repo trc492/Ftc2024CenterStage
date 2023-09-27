@@ -61,26 +61,36 @@ public class BlinkinLEDs extends FtcRevBlinkin
         // LED Patterns are sorted in decreasing priority order.
         final TrcRevBlinkin.Pattern[] ledPatternPriorities = {
             // Highest priority.
+            new TrcRevBlinkin.Pattern(RED_CONE_POS_1, RevLedPattern.SolidRed),
+            new TrcRevBlinkin.Pattern(RED_CONE_POS_2, RevLedPattern.SolidGreen),
+            new TrcRevBlinkin.Pattern(RED_CONE_POS_3, RevLedPattern.SolidBlue),
+            new TrcRevBlinkin.Pattern(BLUE_CONE_POS_1, RevLedPattern.SolidRed),
+            new TrcRevBlinkin.Pattern(BLUE_CONE_POS_2, RevLedPattern.SolidGreen),
+            new TrcRevBlinkin.Pattern(BLUE_CONE_POS_3, RevLedPattern.SolidBlue),
             new TrcRevBlinkin.Pattern(APRIL_TAG, RevLedPattern.SolidAqua),
             new TrcRevBlinkin.Pattern(PURPLE_PIXEL, RevLedPattern.SolidViolet),
             new TrcRevBlinkin.Pattern(GREEN_PIXEL, RevLedPattern.SolidGreen),
             new TrcRevBlinkin.Pattern(YELLOW_PIXEL, RevLedPattern.SolidYellow),
             new TrcRevBlinkin.Pattern(WHITE_PIXEL, RevLedPattern.SolidWhite),
-            new TrcRevBlinkin.Pattern(RED_CONE_POS_1, RevLedPattern.SolidRed),
-            new TrcRevBlinkin.Pattern(RED_CONE_POS_2, RevLedPattern.FixedStrobeRed),
-            new TrcRevBlinkin.Pattern(RED_CONE_POS_3, RevLedPattern.FixedLightChaseRed),
-            new TrcRevBlinkin.Pattern(BLUE_CONE_POS_1, RevLedPattern.SolidBlue),
-            new TrcRevBlinkin.Pattern(BLUE_CONE_POS_2, RevLedPattern.FixedStrobeBlue),
-            new TrcRevBlinkin.Pattern(BLUE_CONE_POS_3, RevLedPattern.FixedLightChaseBlue),
             new TrcRevBlinkin.Pattern(TENSOR_FLOW, RevLedPattern.SolidGray),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_FIELD, RevLedPattern.SolidGold),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_ROBOT, RevLedPattern.FixedStrobeGold),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_INVERTED, RevLedPattern.FixedStrobeWhite),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_FIELD, RevLedPattern.SolidDarkGreen),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_ROBOT, RevLedPattern.SolidDarkBlue),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_INVERTED, RevLedPattern.SolidDarkRed),
             new TrcRevBlinkin.Pattern(OFF_PATTERN, RevLedPattern.SolidBlack)
             // Lowest priority.
         };
         setPatternPriorities(ledPatternPriorities);
     }   //BlinkinLEDs
+
+    /**
+     * This method sets the pattern ON for a period of time and turns off automatically afterwards.
+     *
+     * @param patternName specifies the name of the LED pattern to turn on.
+     */
+    public void setDetectedPattern(String patternName)
+    {
+        setPatternState(patternName, true, 0.5);
+    }   //setDetectedPattern
 
     /**
      * This method sets the LED to indicate the drive orientation mode of the robot.

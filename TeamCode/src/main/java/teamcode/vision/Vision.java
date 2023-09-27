@@ -60,14 +60,13 @@ import teamcode.subsystems.BlinkinLEDs;
 public class Vision
 {
     private static final String moduleName = "Vision";
-    private static final double[] DEF_COLORBLOB_THRESHOLDS = {0.0, 255.0, 0.0, 255.0, 0.0, 255.0};
     // HSV Color Space.
     private static final int colorConversion = Imgproc.COLOR_BGR2HSV_FULL;
     private static final double[] purplePixelColorThresholds = {220.0, 255.0, 60.0, 255.0, 100.0, 255.0};
     private static final double[] greenPixelColorThresholds = {60.0, 120.0, 60.0, 255.0, 60.0, 255.0};
     private static final double[] yellowPixelColorThresholds = {110.0, 140.0, 150.0, 225.0, 120.0, 255.0};
     private static final double[] whitePixelColorThresholds = {0.0, 60.0, 0.0, 60.0, 230.0, 255.0};
-    private static final double[] redConeColorThresholds = {160.0, 200.0, 120.0, 255.0, 150.0, 255.0};
+    private static final double[] redConeColorThresholds = {160.0, 200.0, 100.0, 255.0, 100.0, 255.0};
     private static final double[] blueConeColorThresholds = {0.0, 80.0, 120.0, 255.0, 100.0, 255.0};
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams pixelFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
@@ -80,7 +79,7 @@ public class Vision
             .setAspectRatioRange(0.2, 5.0);
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams coneFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
-            .setMinArea(3000.0)
+            .setMinArea(5000.0)
             .setMinPerimeter(200.0)
             .setWidthRange(50.0, 1000.0)
             .setHeightRange(80.0, 1000.0)
@@ -90,7 +89,8 @@ public class Vision
     private static final String TFOD_MODEL_ASSET = "CenterStage.tflite";
     private static final String TFOD_MODEL_FILENAME = "TrcCenterStage.tflite";
     private static final float TFOD_MIN_CONFIDENCE = 0.90f;
-    public static final String[] TFOD_FIRST_LABELS = {"Pixel"};
+    public static final String TFOD_PIXEL_LABEL = "Pixel";
+    public static final String[] TFOD_FIRST_LABELS = {TFOD_PIXEL_LABEL};
     public static final String[] TFOD_TRC_LABELS = {"Yellow Pixel", "Purple Pixel", "White Pixel", "Green Pixel"};
 
     private final Robot robot;
@@ -146,7 +146,7 @@ public class Vision
 
             robot.globalTracer.traceInfo(moduleName, "Starting RawEocvColorBlobVision...");
             rawColorBlobPipeline = new FtcRawEocvColorBlobPipeline(
-                "rawColorBlobPipeline", colorConversion, DEF_COLORBLOB_THRESHOLDS, pixelFilterContourParams, tracer);
+                "rawColorBlobPipeline", colorConversion, redConeColorThresholds, pixelFilterContourParams, tracer);
             // Display colorThresholdOutput.
             rawColorBlobPipeline.setVideoOutput(0);
             rawColorBlobPipeline.setAnnotateEnabled(true);
@@ -486,6 +486,149 @@ public class Vision
     }   //isTensorFlowVisionEnabled
 
     /**
+     * This method calls RawColorBlob vision to detect the color blob for color threshold tuning.
+     *
+     * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
+     * @return detected raw color blob object info.
+     */
+    public TrcVisionTargetInfo<TrcOpenCvDetector.DetectedObject<?>> getDetectedRawColorBlob(int lineNum)
+    {
+        TrcVisionTargetInfo<TrcOpenCvDetector.DetectedObject<?>> colorBlobInfo =
+            rawColorBlobVision != null? rawColorBlobVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0): null;
+
+        if (lineNum != -1)
+        {
+            robot.dashboard.displayPrintf(lineNum, "ColorBlob: %s", colorBlobInfo != null? colorBlobInfo: "Not found.");
+        }
+
+        return colorBlobInfo;
+    }   //getDetectedRawColorBlob
+
+    /**
+     * This method calls AprilTag vision to detect the AprilTag object.
+     *
+     * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
+     * @return detected AprilTag object info.
+     */
+    public TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> getDetectedArpilTag(int lineNum)
+    {
+        TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
+            robot.vision.aprilTagVision.getBestDetectedTargetInfo(null);
+
+        if (aprilTagInfo != null && robot.blinkin != null)
+        {
+            robot.blinkin.setDetectedPattern(BlinkinLEDs.APRIL_TAG);
+        }
+
+        if (lineNum != -1)
+        {
+            robot.dashboard.displayPrintf(lineNum, "AprilTag: %s", aprilTagInfo != null? aprilTagInfo: "Not found.");
+        }
+
+        return aprilTagInfo;
+    }   //getDetectedAprilTag
+
+    /**
+     * This method calls ColorBlob vision to detect the Purple Pixel object.
+     *
+     * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
+     * @return detected Purple Pixel object info.
+     */
+    public TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> getDetectedPurplePixel(int lineNum)
+    {
+        TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> colorBlobInfo =
+            robot.vision.purplePixelVision.getBestDetectedTargetInfo(robot.vision::validatePixel, null, 0.0, 0.0);
+
+        if (colorBlobInfo != null && robot.blinkin != null)
+        {
+            robot.blinkin.setDetectedPattern(BlinkinLEDs.PURPLE_PIXEL);
+        }
+
+        if (lineNum != -1)
+        {
+            robot.dashboard.displayPrintf(
+                lineNum, "PurplePixel: %s", colorBlobInfo != null? colorBlobInfo: "Not found.");
+        }
+
+        return colorBlobInfo;
+    }   //getDetectedPurplePixel
+
+    /**
+     * This method calls ColorBlob vision to detect the Green Pixel object.
+     *
+     * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
+     * @return detected Green Pixel object info.
+     */
+    public TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> getDetectedGreenPixel(int lineNum)
+    {
+        TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> colorBlobInfo =
+            robot.vision.greenPixelVision.getBestDetectedTargetInfo(robot.vision::validatePixel, null, 0.0, 0.0);
+
+        if (colorBlobInfo != null && robot.blinkin != null)
+        {
+            robot.blinkin.setDetectedPattern(BlinkinLEDs.GREEN_PIXEL);
+        }
+
+        if (lineNum != -1)
+        {
+            robot.dashboard.displayPrintf(
+                lineNum, "GreenPixel: %s", colorBlobInfo != null? colorBlobInfo: "Not found.");
+        }
+
+        return colorBlobInfo;
+    }   //getDetectedGreenPixel
+
+    /**
+     * This method calls ColorBlob vision to detect the Yellow Pixel object.
+     *
+     * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
+     * @return detected Yellow Pixel object info.
+     */
+    public TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> getDetectedYellowPixel(int lineNum)
+    {
+        TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> colorBlobInfo =
+            robot.vision.yellowPixelVision.getBestDetectedTargetInfo(robot.vision::validatePixel, null, 0.0, 0.0);
+
+        if (colorBlobInfo != null && robot.blinkin != null)
+        {
+            robot.blinkin.setDetectedPattern(BlinkinLEDs.YELLOW_PIXEL);
+        }
+
+        if (lineNum != -1)
+        {
+            robot.dashboard.displayPrintf(
+                lineNum, "YellowPixel: %s", colorBlobInfo != null? colorBlobInfo: "Not found.");
+        }
+
+        return colorBlobInfo;
+    }   //getDetectedYellowPixel
+
+    /**
+     * This method calls ColorBlob vision to detect the White Pixel object.
+     *
+     * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
+     * @return detected White Pixel object info.
+     */
+    public TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> getDetectedWhitePixel(int lineNum)
+    {
+        TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> colorBlobInfo =
+            robot.vision.whitePixelVision.getBestDetectedTargetInfo(robot.vision::validatePixel, null, 0.0, 0.0);
+
+        if (colorBlobInfo != null && robot.blinkin != null)
+        {
+            robot.blinkin.setDetectedPattern(BlinkinLEDs.WHITE_PIXEL);
+        }
+
+        if (lineNum != -1)
+        {
+            robot.dashboard.displayPrintf(
+                lineNum, "WhitePixel: %s", colorBlobInfo != null? colorBlobInfo: "Not found.");
+        }
+
+        return colorBlobInfo;
+    }   //getDetectedWhitePixel
+
+    /**
      * This method detects the team prop and determine its position.
      *
      * @param alliance specifies the alliance color to look for team prop.
@@ -536,26 +679,19 @@ public class Vision
                 ledLabel = alliance == FtcAuto.Alliance.RED_ALLIANCE?
                     BlinkinLEDs.RED_CONE_POS_3: BlinkinLEDs.BLUE_CONE_POS_3;
             }
+
+            if (robot.blinkin != null)
+            {
+                robot.blinkin.setDetectedPattern(ledLabel);
+            }
         }
 
         if (lineNum != -1)
         {
             robot.dashboard.displayPrintf(
-                lineNum, "%s: %s",
+                lineNum, "%s: %s (pos=%d)",
                 alliance == FtcAuto.Alliance.RED_ALLIANCE? "RedCone": "BlueCone",
-                teamPropInfo != null? teamPropInfo: "Not found");
-        }
-
-        if (robot.blinkin != null)
-        {
-            // Turn off previous detection indication.
-//            robot.blinkin.setPatternState(BlinkinLEDs.RED_CONE_POS_1, false);
-//            robot.blinkin.setPatternState(BlinkinLEDs.RED_CONE_POS_2, false);
-//            robot.blinkin.setPatternState(BlinkinLEDs.RED_CONE_POS_3, false);
-//            robot.blinkin.setPatternState(BlinkinLEDs.BLUE_CONE_POS_1, false);
-//            robot.blinkin.setPatternState(BlinkinLEDs.BLUE_CONE_POS_2, false);
-//            robot.blinkin.setPatternState(BlinkinLEDs.BLUE_CONE_POS_3, false);
-            robot.blinkin.setPatternState(ledLabel, true, 0.5);
+                teamPropInfo != null? teamPropInfo: "Not found", pos);
         }
 
         if (pos != 0)
@@ -565,6 +701,32 @@ public class Vision
 
         return pos;
     }   //getDetectedTeamPropPosition
+
+    /**
+     * This method calls TensorFlow vision to detect the Pixel objects.
+     *
+     * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
+     * @return detected Pixel object info.
+     */
+    public TrcVisionTargetInfo<FtcVisionTensorFlow.DetectedObject> getDetectedTensorFlowPixel(int lineNum)
+    {
+        TrcVisionTargetInfo<FtcVisionTensorFlow.DetectedObject> tensorFlowInfo =
+            robot.vision.tensorFlowVision.getBestDetectedTargetInfo(
+                Vision.TFOD_PIXEL_LABEL, null, null, 0.0, 0.0);
+
+        if (tensorFlowInfo != null && robot.blinkin != null)
+        {
+            robot.blinkin.setDetectedPattern(BlinkinLEDs.TENSOR_FLOW);
+        }
+
+        if (lineNum != -1)
+        {
+            robot.dashboard.displayPrintf(
+                lineNum, "TensorFlow: %s", tensorFlowInfo != null? tensorFlowInfo: "Not found.");
+        }
+
+        return tensorFlowInfo;
+    }   //getDetectedTensorFlowPixel
 
     /**
      * This method returns the last detected team prop position.
@@ -579,12 +741,13 @@ public class Vision
     /**
      * This method validates the detected pixel is really a pixel by checking its physical width to be about 3 inches.
      *
-     * @param pixel specifies the detected pixel object.
+     * @param pixelInfo specifies the detected pixel info object.
      * @return true if it passes the test, false otherwise.
      */
-    public boolean validatePixel(TrcOpenCvDetector.DetectedObject<?> pixel)
+    public boolean validatePixel(TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> pixelInfo)
     {
-        return true;
+        // Pixel is 3-inch wide.
+        return pixelInfo.objWidth > 2.0 && pixelInfo.objWidth < 4.0;
     }   //validatePixel
 
     /**
