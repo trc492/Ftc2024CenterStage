@@ -507,13 +507,14 @@ public class Vision
     /**
      * This method calls AprilTag vision to detect the AprilTag object.
      *
+     * @param id specifies the AprilTag ID to look for, null if match to any ID.
      * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
      * @return detected AprilTag object info.
      */
-    public TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> getDetectedArpilTag(int lineNum)
+    public TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> getDetectedAprilTag(Integer id, int lineNum)
     {
         TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
-            robot.vision.aprilTagVision.getBestDetectedTargetInfo(null);
+            robot.vision.aprilTagVision.getBestDetectedTargetInfo(id, null);
 
         if (aprilTagInfo != null && robot.blinkin != null)
         {

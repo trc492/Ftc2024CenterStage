@@ -1101,7 +1101,7 @@ public class FtcTest extends FtcTeleOp
 
             if (robot.vision.aprilTagVision != null)
             {
-                robot.vision.getDetectedArpilTag(lineNum++);
+                robot.vision.getDetectedAprilTag(null, lineNum++);
             }
 
             if (robot.vision.purplePixelVision != null)
