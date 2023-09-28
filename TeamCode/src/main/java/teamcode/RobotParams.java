@@ -46,10 +46,11 @@ public class RobotParams
         // Miscellaneous
         public static boolean useTraceLog = true;
         public static boolean useLoopPerformanceMonitor = true;
-        public static boolean useBlinkin = true;
+        public static boolean useBlinkin = false;//true;
         public static boolean useBatteryMonitor = false;
         // Vision
         public static boolean useWebCam = true;
+        public static boolean hasWebCam2 = false;
         public static boolean useBuiltinCamBack = false;
         public static boolean tuneColorBlobVision = false;
         public static boolean useAprilTagVision = true;
@@ -58,14 +59,14 @@ public class RobotParams
         public static boolean useTfodModelAsset = false;
         public static boolean showVisionView = true;
         // Robot
-        public static boolean noRobot = false;
+        public static boolean noRobot = true;//false;
         public static boolean swerveRobot = false;
         // Drive Base
         public static boolean useExternalOdometry = true;
         public static boolean useVelocityControl = false;
         public static boolean doSwervePhysicalAlignment = false;
         // Subsystems
-        public static boolean useSubsystems = true;
+        public static boolean useSubsystems = false;//true;
         public static boolean useElevator = true;
         public static boolean useArm = true;
         public static boolean useGrabber = true;
@@ -82,7 +83,8 @@ public class RobotParams
     //
     // Miscellaneous.
     public static final String HWNAME_IMU                       = "imu";
-    public static final String HWNAME_WEBCAM                    = "Webcam 1";
+    public static final String HWNAME_WEBCAM1                   = "Webcam 1";
+    public static final String HWNAME_WEBCAM2                   = "Webcam 2";
     public static final String HWNAME_BLINKIN                   = "blinkin";
     // Drive Base.
     public static final String HWNAME_LFDRIVE_MOTOR             = "lfDriveMotor";
@@ -103,6 +105,7 @@ public class RobotParams
     public static final String HWNAME_ELEVATOR                  = "elevator";
     public static final String HWNAME_ARM                       = "arm";
     public static final String HWNAME_GRABBER                   = "grabber";
+    public static final String HWNAME_INTAKE                    = "intake";
     //
     // Field dimensions.
     //
@@ -356,5 +359,9 @@ public class RobotParams
     public static final double GRABBER_OPEN_TIME                = 0.5;
     public static final double GRABBER_CLOSE_POS                = GRABBER_MIN_POS;
     public static final double GRABBER_CLOSE_TIME               = 0.5;
+    // Intake subsystem.
+    public static final double INTAKE_SENSOR_THRESHOLD          = 5.0;
+    public static final double INTAKE_PICKUP_POWER              = 1.0;
+    public static final double INTAKE_SPITOUT_POWER             = -0.5;
 
 }   //class RobotParams

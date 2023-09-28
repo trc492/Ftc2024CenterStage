@@ -60,14 +60,20 @@ import teamcode.subsystems.BlinkinLEDs;
 public class Vision
 {
     private static final String moduleName = "Vision";
+    // Warning: EOCV converts camera stream to RGBA whereas Desktop OpenCV converts it to BGRA. Therefore, the correct
+    // color conversion must be RGBA (or RGB) to whatever color space you want to convert.
+    //
     // HSV Color Space.
-    private static final int colorConversion = Imgproc.COLOR_BGR2HSV_FULL;
-    private static final double[] purplePixelColorThresholds = {220.0, 255.0, 60.0, 255.0, 100.0, 255.0};
+    private static final int colorConversion = Imgproc.COLOR_RGB2HSV_FULL;
+    private static final double[] purplePixelColorThresholds = {170.0, 200.0, 40.0, 160.0, 100.0, 255.0};
     private static final double[] greenPixelColorThresholds = {60.0, 120.0, 60.0, 255.0, 60.0, 255.0};
-    private static final double[] yellowPixelColorThresholds = {110.0, 140.0, 150.0, 225.0, 120.0, 255.0};
-    private static final double[] whitePixelColorThresholds = {0.0, 60.0, 0.0, 60.0, 230.0, 255.0};
-    private static final double[] redConeColorThresholds = {160.0, 200.0, 100.0, 255.0, 100.0, 255.0};
-    private static final double[] blueConeColorThresholds = {0.0, 80.0, 120.0, 255.0, 100.0, 255.0};
+    private static final double[] yellowPixelColorThresholds = {30.0, 60.0, 120.0, 225.0, 200.0, 255.0};
+    private static final double[] whitePixelColorThresholds = {70.0, 120.0, 0.0, 255.0, 230.0, 255.0};
+    private static final double[] redConeColorThresholds = {0.0, 10.0, 120.0, 255.0, 100.0, 255.0};
+    private static final double[] blueConeColorThresholds = {160.0, 200.0, 120.0, 255.0, 100.0, 255.0};
+    // YCrCb Color Space.
+//    private static final double[] redConeColorThresholds = {60.0, 100.0, 200.0, 255.0, 80.0, 120.0};
+//    private static final double[] blueConeColorThresholds = {160.0, 200.0, 120.0, 255.0, 100.0, 255.0};
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams pixelFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
             .setMinArea(1000.0)
@@ -135,13 +141,13 @@ public class Vision
                 int cameraViewId = opMode.hardwareMap.appContext.getResources().getIdentifier(
                     "cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
                 webcam = OpenCvCameraFactory.getInstance().createWebcam(
-                    opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM), cameraViewId);
+                    opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1), cameraViewId);
                 webcam.showFpsMeterOnViewport(false);
             }
             else
             {
                 webcam = OpenCvCameraFactory.getInstance().createWebcam(
-                    opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM));
+                    opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1));
             }
 
             robot.globalTracer.traceInfo(moduleName, "Starting RawEocvColorBlobVision...");
@@ -232,14 +238,16 @@ public class Vision
 
             VisionProcessor[] visionProcessors = new VisionProcessor[visionProcessorsList.size()];
             visionProcessorsList.toArray(visionProcessors);
-            vision = RobotParams.Preferences.useWebCam ?
+            vision = RobotParams.Preferences.useWebCam?
                 new FtcVision(
-                    opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM),
+                    opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1),
+                    RobotParams.Preferences.hasWebCam2?
+                        opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM2): null,
                     RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT,
-                    RobotParams.Preferences.showVisionView, visionProcessors) :
+                    RobotParams.Preferences.showVisionView, visionProcessors):
                 new FtcVision(
-                    RobotParams.Preferences.useBuiltinCamBack ?
-                        BuiltinCameraDirection.BACK : BuiltinCameraDirection.FRONT,
+                    RobotParams.Preferences.useBuiltinCamBack?
+                        BuiltinCameraDirection.BACK: BuiltinCameraDirection.FRONT,
                     RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT,
                     RobotParams.Preferences.showVisionView, visionProcessors);
             // Disable all vision processors until they are needed.

@@ -359,6 +359,15 @@ public class Robot
      */
     public void zeroCalibrate()
     {
+        if (elevator != null)
+        {
+            elevator.zeroCalibrate(RobotParams.ELEVATOR_CAL_POWER);
+        }
+
+        if (arm != null)
+        {
+            arm.zeroCalibrate(RobotParams.ARM_CAL_POWER);
+        }
     }   //zeroCalibrate
 
     /**
