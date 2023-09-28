@@ -63,16 +63,21 @@ public class Vision
     // Warning: EOCV converts camera stream to RGBA whereas Desktop OpenCV converts it to BGRA. Therefore, the correct
     // color conversion must be RGBA (or RGB) to whatever color space you want to convert.
     //
-    // HSV Color Space.
-    private static final int colorConversion = Imgproc.COLOR_RGB2HSV_FULL;
-    private static final double[] purplePixelColorThresholds = {170.0, 200.0, 40.0, 160.0, 100.0, 255.0};
-    private static final double[] greenPixelColorThresholds = {60.0, 120.0, 60.0, 255.0, 60.0, 255.0};
-    private static final double[] yellowPixelColorThresholds = {30.0, 60.0, 120.0, 225.0, 200.0, 255.0};
-    private static final double[] whitePixelColorThresholds = {70.0, 120.0, 0.0, 255.0, 230.0, 255.0};
-    private static final double[] redConeColorThresholds = {0.0, 10.0, 120.0, 255.0, 100.0, 255.0};
-    private static final double[] blueConeColorThresholds = {160.0, 200.0, 120.0, 255.0, 100.0, 255.0};
     // YCrCb Color Space.
-//    private static final double[] redConeColorThresholds = {60.0, 100.0, 200.0, 255.0, 80.0, 120.0};
+    private static final int colorConversion = Imgproc.COLOR_RGB2YCrCb;
+    private static final double[] purplePixelColorThresholds = {60.0, 200.0, 120.0, 140.0, 150.0, 200.0};
+    private static final double[] greenPixelColorThresholds = {40.0, 200.0, 60.0, 120.0, 60.0, 120.0};
+    private static final double[] yellowPixelColorThresholds = {120.0, 200.0, 120.0, 180.0, 20.0, 80.0};
+    private static final double[] whitePixelColorThresholds = {200.0, 250.0, 100.0, 130.0, 120.0, 140.0};
+    private static final double[] redConeColorThresholds = {20.0, 120.0, 180.0, 220.0, 90.0, 120.0};
+    private static final double[] blueConeColorThresholds = {40.0, 140.0, 100.0, 150.0, 150.0, 200.0};
+//    // HSV Color Space.
+//    private static final int colorConversion = Imgproc.COLOR_RGB2HSV_FULL;
+//    private static final double[] purplePixelColorThresholds = {170.0, 200.0, 40.0, 160.0, 100.0, 255.0};
+//    private static final double[] greenPixelColorThresholds = {60.0, 120.0, 60.0, 255.0, 60.0, 255.0};
+//    private static final double[] yellowPixelColorThresholds = {30.0, 60.0, 120.0, 225.0, 200.0, 255.0};
+//    private static final double[] whitePixelColorThresholds = {70.0, 120.0, 0.0, 255.0, 230.0, 255.0};
+//    private static final double[] redConeColorThresholds = {0.0, 10.0, 120.0, 255.0, 100.0, 255.0};
 //    private static final double[] blueConeColorThresholds = {160.0, 200.0, 120.0, 255.0, 100.0, 255.0};
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams pixelFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
@@ -152,7 +157,8 @@ public class Vision
 
             robot.globalTracer.traceInfo(moduleName, "Starting RawEocvColorBlobVision...");
             rawColorBlobPipeline = new FtcRawEocvColorBlobPipeline(
-                "rawColorBlobPipeline", colorConversion, redConeColorThresholds, pixelFilterContourParams, tracer);
+                "rawColorBlobPipeline", colorConversion, whitePixelColorThresholds, pixelFilterContourParams,
+                tracer);
             // Display colorThresholdOutput.
             rawColorBlobPipeline.setVideoOutput(0);
             rawColorBlobPipeline.setAnnotateEnabled(true);
@@ -712,6 +718,16 @@ public class Vision
     }   //getDetectedTeamPropPosition
 
     /**
+     * This method returns the last detected team prop position.
+     *
+     * @return last team prop position, 0 if never detected it.
+     */
+    public int getLastDetectedTeamPropPosition()
+    {
+        return lastTeamPropPos;
+    }   //getLastDetectedTeamPropPosition
+
+    /**
      * This method calls TensorFlow vision to detect the Pixel objects.
      *
      * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
@@ -721,7 +737,7 @@ public class Vision
     {
         TrcVisionTargetInfo<FtcVisionTensorFlow.DetectedObject> tensorFlowInfo =
             robot.vision.tensorFlowVision.getBestDetectedTargetInfo(
-                Vision.TFOD_PIXEL_LABEL, null, null, 0.0, 0.0);
+                Vision.TFOD_PIXEL_LABEL, null, this::compareConfidence, 0.0, 0.0);
 
         if (tensorFlowInfo != null && robot.blinkin != null)
         {
@@ -736,16 +752,6 @@ public class Vision
 
         return tensorFlowInfo;
     }   //getDetectedTensorFlowPixel
-
-    /**
-     * This method returns the last detected team prop position.
-     *
-     * @return last team prop position, 0 if never detected it.
-     */
-    public int getLastDetectedTeamPropPosition()
-    {
-        return lastTeamPropPos;
-    }   //getLastDetectedTeamPropPosition
 
     /**
      * This method validates the detected pixel is really a pixel by checking its physical width to be about 3 inches.
