@@ -632,7 +632,6 @@ public class Vision
     {
         int pos = 0;
         TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> teamPropInfo = null;
-        String ledLabel = null;
 
         if (alliance == FtcAuto.Alliance.RED_ALLIANCE)
         {
@@ -653,6 +652,7 @@ public class Vision
         {
             double teamPropXPos = teamPropInfo.rect.x + teamPropInfo.rect.width/2.0;
             double oneThirdScreenWidth = RobotParams.CAM_IMAGE_WIDTH/3.0;
+            String ledLabel = null;
 
             if (teamPropXPos < oneThirdScreenWidth)
             {
