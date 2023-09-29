@@ -159,7 +159,7 @@ public class Vision
             rawColorBlobPipeline = new FtcRawEocvColorBlobPipeline(
                 "rawColorBlobPipeline", colorConversion, whitePixelColorThresholds, pixelFilterContourParams,
                 tracer);
-            // Display colorThresholdOutput.
+            // By default, display original Mat.
             rawColorBlobPipeline.setVideoOutput(0);
             rawColorBlobPipeline.setAnnotateEnabled(true);
             rawColorBlobVision = new FtcRawEocvVision(
@@ -257,6 +257,7 @@ public class Vision
                     RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT,
                     RobotParams.Preferences.showVisionView, visionProcessors);
             // Disable all vision processors until they are needed.
+            setRawColorBlobVisionEnabled(false);
             setAprilTagVisionEnabled(false);
             setPurplePixelVisionEnabled(false);
             setGreenPixelVisionEnabled(false);
@@ -306,110 +307,6 @@ public class Vision
     }   //setRawColorBlobVisionEnabled
 
     /**
-     * This method enables/disables AprilTag vision.
-     *
-     * @param enabled specifies true to enable, false to disable.
-     */
-    public void setAprilTagVisionEnabled(boolean enabled)
-    {
-        if (aprilTagProcessor != null)
-        {
-            vision.setProcessorEnabled(aprilTagProcessor, enabled);
-        }
-    }   //setAprilTagVisionEnabled
-
-    /**
-     * This method enables/disables PurplePixel vision.
-     *
-     * @param enabled specifies true to enable, false to disable.
-     */
-    public void setPurplePixelVisionEnabled(boolean enabled)
-    {
-        if (purplePixelProcessor != null)
-        {
-            vision.setProcessorEnabled(purplePixelProcessor, enabled);
-        }
-    }   //setPurplePixelVisionEnabled
-
-    /**
-     * This method enables/disables GreenPixel vision.
-     *
-     * @param enabled specifies true to enable, false to disable.
-     */
-    public void setGreenPixelVisionEnabled(boolean enabled)
-    {
-        if (greenPixelProcessor != null)
-        {
-            vision.setProcessorEnabled(greenPixelProcessor, enabled);
-        }
-    }   //setGreenPixelVisionEnabled
-
-    /**
-     * This method enables/disables YellowPixel vision.
-     *
-     * @param enabled specifies true to enable, false to disable.
-     */
-    public void setYellowPixelVisionEnabled(boolean enabled)
-    {
-        if (yellowPixelProcessor != null)
-        {
-            vision.setProcessorEnabled(yellowPixelProcessor, enabled);
-        }
-    }   //setYellowVisionEnabled
-
-    /**
-     * This method enables/disables WhitePixel vision.
-     *
-     * @param enabled specifies true to enable, false to disable.
-     */
-    public void setWhitePixelVisionEnabled(boolean enabled)
-    {
-        if (whitePixelProcessor != null)
-        {
-            vision.setProcessorEnabled(whitePixelProcessor, enabled);
-        }
-    }   //setWhitePixelVisionEnabled
-
-    /**
-     * This method enables/disables RedCone vision.
-     *
-     * @param enabled specifies true to enable, false to disable.
-     */
-    public void setRedConeVisionEnabled(boolean enabled)
-    {
-        if (redConeProcessor != null)
-        {
-            vision.setProcessorEnabled(redConeProcessor, enabled);
-        }
-    }   //setRedConeVisionEnabled
-
-    /**
-     * This method enables/disables BlueCone vision.
-     *
-     * @param enabled specifies true to enable, false to disable.
-     */
-    public void setBlueConeVisionEnabled(boolean enabled)
-    {
-        if (blueConeProcessor != null)
-        {
-            vision.setProcessorEnabled(blueConeProcessor, enabled);
-        }
-    }   //setBlueConeVisionEnabled
-
-    /**
-     * This method enables/disables TensorFlow vision.
-     *
-     * @param enabled specifies true to enable, false to disable.
-     */
-    public void setTensorFlowVisionEnabled(boolean enabled)
-    {
-        if (tensorFlowProcessor != null)
-        {
-            vision.setProcessorEnabled(tensorFlowProcessor, enabled);
-        }
-    }   //setTensorFlowVisionEnabled
-
-    /**
      * This method checks if raw ColorBlob vision is enabled.
      *
      * @return true if enabled, false if disabled.
@@ -418,86 +315,6 @@ public class Vision
     {
         return rawColorBlobVision != null && rawColorBlobVision.getPipeline() != null;
     }   //isRawColorBlobVisionEnabled
-
-    /**
-     * This method checks if AprilTag vision is enabled.
-     *
-     * @return true if enabled, false if disabled.
-     */
-    public boolean isAprilTagVisionEnabled()
-    {
-        return aprilTagProcessor != null && vision.isVisionProcessorEnabled(aprilTagProcessor);
-    }   //isAprilTagVisionEnabled
-
-    /**
-     * This method checks if PurplePixel vision is enabled.
-     *
-     * @return true if enabled, false if disabled.
-     */
-    public boolean isPurplePixelVisionEnabled()
-    {
-        return purplePixelProcessor != null && vision.isVisionProcessorEnabled(purplePixelProcessor);
-    }   //isPurplePixelVisionEnabled
-
-    /**
-     * This method checks if GreenPixel vision is enabled.
-     *
-     * @return true if enabled, false if disabled.
-     */
-    public boolean isGreenPixelVisionEnabled()
-    {
-        return greenPixelProcessor != null && vision.isVisionProcessorEnabled(greenPixelProcessor);
-    }   //isGreenPixelVisionEnabled
-
-    /**
-     * This method checks if YellowPixel vision is enabled.
-     *
-     * @return true if enabled, false if disabled.
-     */
-    public boolean isYellowPixelVisionEnabled()
-    {
-        return yellowPixelProcessor != null && vision.isVisionProcessorEnabled(yellowPixelProcessor);
-    }   //isYellowPixelVisionEnabled
-
-    /**
-     * This method checks if WhitePixel vision is enabled.
-     *
-     * @return true if enabled, false if disabled.
-     */
-    public boolean isWhitePixelVisionEnabled()
-    {
-        return whitePixelProcessor != null && vision.isVisionProcessorEnabled(whitePixelProcessor);
-    }   //isWhitePixelVisionEnabled
-
-    /**
-     * This method checks if RedCone vision is enabled.
-     *
-     * @return true if enabled, false if disabled.
-     */
-    public boolean isRedConeVisionEnabled()
-    {
-        return redConeProcessor != null && vision.isVisionProcessorEnabled(redConeProcessor);
-    }   //isRedConeVisionEnabled
-
-    /**
-     * This method checks if BlueCone vision is enabled.
-     *
-     * @return true if enabled, false if disabled.
-     */
-    public boolean isBlueConeVisionEnabled()
-    {
-        return blueConeProcessor != null && vision.isVisionProcessorEnabled(blueConeProcessor);
-    }   //isBlueConeVisionEnabled
-
-    /**
-     * This method checks if TensorFlow vision is enabled.
-     *
-     * @return true if enabled, false if disabled.
-     */
-    public boolean isTensorFlowVisionEnabled()
-    {
-        return tensorFlowProcessor != null && vision.isVisionProcessorEnabled(tensorFlowProcessor);
-    }   //isTensorFlowVisionEnabled
 
     /**
      * This method calls RawColorBlob vision to detect the color blob for color threshold tuning.
@@ -517,6 +334,29 @@ public class Vision
 
         return colorBlobInfo;
     }   //getDetectedRawColorBlob
+
+    /**
+     * This method enables/disables AprilTag vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
+    public void setAprilTagVisionEnabled(boolean enabled)
+    {
+        if (aprilTagProcessor != null)
+        {
+            vision.setProcessorEnabled(aprilTagProcessor, enabled);
+        }
+    }   //setAprilTagVisionEnabled
+
+    /**
+     * This method checks if AprilTag vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
+    public boolean isAprilTagVisionEnabled()
+    {
+        return aprilTagProcessor != null && vision.isVisionProcessorEnabled(aprilTagProcessor);
+    }   //isAprilTagVisionEnabled
 
     /**
      * This method calls AprilTag vision to detect the AprilTag object.
@@ -544,6 +384,29 @@ public class Vision
     }   //getDetectedAprilTag
 
     /**
+     * This method enables/disables PurplePixel vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
+    public void setPurplePixelVisionEnabled(boolean enabled)
+    {
+        if (purplePixelProcessor != null)
+        {
+            vision.setProcessorEnabled(purplePixelProcessor, enabled);
+        }
+    }   //setPurplePixelVisionEnabled
+
+    /**
+     * This method checks if PurplePixel vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
+    public boolean isPurplePixelVisionEnabled()
+    {
+        return purplePixelProcessor != null && vision.isVisionProcessorEnabled(purplePixelProcessor);
+    }   //isPurplePixelVisionEnabled
+
+    /**
      * This method calls ColorBlob vision to detect the Purple Pixel object.
      *
      * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
@@ -567,6 +430,29 @@ public class Vision
 
         return colorBlobInfo;
     }   //getDetectedPurplePixel
+
+    /**
+     * This method enables/disables GreenPixel vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
+    public void setGreenPixelVisionEnabled(boolean enabled)
+    {
+        if (greenPixelProcessor != null)
+        {
+            vision.setProcessorEnabled(greenPixelProcessor, enabled);
+        }
+    }   //setGreenPixelVisionEnabled
+
+    /**
+     * This method checks if GreenPixel vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
+    public boolean isGreenPixelVisionEnabled()
+    {
+        return greenPixelProcessor != null && vision.isVisionProcessorEnabled(greenPixelProcessor);
+    }   //isGreenPixelVisionEnabled
 
     /**
      * This method calls ColorBlob vision to detect the Green Pixel object.
@@ -594,6 +480,29 @@ public class Vision
     }   //getDetectedGreenPixel
 
     /**
+     * This method enables/disables YellowPixel vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
+    public void setYellowPixelVisionEnabled(boolean enabled)
+    {
+        if (yellowPixelProcessor != null)
+        {
+            vision.setProcessorEnabled(yellowPixelProcessor, enabled);
+        }
+    }   //setYellowVisionEnabled
+
+    /**
+     * This method checks if YellowPixel vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
+    public boolean isYellowPixelVisionEnabled()
+    {
+        return yellowPixelProcessor != null && vision.isVisionProcessorEnabled(yellowPixelProcessor);
+    }   //isYellowPixelVisionEnabled
+
+    /**
      * This method calls ColorBlob vision to detect the Yellow Pixel object.
      *
      * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
@@ -619,6 +528,29 @@ public class Vision
     }   //getDetectedYellowPixel
 
     /**
+     * This method enables/disables WhitePixel vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
+    public void setWhitePixelVisionEnabled(boolean enabled)
+    {
+        if (whitePixelProcessor != null)
+        {
+            vision.setProcessorEnabled(whitePixelProcessor, enabled);
+        }
+    }   //setWhitePixelVisionEnabled
+
+    /**
+     * This method checks if WhitePixel vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
+    public boolean isWhitePixelVisionEnabled()
+    {
+        return whitePixelProcessor != null && vision.isVisionProcessorEnabled(whitePixelProcessor);
+    }   //isWhitePixelVisionEnabled
+
+    /**
      * This method calls ColorBlob vision to detect the White Pixel object.
      *
      * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
@@ -642,6 +574,52 @@ public class Vision
 
         return colorBlobInfo;
     }   //getDetectedWhitePixel
+
+    /**
+     * This method enables/disables RedCone vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
+    public void setRedConeVisionEnabled(boolean enabled)
+    {
+        if (redConeProcessor != null)
+        {
+            vision.setProcessorEnabled(redConeProcessor, enabled);
+        }
+    }   //setRedConeVisionEnabled
+
+    /**
+     * This method checks if RedCone vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
+    public boolean isRedConeVisionEnabled()
+    {
+        return redConeProcessor != null && vision.isVisionProcessorEnabled(redConeProcessor);
+    }   //isRedConeVisionEnabled
+
+    /**
+     * This method enables/disables BlueCone vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
+    public void setBlueConeVisionEnabled(boolean enabled)
+    {
+        if (blueConeProcessor != null)
+        {
+            vision.setProcessorEnabled(blueConeProcessor, enabled);
+        }
+    }   //setBlueConeVisionEnabled
+
+    /**
+     * This method checks if BlueCone vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
+    public boolean isBlueConeVisionEnabled()
+    {
+        return blueConeProcessor != null && vision.isVisionProcessorEnabled(blueConeProcessor);
+    }   //isBlueConeVisionEnabled
 
     /**
      * This method detects the team prop and determine its position.
@@ -726,6 +704,29 @@ public class Vision
     {
         return lastTeamPropPos;
     }   //getLastDetectedTeamPropPosition
+
+    /**
+     * This method enables/disables TensorFlow vision.
+     *
+     * @param enabled specifies true to enable, false to disable.
+     */
+    public void setTensorFlowVisionEnabled(boolean enabled)
+    {
+        if (tensorFlowProcessor != null)
+        {
+            vision.setProcessorEnabled(tensorFlowProcessor, enabled);
+        }
+    }   //setTensorFlowVisionEnabled
+
+    /**
+     * This method checks if TensorFlow vision is enabled.
+     *
+     * @return true if enabled, false if disabled.
+     */
+    public boolean isTensorFlowVisionEnabled()
+    {
+        return tensorFlowProcessor != null && vision.isVisionProcessorEnabled(tensorFlowProcessor);
+    }   //isTensorFlowVisionEnabled
 
     /**
      * This method calls TensorFlow vision to detect the Pixel objects.
