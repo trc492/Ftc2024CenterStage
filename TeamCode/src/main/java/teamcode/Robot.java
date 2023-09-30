@@ -359,6 +359,14 @@ public class Robot
     }   //zeroCalibrate
 
     /**
+     * This method zero calibrates all subsystems.
+     */
+    public void zeroCalibrate()
+    {
+        zeroCalibrate(null);
+    }   //zeroCalibrate
+
+    /**
      * This method sends the text string to the Driver Station to be spoken using text to speech.
      *
      * @param sentence specifies the sentence to be spoken by the Driver Station.
