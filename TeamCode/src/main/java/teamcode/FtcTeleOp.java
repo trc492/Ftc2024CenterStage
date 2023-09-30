@@ -46,6 +46,7 @@ public class FtcTeleOp extends FtcOpMode
     private double drivePowerScale = RobotParams.DRIVE_POWER_SCALE_NORMAL;
     private double turnPowerScale = RobotParams.TURN_POWER_SCALE_NORMAL;
     private boolean manualOverride = false;
+    private boolean grabberOpen = false;
 
     //
     // Implements FtcOpMode abstract method.
@@ -80,6 +81,10 @@ public class FtcTeleOp extends FtcOpMode
         driverGamepad.setYInverted(true);
         operatorGamepad.setYInverted(true);
         setDriveOrientation(TrcDriveBase.DriveOrientation.ROBOT);
+        if (robot.grabber != null)
+        {
+            robot.grabber.setGrabberOpened(grabberOpen);
+        }
     }   //robotInit
 
     //
@@ -188,9 +193,8 @@ public class FtcTeleOp extends FtcOpMode
                             elevatorPower, RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS, true);
                     }
                     robot.dashboard.displayPrintf(
-                        lineNum++, "Elevator: power=%.1f, pos=%.1f, limitSw=%s/%s",
-                        elevatorPower, robot.elevator.getPosition(), robot.elevator.isLowerLimitSwitchActive(),
-                        robot.elevator.isUpperLimitSwitchActive());
+                        lineNum++, "Elevator: power=%.1f, pos=%.1f, lowerLimitSw=%s",
+                        elevatorPower, robot.elevator.getPosition(), robot.elevator.isLowerLimitSwitchActive());
                 }
 
                 if (robot.arm != null)
@@ -206,9 +210,8 @@ public class FtcTeleOp extends FtcOpMode
                             armPower, RobotParams.ARM_MIN_POS, RobotParams.ARM_MAX_POS, true);
                     }
                     robot.dashboard.displayPrintf(
-                        lineNum++, "Arm: power=%.1f, pos=%.1f, limitSw=%s/%s",
-                        armPower, robot.arm.getPosition(), robot.arm.isLowerLimitSwitchActive(),
-                        robot.arm.isUpperLimitSwitchActive());
+                        lineNum++, "Arm: power=%.1f, pos=%.1f, lowerLimitSw=%s",
+                        armPower, robot.arm.getPosition(), robot.arm.isLowerLimitSwitchActive());
                 }
             }
         }
@@ -322,13 +325,13 @@ public class FtcTeleOp extends FtcOpMode
         switch (button)
         {
             case FtcGamepad.GAMEPAD_A:
-                if(pressed)
+                if (robot.grabber != null)
                 {
-                    robot.grabber.close();
-                }
-                else
-                {
-                    robot.grabber.open();
+                    if(pressed)
+                    {
+                        grabberOpen = !grabberOpen;
+                        robot.grabber.setGrabberOpened(grabberOpen);
+                    }
                 }
                 break;
 
@@ -364,7 +367,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (pressed)
                 {
                     // Zero calibrate all subsystems (arm, elevator and turret).
-                    robot.zeroCalibrate();
+                    robot.zeroCalibrate(moduleName);
                 }
                 break;
         }

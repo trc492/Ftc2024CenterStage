@@ -123,7 +123,7 @@ public class Vision
     private FtcEocvColorBlobProcessor blueConeProcessor;
     public FtcVisionTensorFlow tensorFlowVision;
     private TfodProcessor tensorFlowProcessor;
-    private FtcVision vision = null;
+    private FtcVision vision;
     private int lastTeamPropPos = 0;
 
     /**

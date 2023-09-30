@@ -87,6 +87,23 @@ public class Grabber
     }   //getServoGrabber
 
     /**
+     * This method opens/closes the grabber.
+     *
+     * @param open specifies true to open grabber, false to close.
+     */
+    public void setGrabberOpened(boolean open)
+    {
+        if (open)
+        {
+            grabber.open();
+        }
+        else
+        {
+            grabber.close();
+        }
+    }   //setGrabberOpened
+
+    /**
      * This method is called when an analog sensor threshold has been crossed.
      *
      * @param context specifies the callback context.

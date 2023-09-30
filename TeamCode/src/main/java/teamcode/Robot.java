@@ -28,10 +28,8 @@ import TrcCommonLib.trclib.TrcMotor;
 import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcServo;
-import TrcCommonLib.trclib.TrcServoGrabber;
 import TrcFtcLib.ftclib.FtcDashboard;
 import TrcFtcLib.ftclib.FtcDcMotor;
-import TrcFtcLib.ftclib.FtcDigitalInput;
 import TrcFtcLib.ftclib.FtcMatchInfo;
 import TrcFtcLib.ftclib.FtcMotorActuator;
 import TrcFtcLib.ftclib.FtcOpMode;
@@ -71,7 +69,7 @@ public class Robot
     public RobotDrive robotDrive;
     public FtcDcMotor elevator;
     public FtcDcMotor arm;
-    public TrcServoGrabber grabber = null;
+    public Grabber grabber = null;
 
     /**
      * Constructor: Create an instance of the object.
@@ -138,19 +136,6 @@ public class Robot
                         .setPositionPresets(RobotParams.ELEVATOR_PRESET_TOLERANCE, RobotParams.ELEVATOR_PRESETS);
                     elevator = new FtcMotorActuator(
                         RobotParams.HWNAME_ELEVATOR, motorParams, globalTracer, false).getMotor();
-//                    final TrcPidActuator.Parameters elevatorParams = new TrcPidActuator.Parameters()
-//                        .setPosRange(RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS)
-//                        .setPidParams(new TrcPidController.PidParameters(
-//                            RobotParams.ELEVATOR_KP, RobotParams.ELEVATOR_KI, RobotParams.ELEVATOR_KD,
-//                            RobotParams.ELEVATOR_TOLERANCE, null))
-//                        .setPowerCompensation(this::getElevatorPowerCompensation)
-//                        .setStallProtectionParams(
-//                            RobotParams.ELEVATOR_STALL_MIN_POWER, RobotParams.ELEVATOR_STALL_TOLERANCE,
-//                            RobotParams.ELEVATOR_STALL_TIMEOUT, RobotParams.ELEVATOR_RESET_TIMEOUT)
-//                        .setZeroCalibratePower(RobotParams.ELEVATOR_CAL_POWER)
-//                        .setPosPresets(RobotParams.ELEVATOR_PRESET_TOLERANCE, RobotParams.ELEVATOR_PRESET_LEVELS);
-                    // Set asymmetric power limits so down power is smaller since it's helped by gravity.
-//                    elevator.getPidController().setOutputRange(-RobotParams.ELEVATOR_DOWN_POWER_SCALE, 1.0);
                 }
 
                 if (RobotParams.Preferences.useArm)
@@ -163,13 +148,14 @@ public class Robot
                                                     RobotParams.ARM_UPPER_LIMIT_INVERTED)
                         .setPositionScaleAndOffset(RobotParams.ARM_DEG_PER_COUNT, RobotParams.ARM_OFFSET)
                         .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS);
-                    elevator = new FtcMotorActuator(
+                    arm = new FtcMotorActuator(
                         RobotParams.HWNAME_ARM, motorParams, globalTracer, false).getMotor();
+                    dashboard.displayPrintf(5, "Arm: PID=%s", arm.getMotorPositionPidCoefficients());
                 }
 
                 if (RobotParams.Preferences.useGrabber)
                 {
-                    grabber = new Grabber(RobotParams.HWNAME_GRABBER, globalTracer).getServoGrabber();
+                    grabber = new Grabber(RobotParams.HWNAME_GRABBER, globalTracer);
                 }
             }
         }
@@ -356,17 +342,19 @@ public class Robot
 
     /**
      * This method zero calibrates all subsystems.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the motor.
      */
-    public void zeroCalibrate()
+    public void zeroCalibrate(String owner)
     {
         if (elevator != null)
         {
-            elevator.zeroCalibrate(RobotParams.ELEVATOR_CAL_POWER);
+            elevator.zeroCalibrate(owner, RobotParams.ELEVATOR_CAL_POWER);
         }
 
         if (arm != null)
         {
-            arm.zeroCalibrate(RobotParams.ARM_CAL_POWER);
+            arm.zeroCalibrate(owner, RobotParams.ARM_CAL_POWER);
         }
     }   //zeroCalibrate
 
