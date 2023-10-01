@@ -35,6 +35,7 @@ import TrcFtcLib.ftclib.FtcMatchInfo;
 import TrcFtcLib.ftclib.FtcMenu;
 import TrcFtcLib.ftclib.FtcOpMode;
 import TrcFtcLib.ftclib.FtcValueMenu;
+import teamcode.autocommands.CmdAuto;
 
 /**
  * This class contains the Autonomous Mode program.
@@ -50,12 +51,19 @@ public class FtcAuto extends FtcOpMode
 
     public enum StartPos
     {
-        LEFT,
-        RIGHT
+        AUDIENCE,
+        BACKSTAGE
     }   //enum StartPos
+
+    public enum ParkPos
+    {
+        CORNER,
+        CENTER
+    }   //enum ParkPos
 
     public enum AutoStrategy
     {
+        AUTO,
         PID_DRIVE,
         TIMED_DRIVE,
         DO_NOTHING
@@ -66,9 +74,10 @@ public class FtcAuto extends FtcOpMode
      */
     public static class AutoChoices
     {
-        public double startDelay = 0.0;
+        public double delay = 0.0;
         public Alliance alliance = Alliance.RED_ALLIANCE;
-        public StartPos startPos = StartPos.LEFT;
+        public StartPos startPos = StartPos.AUDIENCE;
+        public ParkPos parkPos = ParkPos.CORNER;
         public AutoStrategy strategy = AutoStrategy.DO_NOTHING;
         public double xTarget = 0.0;
         public double yTarget = 0.0;
@@ -81,16 +90,17 @@ public class FtcAuto extends FtcOpMode
         {
             return String.format(
                 Locale.US,
-                "startDelay=%.0f " +
+                "delay=%.0f " +
                 "alliance=\"%s\" " +
                 "startPos=\"%s\" " +
+                "parkPos=\"%s\" " +
                 "strategy=\"%s\" " +
                 "xTarget=%.1f " +
                 "yTarget=%.1f " +
                 "turnTarget=%.0f " +
                 "driveTime=%.0f " +
                 "drivePower=%.1f",
-                startDelay, alliance, startPos, strategy, xTarget, yTarget, turnTarget, driveTime, drivePower);
+                delay, alliance, startPos, parkPos, strategy, xTarget, yTarget, turnTarget, driveTime, drivePower);
         }   //toString
 
     }   //class AutoChoices
@@ -135,11 +145,18 @@ public class FtcAuto extends FtcOpMode
         //
         switch (autoChoices.strategy)
         {
+            case AUTO:
+                if (!RobotParams.Preferences.noRobot)
+                {
+                    autoCommand = new CmdAuto(robot, autoChoices);
+                }
+                break;
+
             case PID_DRIVE:
                 if (!RobotParams.Preferences.noRobot)
                 {
                     autoCommand = new CmdPidDrive(
-                        robot.robotDrive.driveBase, robot.robotDrive.pidDrive, autoChoices.startDelay,
+                        robot.robotDrive.driveBase, robot.robotDrive.pidDrive, autoChoices.delay,
                         autoChoices.drivePower, null,
                         new TrcPose2D(autoChoices.xTarget*12.0, autoChoices.yTarget*12.0, autoChoices.turnTarget));
                 }
@@ -149,7 +166,7 @@ public class FtcAuto extends FtcOpMode
                 if (!RobotParams.Preferences.noRobot)
                 {
                     autoCommand = new CmdTimedDrive(
-                        robot.robotDrive.driveBase, autoChoices.startDelay, autoChoices.driveTime,
+                        robot.robotDrive.driveBase, autoChoices.delay, autoChoices.driveTime,
                         0.0, autoChoices.drivePower, 0.0);
                 }
                 break;
@@ -311,11 +328,12 @@ public class FtcAuto extends FtcOpMode
         //
         // Construct menus.
         //
-        FtcValueMenu startDelayMenu = new FtcValueMenu(
-            "Start delay time:", null, 0.0, 30.0, 1.0, 0.0, " %.0f sec");
-        FtcChoiceMenu<Alliance> allianceMenu = new FtcChoiceMenu<>("Alliance:", startDelayMenu);
+        FtcValueMenu delayMenu = new FtcValueMenu(
+            "Delay time:", null, 0.0, 30.0, 1.0, 0.0, " %.0f sec");
+        FtcChoiceMenu<Alliance> allianceMenu = new FtcChoiceMenu<>("Alliance:", delayMenu);
         FtcChoiceMenu<StartPos> startPosMenu = new FtcChoiceMenu<>("Start Position:", allianceMenu);
-        FtcChoiceMenu<AutoStrategy> strategyMenu = new FtcChoiceMenu<>("Auto Strategies:", startPosMenu);
+        FtcChoiceMenu<ParkPos> parkPosMenu = new FtcChoiceMenu<>("Park Position:", startPosMenu);
+        FtcChoiceMenu<AutoStrategy> strategyMenu = new FtcChoiceMenu<>("Auto Strategies:", parkPosMenu);
 
         FtcValueMenu xTargetMenu = new FtcValueMenu(
             "xTarget:", strategyMenu, -12.0, 12.0, 0.5, 4.0, " %.1f ft");
@@ -328,7 +346,7 @@ public class FtcAuto extends FtcOpMode
         FtcValueMenu drivePowerMenu = new FtcValueMenu(
             "Drive power:", strategyMenu, -1.0, 1.0, 0.1, 0.5, " %.1f");
 
-        startDelayMenu.setChildMenu(allianceMenu);
+        delayMenu.setChildMenu(allianceMenu);
         xTargetMenu.setChildMenu(yTargetMenu);
         yTargetMenu.setChildMenu(turnTargetMenu);
         turnTargetMenu.setChildMenu(drivePowerMenu);
@@ -339,8 +357,11 @@ public class FtcAuto extends FtcOpMode
         allianceMenu.addChoice("Red", Alliance.RED_ALLIANCE, true, startPosMenu);
         allianceMenu.addChoice("Blue", Alliance.BLUE_ALLIANCE, false, startPosMenu);
 
-        startPosMenu.addChoice("Start Position Left", StartPos.LEFT, true, strategyMenu);
-        startPosMenu.addChoice("Start Position Right", StartPos.RIGHT, false, strategyMenu);
+        startPosMenu.addChoice("Start Position Audience", StartPos.AUDIENCE, true, parkPosMenu);
+        startPosMenu.addChoice("Start Position Backstage", StartPos.BACKSTAGE, false, parkPosMenu);
+
+        parkPosMenu.addChoice("Park at Corner", ParkPos.CORNER, true, strategyMenu);
+        parkPosMenu.addChoice("Park at Center", ParkPos.CENTER, false, strategyMenu);
 
         strategyMenu.addChoice("PID Drive", AutoStrategy.PID_DRIVE, false, xTargetMenu);
         strategyMenu.addChoice("Timed Drive", AutoStrategy.TIMED_DRIVE, false, driveTimeMenu);
@@ -348,13 +369,14 @@ public class FtcAuto extends FtcOpMode
         //
         // Traverse menus.
         //
-        FtcMenu.walkMenuTree(startDelayMenu);
+        FtcMenu.walkMenuTree(delayMenu);
         //
         // Fetch choices.
         //
-        autoChoices.startDelay = startDelayMenu.getCurrentValue();
+        autoChoices.delay = delayMenu.getCurrentValue();
         autoChoices.alliance = allianceMenu.getCurrentChoiceObject();
         autoChoices.startPos = startPosMenu.getCurrentChoiceObject();
+        autoChoices.parkPos = parkPosMenu.getCurrentChoiceObject();
         autoChoices.strategy = strategyMenu.getCurrentChoiceObject();
         autoChoices.xTarget = xTargetMenu.getCurrentValue();
         autoChoices.yTarget = yTargetMenu.getCurrentValue();

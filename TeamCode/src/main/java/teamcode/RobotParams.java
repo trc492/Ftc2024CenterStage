@@ -31,6 +31,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import TrcCommonLib.trclib.TrcDriveBase.DriveOrientation;
 import TrcCommonLib.trclib.TrcHomographyMapper;
 import TrcCommonLib.trclib.TrcPidController;
+import TrcCommonLib.trclib.TrcPose2D;
 import TrcFtcLib.ftclib.FtcGamepad;
 
 /**
@@ -46,7 +47,7 @@ public class RobotParams
         // Miscellaneous
         public static boolean useTraceLog = true;
         public static boolean useLoopPerformanceMonitor = true;
-        public static boolean useBlinkin = false;//true;
+        public static boolean useBlinkin = true;//false
         public static boolean useBatteryMonitor = false;
         // Vision
         public static boolean useWebCam = true;
@@ -59,14 +60,14 @@ public class RobotParams
         public static boolean useTfodModelAsset = false;
         public static boolean showVisionView = true;
         // Robot
-        public static boolean noRobot = true;//false;
+        public static boolean noRobot = false;//true
         public static boolean swerveRobot = false;
         // Drive Base
-        public static boolean useExternalOdometry = true;
+        public static boolean useExternalOdometry = true;//false
         public static boolean useVelocityControl = false;
         public static boolean doSwervePhysicalAlignment = false;
         // Subsystems
-        public static boolean useSubsystems = false;//true;
+        public static boolean useSubsystems = true;//false;
         public static boolean useElevator = true;
         public static boolean useArm = true;
         public static boolean useGrabber = true;
@@ -122,7 +123,70 @@ public class RobotParams
     //
     // Game positions.
     //
+    // Robot start positions in inches.
+    public static final double STARTPOS_AUDIENCE_X              = -1.5 * FULL_TILE_INCHES;
+    public static final double STARTPOS_BACKSTAGE_X             = 0.5 * FULL_TILE_INCHES;
+    public static final double STARTPOS_BLUE_Y                  = HALF_FIELD_INCHES - ROBOT_LENGTH/2.0;
+    public static final double STARTPOS_RED_Y                   = -STARTPOS_BLUE_Y;
+    public static final TrcPose2D STARTPOS_BLUE_AUDIENCE        = new TrcPose2D(
+        STARTPOS_AUDIENCE_X, STARTPOS_BLUE_Y, 180.0);
+    public static final TrcPose2D STARTPOS_BLUE_BACKSTAGE       = new TrcPose2D(
+        STARTPOS_BACKSTAGE_X, STARTPOS_BLUE_Y, 180.0);
+    public static final TrcPose2D STARTPOS_RED_AUDIENCE         = new TrcPose2D(
+        STARTPOS_AUDIENCE_X, STARTPOS_RED_Y, 0.0);
+    public static final TrcPose2D STARTPOS_RED_BACKSTAGE        = new TrcPose2D(
+        STARTPOS_BACKSTAGE_X, STARTPOS_RED_Y, 0.0);
+    // Robot park positions in tile units.
+    public static final double PARKPOS_X                        = 2.5 * FULL_TILE_INCHES;
+    public static final double PARKPOS_BLUE_CORNER_Y            = 2.5 * FULL_TILE_INCHES;
+    public static final double PARKPOS_BLUE_CENTER_Y            = 0.5 * FULL_TILE_INCHES;
+    public static final TrcPose2D PARKPOS_BLUE_CORNER           = new TrcPose2D(
+        PARKPOS_X, PARKPOS_BLUE_CORNER_Y, 90.0);
+    public static final TrcPose2D PARKPOS_BLUE_CENTER           = new TrcPose2D(
+        PARKPOS_X, PARKPOS_BLUE_CENTER_Y, 90.0);
+    public static final double PARKPOS_RED_CORNER_Y             = -PARKPOS_BLUE_CORNER_Y;
+    public static final double PARKPOS_RED_CENTER_Y             = -PARKPOS_BLUE_CENTER_Y;
+    public static final TrcPose2D PARKPOS_RED_CORNER            = new TrcPose2D(
+        PARKPOS_X, PARKPOS_RED_CORNER_Y, 90.0);
+    public static final TrcPose2D PARKPOS_RED_CENTER            = new TrcPose2D(
+        PARKPOS_X, PARKPOS_RED_CENTER_Y, 90.0);
 
+    public static final double BLUE_AUDIENCE_SPIKE_1_X          = -1.0 * FULL_TILE_INCHES;
+    public static final double BLUE_AUDIENCE_SPIKE_2_X          = -1.5 * FULL_TILE_INCHES;
+    public static final double BLUE_AUDIENCE_SPIKE_3_X          = -2.0 * FULL_TILE_INCHES;
+    public static final double BLUE_BACKSTAGE_SPIKE_1_X         = 1.0 * FULL_TILE_INCHES;
+    public static final double BLUE_BACKSTAGE_SPIKE_2_X         = 0.5 * FULL_TILE_INCHES;
+    public static final double BLUE_BACKSTAGE_SPIKE_3_X         = 0.0;
+    public static final double BLUE_SPIKES_1AND3_Y              = 2.0 * FULL_TILE_INCHES;
+    public static final double BLUE_SPIKE_2_Y                   = 1.5 * FULL_TILE_INCHES;
+    public static final TrcPose2D[] BLUE_AUDIENCE_SPIKES        = new TrcPose2D[] {
+        new TrcPose2D(BLUE_AUDIENCE_SPIKE_1_X, BLUE_SPIKES_1AND3_Y, 180.0),
+        new TrcPose2D(BLUE_AUDIENCE_SPIKE_2_X, BLUE_SPIKE_2_Y, 180.0),
+        new TrcPose2D(BLUE_AUDIENCE_SPIKE_3_X, BLUE_SPIKES_1AND3_Y, 180.0)
+    };
+    public static final TrcPose2D[] BLUE_BACKSTAGE_SPIKES       = new TrcPose2D[] {
+        new TrcPose2D(BLUE_BACKSTAGE_SPIKE_1_X, BLUE_SPIKES_1AND3_Y, 180.0),
+        new TrcPose2D(BLUE_BACKSTAGE_SPIKE_2_X, BLUE_SPIKE_2_Y, 180.0),
+        new TrcPose2D(BLUE_BACKSTAGE_SPIKE_3_X, BLUE_SPIKES_1AND3_Y, 180.0)
+    };
+    public static final double RED_AUDIENCE_SPIKE_1_X           = -2.0 * FULL_TILE_INCHES;
+    public static final double RED_AUDIENCE_SPIKE_2_X           = -1.5 * FULL_TILE_INCHES;
+    public static final double RED_AUDIENCE_SPIKE_3_X           = -1.0 * FULL_TILE_INCHES;
+    public static final double RED_BACKSTAGE_SPIKE_1_X          = 0.0;
+    public static final double RED_BACKSTAGE_SPIKE_2_X          = 0.5 * FULL_TILE_INCHES;
+    public static final double RED_BACKSTAGE_SPIKE_3_X          = 1.0 * FULL_TILE_INCHES;
+    public static final double RED_SPIKES_1AND3_Y               = -2.0 * FULL_TILE_INCHES;
+    public static final double RED_SPIKE_2_Y                    = -1.5 * FULL_TILE_INCHES;
+    public static final TrcPose2D[] RED_AUDIENCE_SPIKES         = new TrcPose2D[] {
+        new TrcPose2D(RED_AUDIENCE_SPIKE_1_X, RED_SPIKES_1AND3_Y, 0.0),
+        new TrcPose2D(RED_AUDIENCE_SPIKE_2_X, RED_SPIKE_2_Y, 0.0),
+        new TrcPose2D(RED_AUDIENCE_SPIKE_3_X, RED_SPIKES_1AND3_Y, 0.0)
+    };
+    public static final TrcPose2D[] RED_BACKSTAGE_SPIKES        = new TrcPose2D[] {
+        new TrcPose2D(RED_BACKSTAGE_SPIKE_1_X, RED_SPIKES_1AND3_Y, 180.0),
+        new TrcPose2D(RED_BACKSTAGE_SPIKE_2_X, RED_SPIKE_2_Y, 180.0),
+        new TrcPose2D(RED_BACKSTAGE_SPIKE_3_X, RED_SPIKES_1AND3_Y, 180.0)
+    };
     //
     // Vision subsystem.
     //
@@ -290,8 +354,7 @@ public class RobotParams
     public static final double ELEVATOR_ENCODER_PPR             = GOBILDA_5203_435_ENCODER_PPR;
     public static final double ELEVATOR_PULLEY_DIAMETER         = 1.5*1.0465;       // in inches
     public static final double ELEVATOR_PULLEY_CIRCUMFERENCE    = Math.PI*ELEVATOR_PULLEY_DIAMETER;
-    public static final double ELEVATOR_INCHES_PER_COUNT        =
-        ELEVATOR_PULLEY_CIRCUMFERENCE/ELEVATOR_ENCODER_PPR;
+    public static final double ELEVATOR_INCHES_PER_COUNT        = ELEVATOR_PULLEY_CIRCUMFERENCE/ELEVATOR_ENCODER_PPR;
     public static final double ELEVATOR_OFFSET                  = 7.8;              // in inches
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
     public static final double ELEVATOR_MAX_POS                 = 34.0;
@@ -306,7 +369,8 @@ public class RobotParams
     // Preset positions.
     public static final double ELEVATOR_PRESET_TOLERANCE        = 2.0;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
-        ELEVATOR_MIN_POS
+        ELEVATOR_MIN_POS,
+        ELEVATOR_MAX_POS
     };
     //
     // Arm subsystem.
@@ -341,7 +405,8 @@ public class RobotParams
     public static final double ARM_PRESET_TOLERANCE             = 2.0;
     // Index 0 is a placeholder so index 1 is 1 cone, 2 is 2 cones, etc.
     public static final double[] ARM_PRESETS                    = new double[] {
-        0.0
+        ARM_MIN_POS,
+        ARM_MAX_POS
     };
     //
     // Grabber subsystem.

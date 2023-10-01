@@ -188,6 +188,32 @@ public class RobotDrive
      */
     public void setAutoStartPosition(FtcAuto.AutoChoices autoChoices)
     {
+        driveBase.setFieldPosition(
+            autoChoices.alliance == FtcAuto.Alliance.RED_ALLIANCE ?
+                (autoChoices.startPos == FtcAuto.StartPos.AUDIENCE ?
+                    RobotParams.STARTPOS_RED_AUDIENCE : RobotParams.STARTPOS_RED_BACKSTAGE) :
+                (autoChoices.startPos == FtcAuto.StartPos.AUDIENCE ?
+                    RobotParams.STARTPOS_BLUE_AUDIENCE : RobotParams.STARTPOS_BLUE_BACKSTAGE));
     }   //setAutoStartPosition
+
+    /**
+     * This method adjusts the target cell according to the alliance color.
+     *
+     * @param tileX specifies X tile coordinate for Blue Alliance.
+     * @param tileY specifies Y tile coordinate for Blue Alliance.
+     * @param heading specifies heading for Blue Alliance.
+     * @param alliance specifies alliance color.
+     * @return adjusted target pose as TrcPose2D.
+     */
+    public TrcPose2D getAutoTargetPose(double tileX, double tileY, double heading, FtcAuto.Alliance alliance)
+    {
+        if (alliance == FtcAuto.Alliance.BLUE_ALLIANCE)
+        {
+            tileY = -tileY;
+            heading = (heading + 180.0) % 360.0;
+        }
+
+        return new TrcPose2D(tileX*RobotParams.FULL_TILE_INCHES, tileY*RobotParams.FULL_TILE_INCHES, heading);
+    }   //getAutoTargetPose
 
 }   //class RobotDrive
