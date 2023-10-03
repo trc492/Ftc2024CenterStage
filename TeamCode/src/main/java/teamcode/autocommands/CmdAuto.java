@@ -135,7 +135,6 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         teamPropPos = robot.vision.getLastDetectedTeamPropPosition();
                         if (teamPropPos > 0)
                         {
-                            teamPropIndex = teamPropPos - 1;
                             msg = "Team Prop found at position " + teamPropPos;
                             robot.globalTracer.traceInfo(moduleName, msg);
                             robot.speak(msg);
@@ -145,12 +144,14 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     if (teamPropPos == 0)
                     {
                         // We still can't see the team prop, set to default position.
-                        teamPropIndex = 1;
+                        teamPropPos = 2;
                         msg = "No team prop found, default to position " + teamPropPos;
                         robot.globalTracer.traceInfo(moduleName, msg);
                         robot.speak(msg);
                     }
-                    // Navigate robot to spike position 1, 2 or 3.
+
+                    teamPropIndex = teamPropPos - 1;
+                    // Navigate robot to spike mark 1, 2 or 3.
                     TrcPose2D spikeMarkPose =
                         autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
                             autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
@@ -202,8 +203,9 @@ public class CmdAuto implements TrcRobot.RobotCommand
                                 -1);
                         if (aprilTagInfo != null)
                         {
+                            // Account for grabber offset from the camera.
                             aprilTagPose = new TrcPose2D(
-                                aprilTagInfo.objPose.x, aprilTagInfo.objPose.y, aprilTagInfo.objPose.yaw);
+                                aprilTagInfo.objPose.x, aprilTagInfo.objPose.y - 6.0, aprilTagInfo.objPose.yaw);
                             sm.setState(State.ALIGN_TO_APRILTAG);
                         }
                         else if (visionExpiredTime == null)
