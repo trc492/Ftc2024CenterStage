@@ -106,7 +106,7 @@ public class Vision
 
     private final Robot robot;
     private FtcRawEocvColorBlobPipeline rawColorBlobPipeline;
-    public FtcRawEocvVision rawColorBlobVision = null;
+    public FtcRawEocvVision rawColorBlobVision;
     public FtcVisionAprilTag aprilTagVision;
     private AprilTagProcessor aprilTagProcessor;
     public FtcVisionEocvColorBlob purplePixelVision;
