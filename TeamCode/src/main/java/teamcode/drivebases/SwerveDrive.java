@@ -193,6 +193,10 @@ public class SwerveDrive extends RobotDrive
         for (int i = 0; i < servoNames.length; i++)
         {
             servos[i] = new FtcCRServo(servoNames[i], encoders[i]);
+            if (RobotParams.Preferences.swerveDualServoSteering)
+            {
+                servos[i].followMotor(new FtcCRServo(servoNames[i] + ".slave", null));
+            }
             servos[i].setMotorInverted(inverted[i]);
             servos[i].setSoftwarePidEnabled(true);
             servos[i].setPositionPidCoefficients(

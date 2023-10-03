@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Titan Robotics Club (http://www.titanrobotics.com)
+ * Copyright (c) 2023 Titan Robotics Club (http://www.titanrobotics.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,8 @@ import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcStateMachine;
 import TrcCommonLib.trclib.TrcTimer;
+import TrcCommonLib.trclib.TrcVisionTargetInfo;
+import TrcFtcLib.ftclib.FtcVisionAprilTag;
 import teamcode.FtcAuto;
 import teamcode.Robot;
 import teamcode.RobotParams;
@@ -56,7 +58,9 @@ public class CmdAuto implements TrcRobot.RobotCommand
     private final TrcTimer timer;
     private final TrcEvent event;
     private final TrcStateMachine<State> sm;
-    private int teamPropPos = 0;
+    private int teamPropIndex = 0;
+    private TrcPose2D aprilTagPose = null;
+    private Double visionExpiredTime = null;
 
     /**
      * Constructor: Create an instance of the object.
@@ -122,6 +126,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
             {
                 case START:
                     String msg;
+                    int teamPropPos = 0;
                     // Set robot's start position on the field.
                     robot.robotDrive.setAutoStartPosition(autoChoices);
                     // Use vision to determine team prop position (0, 1, 2, 3).
@@ -130,6 +135,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         teamPropPos = robot.vision.getLastDetectedTeamPropPosition();
                         if (teamPropPos > 0)
                         {
+                            teamPropIndex = teamPropPos - 1;
                             msg = "Team Prop found at position " + teamPropPos;
                             robot.globalTracer.traceInfo(moduleName, msg);
                             robot.speak(msg);
@@ -139,23 +145,22 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     if (teamPropPos == 0)
                     {
                         // We still can't see the team prop, set to default position.
-                        teamPropPos = 2;
+                        teamPropIndex = 1;
                         msg = "No team prop found, default to position " + teamPropPos;
                         robot.globalTracer.traceInfo(moduleName, msg);
                         robot.speak(msg);
                     }
                     // Navigate robot to spike position 1, 2 or 3.
-                    int teamPropIndex = teamPropPos - 1;
-                    TrcPose2D spikePose =
+                    TrcPose2D spikeMarkPose =
                         autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
                             autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
-                                RobotParams.BLUE_AUDIENCE_SPIKES[teamPropIndex]:
-                                RobotParams.BLUE_BACKSTAGE_SPIKES[teamPropIndex]:
+                                RobotParams.BLUE_AUDIENCE_SPIKE_MARKS[teamPropIndex]:
+                                RobotParams.BLUE_BACKSTAGE_SPIKE_MARKS[teamPropIndex]:
                             autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
                                 RobotParams.RED_AUDIENCE_SPIKES[teamPropIndex]:
                                 RobotParams.RED_BACKSTAGE_SPIKES[teamPropIndex];
                     robot.robotDrive.purePursuitDrive.start(
-                        event, robot.robotDrive.driveBase.getFieldPosition(), false, spikePose);
+                        event, robot.robotDrive.driveBase.getFieldPosition(), false, spikeMarkPose);
                     sm.waitForSingleEvent(event,State.PLACE_PURPLE_PIXEL);
                     break;
 
@@ -178,14 +183,50 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                 case DRIVE_TO_BACKDROP:
                     // Navigate robot to backdrop.
+                    robot.robotDrive.purePursuitDrive.start(
+                        event, robot.robotDrive.driveBase.getFieldPosition(), false,
+                        autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
+                            RobotParams.BLUE_BACKDROP: RobotParams.RED_BACKDROP);
+                    sm.waitForSingleEvent(event,State.DETERMINE_APRILTAG_POSE);
                     break;
 
                 case DETERMINE_APRILTAG_POSE:
                     // Use vision to determine the appropriate AprilTag location.
+                    if (robot.vision != null && robot.vision.aprilTagVision != null)
+                    {
+                        TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
+                            robot.vision.getDetectedAprilTag(
+                                autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
+                                    RobotParams.BLUE_BACKDROP_APRILTAGS[teamPropIndex]:
+                                    RobotParams.RED_BACKDROP_APRILTAGS[teamPropIndex],
+                                -1);
+                        if (aprilTagInfo != null)
+                        {
+                            aprilTagPose = new TrcPose2D(
+                                aprilTagInfo.objPose.x, aprilTagInfo.objPose.y, aprilTagInfo.objPose.yaw);
+                            sm.setState(State.ALIGN_TO_APRILTAG);
+                        }
+                        else if (visionExpiredTime == null)
+                        {
+                            visionExpiredTime = TrcTimer.getCurrentTime() + 1.0;
+                        }
+                        else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
+                        {
+                            sm.setState(State.ALIGN_TO_APRILTAG);
+                        }
+                    }
                     break;
 
                 case ALIGN_TO_APRILTAG:
                     // Navigate robot to the AprilTag location.
+                    if (aprilTagPose == null)
+                    {
+                        // Vision does not see AprilTag, just move forward.
+                        aprilTagPose = new TrcPose2D(0.0, 4.0, 0.0);
+                    }
+                    robot.robotDrive.purePursuitDrive.start(
+                        event, robot.robotDrive.driveBase.getFieldPosition(), true, aprilTagPose);
+                    sm.waitForSingleEvent(event,State.PLACE_YELLOW_PIXEL);
                     break;
 
                 case PLACE_YELLOW_PIXEL:
@@ -194,6 +235,14 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                 case PARK_AT_BACKSTAGE:
                     // Navigate robot to the backstage location.
+                    robot.robotDrive.purePursuitDrive.start(
+                        event, robot.robotDrive.driveBase.getFieldPosition(), false,
+                        autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
+                            autoChoices.parkPos == FtcAuto.ParkPos.CORNER?
+                                RobotParams.PARKPOS_BLUE_CORNER: RobotParams.PARKPOS_BLUE_CENTER:
+                            autoChoices.parkPos == FtcAuto.ParkPos.CORNER?
+                                RobotParams.PARKPOS_RED_CORNER: RobotParams.PARKPOS_RED_CENTER);
+                    sm.waitForSingleEvent(event,State.DONE);
                     break;
 
                 default:

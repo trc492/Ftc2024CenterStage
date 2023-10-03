@@ -24,8 +24,6 @@ package teamcode;
 
 import android.os.Environment;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import TrcCommonLib.trclib.TrcDriveBase.DriveOrientation;
@@ -47,7 +45,7 @@ public class RobotParams
         // Miscellaneous
         public static boolean useTraceLog = true;
         public static boolean useLoopPerformanceMonitor = true;
-        public static boolean useBlinkin = true;//false
+        public static boolean useBlinkin = false;//false
         public static boolean useBatteryMonitor = false;
         // Vision
         public static boolean useWebCam = true;
@@ -61,13 +59,14 @@ public class RobotParams
         public static boolean showVisionView = true;
         // Robot
         public static boolean noRobot = false;//true
-        public static boolean swerveRobot = false;
+        public static boolean swerveRobot = true;
+        public static boolean swerveDualServoSteering = true;
         // Drive Base
-        public static boolean useExternalOdometry = true;//false
+        public static boolean useExternalOdometry = false;//false
         public static boolean useVelocityControl = false;
         public static boolean doSwervePhysicalAlignment = false;
         // Subsystems
-        public static boolean useSubsystems = true;//false;
+        public static boolean useSubsystems = false;//false;
         public static boolean useElevator = true;
         public static boolean useArm = true;
         public static boolean useGrabber = true;
@@ -96,8 +95,6 @@ public class RobotParams
     public static final String HWNAME_RFSTEER_SERVO             = "rfSteerServo";
     public static final String HWNAME_LBSTEER_SERVO             = "lbSteerServo";
     public static final String HWNAME_RBSTEER_SERVO             = "rbSteerServo";
-    public static final String HWNAME_LODO_SERVO                = "lOdoServo";
-    public static final String HWNAME_RODO_SERVO                = "rOdoServo";
     public static final String HWNAME_LFSTEER_ENCODER           = "lfSteerEncoder";
     public static final String HWNAME_RFSTEER_ENCODER           = "rfSteerEncoder";
     public static final String HWNAME_LBSTEER_ENCODER           = "lbSteerEncoder";
@@ -159,12 +156,12 @@ public class RobotParams
     public static final double BLUE_BACKSTAGE_SPIKE_3_X         = 0.0;
     public static final double BLUE_SPIKES_1AND3_Y              = 2.0 * FULL_TILE_INCHES;
     public static final double BLUE_SPIKE_2_Y                   = 1.5 * FULL_TILE_INCHES;
-    public static final TrcPose2D[] BLUE_AUDIENCE_SPIKES        = new TrcPose2D[] {
+    public static final TrcPose2D[] BLUE_AUDIENCE_SPIKE_MARKS   = new TrcPose2D[] {
         new TrcPose2D(BLUE_AUDIENCE_SPIKE_1_X, BLUE_SPIKES_1AND3_Y, 180.0),
         new TrcPose2D(BLUE_AUDIENCE_SPIKE_2_X, BLUE_SPIKE_2_Y, 180.0),
         new TrcPose2D(BLUE_AUDIENCE_SPIKE_3_X, BLUE_SPIKES_1AND3_Y, 180.0)
     };
-    public static final TrcPose2D[] BLUE_BACKSTAGE_SPIKES       = new TrcPose2D[] {
+    public static final TrcPose2D[] BLUE_BACKSTAGE_SPIKE_MARKS  = new TrcPose2D[] {
         new TrcPose2D(BLUE_BACKSTAGE_SPIKE_1_X, BLUE_SPIKES_1AND3_Y, 180.0),
         new TrcPose2D(BLUE_BACKSTAGE_SPIKE_2_X, BLUE_SPIKE_2_Y, 180.0),
         new TrcPose2D(BLUE_BACKSTAGE_SPIKE_3_X, BLUE_SPIKES_1AND3_Y, 180.0)
@@ -187,6 +184,12 @@ public class RobotParams
         new TrcPose2D(RED_BACKSTAGE_SPIKE_2_X, RED_SPIKE_2_Y, 180.0),
         new TrcPose2D(RED_BACKSTAGE_SPIKE_3_X, RED_SPIKES_1AND3_Y, 180.0)
     };
+    public static final TrcPose2D RED_BACKDROP                  = new TrcPose2D(
+        2.0 * FULL_TILE_INCHES, -1.5 * FULL_TILE_INCHES, 90.0);
+    public static final TrcPose2D BLUE_BACKDROP                 = new TrcPose2D(
+        2.0 * FULL_TILE_INCHES, 1.5 * FULL_TILE_INCHES, 90.0);
+    public static final int[] BLUE_BACKDROP_APRILTAGS           = new int[]{1, 2, 3};
+    public static final int[] RED_BACKDROP_APRILTAGS            = new int[]{4, 5, 6};
     //
     // Vision subsystem.
     //
@@ -275,14 +278,11 @@ public class RobotParams
     public static final double STEER_SERVO_IZONE                = 0.0;
     public static final double STEER_SERVO_TOLERANCE            = 0.5;
 
-    public static final DcMotor.RunMode DRIVE_MOTOR_MODE        = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
     public static final TrcPidController.PidCoefficients DRIVE_POSPID_COEFFS =
         new TrcPidController.PidCoefficients(0.0, 0.0, 0.0, 1.0);
     public static final TrcPidController.PidCoefficients DRIVE_VELPID_COEFFS =
         new TrcPidController.PidCoefficients(1.0, 0.0, 0.0, 0.0);
     public static final boolean DRIVE_WHEEL_BRAKE_MODE_ON       = true;
-    public static final boolean LEFT_WHEEL_INVERTED             = false;
-    public static final boolean RIGHT_WHEEL_INVERTED            = false;
     public static final double TURN_POWER_LIMIT                 = 0.5;
     public static final double DRIVE_POWER_SCALE_SLOW           = 0.5;
     public static final double DRIVE_POWER_SCALE_NORMAL         = 1.0;
@@ -345,12 +345,6 @@ public class RobotParams
     public static final boolean ELEVATOR_LOWER_LIMIT_INVERTED   = false;
     public static final boolean ELEVATOR_HAS_UPPER_LIMIT_SWITCH = false;
     public static final boolean ELEVATOR_UPPER_LIMIT_INVERTED   = false;
-    // PID Actuator parameters.
-    public static final double ELEVATOR_KP                      = 0.30;
-    public static final double ELEVATOR_KI                      = 0;//0.5;
-    public static final double ELEVATOR_KD                      = 0.025;
-    public static final double ELEVATOR_TOLERANCE               = 2.0;
-    public static final double ELEVATOR_IZONE                   = 10.0;
     public static final double ELEVATOR_ENCODER_PPR             = GOBILDA_5203_435_ENCODER_PPR;
     public static final double ELEVATOR_PULLEY_DIAMETER         = 1.5*1.0465;       // in inches
     public static final double ELEVATOR_PULLEY_CIRCUMFERENCE    = Math.PI*ELEVATOR_PULLEY_DIAMETER;
@@ -358,14 +352,8 @@ public class RobotParams
     public static final double ELEVATOR_OFFSET                  = 7.8;              // in inches
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
     public static final double ELEVATOR_MAX_POS                 = 34.0;
-    public static final double ELEVATOR_STALL_MIN_POWER         = 0.75;
-    public static final double ELEVATOR_STALL_TOLERANCE         = 0.0;
-    public static final double ELEVATOR_STALL_TIMEOUT           = 1.0;
-    public static final double ELEVATOR_RESET_TIMEOUT           = 0.5;
     // Power settings.
     public static final double ELEVATOR_CAL_POWER               = -0.1;
-    public static final double ELEVATOR_POWER_COMPENSATION      = 0.1;
-    public static final double ELEVATOR_DOWN_POWER_SCALE        = 0.3;
     // Preset positions.
     public static final double ELEVATOR_PRESET_TOLERANCE        = 2.0;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
@@ -381,11 +369,6 @@ public class RobotParams
     public static final boolean ARM_LOWER_LIMIT_INVERTED        = false;
     public static final boolean ARM_HAS_UPPER_LIMIT_SWITCH      = false;
     public static final boolean ARM_UPPER_LIMIT_INVERTED        = false;
-    // PID Actuator parameters.
-    public static final double ARM_KP                           = 0.1;
-    public static final double ARM_KI                           = 0.0;
-    public static final double ARM_KD                           = 0.0;
-    public static final double ARM_TOLERANCE                    = 0.5;
     public static final double ARM_ENCODER_PPR                  = GOBILDA_5203_435_ENCODER_PPR;
     // https://www.gobilda.com/super-duty-worm-drive-pan-kit-28-1-ratio/
     public static final double ARM_GEAR_RATIO                   = 28.0;
@@ -394,14 +377,9 @@ public class RobotParams
     // Arm Zero-Calibrated to Up Position. Arm Max Position is Down.
     public static final double ARM_MIN_POS                      = ARM_OFFSET;
     public static final double ARM_MAX_POS                      = 145.0;
-    public static final double ARM_STALL_MIN_POWER              = 0.75;
-    public static final double ARM_STALL_TOLERANCE              = 0.0;
-    public static final double ARM_STALL_TIMEOUT                = 1.0;
-    public static final double ARM_RESET_TIMEOUT                = 0.5;
     // Power settings.
     public static final double ARM_CAL_POWER                    = -0.5;
     // Preset positions.
-    public static final double ARM_UP_POS                       = 0.0;
     public static final double ARM_PRESET_TOLERANCE             = 2.0;
     // Index 0 is a placeholder so index 1 is 1 cone, 2 is 2 cones, etc.
     public static final double[] ARM_PRESETS                    = new double[] {

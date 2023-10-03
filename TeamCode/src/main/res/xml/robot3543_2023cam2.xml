@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <!--
-Copyright (c) 2023 Titan Robotics Club (http://www.titanrobotics.com)
+Copyright (c) 2022 Titan Robotics Club (http://www.titanrobotics.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,35 +20,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<Robot type="FirstInspires-FTC" name="SwerveBase_2023">
+<Robot type="FirstInspires-FTC" name="Robot3543_2023Cam2">
     <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
         <LynxModule name="Control Hub" port="173">
             <goBILDA5202SeriesMotor name="lfDriveMotor" port="0" />
-            <goBILDA5202SeriesMotor name="lbDriveMotor" port="1" />
-            <goBILDA5202SeriesMotor name="rfDriveMotor" port="2" />
+            <goBILDA5202SeriesMotor name="rfDriveMotor" port="1" />
+            <goBILDA5202SeriesMotor name="lbDriveMotor" port="2" />
             <goBILDA5202SeriesMotor name="rbDriveMotor" port="3" />
-            <ContinuousRotationServo name="rfSteerServo" port="2" />
-            <ContinuousRotationServo name="rbSteerServo" port="3" />
-            <ContinuousRotationServo name="lfSteerServo" port="4" />
-            <ContinuousRotationServo name="lbSteerServo" port="5" />
-            <AnalogInput name="lfSteerEncoder" port="0" />
-            <AnalogInput name="lbSteerEncoder" port="1" />
-            <AnalogInput name="rfSteerEncoder" port="2" />
-            <AnalogInput name="rbSteerEncoder" port="3" />
-            <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
+            <DigitalDevice name="turret.lowerLimit" port="0" />
+            <DigitalDevice name="turret.dirSwitch" port="1" />
+            <DigitalDevice name="elevator.lowerLimit" port="2" />
+            <DigitalDevice name="arm.lowerLimit" port="3" />
+            <LynxEmbeddedIMU name="imu" port="0" bus="0" />
+            <REV_VL53L0X_RANGE_SENSOR name="grabber.sensor" port="0" bus="1"/>
+            <REV_VL53L0X_RANGE_SENSOR name="turret.sensor" port="0" bus="2"/>
+            <!--<RevColorSensorV3 name="grabber.sensor" port="0" bus="1"/>-->
         </LynxModule>
         <LynxModule name="Expansion Hub 2" port="2">
-            <ContinuousRotationServo name="rfSteerServo.slave" port="2" />
-            <ContinuousRotationServo name="rbSteerServo.slave" port="3" />
-            <ContinuousRotationServo name="lfSteerServo.slave" port="4" />
-            <ContinuousRotationServo name="lbSteerServo.slave" port="5" />
+            <RevRoboticsCoreHexMotor name="turret.motor" port="0" />
+            <goBILDA5202SeriesMotor name="elevator.motor" port="1" />
+            <goBILDA5202SeriesMotor name="arm.motor" port="2" />
+            <Servo name="grabber.left" port="0" />
+            <Servo name="grabber.right" port="1" />
+            <RevBlinkinLedDriver name="blinkin" port="5" />
+            <!--<LynxEmbeddedIMU name="imu 1" port="0" bus="0" />-->
         </LynxModule>
     </LynxUsbDevice>
     <Webcam name="Webcam 1" serialNumber="B6C92370" />
-    <!--
-    <Webcam name="Webcam 1" serialNumber="VendorProduct:vendor=0x045e|product=0x0779|connection="/>
-    <Webcam name="Webcam 1" serialNumber="UC762"/>
-    <Webcam name="Webcam 1" serialNumber="B580F950" />
-    <Webcam name="Webcam 1" serialNumber="A8784D40" />
-    <Webcam name="Webcam 2" serialNumber="816BAF60" />-->
+    <!--<Webcam name="Webcam 1" serialNumber="B580F950" />-->
+    <!--<Webcam name="Webcam 1" serialNumber="A8784D40" />-->
+    <!--<Webcam name="Webcam 2" serialNumber="816BAF60" />-->
 </Robot>
