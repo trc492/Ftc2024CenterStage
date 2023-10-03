@@ -125,8 +125,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
             switch (state)
             {
                 case START:
-                    String msg;
                     int teamPropPos = 0;
+                    String msg;
                     // Set robot's start position on the field.
                     robot.robotDrive.setAutoStartPosition(autoChoices);
                     // Use vision to determine team prop position (0, 1, 2, 3).
@@ -210,12 +210,19 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         }
                         else if (visionExpiredTime == null)
                         {
+                            // Can't find AprilTag, set a timeout and try again.
                             visionExpiredTime = TrcTimer.getCurrentTime() + 1.0;
                         }
                         else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
                         {
+                            // Timing out, moving on.
                             sm.setState(State.ALIGN_TO_APRILTAG);
                         }
+                    }
+                    else
+                    {
+                        // Vision is not enable, move on.
+                        sm.setState(State.ALIGN_TO_APRILTAG);
                     }
                     break;
 

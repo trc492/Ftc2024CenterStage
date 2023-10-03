@@ -258,10 +258,10 @@ public class RobotParams
     // DriveBase subsystem.
     //
     public static DriveOrientation DEF_DRIVE_ORIENTATION        = DriveOrientation.FIELD;
-    public static final double LFSTEER_ZERO_POS                 = 0.466807;
-    public static final double RFSTEER_ZERO_POS                 = 0.464366;
-    public static final double LBSTEER_ZERO_POS                 = 0.536509;
-    public static final double RBSTEER_ZERO_POS                 = 0.538126;
+    public static final double LFSTEER_ZERO_POS                 = 0.474812;
+    public static final double RFSTEER_ZERO_POS                 = 0.467663;
+    public static final double LBSTEER_ZERO_POS                 = 0.541338;
+    public static final double RBSTEER_ZERO_POS                 = 0.545340;
 
     public static final boolean LFDRIVE_INVERTED                = true;
     public static final boolean RFDRIVE_INVERTED                = false;//true;

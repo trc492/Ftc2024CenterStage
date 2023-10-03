@@ -44,8 +44,9 @@ SOFTWARE.
             <ContinuousRotationServo name="lbSteerServo.slave" port="5" />
         </LynxModule>
     </LynxUsbDevice>
-    <Webcam name="Webcam 1" serialNumber="B6C92370" />
+    <Webcam name="Webcam 1" serialNumber="VendorProduct:vendor=0x045e|product=0x0779|connection="/>
     <!--
+    <Webcam name="Webcam 1" serialNumber="B6C92370" />
     <Webcam name="Webcam 1" serialNumber="VendorProduct:vendor=0x045e|product=0x0779|connection="/>
     <Webcam name="Webcam 1" serialNumber="UC762"/>
     <Webcam name="Webcam 1" serialNumber="B580F950" />
