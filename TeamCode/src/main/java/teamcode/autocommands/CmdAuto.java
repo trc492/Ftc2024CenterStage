@@ -139,6 +139,9 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             robot.globalTracer.traceInfo(moduleName, msg);
                             robot.speak(msg);
                         }
+                        // Done with Team Prop detection, disable them.
+                        robot.vision.setRedConeVisionEnabled(false);
+                        robot.vision.setBlueConeVisionEnabled(false);
                     }
 
                     if (teamPropPos == 0)
