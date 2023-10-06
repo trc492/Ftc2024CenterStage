@@ -85,6 +85,7 @@ public class Robot
         opMode = FtcOpMode.getInstance();
         dashboard = FtcDashboard.getInstance();
         globalTracer = TrcDbgTrace.getGlobalTracer();
+        checkRobotSupport();
 
         speak("Init starting");
         //
@@ -173,6 +174,25 @@ public class Robot
     {
         return RobotParams.ROBOT_NAME;
     }   //toString
+
+    private void checkRobotSupport()
+    {
+        if (RobotParams.Preferences.swerveRobot)
+        {
+            RobotParams.Preferences.useBlinkin = false;
+            RobotParams.Preferences.useExternalOdometry = false;
+            RobotParams.Preferences.useSubsystems = false;
+        }
+        else if (RobotParams.Preferences.powerPlayRobot)
+        {
+            RobotParams.Preferences.useBlinkin = true;
+            RobotParams.Preferences.useExternalOdometry = true;
+            RobotParams.Preferences.useSubsystems = true;
+        }
+        else
+        {
+        }
+    }   //checkRobotSupport
 
     /**
      * This method is call when the robot mode is about to start. It contains code to initialize robot hardware

@@ -45,7 +45,7 @@ public class RobotParams
         // Miscellaneous
         public static boolean useTraceLog = true;
         public static boolean useLoopPerformanceMonitor = true;
-        public static boolean useBlinkin = false;//false
+        public static boolean useBlinkin = true;
         public static boolean useBatteryMonitor = false;
         // Vision
         public static boolean useWebCam = true;
@@ -58,22 +58,23 @@ public class RobotParams
         public static boolean useTfodModelAsset = false;
         public static boolean showVisionView = true;
         // Robot
-        public static boolean noRobot = false;//true
-        public static boolean swerveRobot = true;
+        public static boolean noRobot = false;
+        public static boolean swerveRobot = false;
+        public static boolean powerPlayRobot = true;
         public static boolean swerveDualServoSteering = true;
         // Drive Base
-        public static boolean useExternalOdometry = false;//false
+        public static boolean useExternalOdometry = true;
         public static boolean useVelocityControl = false;
         public static boolean doSwervePhysicalAlignment = false;
         // Subsystems
-        public static boolean useSubsystems = false;//false;
+        public static boolean useSubsystems = true;
         public static boolean useElevator = true;
         public static boolean useArm = true;
         public static boolean useGrabber = true;
         public static boolean hasGrabberSensor = true;
     }   //class Preferences
 
-    public static final String ROBOT_NAME                       = "Robot3543";
+    public static final String ROBOT_NAME                       = "Robot3543_2024";
     public static final String TEAM_FOLDER_PATH                 =
         Environment.getExternalStorageDirectory().getPath() + "/FIRST/ftc3543";
     public static final String LOG_FOLDER_PATH                  = TEAM_FOLDER_PATH + "/tracelogs";
@@ -201,7 +202,7 @@ public class RobotParams
     public static final double CAM_LEFT_OFFSET                  = 7.125;//Camera offset from left of robot in inches
     public static final double CAM_HEIGHT_OFFSET                = 3.750;//Camera offset from floor in inches
     public static final double CAM_TILT_DOWN                    = 15.00;//Camera tilt down angle from horizontal in deg
-    // Camera: Micorosoft Lifecam HD 3000 v1
+    // Camera: Micorosoft Lifecam HD 3000 v1/v2
     public static final double WEBCAM_FX                        = 678.154;  // in pixels
     public static final double WEBCAM_FY                        = 678.170;  // in pixels
     public static final double WEBCAM_CX                        = 318.135;  // in pixels
@@ -274,14 +275,14 @@ public class RobotParams
     public static final double RBSTEER_ZERO_POS                 = 0.545340;
 
     public static final boolean LFDRIVE_INVERTED                = true;
-    public static final boolean RFDRIVE_INVERTED                = false;//true;
+    public static final boolean RFDRIVE_INVERTED                = false;
     public static final boolean LBDRIVE_INVERTED                = true;
     public static final boolean RBDRIVE_INVERTED                = false;
     public static final boolean LFSTEER_INVERTED                = true;
     public static final boolean RFSTEER_INVERTED                = true;
     public static final boolean LBSTEER_INVERTED                = true;
     public static final boolean RBSTEER_INVERTED                = true;
-    public static final double STEER_SERVO_KP                   = 0.005;
+    public static final double STEER_SERVO_KP                   = 0.01;
     public static final double STEER_SERVO_KI                   = 0.0;
     public static final double STEER_SERVO_KD                   = 0.0;
     public static final double STEER_SERVO_KF                   = 0.0;
