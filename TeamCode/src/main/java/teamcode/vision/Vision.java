@@ -249,6 +249,7 @@ public class Vision
             visionProcessorsList.toArray(visionProcessors);
             if (RobotParams.Preferences.useWebCam)
             {
+                // Use USB webcams.
                 webcamName1 = opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1);
                 webcamName2 =
                     RobotParams.Preferences.hasWebCam2 ?
@@ -261,22 +262,19 @@ public class Vision
             }
             else
             {
+                // Use phone camera.
                 vision = new FtcVision(
                     RobotParams.Preferences.useBuiltinCamBack?
                         BuiltinCameraDirection.BACK: BuiltinCameraDirection.FRONT,
                     RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT,
                     RobotParams.Preferences.showVisionView, visionProcessors);
             }
-            // Disable all vision processors until they are needed.
+            // Disable all vision until they are needed.
             setRawColorBlobVisionEnabled(false);
-            setAprilTagVisionEnabled(false);
-            setPurplePixelVisionEnabled(false);
-            setGreenPixelVisionEnabled(false);
-            setYellowPixelVisionEnabled(false);
-            setWhitePixelVisionEnabled(false);
-            setRedConeVisionEnabled(false);
-            setBlueConeVisionEnabled(false);
-            setTensorFlowVisionEnabled(false);
+            for (VisionProcessor processor: visionProcessors)
+            {
+                vision.setProcessorEnabled(processor, false);
+            }
         }
     }   //Vision
 
