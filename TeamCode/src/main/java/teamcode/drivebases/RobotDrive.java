@@ -71,9 +71,7 @@ public class RobotDrive
      */
     public RobotDrive()
     {
-        gyro = new FtcImu(
-            RobotParams.HWNAME_IMU, RevHubOrientationOnRobot.LogoFacingDirection.UP,
-            RevHubOrientationOnRobot.UsbFacingDirection.LEFT);
+        gyro = new FtcImu(RobotParams.HWNAME_IMU, RobotParams.hubLogoDirection, RobotParams.hubUsbDirection);
     }   //RobotDrive
 
     /**

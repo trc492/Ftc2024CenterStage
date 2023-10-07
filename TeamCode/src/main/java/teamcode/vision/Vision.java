@@ -34,6 +34,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcOpenCvColorBlobPipeline;
@@ -60,6 +61,16 @@ import teamcode.subsystems.BlinkinLEDs;
 public class Vision
 {
     private static final String moduleName = "Vision";
+
+    public enum PixelType
+    {
+        PurplePixel,
+        GreenPixel,
+        YellowPixel,
+        WhitePixel,
+        AnyPixel
+    }   //enum PixelType
+
     // Warning: EOCV converts camera stream to RGBA whereas Desktop OpenCV converts it to BGRA. Therefore, the correct
     // color conversion must be RGBA (or RGB) to whatever color space you want to convert.
     //
@@ -406,196 +417,198 @@ public class Vision
     }   //getDetectedAprilTag
 
     /**
-     * This method enables/disables PurplePixel vision.
+     * This method enables/disables vision for the specified pixel type.
      *
+     * @param pixelType specifies the pixel type to be detected.
      * @param enabled specifies true to enable, false to disable.
      */
-    public void setPurplePixelVisionEnabled(boolean enabled)
+    public void setPixelVisionEnabled(PixelType pixelType, boolean enabled)
     {
-        if (purplePixelProcessor != null)
+        switch (pixelType)
         {
-            vision.setProcessorEnabled(purplePixelProcessor, enabled);
+            case PurplePixel:
+                if (purplePixelProcessor != null)
+                {
+                    vision.setProcessorEnabled(purplePixelProcessor, enabled);
+                }
+                break;
+
+            case GreenPixel:
+                if (greenPixelProcessor != null)
+                {
+                    vision.setProcessorEnabled(greenPixelProcessor, enabled);
+                }
+                break;
+
+            case YellowPixel:
+                if (yellowPixelProcessor != null)
+                {
+                    vision.setProcessorEnabled(yellowPixelProcessor, enabled);
+                }
+                break;
+
+            case WhitePixel:
+                if (whitePixelProcessor != null)
+                {
+                    vision.setProcessorEnabled(whitePixelProcessor, enabled);
+                }
+                break;
+
+            case AnyPixel:
+                if (purplePixelProcessor != null)
+                {
+                    vision.setProcessorEnabled(purplePixelProcessor, enabled);
+                }
+                if (greenPixelProcessor != null)
+                {
+                    vision.setProcessorEnabled(greenPixelProcessor, enabled);
+                }
+                if (yellowPixelProcessor != null)
+                {
+                    vision.setProcessorEnabled(yellowPixelProcessor, enabled);
+                }
+                if (whitePixelProcessor != null)
+                {
+                    vision.setProcessorEnabled(whitePixelProcessor, enabled);
+                }
+                break;
         }
-    }   //setPurplePixelVisionEnabled
+    }   //setPixelVisionEnabled
 
     /**
-     * This method checks if PurplePixel vision is enabled.
+     * This method checks if vision is enabled for the specified pixel type.
      *
+     * @param pixelType specifies the pixel type to be detected.
      * @return true if enabled, false if disabled.
      */
-    public boolean isPurplePixelVisionEnabled()
+    public boolean isPixelVisionEnabled(PixelType pixelType)
     {
-        return purplePixelProcessor != null && vision.isVisionProcessorEnabled(purplePixelProcessor);
-    }   //isPurplePixelVisionEnabled
+        boolean enabled = false;
+
+        switch (pixelType)
+        {
+            case PurplePixel:
+                enabled = purplePixelProcessor != null && vision.isVisionProcessorEnabled(purplePixelProcessor);
+                break;
+
+            case GreenPixel:
+                enabled = greenPixelProcessor != null && vision.isVisionProcessorEnabled(greenPixelProcessor);
+                break;
+
+            case YellowPixel:
+                enabled = yellowPixelProcessor != null && vision.isVisionProcessorEnabled(yellowPixelProcessor);
+                break;
+
+            case WhitePixel:
+                enabled = whitePixelProcessor != null && vision.isVisionProcessorEnabled(whitePixelProcessor);
+                break;
+
+            case AnyPixel:
+                enabled = purplePixelProcessor != null && vision.isVisionProcessorEnabled(purplePixelProcessor) ||
+                          greenPixelProcessor != null && vision.isVisionProcessorEnabled(greenPixelProcessor) ||
+                          yellowPixelProcessor != null && vision.isVisionProcessorEnabled(yellowPixelProcessor) ||
+                          whitePixelProcessor != null && vision.isVisionProcessorEnabled(whitePixelProcessor);
+                break;
+        }
+
+        return enabled;
+    }   //isPixelVisionEnabled
 
     /**
-     * This method calls ColorBlob vision to detect the Purple Pixel object.
+     * This method calls ColorBlob vision to detect the specified Pixel object.
      *
+     * @param pixelType specifies the pixel type to be detected.
      * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
      * @return detected Purple Pixel object info.
      */
-    public TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> getDetectedPurplePixel(int lineNum)
+    public TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> getDetectedPixel(
+        PixelType pixelType, int lineNum)
     {
-        TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> colorBlobInfo =
-            robot.vision.purplePixelVision.getBestDetectedTargetInfo(robot.vision::validatePixel, null, 0.0, 0.0);
+        TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> pixelInfo = null;
+        String pixelName = null;
 
-        if (colorBlobInfo != null && robot.blinkin != null)
+        switch (pixelType)
         {
-            robot.blinkin.setDetectedPattern(BlinkinLEDs.PURPLE_PIXEL);
+            case PurplePixel:
+                pixelInfo = purplePixelVision != null? purplePixelVision.getBestDetectedTargetInfo(
+                    this::validatePixel, this::compareDistance, 0.0, 0.0): null;
+                pixelName = BlinkinLEDs.PURPLE_PIXEL;
+                break;
+
+            case GreenPixel:
+                pixelInfo = greenPixelVision != null? greenPixelVision.getBestDetectedTargetInfo(
+                    this::validatePixel, this::compareDistance, 0.0, 0.0): null;
+                pixelName = BlinkinLEDs.GREEN_PIXEL;
+                break;
+
+            case YellowPixel:
+                pixelInfo = yellowPixelVision != null? yellowPixelVision.getBestDetectedTargetInfo(
+                    this::validatePixel, this::compareDistance, 0.0, 0.0): null;
+                pixelName = BlinkinLEDs.YELLOW_PIXEL;
+                break;
+
+            case WhitePixel:
+                pixelInfo = whitePixelVision != null? whitePixelVision.getBestDetectedTargetInfo(
+                    this::validatePixel, this::compareDistance, 0.0, 0.0): null;
+                pixelName = BlinkinLEDs.WHITE_PIXEL;
+                break;
+
+            case AnyPixel:
+                ArrayList<TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject>> pixelList = new ArrayList<>();
+
+                pixelInfo = purplePixelVision != null? purplePixelVision.getBestDetectedTargetInfo(
+                    this::validatePixel, this::compareDistance, 0.0, 0.0): null;
+                if (pixelInfo != null)
+                {
+                    pixelList.add(pixelInfo);
+                }
+
+                pixelInfo = greenPixelVision != null? greenPixelVision.getBestDetectedTargetInfo(
+                    this::validatePixel, this::compareDistance, 0.0, 0.0): null;
+                if (pixelInfo != null)
+                {
+                    pixelList.add(pixelInfo);
+                }
+
+                pixelInfo = yellowPixelVision != null? yellowPixelVision.getBestDetectedTargetInfo(
+                    this::validatePixel, this::compareDistance, 0.0, 0.0): null;
+                if (pixelInfo != null)
+                {
+                    pixelList.add(pixelInfo);
+                }
+
+                pixelInfo = whitePixelVision != null? whitePixelVision.getBestDetectedTargetInfo(
+                    this::validatePixel, this::compareDistance, 0.0, 0.0): null;
+                if (pixelInfo != null)
+                {
+                    pixelList.add(pixelInfo);
+                }
+
+                TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject>[] pixels =
+                    new TrcVisionTargetInfo[pixelList.size()];
+                pixelList.toArray(pixels);
+                if (pixels.length > 1)
+                {
+                    Arrays.sort(pixels, this::compareDistance);
+                }
+                pixelInfo = pixels[0];
+                pixelName = pixelInfo.detectedObj.label;
+                break;
+        }
+
+        if (pixelInfo != null && robot.blinkin != null)
+        {
+            robot.blinkin.setDetectedPattern(pixelName);
         }
 
         if (lineNum != -1)
         {
             robot.dashboard.displayPrintf(
-                lineNum, "PurplePixel: %s", colorBlobInfo != null? colorBlobInfo: "Not found.");
+                lineNum, "%s: %s", pixelName, pixelInfo != null? pixelInfo: "Not found.");
         }
 
-        return colorBlobInfo;
-    }   //getDetectedPurplePixel
-
-    /**
-     * This method enables/disables GreenPixel vision.
-     *
-     * @param enabled specifies true to enable, false to disable.
-     */
-    public void setGreenPixelVisionEnabled(boolean enabled)
-    {
-        if (greenPixelProcessor != null)
-        {
-            vision.setProcessorEnabled(greenPixelProcessor, enabled);
-        }
-    }   //setGreenPixelVisionEnabled
-
-    /**
-     * This method checks if GreenPixel vision is enabled.
-     *
-     * @return true if enabled, false if disabled.
-     */
-    public boolean isGreenPixelVisionEnabled()
-    {
-        return greenPixelProcessor != null && vision.isVisionProcessorEnabled(greenPixelProcessor);
-    }   //isGreenPixelVisionEnabled
-
-    /**
-     * This method calls ColorBlob vision to detect the Green Pixel object.
-     *
-     * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
-     * @return detected Green Pixel object info.
-     */
-    public TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> getDetectedGreenPixel(int lineNum)
-    {
-        TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> colorBlobInfo =
-            robot.vision.greenPixelVision.getBestDetectedTargetInfo(robot.vision::validatePixel, null, 0.0, 0.0);
-
-        if (colorBlobInfo != null && robot.blinkin != null)
-        {
-            robot.blinkin.setDetectedPattern(BlinkinLEDs.GREEN_PIXEL);
-        }
-
-        if (lineNum != -1)
-        {
-            robot.dashboard.displayPrintf(
-                lineNum, "GreenPixel: %s", colorBlobInfo != null? colorBlobInfo: "Not found.");
-        }
-
-        return colorBlobInfo;
-    }   //getDetectedGreenPixel
-
-    /**
-     * This method enables/disables YellowPixel vision.
-     *
-     * @param enabled specifies true to enable, false to disable.
-     */
-    public void setYellowPixelVisionEnabled(boolean enabled)
-    {
-        if (yellowPixelProcessor != null)
-        {
-            vision.setProcessorEnabled(yellowPixelProcessor, enabled);
-        }
-    }   //setYellowVisionEnabled
-
-    /**
-     * This method checks if YellowPixel vision is enabled.
-     *
-     * @return true if enabled, false if disabled.
-     */
-    public boolean isYellowPixelVisionEnabled()
-    {
-        return yellowPixelProcessor != null && vision.isVisionProcessorEnabled(yellowPixelProcessor);
-    }   //isYellowPixelVisionEnabled
-
-    /**
-     * This method calls ColorBlob vision to detect the Yellow Pixel object.
-     *
-     * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
-     * @return detected Yellow Pixel object info.
-     */
-    public TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> getDetectedYellowPixel(int lineNum)
-    {
-        TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> colorBlobInfo =
-            robot.vision.yellowPixelVision.getBestDetectedTargetInfo(robot.vision::validatePixel, null, 0.0, 0.0);
-
-        if (colorBlobInfo != null && robot.blinkin != null)
-        {
-            robot.blinkin.setDetectedPattern(BlinkinLEDs.YELLOW_PIXEL);
-        }
-
-        if (lineNum != -1)
-        {
-            robot.dashboard.displayPrintf(
-                lineNum, "YellowPixel: %s", colorBlobInfo != null? colorBlobInfo: "Not found.");
-        }
-
-        return colorBlobInfo;
-    }   //getDetectedYellowPixel
-
-    /**
-     * This method enables/disables WhitePixel vision.
-     *
-     * @param enabled specifies true to enable, false to disable.
-     */
-    public void setWhitePixelVisionEnabled(boolean enabled)
-    {
-        if (whitePixelProcessor != null)
-        {
-            vision.setProcessorEnabled(whitePixelProcessor, enabled);
-        }
-    }   //setWhitePixelVisionEnabled
-
-    /**
-     * This method checks if WhitePixel vision is enabled.
-     *
-     * @return true if enabled, false if disabled.
-     */
-    public boolean isWhitePixelVisionEnabled()
-    {
-        return whitePixelProcessor != null && vision.isVisionProcessorEnabled(whitePixelProcessor);
-    }   //isWhitePixelVisionEnabled
-
-    /**
-     * This method calls ColorBlob vision to detect the White Pixel object.
-     *
-     * @param lineNum specifies the dashboard line number to display the detected object info, -1 to disable printing.
-     * @return detected White Pixel object info.
-     */
-    public TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> getDetectedWhitePixel(int lineNum)
-    {
-        TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> colorBlobInfo =
-            robot.vision.whitePixelVision.getBestDetectedTargetInfo(robot.vision::validatePixel, null, 0.0, 0.0);
-
-        if (colorBlobInfo != null && robot.blinkin != null)
-        {
-            robot.blinkin.setDetectedPattern(BlinkinLEDs.WHITE_PIXEL);
-        }
-
-        if (lineNum != -1)
-        {
-            robot.dashboard.displayPrintf(
-                lineNum, "WhitePixel: %s", colorBlobInfo != null? colorBlobInfo: "Not found.");
-        }
-
-        return colorBlobInfo;
-    }   //getDetectedWhitePixel
+        return pixelInfo;
+    }   //getDetectedPixel
 
     /**
      * This method enables/disables RedCone vision.
@@ -787,6 +800,21 @@ public class Vision
         // Pixel is 3-inch wide.
         return pixelInfo.objWidth > 2.0 && pixelInfo.objWidth < 4.0;
     }   //validatePixel
+
+    /**
+     * This method is called by the Arrays.sort to sort the target object by increasing distance.
+     *
+     * @param a specifies the first target
+     * @param b specifies the second target.
+     * @return negative value if a has closer distance than b, 0 if a and b have equal distances, positive value
+     *         if a has higher distance than b.
+     */
+    private int compareDistance(
+        TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> a,
+        TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> b)
+    {
+        return (int)((b.detectedObj.getObjectPose().y - a.detectedObj.getObjectPose().y)*100);
+    }   //compareDistance
 
     /**
      * This method is called by the Arrays.sort to sort the target object by decreasing confidence.

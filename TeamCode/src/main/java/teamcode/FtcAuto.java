@@ -55,12 +55,6 @@ public class FtcAuto extends FtcOpMode
         BACKSTAGE
     }   //enum StartPos
 
-    public enum ParkPos
-    {
-        CORNER,
-        CENTER
-    }   //enum ParkPos
-
     public enum AutoStrategy
     {
         AUTO,
@@ -69,6 +63,12 @@ public class FtcAuto extends FtcOpMode
         DO_NOTHING
     }   //enum AutoStrategy
 
+    public enum ParkPos
+    {
+        CORNER,
+        CENTER
+    }   //enum ParkPos
+
     /**
      * This class stores the autonomous menu choices.
      */
@@ -76,9 +76,9 @@ public class FtcAuto extends FtcOpMode
     {
         public double delay = 0.0;
         public Alliance alliance = Alliance.RED_ALLIANCE;
-        public StartPos startPos = StartPos.AUDIENCE;
-        public ParkPos parkPos = ParkPos.CORNER;
+        public StartPos startPos = StartPos.BACKSTAGE;
         public AutoStrategy strategy = AutoStrategy.DO_NOTHING;
+        public ParkPos parkPos = ParkPos.CORNER;
         public double xTarget = 0.0;
         public double yTarget = 0.0;
         public double turnTarget = 0.0;
@@ -93,14 +93,14 @@ public class FtcAuto extends FtcOpMode
                 "delay=%.0f " +
                 "alliance=\"%s\" " +
                 "startPos=\"%s\" " +
-                "parkPos=\"%s\" " +
                 "strategy=\"%s\" " +
+                "parkPos=\"%s\" " +
                 "xTarget=%.1f " +
                 "yTarget=%.1f " +
                 "turnTarget=%.0f " +
                 "driveTime=%.0f " +
                 "drivePower=%.1f",
-                delay, alliance, startPos, parkPos, strategy, xTarget, yTarget, turnTarget, driveTime, drivePower);
+                delay, alliance, startPos, strategy, parkPos, xTarget, yTarget, turnTarget, driveTime, drivePower);
         }   //toString
 
     }   //class AutoChoices
@@ -255,6 +255,9 @@ public class FtcAuto extends FtcOpMode
                 robot.globalTracer.traceInfo(funcName, "Disabling TensorFlowVision.");
                 robot.vision.setTensorFlowVisionEnabled(false);
             }
+            robot.vision.setRedConeVisionEnabled(false);
+            robot.vision.setBlueConeVisionEnabled(false);
+            robot.vision.setAprilTagVisionEnabled(true);
         }
 
         if (robot.battery != null)
@@ -328,24 +331,23 @@ public class FtcAuto extends FtcOpMode
         //
         // Construct menus.
         //
-        FtcValueMenu delayMenu = new FtcValueMenu(
-            "Delay time:", null, 0.0, 30.0, 1.0, 0.0, " %.0f sec");
+        FtcValueMenu delayMenu = new FtcValueMenu("Delay time:", null, 0.0, 30.0, 1.0, 0.0, " %.0f sec");
         FtcChoiceMenu<Alliance> allianceMenu = new FtcChoiceMenu<>("Alliance:", delayMenu);
         FtcChoiceMenu<StartPos> startPosMenu = new FtcChoiceMenu<>("Start Position:", allianceMenu);
-        FtcChoiceMenu<ParkPos> parkPosMenu = new FtcChoiceMenu<>("Park Position:", startPosMenu);
-        FtcChoiceMenu<AutoStrategy> strategyMenu = new FtcChoiceMenu<>("Auto Strategies:", parkPosMenu);
+        FtcChoiceMenu<AutoStrategy> strategyMenu = new FtcChoiceMenu<>("Auto Strategies:", startPosMenu);
+        FtcChoiceMenu<ParkPos> parkPosMenu = new FtcChoiceMenu<>("Park Position:", strategyMenu);
 
         FtcValueMenu xTargetMenu = new FtcValueMenu(
             "xTarget:", strategyMenu, -12.0, 12.0, 0.5, 4.0, " %.1f ft");
         FtcValueMenu yTargetMenu = new FtcValueMenu(
             "yTarget:", xTargetMenu, -12.0, 12.0, 0.5, 4.0, " %.1f ft");
         FtcValueMenu turnTargetMenu = new FtcValueMenu(
-            "turnTarget:", yTargetMenu, -180.0, 180.0, 5.0, 90.0, " %.0f ft");
+            "turnTarget:", yTargetMenu, -180.0, 180.0, 5.0, 90.0, " %.0f deg");
         FtcValueMenu driveTimeMenu = new FtcValueMenu(
             "Drive time:", strategyMenu, 0.0, 30.0, 1.0, 5.0, " %.0f sec");
         FtcValueMenu drivePowerMenu = new FtcValueMenu(
             "Drive power:", strategyMenu, -1.0, 1.0, 0.1, 0.5, " %.1f");
-
+        // Link Value Menus to their children.
         delayMenu.setChildMenu(allianceMenu);
         xTargetMenu.setChildMenu(yTargetMenu);
         yTargetMenu.setChildMenu(turnTargetMenu);
@@ -357,15 +359,16 @@ public class FtcAuto extends FtcOpMode
         allianceMenu.addChoice("Red", Alliance.RED_ALLIANCE, true, startPosMenu);
         allianceMenu.addChoice("Blue", Alliance.BLUE_ALLIANCE, false, startPosMenu);
 
-        startPosMenu.addChoice("Start Position Audience", StartPos.AUDIENCE, true, parkPosMenu);
-        startPosMenu.addChoice("Start Position Backstage", StartPos.BACKSTAGE, false, parkPosMenu);
+        startPosMenu.addChoice("Start Position Audience", StartPos.AUDIENCE, true, strategyMenu);
+        startPosMenu.addChoice("Start Position Backstage", StartPos.BACKSTAGE, false, strategyMenu);
 
-        parkPosMenu.addChoice("Park at Corner", ParkPos.CORNER, true, strategyMenu);
-        parkPosMenu.addChoice("Park at Center", ParkPos.CENTER, false, strategyMenu);
-
+        strategyMenu.addChoice("Autonomous", AutoStrategy.AUTO, true, parkPosMenu);
         strategyMenu.addChoice("PID Drive", AutoStrategy.PID_DRIVE, false, xTargetMenu);
         strategyMenu.addChoice("Timed Drive", AutoStrategy.TIMED_DRIVE, false, driveTimeMenu);
-        strategyMenu.addChoice("Do nothing", AutoStrategy.DO_NOTHING, true);
+        strategyMenu.addChoice("Do nothing", AutoStrategy.DO_NOTHING, false);
+
+        parkPosMenu.addChoice("Park at Corner", ParkPos.CORNER, true);
+        parkPosMenu.addChoice("Park at Center", ParkPos.CENTER, false);
         //
         // Traverse menus.
         //
@@ -376,8 +379,8 @@ public class FtcAuto extends FtcOpMode
         autoChoices.delay = delayMenu.getCurrentValue();
         autoChoices.alliance = allianceMenu.getCurrentChoiceObject();
         autoChoices.startPos = startPosMenu.getCurrentChoiceObject();
-        autoChoices.parkPos = parkPosMenu.getCurrentChoiceObject();
         autoChoices.strategy = strategyMenu.getCurrentChoiceObject();
+        autoChoices.parkPos = parkPosMenu.getCurrentChoiceObject();
         autoChoices.xTarget = xTargetMenu.getCurrentValue();
         autoChoices.yTarget = yTargetMenu.getCurrentValue();
         autoChoices.turnTarget = turnTargetMenu.getCurrentValue();

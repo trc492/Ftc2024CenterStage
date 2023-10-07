@@ -46,6 +46,7 @@ import TrcFtcLib.ftclib.FtcPidCoeffCache;
 import TrcFtcLib.ftclib.FtcValueMenu;
 import teamcode.drivebases.RobotDrive;
 import teamcode.drivebases.SwerveDrive;
+import teamcode.vision.Vision;
 
 /**
  * This class contains the Test Mode program. It extends FtcTeleOp so that we can teleop control the robot for
@@ -275,25 +276,25 @@ public class FtcTest extends FtcTeleOp
                     if (robot.vision.purplePixelVision != null)
                     {
                         robot.globalTracer.traceInfo(funcName, "Enabling PurplePixelVision.");
-                        robot.vision.setPurplePixelVisionEnabled(true);
+                        robot.vision.setPixelVisionEnabled(Vision.PixelType.PurplePixel, true);
                     }
 
                     if (robot.vision.greenPixelVision != null)
                     {
                         robot.globalTracer.traceInfo(funcName, "Enabling GreenPixelVision.");
-                        robot.vision.setGreenPixelVisionEnabled(true);
+                        robot.vision.setPixelVisionEnabled(Vision.PixelType.GreenPixel, true);
                     }
 
                     if (robot.vision.yellowPixelVision != null)
                     {
                         robot.globalTracer.traceInfo(funcName, "Enabling YellowPixelVision.");
-                        robot.vision.setYellowPixelVisionEnabled(true);
+                        robot.vision.setPixelVisionEnabled(Vision.PixelType.YellowPixel, true);
                     }
 
                     if (robot.vision.whitePixelVision != null)
                     {
                         robot.globalTracer.traceInfo(funcName, "Enabling WhitePixelVision.");
-                        robot.vision.setWhitePixelVisionEnabled(true);
+                        robot.vision.setPixelVisionEnabled(Vision.PixelType.WhitePixel, true);
                     }
 
                     if (robot.vision.redConeVision != null)
@@ -426,8 +427,8 @@ public class FtcTest extends FtcTeleOp
                     prevTime = currTime;
                     prevVelocity = velocity;
 
-                    robot.dashboard.displayPrintf(1, "Drive Vel: (%.1f/%.1f)", velocity, maxDriveVelocity);
-                    robot.dashboard.displayPrintf(2, "Drive Accel: (%.1f/%.1f)", acceleration, maxDriveAcceleration);
+                    robot.dashboard.displayPrintf(8, "Drive Vel: (%.1f/%.1f)", velocity, maxDriveVelocity);
+                    robot.dashboard.displayPrintf(9, "Drive Accel: (%.1f/%.1f)", acceleration, maxDriveAcceleration);
                 }
                 break;
 
@@ -435,10 +436,10 @@ public class FtcTest extends FtcTeleOp
             case Y_TIMED_DRIVE:
                 if (!RobotParams.Preferences.noRobot)
                 {
-                    robot.dashboard.displayPrintf(1, "Timed Drive: %.0f sec", testChoices.driveTime);
-                    robot.dashboard.displayPrintf(2, "RobotPose=%s", robot.robotDrive.driveBase.getFieldPosition());
+                    robot.dashboard.displayPrintf(8, "Timed Drive: %.0f sec", testChoices.driveTime);
+                    robot.dashboard.displayPrintf(9, "RobotPose=%s", robot.robotDrive.driveBase.getFieldPosition());
                     robot.dashboard.displayPrintf(
-                        3, "rawEnc=lf:%.0f,rf:%.0f,lb:%.0f,rb:%.0f",
+                        10, "rawEnc=lf:%.0f,rf:%.0f,lb:%.0f,rb:%.0f",
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_LEFT_FRONT].getPosition(),
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_RIGHT_FRONT].getPosition(),
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_LEFT_BACK].getPosition(),
@@ -475,13 +476,13 @@ public class FtcTest extends FtcTeleOp
                     }
 
                     robot.dashboard.displayPrintf(
-                        1, "RobotPose=%s,rawEnc=lf:%.0f,rf:%.0f,lb:%.0f,rb:%.0f",
+                        8, "RobotPose=%s,rawEnc=lf:%.0f,rf:%.0f,lb:%.0f,rb:%.0f",
                         robot.robotDrive.driveBase.getFieldPosition(),
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_LEFT_FRONT].getPosition(),
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_RIGHT_FRONT].getPosition(),
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_LEFT_BACK].getPosition(),
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_RIGHT_BACK].getPosition());
-                    int lineNum = 2;
+                    int lineNum = 9;
                     if (xPidCtrl != null)
                     {
                         xPidCtrl.displayPidInfo(lineNum);
@@ -532,21 +533,21 @@ public class FtcTest extends FtcTeleOp
                         swerveDrive.runSteeringCalibration();
                         if (swerveDrive.calibrationCount > 0)
                         {
-                            robot.dashboard.displayPrintf(1, "Count = %d", swerveDrive.calibrationCount);
+                            robot.dashboard.displayPrintf(8, "Count = %d", swerveDrive.calibrationCount);
                             robot.dashboard.displayPrintf(
-                                2, "Encoder: lf=%.3f/%f",
+                                9, "Encoder: lf=%.3f/%f",
                                 swerveDrive.steerEncoders[SwerveDrive.INDEX_LEFT_FRONT].getRawPosition(),
                                 swerveDrive.zeroPositions[SwerveDrive.INDEX_LEFT_FRONT]/swerveDrive.calibrationCount);
                             robot.dashboard.displayPrintf(
-                                3, "Encoder: rf=%.3f/%f",
+                                10, "Encoder: rf=%.3f/%f",
                                 swerveDrive.steerEncoders[SwerveDrive.INDEX_RIGHT_FRONT].getRawPosition(),
                                 swerveDrive.zeroPositions[SwerveDrive.INDEX_RIGHT_FRONT]/swerveDrive.calibrationCount);
                             robot.dashboard.displayPrintf(
-                                4, "Encoder: lb=%.3f/%f",
+                                11, "Encoder: lb=%.3f/%f",
                                 swerveDrive.steerEncoders[SwerveDrive.INDEX_LEFT_BACK].getRawPosition(),
                                 swerveDrive.zeroPositions[SwerveDrive.INDEX_LEFT_BACK]/swerveDrive.calibrationCount);
                             robot.dashboard.displayPrintf(
-                                5, "Encoder: rb=%.3f/%f",
+                                12, "Encoder: rb=%.3f/%f",
                                 swerveDrive.steerEncoders[SwerveDrive.INDEX_RIGHT_BACK].getRawPosition(),
                                 swerveDrive.zeroPositions[SwerveDrive.INDEX_RIGHT_BACK]/swerveDrive.calibrationCount);
                         }
@@ -828,7 +829,7 @@ public class FtcTest extends FtcTeleOp
      */
     private void updateColorThresholds()
     {
-        robot.dashboard.displayPrintf(8, "Thresholds: %s", Arrays.toString(colorThresholds));
+        robot.dashboard.displayPrintf(6, "Thresholds: %s", Arrays.toString(colorThresholds));
     }   //updateColorThresholds
 
     /**
@@ -1043,7 +1044,7 @@ public class FtcTest extends FtcTeleOp
      */
     private void doSensorsTest()
     {
-        int lineNum = 1;
+        int lineNum = 8;
         //
         // Read all sensors and display on the dashboard.
         // Drive the robot around to sample different locations of the field.
@@ -1092,7 +1093,7 @@ public class FtcTest extends FtcTeleOp
     {
         if (robot.vision != null)
         {
-            int lineNum = 1;
+            int lineNum = 8;
 
             if (robot.vision.rawColorBlobVision != null)
             {
@@ -1106,22 +1107,22 @@ public class FtcTest extends FtcTeleOp
 
             if (robot.vision.purplePixelVision != null)
             {
-                robot.vision.getDetectedPurplePixel(lineNum++);
+                robot.vision.getDetectedPixel(Vision.PixelType.PurplePixel, lineNum++);
             }
 
             if (robot.vision.greenPixelVision != null)
             {
-                robot.vision.getDetectedGreenPixel(lineNum++);
+                robot.vision.getDetectedPixel(Vision.PixelType.GreenPixel, lineNum++);
             }
 
             if (robot.vision.yellowPixelVision != null)
             {
-                robot.vision.getDetectedYellowPixel(lineNum++);
+                robot.vision.getDetectedPixel(Vision.PixelType.YellowPixel, lineNum++);
             }
 
             if (robot.vision.whitePixelVision != null)
             {
-                robot.vision.getDetectedWhitePixel(lineNum++);
+                robot.vision.getDetectedPixel(Vision.PixelType.WhitePixel, lineNum++);
             }
 
             if (robot.vision.redConeVision != null)

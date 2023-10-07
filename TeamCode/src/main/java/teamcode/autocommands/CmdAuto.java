@@ -22,6 +22,8 @@
 
 package teamcode.autocommands;
 
+import java.util.Locale;
+
 import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
@@ -139,9 +141,6 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             robot.globalTracer.traceInfo(moduleName, msg);
                             robot.speak(msg);
                         }
-                        // Done with Team Prop detection, disable them.
-                        robot.vision.setRedConeVisionEnabled(false);
-                        robot.vision.setBlueConeVisionEnabled(false);
                     }
 
                     if (teamPropPos == 0)
@@ -165,11 +164,12 @@ public class CmdAuto implements TrcRobot.RobotCommand
                                 RobotParams.RED_BACKSTAGE_SPIKES[teamPropIndex];
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, spikeMarkPose);
-                    sm.waitForSingleEvent(event,State.PLACE_PURPLE_PIXEL);
+                    sm.waitForSingleEvent(event, State.PLACE_PURPLE_PIXEL);
                     break;
 
                 case PLACE_PURPLE_PIXEL:
                     // Place purple pixel on the spike position 1, 2 or 3.
+                    sm.setState(State.DO_DELAY);
                     break;
 
                 case DO_DELAY:
@@ -198,17 +198,25 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Use vision to determine the appropriate AprilTag location.
                     if (robot.vision != null && robot.vision.aprilTagVision != null)
                     {
+                        int aprilTagId =
+                            autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
+                                RobotParams.BLUE_BACKDROP_APRILTAGS[teamPropIndex]:
+                                RobotParams.RED_BACKDROP_APRILTAGS[teamPropIndex];
                         TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
-                            robot.vision.getDetectedAprilTag(
-                                autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
-                                    RobotParams.BLUE_BACKDROP_APRILTAGS[teamPropIndex]:
-                                    RobotParams.RED_BACKDROP_APRILTAGS[teamPropIndex],
-                                -1);
+                            robot.vision.getDetectedAprilTag(aprilTagId, -1);
                         if (aprilTagInfo != null)
                         {
                             // Account for grabber offset from the camera.
                             aprilTagPose = new TrcPose2D(
-                                aprilTagInfo.objPose.x, aprilTagInfo.objPose.y - 6.0, aprilTagInfo.objPose.yaw);
+                                aprilTagInfo.objPose.x, aprilTagInfo.objPose.y - 6.0,
+                                90.0 - robot.robotDrive.driveBase.getHeading());
+                            robot.globalTracer.traceInfo(
+                                moduleName, "AprilTag %d found at %s", aprilTagId, aprilTagPose);
+                            msg = String.format(
+                                Locale.US, "AprilTag %d found at x %.1f, y %.1f",
+                                aprilTagId, aprilTagInfo.objPose.x, aprilTagInfo.objPose.y);
+                            robot.dashboard.displayPrintf(3, "%s", msg);
+                            robot.speak(msg);
                             sm.setState(State.ALIGN_TO_APRILTAG);
                         }
                         else if (visionExpiredTime == null)
@@ -219,12 +227,14 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
                         {
                             // Timing out, moving on.
+                            robot.globalTracer.traceInfo(moduleName, "AprilTag not found.");
                             sm.setState(State.ALIGN_TO_APRILTAG);
                         }
                     }
                     else
                     {
                         // Vision is not enable, move on.
+                        robot.globalTracer.traceInfo(moduleName, "AprilTag Vision not enabled.");
                         sm.setState(State.ALIGN_TO_APRILTAG);
                     }
                     break;
@@ -243,6 +253,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                 case PLACE_YELLOW_PIXEL:
                     // Place yellow pixel at the appropriate location on the backdrop.
+                    sm.setState(State.PARK_AT_BACKSTAGE);
                     break;
 
                 case PARK_AT_BACKSTAGE:

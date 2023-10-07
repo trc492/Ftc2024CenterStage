@@ -298,25 +298,25 @@ public class Robot
             if (vision.purplePixelVision != null)
             {
                 globalTracer.traceInfo(funcName, "Disabling PurplePixelVision.");
-                vision.setPurplePixelVisionEnabled(false);
+                vision.setPixelVisionEnabled(Vision.PixelType.PurplePixel, false);
             }
 
             if (vision.greenPixelVision != null)
             {
                 globalTracer.traceInfo(funcName, "Disabling GreenPixelVision.");
-                vision.setGreenPixelVisionEnabled(false);
+                vision.setPixelVisionEnabled(Vision.PixelType.GreenPixel, false);
             }
 
             if (vision.yellowPixelVision != null)
             {
                 globalTracer.traceInfo(funcName, "Disabling YellowPixelVision.");
-                vision.setYellowPixelVisionEnabled(false);
+                vision.setPixelVisionEnabled(Vision.PixelType.YellowPixel, false);
             }
 
             if (vision.whitePixelVision != null)
             {
                 globalTracer.traceInfo(funcName, "Disabling WhitePixelVision.");
-                vision.setWhitePixelVisionEnabled(false);
+                vision.setPixelVisionEnabled(Vision.PixelType.WhitePixel, false);
             }
 
             if (vision.redConeVision != null)

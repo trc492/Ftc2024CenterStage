@@ -22,39 +22,54 @@
 
 package teamcode.autotasks;
 
+import java.util.Locale;
+
 import TrcCommonLib.trclib.TrcAutoTask;
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcEvent;
+import TrcCommonLib.trclib.TrcOpenCvColorBlobPipeline;
 import TrcCommonLib.trclib.TrcOwnershipMgr;
+import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcTaskMgr;
+import TrcCommonLib.trclib.TrcTimer;
+import TrcCommonLib.trclib.TrcVisionTargetInfo;
 import teamcode.Robot;
+import teamcode.vision.Vision;
 
 /**
- * This class implements auto-assist task.
+ * This class implements auto-assist pickup pixel task.
  */
-public class TaskAuto extends TrcAutoTask<TaskAuto.State>
+public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
 {
-    private static final String moduleName = "TaskAuto";
+    private static final String moduleName = "TaskAutoPickupPixel";
 
     public enum State
     {
         START,
+        FIND_PIXEL,
+        ALIGN_TO_PIXEL,
+        PICK_UP_PIXEL,
         DONE
     }   //enum State
 
     private static class TaskParams
     {
-        TaskParams()
+        Vision.PixelType pixelType;
+        TaskParams(Vision.PixelType pixelType)
         {
+            this.pixelType = pixelType;
         }   //TaskParams
     }   //class TaskParams
 
     private final String ownerName;
     private final Robot robot;
     private final TrcDbgTrace msgTracer;
+    private final TrcEvent event;
 
     private String currOwner = null;
+    private TrcPose2D pixelPose = null;
+    private Double visionExpiredTime = null;
 
     /**
      * Constructor: Create an instance of the object.
@@ -63,30 +78,32 @@ public class TaskAuto extends TrcAutoTask<TaskAuto.State>
      * @param robot specifies the robot object that contains all the necessary subsystems.
      * @param msgTracer specifies the tracer to use to log events, can be null if not provided.
      */
-    public TaskAuto(String ownerName, Robot robot, TrcDbgTrace msgTracer)
+    public TaskAutoPickupPixel(String ownerName, Robot robot, TrcDbgTrace msgTracer)
     {
         super(moduleName, ownerName, TrcTaskMgr.TaskType.POST_PERIODIC_TASK, msgTracer);
         this.ownerName = ownerName;
         this.robot = robot;
         this.msgTracer = msgTracer;
-    }   //TaskAuto
+        event = new TrcEvent(moduleName);
+    }   //TaskAutoPickupPixel
 
     /**
-     * This method starts the auto-assist operation.
+     * This method starts the auto-assist pickup operation.
      *
+     * @param pixelType specifies the pixel type to look for and pick up.
      * @param completionEvent specifies the event to signal when done, can be null if none provided.
      */
-    public void autoAssist(TrcEvent completionEvent)
+    public void autoAssistPickup(Vision.PixelType pixelType, TrcEvent completionEvent)
     {
-        final String funcName = "autoAssist";
+        final String funcName = "autoAssistPickup";
 
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(funcName, "%s: event=%s", moduleName, completionEvent);
+            msgTracer.traceInfo(funcName, "%s: pixelType=%s, event=%s", moduleName, pixelType, completionEvent);
         }
 
-        startAutoTask(State.START, new TaskParams(), completionEvent);
-    }   //autoAssist
+        startAutoTask(State.START, new TaskParams(pixelType), completionEvent);
+    }   //autoAssistPickup
 
     /**
      * This method cancels an in progress auto-assist operation if any.
@@ -100,6 +117,10 @@ public class TaskAuto extends TrcAutoTask<TaskAuto.State>
             msgTracer.traceInfo(funcName, "%s: Canceling auto-assist.", moduleName);
         }
 
+        if (robot.vision != null)
+        {
+            robot.vision.setPixelVisionEnabled(Vision.PixelType.AnyPixel, false);
+        }
         stopAutoTask(false);
     }   //autoAssistCancel
 
@@ -120,8 +141,7 @@ public class TaskAuto extends TrcAutoTask<TaskAuto.State>
         final String funcName = "acquireSubsystemsOwnership";
         boolean success = ownerName == null ||
                           (robot.robotDrive.driveBase.acquireExclusiveAccess(ownerName));
-        // Don't acquire drive base ownership globally. Acquire it only if we need to drive.
-        // For example, we only need to drive if we are using vision to approach the target.
+
         if (success)
         {
             currOwner = ownerName;
@@ -199,19 +219,82 @@ public class TaskAuto extends TrcAutoTask<TaskAuto.State>
     protected void runTaskState(
         Object params, State state, TrcTaskMgr.TaskType taskType, TrcRobot.RunMode runMode, boolean slowPeriodicLoop)
     {
-        // TaskParams taskParams = (TaskParams) params;
+        TaskParams taskParams = (TaskParams) params;
 
         switch (state)
         {
             case START:
+                // Set up robot.
+                if (robot.vision != null)
+                {
+                    robot.vision.setPixelVisionEnabled(Vision.PixelType.AnyPixel, true);
+                }
+                break;
+
+            case FIND_PIXEL:
+                // Use vision to locate pixel.
+                if (robot.vision != null)
+                {
+                    TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> pixelInfo =
+                        robot.vision.getDetectedPixel(taskParams.pixelType, -1);
+                    if (pixelInfo != null)
+                    {
+                        pixelPose = new TrcPose2D(
+                            pixelInfo.objPose.x, pixelInfo.objPose.y - 6.0, pixelInfo.objPose.yaw);
+                        String msg = String.format(
+                            Locale.US, "%s is found at x %.1f, y %.1f, angle=%.1f",
+                            taskParams.pixelType, pixelInfo.objPose.x, pixelInfo.objPose.y, pixelInfo.objPose.yaw);
+                        robot.globalTracer.traceInfo(moduleName, msg);
+                        robot.dashboard.displayPrintf(3, "%s", msg);
+                        robot.speak(msg);
+                        sm.setState(State.ALIGN_TO_PIXEL);
+                    }
+                    else if (visionExpiredTime == null)
+                    {
+                        // Can't find any pixel, set a timeout and try again.
+                        visionExpiredTime = TrcTimer.getCurrentTime() + 1.0;
+                    }
+                    else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
+                    {
+                        // Timing out, moving on.
+                        sm.setState(State.DONE);
+                    }
+                }
+                else
+                {
+                    // Vision is not enable, move on.
+                    sm.setState(State.DONE);
+                }
+                break;
+
+            case ALIGN_TO_PIXEL:
+                // Navigate robot to the pixel.
+                if (pixelPose != null)
+                {
+                    robot.robotDrive.purePursuitDrive.start(
+                        event, robot.robotDrive.driveBase.getFieldPosition(), true, pixelPose);
+                    sm.waitForSingleEvent(event, State.PICK_UP_PIXEL);
+                }
+                else
+                {
+                    sm.setState(State.DONE);
+                }
+                break;
+
+            case PICK_UP_PIXEL:
+                // Pick up pixel.
                 break;
 
             default:
             case DONE:
                 // Stop task.
+                if (robot.vision != null)
+                {
+                    robot.vision.setPixelVisionEnabled(Vision.PixelType.AnyPixel, false);
+                }
                 stopAutoTask(true);
                 break;
         }
     }   //runTaskState
  
-}   //class TaskAuto
+}   //class TaskAutoPickupPixel

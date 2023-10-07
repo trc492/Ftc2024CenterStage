@@ -31,11 +31,11 @@ import TrcCommonLib.trclib.TrcTaskMgr;
 import teamcode.Robot;
 
 /**
- * This class implements auto-assist task.
+ * This class implements auto-assist place pixel task.
  */
-public class TaskAuto extends TrcAutoTask<TaskAuto.State>
+public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 {
-    private static final String moduleName = "TaskAuto";
+    private static final String moduleName = "TaskAutoPlacePixel";
 
     public enum State
     {
@@ -43,16 +43,19 @@ public class TaskAuto extends TrcAutoTask<TaskAuto.State>
         DONE
     }   //enum State
 
-    private static class TaskParams
-    {
-        TaskParams()
-        {
-        }   //TaskParams
-    }   //class TaskParams
+//    private static class TaskParams
+//    {
+//        Vision.PixelType pixelType;
+//        TaskParams(Vision.PixelType pixelType)
+//        {
+//            this.pixelType = pixelType;
+//        }   //TaskParams
+//    }   //class TaskParams
 
     private final String ownerName;
     private final Robot robot;
     private final TrcDbgTrace msgTracer;
+    private final TrcEvent event;
 
     private String currOwner = null;
 
@@ -63,30 +66,31 @@ public class TaskAuto extends TrcAutoTask<TaskAuto.State>
      * @param robot specifies the robot object that contains all the necessary subsystems.
      * @param msgTracer specifies the tracer to use to log events, can be null if not provided.
      */
-    public TaskAuto(String ownerName, Robot robot, TrcDbgTrace msgTracer)
+    public TaskAutoPlacePixel(String ownerName, Robot robot, TrcDbgTrace msgTracer)
     {
         super(moduleName, ownerName, TrcTaskMgr.TaskType.POST_PERIODIC_TASK, msgTracer);
         this.ownerName = ownerName;
         this.robot = robot;
         this.msgTracer = msgTracer;
+        event = new TrcEvent(moduleName);
     }   //TaskAuto
 
     /**
-     * This method starts the auto-assist operation.
+     * This method starts the auto-assist place operation.
      *
      * @param completionEvent specifies the event to signal when done, can be null if none provided.
      */
-    public void autoAssist(TrcEvent completionEvent)
+    public void autoAssistPlace(TrcEvent completionEvent)
     {
-        final String funcName = "autoAssist";
+        final String funcName = "autoAssistPlace";
 
         if (msgTracer != null)
         {
             msgTracer.traceInfo(funcName, "%s: event=%s", moduleName, completionEvent);
         }
 
-        startAutoTask(State.START, new TaskParams(), completionEvent);
-    }   //autoAssist
+        startAutoTask(State.START, null, completionEvent);
+    }   //autoAssistPlace
 
     /**
      * This method cancels an in progress auto-assist operation if any.
@@ -120,8 +124,7 @@ public class TaskAuto extends TrcAutoTask<TaskAuto.State>
         final String funcName = "acquireSubsystemsOwnership";
         boolean success = ownerName == null ||
                           (robot.robotDrive.driveBase.acquireExclusiveAccess(ownerName));
-        // Don't acquire drive base ownership globally. Acquire it only if we need to drive.
-        // For example, we only need to drive if we are using vision to approach the target.
+
         if (success)
         {
             currOwner = ownerName;
@@ -199,8 +202,6 @@ public class TaskAuto extends TrcAutoTask<TaskAuto.State>
     protected void runTaskState(
         Object params, State state, TrcTaskMgr.TaskType taskType, TrcRobot.RunMode runMode, boolean slowPeriodicLoop)
     {
-        // TaskParams taskParams = (TaskParams) params;
-
         switch (state)
         {
             case START:
@@ -214,4 +215,4 @@ public class TaskAuto extends TrcAutoTask<TaskAuto.State>
         }
     }   //runTaskState
  
-}   //class TaskAuto
+}   //class TaskAutoPlacePixel

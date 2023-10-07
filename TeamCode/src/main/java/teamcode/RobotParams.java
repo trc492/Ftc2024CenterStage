@@ -24,6 +24,8 @@ package teamcode;
 
 import android.os.Environment;
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import TrcCommonLib.trclib.TrcDriveBase.DriveOrientation;
@@ -75,6 +77,10 @@ public class RobotParams
     }   //class Preferences
 
     public static final String ROBOT_NAME                       = "Robot3543_2024";
+    public static final RevHubOrientationOnRobot.LogoFacingDirection hubLogoDirection =
+        RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD;
+    public static final RevHubOrientationOnRobot.UsbFacingDirection hubUsbDirection =
+        RevHubOrientationOnRobot.UsbFacingDirection.UP;
     public static final String TEAM_FOLDER_PATH                 =
         Environment.getExternalStorageDirectory().getPath() + "/FIRST/ftc3543";
     public static final String LOG_FOLDER_PATH                  = TEAM_FOLDER_PATH + "/tracelogs";
@@ -149,46 +155,35 @@ public class RobotParams
     public static final TrcPose2D PARKPOS_RED_CENTER            = new TrcPose2D(
         PARKPOS_X, PARKPOS_RED_CENTER_Y, 90.0);
 
-    public static final double BLUE_AUDIENCE_SPIKE_1_X          = -1.0 * FULL_TILE_INCHES;
-    public static final double BLUE_AUDIENCE_SPIKE_2_X          = -1.5 * FULL_TILE_INCHES;
-    public static final double BLUE_AUDIENCE_SPIKE_3_X          = -2.0 * FULL_TILE_INCHES;
-    public static final double BLUE_BACKSTAGE_SPIKE_1_X         = 1.0 * FULL_TILE_INCHES;
-    public static final double BLUE_BACKSTAGE_SPIKE_2_X         = 0.5 * FULL_TILE_INCHES;
-    public static final double BLUE_BACKSTAGE_SPIKE_3_X         = 0.0;
-    public static final double BLUE_SPIKES_1AND3_Y              = 2.0 * FULL_TILE_INCHES;
-    public static final double BLUE_SPIKE_2_Y                   = 1.5 * FULL_TILE_INCHES;
+    public static final double SPIKE_MARK_ANGLE_OFFSET          = 30.0;
+    public static final double AUDIENCE_SPIKES_X                = -1.5 * FULL_TILE_INCHES;
+    public static final double BACKSTAGE_SPIKES_X               = 0.5 * FULL_TILE_INCHES;
+    public static final double BLUE_SPIKES_Y                    = 1.5 * FULL_TILE_INCHES;
     public static final TrcPose2D[] BLUE_AUDIENCE_SPIKE_MARKS   = new TrcPose2D[] {
-        new TrcPose2D(BLUE_AUDIENCE_SPIKE_1_X, BLUE_SPIKES_1AND3_Y, 180.0),
-        new TrcPose2D(BLUE_AUDIENCE_SPIKE_2_X, BLUE_SPIKE_2_Y, 180.0),
-        new TrcPose2D(BLUE_AUDIENCE_SPIKE_3_X, BLUE_SPIKES_1AND3_Y, 180.0)
+        new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y, 180.0 - SPIKE_MARK_ANGLE_OFFSET),
+        new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y, 180.0),
+        new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y, 180.0 + SPIKE_MARK_ANGLE_OFFSET)
     };
     public static final TrcPose2D[] BLUE_BACKSTAGE_SPIKE_MARKS  = new TrcPose2D[] {
-        new TrcPose2D(BLUE_BACKSTAGE_SPIKE_1_X, BLUE_SPIKES_1AND3_Y, 180.0),
-        new TrcPose2D(BLUE_BACKSTAGE_SPIKE_2_X, BLUE_SPIKE_2_Y, 180.0),
-        new TrcPose2D(BLUE_BACKSTAGE_SPIKE_3_X, BLUE_SPIKES_1AND3_Y, 180.0)
+        new TrcPose2D(BACKSTAGE_SPIKES_X, BLUE_SPIKES_Y, 180.0 - SPIKE_MARK_ANGLE_OFFSET),
+        new TrcPose2D(BACKSTAGE_SPIKES_X, BLUE_SPIKES_Y, 180.0),
+        new TrcPose2D(BACKSTAGE_SPIKES_X, BLUE_SPIKES_Y, 180.0 + SPIKE_MARK_ANGLE_OFFSET)
     };
-    public static final double RED_AUDIENCE_SPIKE_1_X           = -2.0 * FULL_TILE_INCHES;
-    public static final double RED_AUDIENCE_SPIKE_2_X           = -1.5 * FULL_TILE_INCHES;
-    public static final double RED_AUDIENCE_SPIKE_3_X           = -1.0 * FULL_TILE_INCHES;
-    public static final double RED_BACKSTAGE_SPIKE_1_X          = 0.0;
-    public static final double RED_BACKSTAGE_SPIKE_2_X          = 0.5 * FULL_TILE_INCHES;
-    public static final double RED_BACKSTAGE_SPIKE_3_X          = 1.0 * FULL_TILE_INCHES;
-    public static final double RED_SPIKES_1AND3_Y               = -2.0 * FULL_TILE_INCHES;
-    public static final double RED_SPIKE_2_Y                    = -1.5 * FULL_TILE_INCHES;
+    public static final double RED_SPIKES_Y                     = -1.5 * FULL_TILE_INCHES;
     public static final TrcPose2D[] RED_AUDIENCE_SPIKES         = new TrcPose2D[] {
-        new TrcPose2D(RED_AUDIENCE_SPIKE_1_X, RED_SPIKES_1AND3_Y, 0.0),
-        new TrcPose2D(RED_AUDIENCE_SPIKE_2_X, RED_SPIKE_2_Y, 0.0),
-        new TrcPose2D(RED_AUDIENCE_SPIKE_3_X, RED_SPIKES_1AND3_Y, 0.0)
+        new TrcPose2D(AUDIENCE_SPIKES_X, RED_SPIKES_Y, -SPIKE_MARK_ANGLE_OFFSET),
+        new TrcPose2D(AUDIENCE_SPIKES_X, RED_SPIKES_Y, 0.0),
+        new TrcPose2D(AUDIENCE_SPIKES_X, RED_SPIKES_Y, SPIKE_MARK_ANGLE_OFFSET)
     };
     public static final TrcPose2D[] RED_BACKSTAGE_SPIKES        = new TrcPose2D[] {
-        new TrcPose2D(RED_BACKSTAGE_SPIKE_1_X, RED_SPIKES_1AND3_Y, 180.0),
-        new TrcPose2D(RED_BACKSTAGE_SPIKE_2_X, RED_SPIKE_2_Y, 180.0),
-        new TrcPose2D(RED_BACKSTAGE_SPIKE_3_X, RED_SPIKES_1AND3_Y, 180.0)
+        new TrcPose2D(BACKSTAGE_SPIKES_X, RED_SPIKES_Y, -SPIKE_MARK_ANGLE_OFFSET),
+        new TrcPose2D(BACKSTAGE_SPIKES_X, RED_SPIKES_Y, 0.0),
+        new TrcPose2D(BACKSTAGE_SPIKES_X, RED_SPIKES_Y, SPIKE_MARK_ANGLE_OFFSET)
     };
     public static final TrcPose2D RED_BACKDROP                  = new TrcPose2D(
-        2.0 * FULL_TILE_INCHES, -1.5 * FULL_TILE_INCHES, 90.0);
+        1.2 * FULL_TILE_INCHES, -1.4 * FULL_TILE_INCHES, 90.0);
     public static final TrcPose2D BLUE_BACKDROP                 = new TrcPose2D(
-        2.0 * FULL_TILE_INCHES, 1.5 * FULL_TILE_INCHES, 90.0);
+        1.2 * FULL_TILE_INCHES, 1.4 * FULL_TILE_INCHES, 90.0);
     public static final int[] BLUE_BACKDROP_APRILTAGS           = new int[]{1, 2, 3};
     public static final int[] RED_BACKDROP_APRILTAGS            = new int[]{4, 5, 6};
     //
