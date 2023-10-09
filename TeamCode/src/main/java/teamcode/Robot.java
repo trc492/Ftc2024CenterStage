@@ -189,8 +189,14 @@ public class Robot
             RobotParams.Preferences.useExternalOdometry = true;
             RobotParams.Preferences.useSubsystems = true;
         }
-        else
+        else if (RobotParams.Preferences.centerStageRobot)
         {
+            RobotParams.Preferences.useBlinkin = false;
+            RobotParams.Preferences.useExternalOdometry = false;
+            RobotParams.Preferences.useSubsystems = false;
+            RobotParams.Preferences.useAprilTagVision = false;
+            RobotParams.Preferences.useColorBlobVision = false;
+            RobotParams.Preferences.useTensorFlowVision = false;
         }
     }   //checkRobotSupport
 

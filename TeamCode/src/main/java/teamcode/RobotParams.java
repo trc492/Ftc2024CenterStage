@@ -62,7 +62,8 @@ public class RobotParams
         // Robot
         public static boolean noRobot = false;
         public static boolean swerveRobot = false;
-        public static boolean powerPlayRobot = true;
+        public static boolean powerPlayRobot = false;
+        public static boolean centerStageRobot = true;
         public static boolean swerveDualServoSteering = true;
         // Drive Base
         public static boolean useExternalOdometry = true;
