@@ -126,9 +126,9 @@ public class RobotParams
     public static final double DRIVE_BASE_LENGTH                = 13.250;
     public static final double DRIVE_BASE_WIDTH                 = 12.375;
     //
-    // Game positions.
+    // Game related locations.
     //
-    // Robot start positions in inches.
+    // Robot start locations.
     public static final double STARTPOS_AUDIENCE_X              = -1.5 * FULL_TILE_INCHES;
     public static final double STARTPOS_BACKSTAGE_X             = 0.5 * FULL_TILE_INCHES;
     public static final double STARTPOS_BLUE_Y                  = HALF_FIELD_INCHES - ROBOT_LENGTH/2.0;
@@ -141,7 +141,7 @@ public class RobotParams
         STARTPOS_AUDIENCE_X, STARTPOS_RED_Y, 0.0);
     public static final TrcPose2D STARTPOS_RED_BACKSTAGE        = new TrcPose2D(
         STARTPOS_BACKSTAGE_X, STARTPOS_RED_Y, 0.0);
-    // Robot park positions in tile units.
+    // Robot park locations.
     public static final double PARKPOS_X                        = 2.5 * FULL_TILE_INCHES;
     public static final double PARKPOS_BLUE_CORNER_Y            = 2.5 * FULL_TILE_INCHES;
     public static final double PARKPOS_BLUE_CENTER_Y            = 0.5 * FULL_TILE_INCHES;
@@ -155,7 +155,7 @@ public class RobotParams
         PARKPOS_X, PARKPOS_RED_CORNER_Y, 90.0);
     public static final TrcPose2D PARKPOS_RED_CENTER            = new TrcPose2D(
         PARKPOS_X, PARKPOS_RED_CENTER_Y, 90.0);
-
+    // Spike Mark locations to place the pixel.
     public static final double SPIKE_MARK_ANGLE_OFFSET          = 30.0;
     public static final double AUDIENCE_SPIKES_X                = -1.5 * FULL_TILE_INCHES;
     public static final double BACKSTAGE_SPIKES_X               = 0.5 * FULL_TILE_INCHES;
@@ -181,12 +181,18 @@ public class RobotParams
         new TrcPose2D(BACKSTAGE_SPIKES_X, RED_SPIKES_Y, 0.0),
         new TrcPose2D(BACKSTAGE_SPIKES_X, RED_SPIKES_Y, SPIKE_MARK_ANGLE_OFFSET)
     };
-    public static final TrcPose2D RED_BACKDROP                  = new TrcPose2D(
-        1.2 * FULL_TILE_INCHES, -1.4 * FULL_TILE_INCHES, 90.0);
-    public static final TrcPose2D BLUE_BACKDROP                 = new TrcPose2D(
-        1.2 * FULL_TILE_INCHES, 1.4 * FULL_TILE_INCHES, 90.0);
+    // AprilTag locations to place the pixel.
     public static final int[] BLUE_BACKDROP_APRILTAGS           = new int[]{1, 2, 3};
     public static final int[] RED_BACKDROP_APRILTAGS            = new int[]{4, 5, 6};
+    public static final double APRILTAG_X                       = 2.0 * FULL_TILE_INCHES;
+    public static final TrcPose2D[] APRILTAG_POSES              = new TrcPose2D[] {
+        new TrcPose2D(APRILTAG_X, 0, 90.0), // TagId 1
+        new TrcPose2D(APRILTAG_X, 0, 90.0), // TagId 2
+        new TrcPose2D(APRILTAG_X, 0, 90.0), // TagId 3
+        new TrcPose2D(APRILTAG_X, 0, 90.0), // TagId 4
+        new TrcPose2D(APRILTAG_X, 0, 90.0), // TagId 5
+        new TrcPose2D(APRILTAG_X, 0, 90.0)  // TagId 6
+    };
     //
     // Vision subsystem.
     //
