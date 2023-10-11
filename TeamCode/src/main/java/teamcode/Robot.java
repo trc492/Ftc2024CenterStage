@@ -192,10 +192,11 @@ public class Robot
         else if (RobotParams.Preferences.centerStageRobot)
         {
             RobotParams.Preferences.useBlinkin = false;
+            RobotParams.Preferences.hasWebCam2 = true;
             RobotParams.Preferences.useExternalOdometry = false;
             RobotParams.Preferences.useSubsystems = false;
-            RobotParams.Preferences.useAprilTagVision = false;
-            RobotParams.Preferences.useColorBlobVision = false;
+            RobotParams.Preferences.useAprilTagVision = true;
+            RobotParams.Preferences.useColorBlobVision = true;
             RobotParams.Preferences.useTensorFlowVision = false;
         }
     }   //checkRobotSupport
@@ -218,6 +219,9 @@ public class Robot
             if (robotDrive.gyro != null)
             {
                 robotDrive.gyro.setEnabled(true);
+                // The following are performance counters, could be disabled for competition if you want.
+                // But it might give you some insight if somehow autonomous wasn't performing as expected.
+                robotDrive.gyro.setElapsedTimerEnabled(true);
             }
             //
             // Enable odometry for all opmodes. We may need odometry in TeleOp for auto-assist drive.
@@ -247,14 +251,6 @@ public class Robot
             }
             // Consume it so it's no longer valid for next run.
             endOfAutoRobotPose = null;
-        }
-        //
-        // The following are performance counters, could be disabled for competition if you want.
-        // But it might give you some insight if somehow autonomous wasn't performing as expected.
-        //
-        if (robotDrive != null && robotDrive.gyro != null)
-        {
-            robotDrive.gyro.setElapsedTimerEnabled(true);
         }
         TrcDigitalInput.setElapsedTimerEnabled(true);
         TrcMotor.setElapsedTimerEnabled(true);

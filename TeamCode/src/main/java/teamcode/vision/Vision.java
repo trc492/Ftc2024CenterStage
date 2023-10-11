@@ -134,10 +134,8 @@ public class Vision
     private FtcEocvColorBlobProcessor blueConeProcessor;
     public FtcVisionTensorFlow tensorFlowVision;
     private TfodProcessor tensorFlowProcessor;
-    private WebcamName webcamName1;
-    private WebcamName webcamName2;
-    private WebcamName activeCamera;
-    private FtcVision vision;
+    private WebcamName webcam1, webcam2;
+    public FtcVision vision;
     private int lastTeamPropPos = 0;
 
     /**
@@ -261,15 +259,13 @@ public class Vision
             if (RobotParams.Preferences.useWebCam)
             {
                 // Use USB webcams.
-                webcamName1 = opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1);
-                webcamName2 =
+                webcam1 = opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1);
+                webcam2 =
                     RobotParams.Preferences.hasWebCam2 ?
                         opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM2) : null;
                 vision = new FtcVision(
-                    webcamName1, webcamName2, RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT,
+                    webcam1, webcam2, RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT,
                     RobotParams.Preferences.showVisionView, visionProcessors);
-                // Initialize the active camera to webcamName1.
-                switchActiveCamera();
             }
             else
             {
@@ -290,17 +286,31 @@ public class Vision
     }   //Vision
 
     /**
-     * This method switches between the two webcams.
+     * This method returns the active camera if we have two webcams.
+     *
+     * @return active camera.
      */
-    public void switchActiveCamera()
+    public WebcamName getActiveCamera()
     {
-        // Only do this if we have two webcams.
-        if (webcamName1 != null && webcamName2 != null)
+        return vision.getActiveCamera();
+    }   //getActiveCamera
+
+    /**
+     * This method switch the active camera to the other camera if we have two webcams.
+     */
+    public void switchCamera()
+    {
+        WebcamName activeCamera = getActiveCamera();
+
+        if (activeCamera == webcam1 && webcam2 != null)
         {
-            activeCamera = activeCamera == null || activeCamera == webcamName2? webcamName1: webcamName2;
-            vision.getVisionPortal().setActiveCamera(activeCamera);
+            vision.setActiveCamera(webcam2);
         }
-    }   //switchActiveCamera
+        else if (activeCamera == webcam2 && webcam1 != null)
+        {
+            vision.setActiveCamera(webcam1);
+        }
+    }   //switchCamera
 
     /**
      * This method returns the color threshold values of rawColorBlobVision.
@@ -813,7 +823,7 @@ public class Vision
         TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> a,
         TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> b)
     {
-        return (int)((b.detectedObj.getObjectPose().y - a.detectedObj.getObjectPose().y)*100);
+        return (int)((b.objPose.y - a.objPose.y)*100);
     }   //compareDistance
 
     /**

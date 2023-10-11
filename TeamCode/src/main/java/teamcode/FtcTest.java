@@ -314,6 +314,15 @@ public class FtcTest extends FtcTeleOp
                         robot.globalTracer.traceInfo(funcName, "Enabling TensorFlowVison.");
                         robot.vision.setTensorFlowVisionEnabled(true);
                     }
+
+                    int[] exposureSetting = robot.vision.vision.getExposureSetting();
+                    int currExposure = robot.vision.vision.getCurrentExposure();
+                    int[] gainSetting = robot.vision.vision.getGainSetting();
+                    int currGain = robot.vision.vision.getCurrentGain();
+                    robot.dashboard.displayPrintf(
+                        8, "Exp: %d (%d:%d), Gain: %d (%d:%d)",
+                        currExposure, exposureSetting[0], exposureSetting[1],
+                        currGain, gainSetting != null? gainSetting[0]: 0, gainSetting != null? gainSetting[1]: 0);
                 }
                 break;
 
@@ -657,6 +666,17 @@ public class FtcTest extends FtcTeleOp
                         {
                             // Set display to next intermediate Mat in the pipeline.
                             robot.vision.rawColorBlobVision.getPipeline().setNextVideoOutput();
+                        }
+                        processed = true;
+                    }
+                    break;
+
+                case FtcGamepad.GAMEPAD_LBUMPER:
+                    if (testChoices.test == Test.VISION_TEST)
+                    {
+                        if (pressed)
+                        {
+                            robot.vision.switchCamera();
                         }
                         processed = true;
                     }
@@ -1093,7 +1113,7 @@ public class FtcTest extends FtcTeleOp
     {
         if (robot.vision != null)
         {
-            int lineNum = 8;
+            int lineNum = 9;
 
             if (robot.vision.rawColorBlobVision != null)
             {

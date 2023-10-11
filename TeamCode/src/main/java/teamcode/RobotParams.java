@@ -32,6 +32,7 @@ import TrcCommonLib.trclib.TrcDriveBase.DriveOrientation;
 import TrcCommonLib.trclib.TrcHomographyMapper;
 import TrcCommonLib.trclib.TrcPidController;
 import TrcCommonLib.trclib.TrcPose2D;
+import TrcCommonLib.trclib.TrcUtil;
 import TrcFtcLib.ftclib.FtcGamepad;
 
 /**
@@ -77,7 +78,7 @@ public class RobotParams
         public static boolean hasGrabberSensor = true;
     }   //class Preferences
 
-    public static final String ROBOT_NAME                       = "Robot3543_2024";
+    public static final String ROBOT_NAME                       = "Robot3543_CenterStage";
     public static final RevHubOrientationOnRobot.LogoFacingDirection hubLogoDirection =
         RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD;
     public static final RevHubOrientationOnRobot.UsbFacingDirection hubUsbDirection =
@@ -121,10 +122,10 @@ public class RobotParams
     //
     // Robot dimensions.
     //
-    public static final double ROBOT_LENGTH                     = 17.375;
-    public static final double ROBOT_WIDTH                      = 14.625;
-    public static final double DRIVE_BASE_LENGTH                = 13.250;
-    public static final double DRIVE_BASE_WIDTH                 = 12.375;
+    public static final double ROBOT_LENGTH                     = 17.000;
+    public static final double ROBOT_WIDTH                      = 17.000;
+    public static final double DRIVE_BASE_LENGTH                = (24.0 * 14)*TrcUtil.INCHES_PER_MM;
+    public static final double DRIVE_BASE_WIDTH                 = 16.0;
     //
     // Game related locations.
     //
