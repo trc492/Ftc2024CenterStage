@@ -205,11 +205,11 @@ public class RobotParams
     public static final double CAM_LEFT_OFFSET                  = 7.125;//Camera offset from left of robot in inches
     public static final double CAM_HEIGHT_OFFSET                = 3.750;//Camera offset from floor in inches
     public static final double CAM_TILT_DOWN                    = 15.00;//Camera tilt down angle from horizontal in deg
-    // Camera: Micorosoft Lifecam HD 3000 v1/v2
-    public static final double WEBCAM_FX                        = 678.154;  // in pixels
-    public static final double WEBCAM_FY                        = 678.170;  // in pixels
-    public static final double WEBCAM_CX                        = 318.135;  // in pixels
-    public static final double WEBCAM_CY                        = 228.374;  // in pixels
+//    // Camera: Micorosoft Lifecam HD 3000 v1/v2
+//    public static final double WEBCAM_FX                        = 678.154;  // in pixels
+//    public static final double WEBCAM_FY                        = 678.170;  // in pixels
+//    public static final double WEBCAM_CX                        = 318.135;  // in pixels
+//    public static final double WEBCAM_CY                        = 228.374;  // in pixels
 //    // Camera: Logitech C270
 //    public static final double WEBCAM_FX                        = 822.317;  // in pixels
 //    public static final double WEBCAM_FY                        = 822.317;  // in pixels
@@ -220,11 +220,11 @@ public class RobotParams
 //    public static final double WEBCAM_FY                        = 821.993;  // in pixels
 //    public static final double WEBCAM_CX                        = 330.489;  // in pixels
 //    public static final double WEBCAM_CY                        = 248.997;  // in pixels
-//    // Camera: Logitech C920
-//    public static final double WEBCAM_FX                        = 622.001;  // in pixels
-//    public static final double WEBCAM_FY                        = 622.001;  // in pixels
-//    public static final double WEBCAM_CX                        = 319.803;  // in pixels
-//    public static final double WEBCAM_CY                        = 241.251;  // in pixels
+    // Camera: Logitech C920
+    public static final double WEBCAM_FX                        = 622.001;  // in pixels
+    public static final double WEBCAM_FY                        = 622.001;  // in pixels
+    public static final double WEBCAM_CX                        = 319.803;  // in pixels
+    public static final double WEBCAM_CY                        = 241.251;  // in pixels
 
     // Measurement unit: pixels
     public static final double HOMOGRAPHY_CAMERA_TOPLEFT_X      = 0.0;

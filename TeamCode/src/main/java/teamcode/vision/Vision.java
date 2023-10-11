@@ -313,6 +313,24 @@ public class Vision
     }   //switchCamera
 
     /**
+     * This method displays the exposure settings on the dashboard. This helps tuning camera exposure.
+     *
+     * @param lineNum specifies the dashboard line number to display the info.
+     */
+    public void displayExposureSettings(int lineNum)
+    {
+        long[] exposureSetting = vision.getExposureSetting();
+        long currExposure = vision.getCurrentExposure();
+        int[] gainSetting = vision.getGainSetting();
+        int currGain = vision.getCurrentGain();
+
+        robot.dashboard.displayPrintf(
+            lineNum, "Exp: %d (%d:%d), Gain: %d (%d:%d)",
+            currExposure, exposureSetting[0], exposureSetting[1],
+            currGain, gainSetting != null? gainSetting[0]: 0, gainSetting != null? gainSetting[1]: 0);
+    }   //displayExposureSettings
+
+    /**
      * This method returns the color threshold values of rawColorBlobVision.
      *
      * @return array of color threshold values.

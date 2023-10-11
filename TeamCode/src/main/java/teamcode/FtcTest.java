@@ -134,6 +134,7 @@ public class FtcTest extends FtcTeleOp
     private int colorThresholdIndex = 0;
     private double colorThresholdMultiplier = 1.0;
     private boolean teleOpControlEnabled = true;
+    private long exposure;
 
     //
     // Overrides FtcOpMode abstract method.
@@ -266,6 +267,7 @@ public class FtcTest extends FtcTeleOp
             case VISION_TEST:
                 if (robot.vision != null)
                 {
+                    exposure = robot.vision.vision.getCurrentExposure();
                     // Vision generally will impact performance, so we only enable it if it's needed.
                     if (robot.vision.aprilTagVision != null)
                     {
@@ -314,15 +316,6 @@ public class FtcTest extends FtcTeleOp
                         robot.globalTracer.traceInfo(funcName, "Enabling TensorFlowVison.");
                         robot.vision.setTensorFlowVisionEnabled(true);
                     }
-
-                    int[] exposureSetting = robot.vision.vision.getExposureSetting();
-                    int currExposure = robot.vision.vision.getCurrentExposure();
-                    int[] gainSetting = robot.vision.vision.getGainSetting();
-                    int currGain = robot.vision.vision.getCurrentGain();
-                    robot.dashboard.displayPrintf(
-                        8, "Exp: %d (%d:%d), Gain: %d (%d:%d)",
-                        currExposure, exposureSetting[0], exposureSetting[1],
-                        currGain, gainSetting != null? gainSetting[0]: 0, gainSetting != null? gainSetting[1]: 0);
                 }
                 break;
 
@@ -612,13 +605,12 @@ public class FtcTest extends FtcTeleOp
                         }
                         processed = true;
                     }
-                    else if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
-                             robot.vision != null && robot.vision.rawColorBlobVision != null)
+                    else if ((testChoices.test == Test.TUNE_COLORBLOB_VISION || testChoices.test == Test.VISION_TEST) &&
+                             robot.vision != null)
                     {
                         if (pressed)
                         {
-                            // Commit color thresholds change.
-                            robot.vision.setRawColorBlobThresholds(colorThresholds);
+                            robot.vision.switchCamera();
                         }
                         processed = true;
                     }
@@ -672,11 +664,24 @@ public class FtcTest extends FtcTeleOp
                     break;
 
                 case FtcGamepad.GAMEPAD_LBUMPER:
-                    if (testChoices.test == Test.VISION_TEST)
+                    if (testChoices.test == Test.VISION_TEST && robot.vision != null)
                     {
                         if (pressed)
                         {
-                            robot.vision.switchCamera();
+                            exposure -= 100;
+                            robot.vision.vision.setManualExposure(exposure, null);
+                        }
+                        processed = true;
+                    }
+                    break;
+
+                case FtcGamepad.GAMEPAD_RBUMPER:
+                    if (testChoices.test == Test.VISION_TEST && robot.vision != null)
+                    {
+                        if (pressed)
+                        {
+                            exposure += 100;
+                            robot.vision.vision.setManualExposure(exposure, null);
                         }
                         processed = true;
                     }
@@ -1113,8 +1118,9 @@ public class FtcTest extends FtcTeleOp
     {
         if (robot.vision != null)
         {
-            int lineNum = 9;
+            int lineNum = 8;
 
+            robot.vision.displayExposureSettings(lineNum++);
             if (robot.vision.rawColorBlobVision != null)
             {
                 robot.vision.getDetectedRawColorBlob(lineNum++);
