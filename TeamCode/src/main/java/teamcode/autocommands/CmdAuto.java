@@ -123,7 +123,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
         }
         else
         {
-            TrcPose2D targetPose, intermediate1, intermediate2, intermediate3;
+            TrcPose2D targetPose, intermediate1, intermediate2, intermediate3, intermediate4;
 
             robot.dashboard.displayPrintf(8, "State: %s", state);
             switch (state)
@@ -219,19 +219,23 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(
                             new TrcPose2D(
-                                -2.5 * RobotParams.FULL_TILE_INCHES, 0.5 * RobotParams.FULL_TILE_INCHES, 180.0),
+                                -2.5 * RobotParams.FULL_TILE_INCHES, 2.5 * RobotParams.FULL_TILE_INCHES, 180.0),
                             autoChoices.alliance);
                         intermediate3 = robot.adjustPoseByAlliance(
                             new TrcPose2D(
                                 -2.5 * RobotParams.FULL_TILE_INCHES, 0.5 * RobotParams.FULL_TILE_INCHES, 90.0),
                             autoChoices.alliance);
+                        intermediate4 = robot.adjustPoseByAlliance(
+                            new TrcPose2D(
+                                1.5 * RobotParams.FULL_TILE_INCHES, 0.5 * RobotParams.FULL_TILE_INCHES, 90.0),
+                            autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(
                             new TrcPose2D(
-                                1.5 * RobotParams.FULL_TILE_INCHES, 0.5 * RobotParams.FULL_TILE_INCHES, 90.0 - 10.0),
+                                1.5 * RobotParams.FULL_TILE_INCHES, 1.5 * RobotParams.FULL_TILE_INCHES, 90.0),
                             autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
                             event, robot.robotDrive.driveBase.getFieldPosition(), false,
-                            intermediate1, intermediate2, intermediate3, targetPose);
+                            intermediate1, intermediate2, intermediate3, intermediate4, targetPose);
                     }
                     sm.waitForSingleEvent(event, State.FIND_APRILTAG);
                     break;
