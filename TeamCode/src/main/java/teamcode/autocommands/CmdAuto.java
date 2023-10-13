@@ -46,9 +46,9 @@ public class CmdAuto implements TrcRobot.RobotCommand
     {
         START,
         PLACE_PURPLE_PIXEL,
+        DO_DELAY,
         DRIVE_TO_LOOKOUT,
         FIND_APRILTAG,
-        DO_DELAY,
         DRIVE_TO_APRILTAG,
         PLACE_YELLOW_PIXEL,
         PARK_AT_BACKSTAGE,
@@ -60,8 +60,6 @@ public class CmdAuto implements TrcRobot.RobotCommand
     private final TrcTimer timer;
     private final TrcEvent event;
     private final TrcStateMachine<State> sm;
-    private int teamPropIndex = 0;
-    private TrcPose2D targetPose = null;
     private int aprilTagId = 0;
     private TrcPose2D aprilTagPose = null;
     private Double visionExpiredTime = null;
@@ -125,7 +123,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
         }
         else
         {
-            TrcPose2D intermediate1, intermediate2, intermediate3;
+            TrcPose2D targetPose, intermediate1, intermediate2, intermediate3;
 
             robot.dashboard.displayPrintf(8, "State: %s", state);
             switch (state)
@@ -156,7 +154,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         robot.speak(msg);
                     }
 
-                    teamPropIndex = teamPropPos - 1;
+                    int teamPropIndex = teamPropPos - 1;
+                    // Determine AprilTag ID to look for.
                     aprilTagId =
                         autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
                             RobotParams.BLUE_BACKDROP_APRILTAGS[teamPropIndex]:
@@ -178,10 +177,24 @@ public class CmdAuto implements TrcRobot.RobotCommand
                 case PLACE_PURPLE_PIXEL:
                     // TODO: Add code to place purple pixel.
                     // Place purple pixel on the spike position 1, 2 or 3.
-                    sm.setState(State.DRIVE_TO_LOOKOUT);
+                    sm.setState(State.DO_DELAY);
+                    break;
+
+                case DO_DELAY:
+                    // Do delay waiting for alliance partner to get out of the way if necessary.
+                    if (autoChoices.delay == 0.0)
+                    {
+                        sm.setState(State.DRIVE_TO_LOOKOUT);
+                    }
+                    else
+                    {
+                        timer.set(autoChoices.delay, event);
+                        sm.waitForSingleEvent(event, State.DRIVE_TO_LOOKOUT);
+                    }
                     break;
 
                 case DRIVE_TO_LOOKOUT:
+                    // Drive to the lookout point where we can see the AprilTag clearly.
                     if (autoChoices.startPos == FtcAuto.StartPos.BACKSTAGE)
                     {
                         intermediate1 = robot.adjustPoseByAlliance(
@@ -231,11 +244,11 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             robot.vision.getDetectedAprilTag(aprilTagId, -1);
                         if (aprilTagInfo != null)
                         {
-                            // Account for grabber offset from the camera.
+                            // Determine the absolute field location of the AprilTag.
                             aprilTagPose =
                                 robot.robotDrive.driveBase.getFieldPosition().addRelativePose(
                                     new TrcPose2D(
-                                        aprilTagInfo.objPose.x, aprilTagInfo.objPose.y - 8.0,
+                                        aprilTagInfo.objPose.x, aprilTagInfo.objPose.y,
                                         90.0 - robot.robotDrive.driveBase.getHeading()));
                             robot.globalTracer.traceInfo(
                                 moduleName, "AprilTag %d found at %s (absPose=%s)",
@@ -245,7 +258,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                                 aprilTagId, aprilTagInfo.objPose.x, aprilTagInfo.objPose.y);
                             robot.dashboard.displayPrintf(1, "%s", msg);
                             robot.speak(msg);
-                            sm.setState(State.DO_DELAY);
+                            sm.setState(State.DRIVE_TO_APRILTAG);
                         }
                         else if (visionExpiredTime == null)
                         {
@@ -254,29 +267,16 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         }
                         else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
                         {
-                            // Timing out, moving on.
+                            // Timed out, moving on.
                             robot.globalTracer.traceInfo(moduleName, "AprilTag %d not found.", aprilTagId);
-                            sm.setState(State.DO_DELAY);
+                            sm.setState(State.DRIVE_TO_APRILTAG);
                         }
                     }
                     else
                     {
-                        // Vision is not enable, move on.
+                        // AprilTag Vision is not enabled, move on.
                         robot.globalTracer.traceInfo(moduleName, "AprilTag Vision not enabled.");
-                        sm.setState(State.DO_DELAY);
-                    }
-                    break;
-
-                case DO_DELAY:
-                    // Do delay waiting for alliance partner to get out of the way if necessary.
-                    if (autoChoices.delay == 0.0)
-                    {
                         sm.setState(State.DRIVE_TO_APRILTAG);
-                    }
-                    else
-                    {
-                        timer.set(autoChoices.delay, event);
-                        sm.waitForSingleEvent(event, State.DRIVE_TO_APRILTAG);
                     }
                     break;
 
@@ -289,7 +289,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         robot.globalTracer.traceInfo(
                             moduleName, "Drive to AprilTag using blind odometry (pose=%s).", aprilTagPose);
                     }
-
+                    // Account for grabber offset from the camera.
+                    aprilTagPose.x -= 8.0;
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
                     sm.waitForSingleEvent(event,State.PLACE_YELLOW_PIXEL);
@@ -302,7 +303,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case PARK_AT_BACKSTAGE:
-                    // Navigate robot to the backstage location.
+                    // Navigate robot to the backstage parking location.
                     targetPose =
                         autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
                             autoChoices.parkPos == FtcAuto.ParkPos.CORNER?
