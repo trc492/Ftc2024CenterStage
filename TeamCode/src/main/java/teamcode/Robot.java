@@ -243,8 +243,8 @@ public class Robot
                 {
                     // There was no saved robotPose, use previous autonomous start position. In case we didn't even
                     // have a previous autonomous run (e.g. just powering up the robot and go into TeleOp), then we
-                    // will default to RED_LEFT starting position which is the AutoChoices default.
-                    robotDrive.setAutoStartPosition(FtcAuto.autoChoices);
+                    // will default to starting position of the AutoChoices default.
+                    setRobotStartPosition(FtcAuto.autoChoices);
                     globalTracer.traceInfo(
                         funcName, "No saved RobotPose, use autoChoiceStartPos=%s",
                         robotDrive.driveBase.getFieldPosition());
@@ -390,9 +390,24 @@ public class Robot
     }   //zeroCalibrate
 
     /**
+     * This method sets the robot's starting position according to the autonomous choices.
+     *
+     * @param autoChoices specifies all the auto choices.
+     */
+    public void setRobotStartPosition(FtcAuto.AutoChoices autoChoices)
+    {
+        robotDrive.driveBase.setFieldPosition(
+            autoChoices.alliance == FtcAuto.Alliance.RED_ALLIANCE ?
+                (autoChoices.startPos == FtcAuto.StartPos.AUDIENCE ?
+                    RobotParams.STARTPOS_RED_AUDIENCE : RobotParams.STARTPOS_RED_BACKSTAGE) :
+                (autoChoices.startPos == FtcAuto.StartPos.AUDIENCE ?
+                    RobotParams.STARTPOS_BLUE_AUDIENCE : RobotParams.STARTPOS_BLUE_BACKSTAGE));
+    }   //setRobotStartPosition
+
+    /**
      * This method adjusts the given pose in the blue alliance to be the specified alliance.
      *
-     * @param pose specifies pose in the blue alliance.
+     * @param pose specifies pose in the blue alliance in tile unit.
      * @param alliance specifies the alliance to be converted to.
      * @return pose adjusted to be in the specified alliance.
      */
@@ -404,6 +419,8 @@ public class Robot
             pose.angle -= angleDelta;
             pose.y = -pose.y;
         }
+        pose.x *= RobotParams.FULL_TILE_INCHES;
+        pose.y *= RobotParams.FULL_TILE_INCHES;
 
         return pose;
     }   //adjustPoseByAlliance

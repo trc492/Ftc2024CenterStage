@@ -22,17 +22,11 @@
 
 package teamcode.drivebases;
 
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-
-import org.opencv.core.Point;
-
 import TrcCommonLib.trclib.TrcDriveBase;
 import TrcCommonLib.trclib.TrcPidDrive;
-import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcPurePursuitDrive;
 import TrcFtcLib.ftclib.FtcDcMotor;
 import TrcFtcLib.ftclib.FtcImu;
-import teamcode.FtcAuto;
 import teamcode.RobotParams;
 
 /**
@@ -124,94 +118,5 @@ public class RobotDrive
 
         return motors;
     }   //createDriveMotors
-
-    /**
-     * This method creates a TrcPose2D point in the target path for PurePursuitDrive.
-     *
-     * @param xTargetLocation specifies the target location in field reference frame.
-     * @param yTargetLocation specifies the target location in field reference frame.
-     * @param heading specifies the robot end heading.
-     * @param tileUnit specifies true if location unit is in floor tile unit, false if in inches unit.
-     * @return path point to be used in PurePursuitDrive.
-     */
-    public TrcPose2D pathPoint(double xTargetLocation, double yTargetLocation, double heading, boolean tileUnit)
-    {
-        double unitScale = tileUnit? RobotParams.FULL_TILE_INCHES: 1.0;
-
-        return new TrcPose2D(xTargetLocation*unitScale, yTargetLocation*unitScale, heading);
-    }   //pathPoint
-
-    /**
-     * This method creates a TrcPose2D point in the target path for PurePursuitDrive.
-     *
-     * @param xTargetLocation specifies the target location in field reference frame.
-     * @param yTargetLocation specifies the target location in field reference frame.
-     * @param heading specifies the robot end heading.
-     * @return path point to be used in PurePursuitDrive.
-     */
-    public TrcPose2D pathPoint(double xTargetLocation, double yTargetLocation, double heading)
-    {
-        return pathPoint(xTargetLocation, yTargetLocation, heading, true);
-    }   //pathPoint
-
-    /**
-     * This method creates a TrcPose2D point in the target path for PurePursuitDrive.
-     *
-     * @param targetLocation specifies the target location in field reference frame.
-     * @param heading specifies the robot end heading.
-     * @param tileUnit specifies true if location unit is in floor tile unit, false if in inches unit.
-     * @return path point to be used in PurePursuitDrive.
-     */
-    public TrcPose2D pathPoint(Point targetLocation, double heading, boolean tileUnit)
-    {
-        return pathPoint(targetLocation.x, targetLocation.y, heading, tileUnit);
-    }   //pathPoint
-
-    /**
-     * This method creates a TrcPose2D point in the target path for PurePursuitDrive.
-     *
-     * @param targetLocation specifies the target location in field reference frame.
-     * @param heading specifies the robot end heading.
-     * @return path point to be used in PurePursuitDrive.
-     */
-    public TrcPose2D pathPoint(Point targetLocation, double heading)
-    {
-        return pathPoint(targetLocation.x, targetLocation.y, heading, true);
-    }   //pathPoint
-
-    /**
-     * This method sets the robot's autonomous starting position according to the autonomous choices.
-     *
-     * @param autoChoices specifies all the auto choices.
-     */
-    public void setAutoStartPosition(FtcAuto.AutoChoices autoChoices)
-    {
-        driveBase.setFieldPosition(
-            autoChoices.alliance == FtcAuto.Alliance.RED_ALLIANCE ?
-                (autoChoices.startPos == FtcAuto.StartPos.AUDIENCE ?
-                    RobotParams.STARTPOS_RED_AUDIENCE : RobotParams.STARTPOS_RED_BACKSTAGE) :
-                (autoChoices.startPos == FtcAuto.StartPos.AUDIENCE ?
-                    RobotParams.STARTPOS_BLUE_AUDIENCE : RobotParams.STARTPOS_BLUE_BACKSTAGE));
-    }   //setAutoStartPosition
-
-    /**
-     * This method adjusts the target cell according to the alliance color.
-     *
-     * @param tileX specifies X tile coordinate for Blue Alliance.
-     * @param tileY specifies Y tile coordinate for Blue Alliance.
-     * @param heading specifies heading for Blue Alliance.
-     * @param alliance specifies alliance color.
-     * @return adjusted target pose as TrcPose2D.
-     */
-    public TrcPose2D getAutoTargetPose(double tileX, double tileY, double heading, FtcAuto.Alliance alliance)
-    {
-        if (alliance == FtcAuto.Alliance.BLUE_ALLIANCE)
-        {
-            tileY = -tileY;
-            heading = (heading + 180.0) % 360.0;
-        }
-
-        return new TrcPose2D(tileX*RobotParams.FULL_TILE_INCHES, tileY*RobotParams.FULL_TILE_INCHES, heading);
-    }   //getAutoTargetPose
 
 }   //class RobotDrive
