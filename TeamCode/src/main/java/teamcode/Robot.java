@@ -186,6 +186,7 @@ public class Robot
         else if (RobotParams.Preferences.powerPlayRobot)
         {
             RobotParams.Preferences.useBlinkin = true;
+            RobotParams.Preferences.hasWebCam2 = false;
             RobotParams.Preferences.useExternalOdometry = true;
             RobotParams.Preferences.useSubsystems = true;
         }
@@ -387,6 +388,25 @@ public class Robot
     {
         zeroCalibrate(null);
     }   //zeroCalibrate
+
+    /**
+     * This method adjusts the given pose in the blue alliance to be the specified alliance.
+     *
+     * @param pose specifies pose in the blue alliance.
+     * @param alliance specifies the alliance to be converted to.
+     * @return pose adjusted to be in the specified alliance.
+     */
+    public TrcPose2D adjustPoseByAlliance(TrcPose2D pose, FtcAuto.Alliance alliance)
+    {
+        if (alliance == FtcAuto.Alliance.RED_ALLIANCE)
+        {
+            double angleDelta = (pose.angle - 90.0)*2.0;
+            pose.angle -= angleDelta;
+            pose.y = -pose.y;
+        }
+
+        return pose;
+    }   //adjustPoseByAlliance
 
     /**
      * This method sends the text string to the Driver Station to be spoken using text to speech.

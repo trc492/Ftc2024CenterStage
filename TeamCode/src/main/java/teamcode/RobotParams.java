@@ -63,8 +63,8 @@ public class RobotParams
         // Robot
         public static boolean noRobot = false;
         public static boolean swerveRobot = false;
-        public static boolean powerPlayRobot = false;
-        public static boolean centerStageRobot = true;
+        public static boolean powerPlayRobot = true;
+        public static boolean centerStageRobot = false;
         public static boolean swerveDualServoSteering = true;
         // Drive Base
         public static boolean useExternalOdometry = true;
@@ -220,11 +220,11 @@ public class RobotParams
 //    public static final double WEBCAM_FY                        = 821.993;  // in pixels
 //    public static final double WEBCAM_CX                        = 330.489;  // in pixels
 //    public static final double WEBCAM_CY                        = 248.997;  // in pixels
-    // Camera: Logitech C920
-    public static final double WEBCAM_FX                        = 622.001;  // in pixels
-    public static final double WEBCAM_FY                        = 622.001;  // in pixels
-    public static final double WEBCAM_CX                        = 319.803;  // in pixels
-    public static final double WEBCAM_CY                        = 241.251;  // in pixels
+//    // Camera: Logitech C920
+//    public static final double WEBCAM_FX                        = 622.001;  // in pixels
+//    public static final double WEBCAM_FY                        = 622.001;  // in pixels
+//    public static final double WEBCAM_CX                        = 319.803;  // in pixels
+//    public static final double WEBCAM_CY                        = 241.251;  // in pixels
 
     // Measurement unit: pixels
     public static final double HOMOGRAPHY_CAMERA_TOPLEFT_X      = 0.0;

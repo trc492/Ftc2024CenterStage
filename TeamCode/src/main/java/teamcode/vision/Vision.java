@@ -116,6 +116,7 @@ public class Vision
     public static final String[] TFOD_TRC_LABELS = {"Yellow Pixel", "Purple Pixel", "White Pixel", "Green Pixel"};
 
     private final Robot robot;
+    private final WebcamName webcam1, webcam2;
     private FtcRawEocvColorBlobPipeline rawColorBlobPipeline;
     public FtcRawEocvVision rawColorBlobVision;
     public FtcVisionAprilTag aprilTagVision;
@@ -134,7 +135,6 @@ public class Vision
     private FtcEocvColorBlobProcessor blueConeProcessor;
     public FtcVisionTensorFlow tensorFlowVision;
     private TfodProcessor tensorFlowProcessor;
-    private WebcamName webcam1, webcam2;
     public FtcVision vision;
     private int lastTeamPropPos = 0;
 
@@ -149,22 +149,23 @@ public class Vision
         FtcOpMode opMode = FtcOpMode.getInstance();
 
         this.robot = robot;
+        this.webcam1 = opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1);
+        this.webcam2 = RobotParams.Preferences.hasWebCam2?
+            opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1): null;
         if (RobotParams.Preferences.tuneColorBlobVision)
         {
-            OpenCvCamera webcam;
+            OpenCvCamera openCvCam;
 
             if (RobotParams.Preferences.showVisionView)
             {
                 int cameraViewId = opMode.hardwareMap.appContext.getResources().getIdentifier(
                     "cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
-                webcam = OpenCvCameraFactory.getInstance().createWebcam(
-                    opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1), cameraViewId);
-                webcam.showFpsMeterOnViewport(false);
+                openCvCam = OpenCvCameraFactory.getInstance().createWebcam(webcam1, cameraViewId);
+                openCvCam.showFpsMeterOnViewport(false);
             }
             else
             {
-                webcam = OpenCvCameraFactory.getInstance().createWebcam(
-                    opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1));
+                openCvCam = OpenCvCameraFactory.getInstance().createWebcam(webcam1);
             }
 
             robot.globalTracer.traceInfo(moduleName, "Starting RawEocvColorBlobVision...");
@@ -176,7 +177,7 @@ public class Vision
             rawColorBlobPipeline.setAnnotateEnabled(true);
             rawColorBlobVision = new FtcRawEocvVision(
                 "rawColorBlobVision", RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT, null, null,
-                webcam, RobotParams.CAM_ORIENTATION, tracer);
+                openCvCam, RobotParams.CAM_ORIENTATION, tracer);
             setRawColorBlobVisionEnabled(false);
         }
         else
@@ -192,8 +193,8 @@ public class Vision
                     .setDrawTagOutlineEnabled(true)
                     .setDrawAxesEnabled(false)
                     .setDrawCubeProjectionEnabled(false)
-                    .setLensIntrinsics(
-                        RobotParams.WEBCAM_FX, RobotParams.WEBCAM_FY, RobotParams.WEBCAM_CX, RobotParams.WEBCAM_CY)
+//                    .setLensIntrinsics(
+//                        RobotParams.WEBCAM_FX, RobotParams.WEBCAM_FY, RobotParams.WEBCAM_CX, RobotParams.WEBCAM_CY)
                     .setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES);
                 aprilTagVision = new FtcVisionAprilTag(aprilTagParams, AprilTagProcessor.TagFamily.TAG_36h11, tracer);
                 aprilTagProcessor = aprilTagVision.getVisionProcessor();
@@ -259,10 +260,6 @@ public class Vision
             if (RobotParams.Preferences.useWebCam)
             {
                 // Use USB webcams.
-                webcam1 = opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1);
-                webcam2 =
-                    RobotParams.Preferences.hasWebCam2 ?
-                        opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM2) : null;
                 vision = new FtcVision(
                     webcam1, webcam2, RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT,
                     RobotParams.Preferences.showVisionView, visionProcessors);
