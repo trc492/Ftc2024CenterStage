@@ -297,7 +297,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case PLACE_YELLOW_PIXEL:
-                    // TODO: Add code to place purple pixel.
+                    // TODO: Add code to place yellow pixel.
                     // Place yellow pixel at the appropriate location on the backdrop.
                     sm.setState(State.PARK_AT_BACKSTAGE);
                     break;
