@@ -397,11 +397,10 @@ public class Robot
     public void setRobotStartPosition(FtcAuto.AutoChoices autoChoices)
     {
         robotDrive.driveBase.setFieldPosition(
-            autoChoices.alliance == FtcAuto.Alliance.RED_ALLIANCE ?
-                (autoChoices.startPos == FtcAuto.StartPos.AUDIENCE ?
-                    RobotParams.STARTPOS_RED_AUDIENCE : RobotParams.STARTPOS_RED_BACKSTAGE) :
-                (autoChoices.startPos == FtcAuto.StartPos.AUDIENCE ?
-                    RobotParams.STARTPOS_BLUE_AUDIENCE : RobotParams.STARTPOS_BLUE_BACKSTAGE));
+            adjustPoseByAlliance(
+                autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
+                    RobotParams.STARTPOS_BLUE_AUDIENCE: RobotParams.STARTPOS_BLUE_BACKSTAGE,
+                autoChoices.alliance));
     }   //setRobotStartPosition
 
     /**
@@ -413,16 +412,18 @@ public class Robot
      */
     public TrcPose2D adjustPoseByAlliance(TrcPose2D pose, FtcAuto.Alliance alliance)
     {
+        TrcPose2D newPose = pose.clone();
+
         if (alliance == FtcAuto.Alliance.RED_ALLIANCE)
         {
-            double angleDelta = (pose.angle - 90.0)*2.0;
-            pose.angle -= angleDelta;
-            pose.y = -pose.y;
+            double angleDelta = (newPose.angle - 90.0) * 2.0;
+            newPose.angle -= angleDelta;
+            newPose.y = -newPose.y;
         }
-        pose.x *= RobotParams.FULL_TILE_INCHES;
-        pose.y *= RobotParams.FULL_TILE_INCHES;
+        newPose.x *= RobotParams.FULL_TILE_INCHES;
+        newPose.y *= RobotParams.FULL_TILE_INCHES;
 
-        return pose;
+        return newPose;
     }   //adjustPoseByAlliance
 
     /**

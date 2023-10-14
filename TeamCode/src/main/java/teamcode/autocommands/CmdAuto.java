@@ -161,14 +161,11 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             RobotParams.BLUE_BACKDROP_APRILTAGS[teamPropIndex]:
                             RobotParams.RED_BACKDROP_APRILTAGS[teamPropIndex];
                     // Navigate robot to spike mark 1, 2 or 3.
-                    targetPose =
-                        autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
-                            autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
-                                RobotParams.BLUE_AUDIENCE_SPIKE_MARKS[teamPropIndex]:
-                                RobotParams.BLUE_BACKSTAGE_SPIKE_MARKS[teamPropIndex]:
-                            autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
-                                RobotParams.RED_AUDIENCE_SPIKES[teamPropIndex]:
-                                RobotParams.RED_BACKSTAGE_SPIKES[teamPropIndex];
+                    targetPose = robot.adjustPoseByAlliance(
+                        autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
+                            RobotParams.BLUE_AUDIENCE_SPIKE_MARKS[teamPropIndex]:
+                            RobotParams.BLUE_BACKSTAGE_SPIKE_MARKS[teamPropIndex],
+                        autoChoices.alliance);
                     intermediate1 = targetPose.clone();
                     intermediate1.y -= 0.2*RobotParams.FULL_TILE_INCHES;
                     intermediate1.angle = 0;
@@ -217,7 +214,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         intermediate2 = robot.adjustPoseByAlliance(
                             new TrcPose2D(-2.5, 2.5, 180.0), autoChoices.alliance);
                         intermediate3 = robot.adjustPoseByAlliance(
-                            new TrcPose2D(-2.5, 0.5, 90.0), autoChoices.alliance);
+                            new TrcPose2D(-2.5, 0.5, 180.0), autoChoices.alliance);
                         intermediate4 = robot.adjustPoseByAlliance(
                             new TrcPose2D(1.5, 0.5, 90.0), autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(
@@ -297,12 +294,10 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                 case PARK_AT_BACKSTAGE:
                     // Navigate robot to the backstage parking location.
-                    targetPose =
-                        autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
-                            autoChoices.parkPos == FtcAuto.ParkPos.CORNER?
-                                RobotParams.PARKPOS_BLUE_CORNER: RobotParams.PARKPOS_BLUE_CENTER:
-                            autoChoices.parkPos == FtcAuto.ParkPos.CORNER?
-                                RobotParams.PARKPOS_RED_CORNER: RobotParams.PARKPOS_RED_CENTER;
+                    targetPose = robot.adjustPoseByAlliance(
+                        autoChoices.parkPos == FtcAuto.ParkPos.CORNER?
+                            RobotParams.PARKPOS_BLUE_CORNER: RobotParams.PARKPOS_BLUE_CENTER,
+                        autoChoices.alliance);
                     intermediate1 = targetPose.clone();
                     intermediate1.x = 2.0 * RobotParams.FULL_TILE_INCHES;
                     robot.robotDrive.purePursuitDrive.start(
