@@ -129,10 +129,10 @@ public class RobotParams
     //
     // Game related locations.
     //
-    // Robot start locations in tile units.
-    public static final double STARTPOS_AUDIENCE_X              = -1.5;
-    public static final double STARTPOS_BACKSTAGE_X             = 0.5;
-    public static final double STARTPOS_BLUE_Y                  = (HALF_FIELD_INCHES-ROBOT_LENGTH/2.0)/FULL_TILE_INCHES;
+    // Robot start locations in inches.
+    public static final double STARTPOS_AUDIENCE_X              = -1.5 * FULL_TILE_INCHES;
+    public static final double STARTPOS_BACKSTAGE_X             = 0.5 * FULL_TILE_INCHES;
+    public static final double STARTPOS_BLUE_Y                  = HALF_FIELD_INCHES - ROBOT_LENGTH / 2.0;
     public static final TrcPose2D STARTPOS_BLUE_AUDIENCE        = new TrcPose2D(
         STARTPOS_AUDIENCE_X, STARTPOS_BLUE_Y, 180.0);
     public static final TrcPose2D STARTPOS_BLUE_BACKSTAGE       = new TrcPose2D(
