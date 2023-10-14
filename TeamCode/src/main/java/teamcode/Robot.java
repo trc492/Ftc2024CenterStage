@@ -24,6 +24,7 @@ package teamcode;
 
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcDigitalInput;
+import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcMotor;
 import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
@@ -458,6 +459,129 @@ public class Robot
     {
         return adjustPoseByAlliance(pose, alliance, true);
     }   //adjustPoseByAlliance
+
+    private final TrcEvent elevatorEvent = new TrcEvent("robot.elevatorEvent");
+    private final TrcEvent armEvent = new TrcEvent("robot.armEvent");
+    private TrcEvent completionEvent = null;
+
+    /**
+     * This method is called when one of the subsystem operations has completed. It signals the completion event only
+     * if all subsystem operations have completed.
+     *
+     * @param context not used.
+     */
+    private void setupCompletion(Object context)
+    {
+        if (completionEvent != null && elevatorEvent.isSignaled() && armEvent.isSignaled())
+        {
+            completionEvent.signal();
+            completionEvent = null;
+        }
+    }   //setupCompletion
+
+    /**
+     * This method set up the elevator and arm subsystems for a certain operation.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param elevatorDelay specifies the delay in seconds before moving elevator.
+     * @param elevatorPos specifies the elevator position.
+     * @param armDelay specifies the delay in seconds before moving arm.
+     * @param armPos specifies the arm position.
+     * @param timeout specifies the maximum time allowed for the operation.
+     * @param event specifies the event to signal when the operation is completed.
+     */
+    public void setupSubsystems(
+        String owner, double elevatorDelay, double elevatorPos, double armDelay, double armPos, double timeout,
+        TrcEvent event)
+    {
+        if (elevator != null && arm != null)
+        {
+            if (event != null)
+            {
+                elevatorEvent.clear();
+                armEvent.clear();
+                elevatorEvent.setCallback(this::setupCompletion, null);
+                armEvent.setCallback(this::setupCompletion, null);
+                completionEvent = event;
+            }
+
+            elevator.setPosition(
+                owner, elevatorDelay, elevatorPos, true, 1.0, event != null? elevatorEvent: null, timeout);
+            arm.setPosition(
+                owner, armDelay, armPos, true, 1.0, event != null? armEvent: null, timeout);
+        }
+    }   //setupSubsystems
+
+    /**
+     * This method set up the elevator and arm subsystems for a certain operation.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param elevatorPos specifies the elevator position.
+     * @param armPos specifies the arm position.
+     * @param timeout specifies the maximum time allowed for the operation.
+     * @param event specifies the event to signal when the operation is completed.
+     */
+    public void setupSubsystems(
+        String owner, double elevatorPos, double armPos, double timeout, TrcEvent event)
+    {
+        setupSubsystems(owner, 0.0, elevatorPos, 0.0, armPos, timeout, event);
+    }   //setupSubsystems
+
+    /**
+     * This method set up the elevator and arm subsystems for a certain operation.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param elevatorDelay specifies the delay in seconds before moving elevator.
+     * @param elevatorPos specifies the elevator position.
+     * @param armDelay specifies the delay in seconds before moving arm.
+     * @param armPos specifies the arm position.
+     * @param timeout specifies the maximum time allowed for the operation.
+     */
+    public void setupSubsystems(
+        String owner, double elevatorDelay, double elevatorPos, double armDelay, double armPos, double timeout)
+    {
+        setupSubsystems(owner, elevatorDelay, elevatorPos, armDelay, armPos, timeout, null);
+    }   //setupSubsystems
+
+    /**
+     * This method set up the elevator and arm subsystems for a certain operation.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param elevatorDelay specifies the delay in seconds before moving elevator.
+     * @param elevatorPos specifies the elevator position.
+     * @param armDelay specifies the delay in seconds before moving arm.
+     * @param armPos specifies the arm position.
+     */
+    public void setupSubsystems(
+        String owner, double elevatorDelay, double elevatorPos, double armDelay, double armPos)
+    {
+        setupSubsystems(owner, elevatorDelay, elevatorPos, armDelay, armPos, 0.0, null);
+    }   //setupSubsystems
+
+    /**
+     * This method set up the elevator and arm subsystems for a certain operation.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param elevatorPos specifies the elevator position.
+     * @param armPos specifies the arm position.
+     * @param timeout specifies the maximum time allowed for the operation.
+     */
+    public void setupSubsystems(String owner, double elevatorPos, double armPos, double timeout)
+    {
+        setupSubsystems(owner, 0.0, elevatorPos, 0.0, armPos, timeout, null);
+    }   //setupSubsystems
+
+    /**
+     * This method set up the elevator and arm subsystems for a certain operation.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param elevatorPos specifies the elevator position.
+     * @param armPos specifies the arm position.
+     */
+    public void setupSubsystems(String owner, double elevatorPos, double armPos)
+    {
+        setupSubsystems(owner, 0.0, elevatorPos, 0.0, armPos, 0.0, null);
+    }   //setupSubsystems
 
     /**
      * This method sends the text string to the Driver Station to be spoken using text to speech.

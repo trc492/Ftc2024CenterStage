@@ -163,6 +163,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
                             RobotParams.BLUE_BACKDROP_APRILTAGS[teamPropIndex]:
                             RobotParams.RED_BACKDROP_APRILTAGS[teamPropIndex];
+                    // Set up elevator and arm for placing pixel on the Spike Mark.
+                    robot.setupSubsystems(null, RobotParams.ELEVATOR_MIN_POS, RobotParams.ARM_MIN_POS);
                     // Navigate robot to spike mark 1, 2 or 3.
                     targetPose = robot.adjustPoseByAlliance(
                         autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
@@ -178,9 +180,16 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case PLACE_PURPLE_PIXEL:
-                    // TODO: Add code to place purple pixel.
                     // Place purple pixel on the spike position 1, 2 or 3.
-                    sm.setState(State.DO_DELAY);
+                    if (robot.grabber != null)
+                    {
+                        robot.grabber.setGrabberOpened(true, event);
+                        sm.waitForSingleEvent(event, State.DO_DELAY);
+                    }
+                    else
+                    {
+                        sm.setState(State.DO_DELAY);
+                    }
                     break;
 
                 case DO_DELAY:

@@ -23,6 +23,7 @@
 package teamcode.subsystems;
 
 import TrcCommonLib.trclib.TrcDbgTrace;
+import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcSensor;
 import TrcCommonLib.trclib.TrcTriggerThresholdZones;
 import TrcFtcLib.ftclib.FtcDistanceSensor;
@@ -85,6 +86,24 @@ public class Grabber
     {
         return grabber;
     }   //getServoGrabber
+
+    /**
+     * This method opens/closes the grabber.
+     *
+     * @param open specifies true to open grabber, false to close.
+     * @param event specifies the event to be signaled after operation time expired.
+     */
+    public void setGrabberOpened(boolean open, TrcEvent event)
+    {
+        if (open)
+        {
+            grabber.open(event);
+        }
+        else
+        {
+            grabber.close(event);
+        }
+    }   //setGrabberOpened
 
     /**
      * This method opens/closes the grabber.
