@@ -143,7 +143,7 @@ public class RobotParams
     public static final TrcPose2D STARTPOS_RED_BACKSTAGE        = new TrcPose2D(
         STARTPOS_BACKSTAGE_X, STARTPOS_RED_Y, 0.0);
     // Robot park locations.
-    public static final double PARKPOS_X                        = 2.5 * FULL_TILE_INCHES;
+    public static final double PARKPOS_X                        = 2.7 * FULL_TILE_INCHES;
     public static final double PARKPOS_BLUE_CORNER_Y            = 2.5 * FULL_TILE_INCHES;
     public static final double PARKPOS_BLUE_CENTER_Y            = 0.5 * FULL_TILE_INCHES;
     public static final TrcPose2D PARKPOS_BLUE_CORNER           = new TrcPose2D(
@@ -157,7 +157,7 @@ public class RobotParams
     public static final TrcPose2D PARKPOS_RED_CENTER            = new TrcPose2D(
         PARKPOS_X, PARKPOS_RED_CENTER_Y, 90.0);
     // Spike Mark locations to place the pixel.
-    public static final double SPIKE_MARK_ANGLE_OFFSET          = 30.0;
+    public static final double SPIKE_MARK_ANGLE_OFFSET          = 45.0;
     public static final double AUDIENCE_SPIKES_X                = -1.5 * FULL_TILE_INCHES;
     public static final double BACKSTAGE_SPIKES_X               = 0.5 * FULL_TILE_INCHES;
     public static final double BLUE_SPIKES_Y                    = 1.5 * FULL_TILE_INCHES;
@@ -171,7 +171,7 @@ public class RobotParams
         new TrcPose2D(BACKSTAGE_SPIKES_X, BLUE_SPIKES_Y, 180.0),
         new TrcPose2D(BACKSTAGE_SPIKES_X, BLUE_SPIKES_Y, 180.0 + SPIKE_MARK_ANGLE_OFFSET)
     };
-    public static final double RED_SPIKES_Y                     = -1.5 * FULL_TILE_INCHES;
+    public static final double RED_SPIKES_Y                     = -1.8 * FULL_TILE_INCHES;
     public static final TrcPose2D[] RED_AUDIENCE_SPIKES         = new TrcPose2D[] {
         new TrcPose2D(AUDIENCE_SPIKES_X, RED_SPIKES_Y, -SPIKE_MARK_ANGLE_OFFSET),
         new TrcPose2D(AUDIENCE_SPIKES_X, RED_SPIKES_Y, 0.0),

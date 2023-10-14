@@ -169,8 +169,11 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
                                 RobotParams.RED_AUDIENCE_SPIKES[teamPropIndex]:
                                 RobotParams.RED_BACKSTAGE_SPIKES[teamPropIndex];
+                    intermediate1 = targetPose.clone();
+                    intermediate1.y -= 0.2*RobotParams.FULL_TILE_INCHES;
+                    intermediate1.angle = 0;
                     robot.robotDrive.purePursuitDrive.start(
-                        event, robot.robotDrive.driveBase.getFieldPosition(), false, targetPose);
+                        event, robot.robotDrive.driveBase.getFieldPosition(), false,intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.PLACE_PURPLE_PIXEL);
                     break;
 
