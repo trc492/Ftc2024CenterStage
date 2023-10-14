@@ -155,6 +155,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     }
 
                     int teamPropIndex = teamPropPos - 1;
+                    // Red alliance's Spike Marks are in opposite order from the Blue alliance.
                     int spikeMarkIndex =
                         autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE? teamPropIndex: 2 - teamPropIndex;
                     // Determine AprilTag ID to look for.
@@ -168,11 +169,11 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             RobotParams.BLUE_AUDIENCE_SPIKE_MARKS[spikeMarkIndex]:
                             RobotParams.BLUE_BACKSTAGE_SPIKE_MARKS[spikeMarkIndex],
                         autoChoices.alliance);
-                    intermediate1 = targetPose.clone();
-                    intermediate1.y -= 0.2*RobotParams.FULL_TILE_INCHES;
-                    intermediate1.angle = 0;
+                    intermediate1 = robot.adjustPoseByAlliance(
+                        targetPose.x, targetPose.y + 0.2*RobotParams.FULL_TILE_INCHES, targetPose.angle,
+                        autoChoices.alliance, false);
                     robot.robotDrive.purePursuitDrive.start(
-                        event, robot.robotDrive.driveBase.getFieldPosition(), false,intermediate1, targetPose);
+                        event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.PLACE_PURPLE_PIXEL);
                     break;
 
@@ -276,13 +277,14 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Navigate robot to Apriltag.
                     if (aprilTagPose == null)
                     {
+                        // TODO: Determine all AprilTag poses.
                         // Vision did not see AprilTag, just go to it using odometry and its known location.
                         aprilTagPose = RobotParams.APRILTAG_POSES[aprilTagId - 1];
                         robot.globalTracer.traceInfo(
                             moduleName, "Drive to AprilTag using blind odometry (pose=%s).", aprilTagPose);
                     }
-                    // Account for grabber offset from the camera.
-                    aprilTagPose.x -= 8.0;
+                    // Account for end-effector offset from the camera.
+                    aprilTagPose.x -= 6.0;
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
                     sm.waitForSingleEvent(event,State.PLACE_YELLOW_PIXEL);

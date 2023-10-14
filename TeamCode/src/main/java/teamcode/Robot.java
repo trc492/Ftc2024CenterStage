@@ -406,14 +406,17 @@ public class Robot
     /**
      * This method adjusts the given pose in the blue alliance to be the specified alliance.
      *
-     * @param pose specifies pose in the blue alliance in tile unit.
+     * @param x specifies x position in the blue alliance in tile unit.
+     * @param y specifies y position in the blue alliance in tile unit.
+     * @param heading specifies heading in the blue alliance in degrees.
      * @param alliance specifies the alliance to be converted to.
      * @param isTileUnit specifies true if pose is in tile units, false otherwise.
      * @return pose adjusted to be in the specified alliance in inches.
      */
-    public TrcPose2D adjustPoseByAlliance(TrcPose2D pose, FtcAuto.Alliance alliance, boolean isTileUnit)
+    public TrcPose2D adjustPoseByAlliance(
+        double x, double y, double heading, FtcAuto.Alliance alliance, boolean isTileUnit)
     {
-        TrcPose2D newPose = pose.clone();
+        TrcPose2D newPose = new TrcPose2D(x, y, heading);
 
         if (alliance == FtcAuto.Alliance.RED_ALLIANCE)
         {
@@ -429,6 +432,19 @@ public class Robot
         }
 
         return newPose;
+    }   //adjustPoseByAlliance
+
+    /**
+     * This method adjusts the given pose in the blue alliance to be the specified alliance.
+     *
+     * @param pose specifies pose in the blue alliance in tile unit.
+     * @param alliance specifies the alliance to be converted to.
+     * @param isTileUnit specifies true if pose is in tile units, false otherwise.
+     * @return pose adjusted to be in the specified alliance in inches.
+     */
+    public TrcPose2D adjustPoseByAlliance(TrcPose2D pose, FtcAuto.Alliance alliance, boolean isTileUnit)
+    {
+        return adjustPoseByAlliance(pose.x, pose.y, pose.angle, alliance, isTileUnit);
     }   //adjustPoseByAlliance
 
     /**
