@@ -155,6 +155,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     }
 
                     int teamPropIndex = teamPropPos - 1;
+                    int spikeMarkIndex =
+                        autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE? teamPropIndex: 2 - teamPropIndex;
                     // Determine AprilTag ID to look for.
                     aprilTagId =
                         autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
@@ -163,8 +165,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Navigate robot to spike mark 1, 2 or 3.
                     targetPose = robot.adjustPoseByAlliance(
                         autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
-                            RobotParams.BLUE_AUDIENCE_SPIKE_MARKS[teamPropIndex]:
-                            RobotParams.BLUE_BACKSTAGE_SPIKE_MARKS[teamPropIndex],
+                            RobotParams.BLUE_AUDIENCE_SPIKE_MARKS[spikeMarkIndex]:
+                            RobotParams.BLUE_BACKSTAGE_SPIKE_MARKS[spikeMarkIndex],
                         autoChoices.alliance);
                     intermediate1 = targetPose.clone();
                     intermediate1.y -= 0.2*RobotParams.FULL_TILE_INCHES;
