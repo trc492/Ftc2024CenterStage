@@ -74,8 +74,8 @@ public class RobotParams
         public static boolean useSubsystems = true;
         public static boolean useElevator = true;
         public static boolean useArm = true;
-        public static boolean useGrabber = true;
-        public static boolean hasGrabberSensor = true;
+        public static boolean useIntake = true;
+        public static boolean usePixelTray = true;
     }   //class Preferences
 
     public static final String ROBOT_NAME                       = "Robot3543_CenterStage";
@@ -111,8 +111,8 @@ public class RobotParams
     // Subsystems.
     public static final String HWNAME_ELEVATOR                  = "elevator";
     public static final String HWNAME_ARM                       = "arm";
-    public static final String HWNAME_GRABBER                   = "grabber";
     public static final String HWNAME_INTAKE                    = "intake";
+    public static final String HWNAME_PIXELTRAY                 = "pixelTray";
     //
     // Field dimensions.
     //
@@ -344,12 +344,18 @@ public class RobotParams
     public static final double ELEVATOR_OFFSET                  = 7.8;              // in inches
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
     public static final double ELEVATOR_MAX_POS                 = 34.0;
+    public static final double ELEVATOR_LEVEL1_POS              = 2.0;
+    public static final double ELEVATOR_LEVEL2_POS              = 8.0;
+    public static final double ELEVATOR_LEVEL3_POS              = 14.0;
     // Power settings.
     public static final double ELEVATOR_CAL_POWER               = -0.1;
     // Preset positions.
     public static final double ELEVATOR_PRESET_TOLERANCE        = 2.0;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
         ELEVATOR_MIN_POS,
+        ELEVATOR_LEVEL1_POS,
+        ELEVATOR_LEVEL2_POS,
+        ELEVATOR_LEVEL3_POS,
         ELEVATOR_MAX_POS
     };
     //
@@ -369,6 +375,7 @@ public class RobotParams
     // Arm Zero-Calibrated to Up Position. Arm Max Position is Down.
     public static final double ARM_MIN_POS                      = ARM_OFFSET;
     public static final double ARM_MAX_POS                      = 145.0;
+    public static final double ARM_SCORE_BACKDROP_POS           = 175.0;
     // Power settings.
     public static final double ARM_CAL_POWER                    = -0.5;
     // Preset positions.
@@ -376,27 +383,38 @@ public class RobotParams
     // Index 0 is a placeholder so index 1 is 1 cone, 2 is 2 cones, etc.
     public static final double[] ARM_PRESETS                    = new double[] {
         ARM_MIN_POS,
+        ARM_SCORE_BACKDROP_POS,
         ARM_MAX_POS
     };
+//    //
+//    // Grabber subsystem.
+//    //
+//    // Servo Grabber parameters.
+//    public static final double GRABBER_MAX_STEPRATE             = 1.0;
+//    public static final double GRABBER_MIN_POS                  = 0.0;
+//    public static final double GRABBER_MAX_POS                  = 0.2;
+//    public static final boolean GRABBER_LSERVO_INVERTED         = false;
+//    public static final boolean GRABBER_RSERVO_INVERTED         = true;
+//    public static final boolean GRABBER_TRIGGER_INVERTED        = true;
+//    public static final double GRABBER_TRIGGER_THRESHOLD        = 1.5;  // in inches
+//    public static final double GRABBER_HAS_OBJECT_THRESHOLD     = 2.5;  // in inches
+//    public static final double GRABBER_OPEN_POS                 = GRABBER_MAX_POS;
+//    public static final double GRABBER_OPEN_TIME                = 0.5;
+//    public static final double GRABBER_CLOSE_POS                = GRABBER_MIN_POS;
+//    public static final double GRABBER_CLOSE_TIME               = 0.5;
     //
-    // Grabber subsystem.
-    //
-    // Servo Grabber parameters.
-    public static final double GRABBER_MAX_STEPRATE             = 1.0;
-    public static final double GRABBER_MIN_POS                  = 0.0;
-    public static final double GRABBER_MAX_POS                  = 0.2;
-    public static final boolean GRABBER_LSERVO_INVERTED         = false;
-    public static final boolean GRABBER_RSERVO_INVERTED         = true;
-    public static final boolean GRABBER_TRIGGER_INVERTED        = true;
-    public static final double GRABBER_TRIGGER_THRESHOLD        = 1.5;  // in inches
-    public static final double GRABBER_HAS_OBJECT_THRESHOLD     = 2.5;  // in inches
-    public static final double GRABBER_OPEN_POS                 = GRABBER_MAX_POS;
-    public static final double GRABBER_OPEN_TIME                = 0.5;
-    public static final double GRABBER_CLOSE_POS                = GRABBER_MIN_POS;
-    public static final double GRABBER_CLOSE_TIME               = 0.5;
     // Intake subsystem.
+    //
     public static final double INTAKE_SENSOR_THRESHOLD          = 5.0;
     public static final double INTAKE_PICKUP_POWER              = 1.0;
     public static final double INTAKE_SPITOUT_POWER             = -0.5;
+    //
+    // Pixel Tray subsystem.
+    //
+    public static final double PIXELTRAY_GATE1_OPEN             = 1.0;
+    public static final double PIXELTRAY_GATE1_CLOSE            = 0.0;
+    public static final double PIXELTRAY_GATE2_OPEN             = 1.0;
+    public static final double PIXELTRAY_GATE2_CLOSE            = 0.0;
+    public static final double PIXELTRAY_OPEN_CLOSE_TIME        = 0.2;  // in msec
 
 }   //class RobotParams

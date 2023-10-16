@@ -39,7 +39,8 @@ import teamcode.drivebases.MecanumDrive;
 import teamcode.drivebases.RobotDrive;
 import teamcode.drivebases.SwerveDrive;
 import teamcode.subsystems.BlinkinLEDs;
-import teamcode.subsystems.Grabber;
+import teamcode.subsystems.Intake;
+import teamcode.subsystems.PixelTray;
 import teamcode.vision.Vision;
 
 /**
@@ -70,7 +71,8 @@ public class Robot
     public RobotDrive robotDrive;
     public FtcDcMotor elevator;
     public FtcDcMotor arm;
-    public Grabber grabber = null;
+    public Intake intake;
+    public PixelTray pixelTray;
 
     /**
      * Constructor: Create an instance of the object.
@@ -155,9 +157,14 @@ public class Robot
                     dashboard.displayPrintf(5, "Arm: PID=%s", arm.getMotorPositionPidCoefficients());
                 }
 
-                if (RobotParams.Preferences.useGrabber)
+                if (RobotParams.Preferences.useIntake)
                 {
-                    grabber = new Grabber(RobotParams.HWNAME_GRABBER, globalTracer);
+                    intake = new Intake(RobotParams.HWNAME_INTAKE, globalTracer);
+                }
+
+                if (RobotParams.Preferences.usePixelTray)
+                {
+                    pixelTray = new PixelTray(RobotParams.HWNAME_PIXELTRAY, globalTracer);
                 }
             }
         }

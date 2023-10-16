@@ -46,7 +46,8 @@ public class FtcTeleOp extends FtcOpMode
     private double drivePowerScale = RobotParams.DRIVE_POWER_SCALE_NORMAL;
     private double turnPowerScale = RobotParams.TURN_POWER_SCALE_NORMAL;
     private boolean manualOverride = false;
-    private boolean grabberOpen = false;
+    private boolean pixelTrayGate1Opened = false;
+    private boolean pixelTrayGate2Opened = false;
 
     //
     // Implements FtcOpMode abstract method.
@@ -81,10 +82,6 @@ public class FtcTeleOp extends FtcOpMode
         driverGamepad.setYInverted(true);
         operatorGamepad.setYInverted(true);
         setDriveOrientation(TrcDriveBase.DriveOrientation.ROBOT);
-        if (robot.grabber != null)
-        {
-            robot.grabber.setGrabberOpened(grabberOpen);
-        }
     }   //robotInit
 
     //
@@ -325,23 +322,39 @@ public class FtcTeleOp extends FtcOpMode
         switch (button)
         {
             case FtcGamepad.GAMEPAD_A:
-                if (robot.grabber != null)
+                if (robot.pixelTray != null)
                 {
                     if(pressed)
                     {
-                        grabberOpen = !grabberOpen;
-                        robot.grabber.setGrabberOpened(grabberOpen);
+                        pixelTrayGate1Opened = !pixelTrayGate1Opened;
+                        robot.pixelTray.setGate1Opened(pixelTrayGate1Opened, null);
                     }
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_B:
+                if (robot.pixelTray != null)
+                {
+                    if(pressed)
+                    {
+                        pixelTrayGate2Opened = !pixelTrayGate2Opened;
+                        robot.pixelTray.setGate2Opened(pixelTrayGate2Opened, null);
+                    }
+                }
                 break;
 
             case FtcGamepad.GAMEPAD_X:
+                if (robot.intake != null)
+                {
+                    robot.intake.pickUp(pressed);
+                }
                 break;
 
             case FtcGamepad.GAMEPAD_Y:
+                if (robot.intake != null)
+                {
+                    robot.intake.spitOut(pressed);
+                }
                 break;
 
             case FtcGamepad.GAMEPAD_LBUMPER:

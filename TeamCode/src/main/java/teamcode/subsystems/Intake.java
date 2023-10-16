@@ -67,14 +67,14 @@ public class Intake
         intakeMotor.stop();
     }   //stop
 
-    public void pickUp()
+    public void pickUp(boolean on)
     {
-        intakeMotor.setPower(RobotParams.INTAKE_PICKUP_POWER);
+        intakeMotor.setPower(on? RobotParams.INTAKE_PICKUP_POWER: 0.0);
     }   //pickUp
 
-    public void spitOut()
+    public void spitOut(boolean on)
     {
-        intakeMotor.setPower(RobotParams.INTAKE_SPITOUT_POWER);
+        intakeMotor.setPower(on? RobotParams.INTAKE_SPITOUT_POWER: 0.0);
     }   //spitOut
 
     /**

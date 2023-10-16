@@ -166,14 +166,15 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Set up elevator and arm for placing pixel on the Spike Mark.
                     robot.setupSubsystems(null, RobotParams.ELEVATOR_MIN_POS, RobotParams.ARM_MIN_POS);
                     // Navigate robot to spike mark 1, 2 or 3.
-                    targetPose = robot.adjustPoseByAlliance(
+                    TrcPose2D targetPoseTile =
                         autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
                             RobotParams.BLUE_AUDIENCE_SPIKE_MARKS[spikeMarkIndex]:
-                            RobotParams.BLUE_BACKSTAGE_SPIKE_MARKS[spikeMarkIndex],
-                        autoChoices.alliance);
-                    intermediate1 = robot.adjustPoseByAlliance(
-                        targetPose.x, targetPose.y + 0.2*RobotParams.FULL_TILE_INCHES, targetPose.angle,
-                        autoChoices.alliance, false);
+                            RobotParams.BLUE_BACKSTAGE_SPIKE_MARKS[spikeMarkIndex];
+                    targetPose = robot.adjustPoseByAlliance(targetPoseTile, autoChoices.alliance);
+                    intermediate1 =
+                        robot.adjustPoseByAlliance(
+                            targetPoseTile.x, targetPoseTile.y + 0.2, robot.robotDrive.driveBase.getHeading(),
+                            autoChoices.alliance, true);
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.PLACE_PURPLE_PIXEL);
@@ -181,9 +182,9 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                 case PLACE_PURPLE_PIXEL:
                     // Place purple pixel on the spike position 1, 2 or 3.
-                    if (robot.grabber != null)
+                    if (robot.pixelTray != null)
                     {
-                        robot.grabber.setGrabberOpened(true, event);
+                        robot.pixelTray.setGate1Opened(true, event);
                         sm.waitForSingleEvent(event, State.DO_DELAY);
                     }
                     else
@@ -239,6 +240,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case FIND_APRILTAG:
+                    // Set up elevator and arm for placing pixel on the Backdrop.
+                    robot.setupSubsystems(null, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ARM_SCORE_BACKDROP_POS);
                     // Use vision to determine the appropriate AprilTag location.
                     if (robot.vision != null && robot.vision.aprilTagVision != null)
                     {
@@ -287,7 +290,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     if (aprilTagPose == null)
                     {
                         // TODO: Determine all AprilTag poses.
-                        // Vision did not see AprilTag, just go to it using odometry and its known location.
+                        // Vision did not see AprilTag, just go to it blindly using odometry and its known location.
                         aprilTagPose = RobotParams.APRILTAG_POSES[aprilTagId - 1];
                         robot.globalTracer.traceInfo(
                             moduleName, "Drive to AprilTag using blind odometry (pose=%s).", aprilTagPose);
@@ -300,12 +303,21 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case PLACE_YELLOW_PIXEL:
-                    // TODO: Add code to place yellow pixel.
                     // Place yellow pixel at the appropriate location on the backdrop.
-                    sm.setState(State.PARK_AT_BACKSTAGE);
+                    if (robot.pixelTray != null)
+                    {
+                        robot.pixelTray.setGate2Opened(true, event);
+                        sm.waitForSingleEvent(event, State.PARK_AT_BACKSTAGE);
+                    }
+                    else
+                    {
+                        sm.setState(State.PARK_AT_BACKSTAGE);
+                    }
                     break;
 
                 case PARK_AT_BACKSTAGE:
+                    // Retract everything.
+                    robot.setupSubsystems(null, RobotParams.ELEVATOR_MIN_POS, RobotParams.ARM_MIN_POS);
                     // Navigate robot to the backstage parking location.
                     targetPose = robot.adjustPoseByAlliance(
                         autoChoices.parkPos == FtcAuto.ParkPos.CORNER?
