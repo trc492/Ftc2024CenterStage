@@ -123,7 +123,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
         }
         else
         {
-            TrcPose2D targetPose, intermediate1, intermediate2, intermediate3, intermediate4;
+            TrcPose2D targetPoseTile, targetPose, intermediate1, intermediate2, intermediate3, intermediate4;
 
             robot.dashboard.displayPrintf(8, "State: %s", state);
             switch (state)
@@ -166,7 +166,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Set up elevator and arm for placing pixel on the Spike Mark.
                     robot.setupSubsystems(null, RobotParams.ELEVATOR_MIN_POS, RobotParams.ARM_MIN_POS);
                     // Navigate robot to spike mark 1, 2 or 3.
-                    TrcPose2D targetPoseTile =
+                    targetPoseTile =
                         autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
                             RobotParams.BLUE_AUDIENCE_SPIKE_MARKS[spikeMarkIndex]:
                             RobotParams.BLUE_BACKSTAGE_SPIKE_MARKS[spikeMarkIndex];
@@ -174,7 +174,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     intermediate1 =
                         robot.adjustPoseByAlliance(
                             targetPoseTile.x, targetPoseTile.y + 0.2, robot.robotDrive.driveBase.getHeading(),
-                            autoChoices.alliance, true);
+                            autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.PLACE_PURPLE_PIXEL);
@@ -210,28 +210,20 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Drive to the lookout point where we can see the AprilTag clearly.
                     if (autoChoices.startPos == FtcAuto.StartPos.BACKSTAGE)
                     {
-                        intermediate1 = robot.adjustPoseByAlliance(
-                            new TrcPose2D(0.5, 2.0, 180.0), autoChoices.alliance);
-                        intermediate2 = robot.adjustPoseByAlliance(
-                            new TrcPose2D(1.5, 2.0, 90.0), autoChoices.alliance);
-                        targetPose = robot.adjustPoseByAlliance(
-                            new TrcPose2D(1.5, 1.5, 90.0), autoChoices.alliance);
+                        intermediate1 = robot.adjustPoseByAlliance(0.5, 2.0, 180.0, autoChoices.alliance);
+                        intermediate2 = robot.adjustPoseByAlliance(1.5, 2.0, 90.0, autoChoices.alliance);
+                        targetPose = robot.adjustPoseByAlliance(1.5, 1.5, 90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
                             event, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, targetPose);
                     }
                     else
                     {
-                        intermediate1 = robot.adjustPoseByAlliance(
-                            new TrcPose2D(-1.5, 2.5, 180.0), autoChoices.alliance);
-                        intermediate2 = robot.adjustPoseByAlliance(
-                            new TrcPose2D(-2.5, 2.5, 180.0), autoChoices.alliance);
-                        intermediate3 = robot.adjustPoseByAlliance(
-                            new TrcPose2D(-2.5, 0.5, 180.0), autoChoices.alliance);
-                        intermediate4 = robot.adjustPoseByAlliance(
-                            new TrcPose2D(1.5, 0.5, 90.0), autoChoices.alliance);
-                        targetPose = robot.adjustPoseByAlliance(
-                            new TrcPose2D(1.5, 1.5, 90.0), autoChoices.alliance);
+                        intermediate1 = robot.adjustPoseByAlliance(-1.5, 2.5, 180.0, autoChoices.alliance);
+                        intermediate2 = robot.adjustPoseByAlliance(-2.5, 2.5, 180.0, autoChoices.alliance);
+                        intermediate3 = robot.adjustPoseByAlliance(-2.5, 0.5, 180.0, autoChoices.alliance);
+                        intermediate4 = robot.adjustPoseByAlliance(1.5, 0.5, 90.0, autoChoices.alliance);
+                        targetPose = robot.adjustPoseByAlliance(1.5, 1.5, 90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
                             event, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, intermediate3, intermediate4, targetPose);
@@ -319,12 +311,12 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Retract everything.
                     robot.setupSubsystems(null, RobotParams.ELEVATOR_MIN_POS, RobotParams.ARM_MIN_POS);
                     // Navigate robot to the backstage parking location.
-                    targetPose = robot.adjustPoseByAlliance(
+                    targetPoseTile =
                         autoChoices.parkPos == FtcAuto.ParkPos.CORNER?
-                            RobotParams.PARKPOS_BLUE_CORNER: RobotParams.PARKPOS_BLUE_CENTER,
-                        autoChoices.alliance);
-                    intermediate1 = targetPose.clone();
-                    intermediate1.x = 2.0 * RobotParams.FULL_TILE_INCHES;
+                            RobotParams.PARKPOS_BLUE_CORNER: RobotParams.PARKPOS_BLUE_CENTER;
+                    targetPose = robot.adjustPoseByAlliance(targetPoseTile, autoChoices.alliance);
+                    intermediate1 = robot.adjustPoseByAlliance(
+                        2.0, targetPoseTile.y, targetPoseTile.angle, autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event,State.DONE);

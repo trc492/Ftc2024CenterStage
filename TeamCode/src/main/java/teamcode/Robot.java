@@ -445,6 +445,20 @@ public class Robot
     /**
      * This method adjusts the given pose in the blue alliance to be the specified alliance.
      *
+     * @param x specifies x position in the blue alliance in tile unit.
+     * @param y specifies y position in the blue alliance in tile unit.
+     * @param heading specifies heading in the blue alliance in degrees.
+     * @param alliance specifies the alliance to be converted to.
+     * @return pose adjusted to be in the specified alliance in inches.
+     */
+    public TrcPose2D adjustPoseByAlliance(double x, double y, double heading, FtcAuto.Alliance alliance)
+    {
+        return adjustPoseByAlliance(x, y, heading, alliance, true);
+    }   //adjustPoseByAlliance
+
+    /**
+     * This method adjusts the given pose in the blue alliance to be the specified alliance.
+     *
      * @param pose specifies pose in the blue alliance in tile unit.
      * @param alliance specifies the alliance to be converted to.
      * @param isTileUnit specifies true if pose is in tile units, false otherwise.
