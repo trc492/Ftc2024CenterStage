@@ -372,6 +372,40 @@ public class Robot
     }   //stopMode
 
     /**
+     * This method update all subsystem status on the dashboard.
+     */
+    public void updateStatus()
+    {
+        int lineNum = 2;
+
+        if (elevator != null)
+        {
+            dashboard.displayPrintf(
+                lineNum++, "Elevator: power=%.1f, pos=%.1f, lowerLimitSw=%s",
+                elevator.getPower(), elevator.getPosition(), elevator.isLowerLimitSwitchActive());
+        }
+
+        if (arm != null)
+        {
+            dashboard.displayPrintf(
+                lineNum++, "Arm: power=%.1f, pos=%.1f, lowerLimitSw=%s",
+                arm.getPower(), arm.getPosition(), arm.isLowerLimitSwitchActive());
+        }
+
+        if (intake != null)
+        {
+            dashboard.displayPrintf(
+                lineNum++, "Intake: power=%.1f", intake.getIntakeMotor().getPower());
+        }
+
+        if (pixelTray != null)
+        {
+            dashboard.displayPrintf(
+                lineNum++, "PixelTray: Gate1=%s, Gate2=%s", pixelTray.isGate1Opened(), pixelTray.isGate2Opened());
+        }
+    }   //updateStatus
+
+    /**
      * This method zero calibrates all subsystems.
      *
      * @param owner specifies the owner ID to check if the caller has ownership of the motor.

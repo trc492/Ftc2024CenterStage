@@ -148,7 +148,6 @@ public class FtcTeleOp extends FtcOpMode
     {
         if (slowPeriodicLoop)
         {
-            int lineNum = 1;
             //
             // DriveBase subsystem.
             //
@@ -161,16 +160,16 @@ public class FtcTeleOp extends FtcOpMode
                     robot.robotDrive.driveBase.supportsHolonomicDrive())
                 {
                     robot.robotDrive.driveBase.holonomicDrive(
-                        null, inputs[0], inputs[1], inputs[2],
-                        robot.robotDrive.driveBase.getDriveGyroAngle());
+                        null, inputs[0], inputs[1], inputs[2], robot.robotDrive.driveBase.getDriveGyroAngle());
                 }
                 else
                 {
                     robot.robotDrive.driveBase.arcadeDrive(inputs[1], inputs[2]);
                 }
                 robot.dashboard.displayPrintf(
-                    lineNum++, "Pose:%s,x=%.2f,y=%.2f,rot=%.2f",
-                    robot.robotDrive.driveBase.getFieldPosition(), inputs[0], inputs[1], inputs[2]);
+                    1, "DriveBase: Power=(%.2f,y=%.2f,rot=%.2f),Pose:%s,Mode=%s",
+                    inputs[0], inputs[1], inputs[2], robot.robotDrive.driveBase.getDriveOrientation(),
+                    robot.robotDrive.driveBase.getFieldPosition());
             }
             //
             // Other subsystems.
@@ -189,9 +188,6 @@ public class FtcTeleOp extends FtcOpMode
                         robot.elevator.setPidPower(
                             elevatorPower, RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS, true);
                     }
-                    robot.dashboard.displayPrintf(
-                        lineNum++, "Elevator: power=%.1f, pos=%.1f, lowerLimitSw=%s",
-                        elevatorPower, robot.elevator.getPosition(), robot.elevator.isLowerLimitSwitchActive());
                 }
 
                 if (robot.arm != null)
@@ -206,10 +202,12 @@ public class FtcTeleOp extends FtcOpMode
                         robot.arm.setPidPower(
                             armPower, RobotParams.ARM_MIN_POS, RobotParams.ARM_MAX_POS, true);
                     }
-                    robot.dashboard.displayPrintf(
-                        lineNum++, "Arm: power=%.1f, pos=%.1f, lowerLimitSw=%s",
-                        armPower, robot.arm.getPosition(), robot.arm.isLowerLimitSwitchActive());
                 }
+            }
+
+            if (RobotParams.Preferences.doStatusUpdate)
+            {
+                robot.updateStatus();
             }
         }
     }   //periodic

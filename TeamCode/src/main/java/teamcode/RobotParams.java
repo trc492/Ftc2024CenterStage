@@ -50,6 +50,7 @@ public class RobotParams
         public static boolean useLoopPerformanceMonitor = true;
         public static boolean useBlinkin = true;
         public static boolean useBatteryMonitor = false;
+        public static boolean doStatusUpdate = true;
         // Vision
         public static boolean useWebCam = true;
         public static boolean hasWebCam2 = false;
@@ -74,8 +75,8 @@ public class RobotParams
         public static boolean useSubsystems = true;
         public static boolean useElevator = true;
         public static boolean useArm = true;
-        public static boolean useIntake = true;
-        public static boolean usePixelTray = true;
+        public static boolean useIntake = false;
+        public static boolean usePixelTray = false;
     }   //class Preferences
 
     public static final String ROBOT_NAME                       = "Robot3543_CenterStage";
