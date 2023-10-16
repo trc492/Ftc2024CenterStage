@@ -151,7 +151,7 @@ public class Vision
         this.robot = robot;
         this.webcam1 = opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1);
         this.webcam2 = RobotParams.Preferences.hasWebCam2?
-            opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1): null;
+            opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM2): null;
         if (RobotParams.Preferences.tuneColorBlobVision)
         {
             OpenCvCamera openCvCam;
