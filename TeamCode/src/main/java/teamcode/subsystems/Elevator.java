@@ -30,32 +30,51 @@ import teamcode.RobotParams;
 
 public class Elevator extends FtcMotorActuator
 {
-    private static class SetPositionParams
+    private enum ActionType
     {
+        SetPosition,
+        SetPower,
+        SetPidPower,
+        ZeroCalibrate
+    }   //enum ActionType
+
+    private static class ActionParams
+    {
+        ActionType actionType;
         String owner;
         double delay;
         double position;
+        double minPos;
+        double maxPos;
         boolean holdTarget;
         double powerLimit;
+        double power;
+        double duration;
         TrcEvent completionEvent;
         double timeout;
 
         void setParams(
-            String owner, double delay, double position, boolean holdTarget, double powerLimit,
+            ActionType actionType, String owner, double delay, double position, double minPos,
+            double maxPos, boolean holdTarget, double powerLimit, double power, double duration,
             TrcEvent completionEvent, double timeout)
         {
+            this.actionType = actionType;
             this.owner = owner;
             this.delay = delay;
             this.position = position;
+            this.minPos = minPos;
+            this.maxPos = maxPos;
             this.holdTarget = holdTarget;
             this.powerLimit = powerLimit;
+            this.power = power;
+            this.duration = duration;
             this.completionEvent = completionEvent;
             this.timeout = timeout;
         }   //setParams
 
-    }   //class SetPositionParams
+    }   //class ActionParams
 
-    private final SetPositionParams setPositionParams = new SetPositionParams();
+    private final ActionParams actionParams = new ActionParams();
     private final TrcEvent armEvent;
     private FtcServo armActuator;
 
@@ -70,7 +89,7 @@ public class Elevator extends FtcMotorActuator
     {
         super(RobotParams.HWNAME_ELEVATOR, motorParams, msgTracer, tracePidInfo);
         armEvent = new TrcEvent(instanceName + ".elevatorEvent");
-        armEvent.setCallback(this::performSetPosition, setPositionParams);
+        armEvent.setCallback(this::performAction, null);
     }   //Elevator
 
     /**
@@ -85,17 +104,36 @@ public class Elevator extends FtcMotorActuator
     }   //setArmActuator
 
     /**
-     * This method is a callback to perform the setPosition operation when it is safe to do so.
+     * This method is a callback to perform the specified action when it is safe to do so.
      *
-     * @param context specifies the setPosition parameters.
+     * @param context not used.
      */
-    private void performSetPosition(Object context)
+    private void performAction(Object context)
     {
-        SetPositionParams setPositionParams = (SetPositionParams) context;
+        switch (actionParams.actionType)
+        {
+            case SetPosition:
+                actuator.setPosition(
+                    actionParams.owner, actionParams.delay, actionParams.position, actionParams.holdTarget,
+                    actionParams.powerLimit, actionParams.completionEvent, actionParams.timeout);
+                break;
 
-        actuator.setPosition(
-            setPositionParams.owner, setPositionParams.delay, setPositionParams.position, setPositionParams.holdTarget,
-            setPositionParams.powerLimit, setPositionParams.completionEvent, setPositionParams.timeout);
+            case SetPower:
+                actuator.setPower(
+                    actionParams.owner, actionParams.delay, actionParams.power, actionParams.duration,
+                    actionParams.completionEvent);
+                break;
+
+            case SetPidPower:
+                actuator.setPidPower(
+                    actionParams.owner, actionParams.power, actionParams.minPos, actionParams.maxPos,
+                    actionParams.holdTarget);
+                break;
+
+            case ZeroCalibrate:
+                actuator.zeroCalibrate(actionParams.owner, actionParams.power);
+                break;
+        }
     }   //performSetPosition
 
     /**
@@ -115,16 +153,16 @@ public class Elevator extends FtcMotorActuator
         String owner, double delay, double position, boolean holdTarget, double powerLimit, TrcEvent completionEvent,
         double timeout)
     {
-        setPositionParams.setParams(owner, delay, position, holdTarget, powerLimit, completionEvent, timeout);
-        if (armActuator.getPosition() > RobotParams.ELEVATOR_SAFE_HEIGHT &&
-            actuator.getPosition() > RobotParams.ARM_FREE_TO_MOVE_POSITION)
+        actionParams.setParams(
+            ActionType.SetPosition, owner, delay, position, 0.0, 0.0, holdTarget, powerLimit, 0.0, 0.0, completionEvent,
+            timeout);
+        if (safeToMove(position))
         {
-            // Raise elevator before moving the arm.
-            armActuator.setPosition(owner, 0.0, RobotParams.ARM_FREE_TO_MOVE_POSITION, armEvent, 0.0);
+            performAction(null);
         }
         else
         {
-            performSetPosition(setPositionParams);
+            lowerArmToMinPos(owner);
         }
     }   //setPosition
 
@@ -139,11 +177,20 @@ public class Elevator extends FtcMotorActuator
      * @param power specifies the percentage power (range -1.0 to 1.0).
      * @param duration specifies the duration in seconds to run the motor and turns it off afterwards, 0.0 if not
      *        turning off.
-     * @param event specifies the event to signal when the motor operation is completed
+     * @param completionEvent specifies the event to signal when the motor operation is completed.
      */
-    public void setPower(String owner, double delay, double power, double duration, TrcEvent event)
+    public void setPower(String owner, double delay, double power, double duration, TrcEvent completionEvent)
     {
-        actuator.setPower(owner, delay, power, duration, event);
+        actionParams.setParams(
+            ActionType.SetPower, owner, delay, 0.0, 0.0, 0.0, false, 0.0, power, duration, completionEvent, 0.0);
+        if (power == 0.0 || safeToMove(power > 0.0? RobotParams.ELEVATOR_MAX_POS: RobotParams.ELEVATOR_MIN_POS))
+        {
+            performAction(null);
+        }
+        else
+        {
+            lowerArmToMinPos(owner);
+        }
     }   //setPower
 
     /**
@@ -164,34 +211,17 @@ public class Elevator extends FtcMotorActuator
      */
     public void setPidPower(String owner, double power, double minPos, double maxPos, boolean holdTarget)
     {
-        actuator.setPidPower(owner, power, minPos, maxPos, holdTarget);
+        actionParams.setParams(
+            ActionType.SetPidPower, owner, 0.0, 0.0, minPos, maxPos, holdTarget, 0.0, power, 0.0, null, 0.0);
+        if (power == 0.0 || safeToMove(power > 0.0? maxPos: minPos))
+        {
+            performAction(null);
+        }
+        else
+        {
+            lowerArmToMinPos(owner);
+        }
     }   //setPidPower
-
-    /**
-     * This method sets the motor to the next preset position up from the current position.
-     *
-     * @param owner specifies the owner ID that will acquire ownership before setting the preset position and will
-     *        automatically release ownership when the motor movement is coompleted, can be null if no ownership
-     *        is required.
-     * @param powerLimit specifies the maximum power limit.
-     */
-    public void presetPositionUp(String owner, double powerLimit)
-    {
-        actuator.presetPositionUp(owner, powerLimit);
-    }   //presetPositionUp
-
-    /**
-     * This method sets the motor to the next preset position down from the current position.
-     *
-     * @param owner specifies the owner ID that will acquire ownership before setting the preset position and will
-     *        automatically release ownership when the motor movement is coompleted, can be null if no ownership
-     *        is required.
-     * @param powerLimit specifies the maximum power limit.
-     */
-    public void presetPositionDown(String owner, double powerLimit)
-    {
-        actuator.presetPositionDown(owner, powerLimit);
-    }   //presetPositionDown
 
     /**
      * This method zero calibrates the motor with the specified calibration power.
@@ -202,7 +232,99 @@ public class Elevator extends FtcMotorActuator
      */
     public void zeroCalibrate(String owner, double calPower)
     {
-        actuator.zeroCalibrate(owner, calPower);
+        actionParams.setParams(
+            ActionType.ZeroCalibrate, owner, 0.0, 0.0, 0.0, 0.0, false, 0.0, calPower, 0.0, null, 0.0);
+        if (safeToMove(RobotParams.ELEVATOR_MIN_POS))
+        {
+            performAction(null);
+        }
+        else
+        {
+            lowerArmToMinPos(owner);
+        }
     }   //zeroCalibrate
+
+    /**
+     * This method sets the servo to the specified preset position.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystem.
+     * @param delay specifies delay time in seconds before setting position, can be zero if no delay.
+     * @param presetIndex specifies the index to the preset position array.
+     * @param powerLimit specifies the power limit applied to the elevator.
+     * @param event specifies the event to signal when done, can be null if not provided.
+     * @param timeout specifies a timeout value in seconds. If the operation is not completed without the specified
+     *        timeout, the operation will be canceled and the event will be signaled. If no timeout is specified, it
+     *        should be set to zero.
+     */
+    public void setPresetPosition(
+        String owner, double delay, int presetIndex, double powerLimit, TrcEvent event, double timeout)
+    {
+        if (actuator.validatePresetIndex(presetIndex))
+        {
+            setPosition(owner, delay, actuator.getPresetPosition(presetIndex), true, powerLimit, event, timeout);
+        }
+    }   //setPresetPosition
+
+    /**
+     * This method sets the actuator to the next preset position up from the current position.
+     *
+     * @param owner specifies the owner ID that will acquire ownership before setting the preset position and will
+     *        automatically release ownership when the actuator movement is coompleted, can be null if no ownership
+     *        is required.
+     * @param powerLimit specifies the power limit applied to the elevator.
+     */
+    public void presetPositionUp(String owner, double powerLimit)
+    {
+        int index = actuator.nextPresetIndexUp();
+
+        if (index != -1)
+        {
+            setPosition(owner, 0.0, actuator.getPresetPosition(index), true, powerLimit, null, 0.0);
+        }
+    }   //presetPositionUp
+
+    /**
+     * This method sets the actuator to the next preset position down from the current position.
+     *
+     * @param owner specifies the owner ID that will acquire ownership before setting the preset position and will
+     *        automatically release ownership when the actuator movement is coompleted, can be null if no ownership
+     *        is required.
+     * @param powerLimit specifies the power limit applied to the elevator.
+     */
+    public void presetPositionDown(String owner, double powerLimit)
+    {
+        int index = actuator.nextPresetIndexDown();
+
+        if (index != -1)
+        {
+            setPosition(owner, 0.0, actuator.getPresetPosition(index), true, powerLimit, null, 0.0);
+        }
+    }   //presetPositionDown
+
+    /**
+     * This method checks if the elevator is safe to move to the target position so it doesn't hit the intake.
+     *
+     * @param targetElevatorPos specifies the target elevator position.
+     * @return true if it is safe to move, false otherwise.
+     */
+    private boolean safeToMove(double targetElevatorPos)
+    {
+        double currArmPos = armActuator.getPosition();
+        double currElevatorPos = actuator.getPosition();
+        return currArmPos >= RobotParams.ARM_FREE_TO_MOVE_POSITION ||
+               currArmPos <= RobotParams.ARM_TUGIN_THRESHOLD ||
+               currElevatorPos >= RobotParams.ELEVATOR_SAFE_HEIGHT &&
+               targetElevatorPos >= RobotParams.ELEVATOR_SAFE_HEIGHT;
+    }   //safeToMove
+
+    /**
+     * This method lowers the arm to tugged-in position before moving the elevator.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystem.
+     */
+    private void lowerArmToMinPos(String owner)
+    {
+        armActuator.setPosition(owner, 0.0, RobotParams.ARM_PHYSICAL_MIN_POS, armEvent, 0.0);
+    }   //lowerArmToMinPos
 
 }   //class Elevator

@@ -372,6 +372,7 @@ public class RobotParams
     public static final double ARM_LOGICAL_MAX_POS              = 0.8;
     public static final double ARM_SCORE_BACKDROP_POS           = 210.0;
     public static final double ARM_FREE_TO_MOVE_POSITION        = 60.0;
+    public static final double ARM_TUGIN_THRESHOLD              = 50.0;
     // Power settings.
     public static final double ARM_PRESET_TOLERANCE             = 2.0;
     // Index 0 is a placeholder so index 1 is 1 cone, 2 is 2 cones, etc.

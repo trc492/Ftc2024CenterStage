@@ -160,6 +160,11 @@ public class Robot
                     elevator.setArmActuator(arm.getServo());
                     arm.setElevatorActuator(elevator.getMotor());
                 }
+                else if (elevator != null || arm != null)
+                {
+                    throw new RuntimeException(
+                        "Elevator and Arm are dependent of each other. They must either both exist or not.");
+                }
 
                 if (RobotParams.Preferences.useIntake)
                 {
