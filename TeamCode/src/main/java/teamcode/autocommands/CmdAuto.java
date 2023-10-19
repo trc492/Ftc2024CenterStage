@@ -163,8 +163,6 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
                             RobotParams.BLUE_BACKDROP_APRILTAGS[teamPropIndex]:
                             RobotParams.RED_BACKDROP_APRILTAGS[teamPropIndex];
-                    // Set up elevator and arm for placing pixel on the Spike Mark.
-                    robot.setupSubsystems(null, RobotParams.ELEVATOR_MIN_POS, RobotParams.ARM_MIN_POS);
                     // Navigate robot to spike mark 1, 2 or 3.
                     targetPoseTile =
                         autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
@@ -173,8 +171,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     targetPose = robot.adjustPoseByAlliance(targetPoseTile, autoChoices.alliance);
                     intermediate1 =
                         robot.adjustPoseByAlliance(
-                            targetPoseTile.x, targetPoseTile.y + 0.2, robot.robotDrive.driveBase.getHeading(),
-                            autoChoices.alliance);
+                            targetPoseTile.x, targetPoseTile.y + 0.2, targetPose.angle, autoChoices.alliance);
+                    intermediate1.angle = robot.robotDrive.driveBase.getHeading();
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.PLACE_PURPLE_PIXEL);
@@ -182,9 +180,9 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                 case PLACE_PURPLE_PIXEL:
                     // Place purple pixel on the spike position 1, 2 or 3.
-                    if (robot.pixelTray != null)
+                    if (robot.intake != null)
                     {
-                        robot.pixelTray.setGate1Opened(true, event);
+                        robot.intake.spitOut(0.0, 1.0, event);
                         sm.waitForSingleEvent(event, State.DO_DELAY);
                     }
                     else
@@ -309,7 +307,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                 case PARK_AT_BACKSTAGE:
                     // Retract everything.
-                    robot.setupSubsystems(null, RobotParams.ELEVATOR_MIN_POS, RobotParams.ARM_MIN_POS);
+                    robot.setupSubsystems(null, RobotParams.ELEVATOR_MIN_POS, RobotParams.ARM_PHYSICAL_MIN_POS);
                     // Navigate robot to the backstage parking location.
                     targetPoseTile =
                         autoChoices.parkPos == FtcAuto.ParkPos.CORNER?

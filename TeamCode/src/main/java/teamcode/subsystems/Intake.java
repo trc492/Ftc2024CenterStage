@@ -23,6 +23,7 @@
 package teamcode.subsystems;
 
 import TrcCommonLib.trclib.TrcDbgTrace;
+import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcSensor;
 import TrcCommonLib.trclib.TrcTriggerThresholdZones;
 import TrcFtcLib.ftclib.FtcDcMotor;
@@ -75,6 +76,11 @@ public class Intake
     public void spitOut(boolean on)
     {
         intakeMotor.setPower(on? RobotParams.INTAKE_SPITOUT_POWER: 0.0);
+    }   //spitOut
+
+    public void spitOut(double delay, double duration, TrcEvent event)
+    {
+        intakeMotor.setPower(delay, RobotParams.INTAKE_SPITOUT_POWER, duration, event);
     }   //spitOut
 
     /**

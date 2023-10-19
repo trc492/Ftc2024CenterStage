@@ -35,10 +35,14 @@ import TrcFtcLib.ftclib.FtcMatchInfo;
 import TrcFtcLib.ftclib.FtcMotorActuator;
 import TrcFtcLib.ftclib.FtcOpMode;
 import TrcFtcLib.ftclib.FtcRobotBattery;
+import TrcFtcLib.ftclib.FtcServo;
+import TrcFtcLib.ftclib.FtcServoActuator;
 import teamcode.drivebases.MecanumDrive;
 import teamcode.drivebases.RobotDrive;
 import teamcode.drivebases.SwerveDrive;
+import teamcode.subsystems.Arm;
 import teamcode.subsystems.BlinkinLEDs;
+import teamcode.subsystems.Elevator;
 import teamcode.subsystems.Intake;
 import teamcode.subsystems.PixelTray;
 import teamcode.vision.Vision;
@@ -69,8 +73,8 @@ public class Robot
     // Subsystems.
     //
     public RobotDrive robotDrive;
-    public FtcDcMotor elevator;
-    public FtcDcMotor arm;
+    public Elevator elevator;
+    public Arm arm;
     public Intake intake;
     public PixelTray pixelTray;
 
@@ -138,23 +142,23 @@ public class Robot
                                                     RobotParams.ELEVATOR_UPPER_LIMIT_INVERTED)
                         .setPositionScaleAndOffset(RobotParams.ELEVATOR_INCHES_PER_COUNT, RobotParams.ELEVATOR_OFFSET)
                         .setPositionPresets(RobotParams.ELEVATOR_PRESET_TOLERANCE, RobotParams.ELEVATOR_PRESETS);
-                    elevator = new FtcMotorActuator(
-                        RobotParams.HWNAME_ELEVATOR, motorParams, globalTracer, false).getMotor();
+                    elevator = new Elevator(motorParams, globalTracer, false);
                 }
 
                 if (RobotParams.Preferences.useArm)
                 {
-                    FtcMotorActuator.MotorParams motorParams = new FtcMotorActuator.MotorParams()
-                        .setMotorInverted(RobotParams.ARM_MOTOR_INVERTED)
-                        .setLowerLimitSwitchEnabled(RobotParams.ARM_HAS_LOWER_LIMIT_SWITCH,
-                                                    RobotParams.ARM_LOWER_LIMIT_INVERTED)
-                        .setUpperLimitSwitchEnabled(RobotParams.ARM_HAS_UPPER_LIMIT_SWITCH,
-                                                    RobotParams.ARM_UPPER_LIMIT_INVERTED)
-                        .setPositionScaleAndOffset(RobotParams.ARM_DEG_PER_COUNT, RobotParams.ARM_OFFSET)
+                    FtcServoActuator.ServoParams servoParams = new FtcServoActuator.ServoParams()
+                        .setServoInverted(RobotParams.ARM_SERVO_INVERTED)
+                        .setPhysicalPosRange(RobotParams.ARM_PHYSICAL_MIN_POS, RobotParams.ARM_PHYSICAL_MAX_POS)
+                        .setLogicalPosRange(RobotParams.ARM_LOGICAL_MIN_POS, RobotParams.ARM_LOGICAL_MAX_POS)
                         .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS);
-                    arm = new FtcMotorActuator(
-                        RobotParams.HWNAME_ARM, motorParams, globalTracer, false).getMotor();
-                    dashboard.displayPrintf(5, "Arm: PID=%s", arm.getMotorPositionPidCoefficients());
+                    arm = new Arm(servoParams, globalTracer);
+                }
+
+                if (elevator != null && arm != null)
+                {
+                    elevator.setArmActuator(arm.getServo());
+                    arm.setElevatorActuator(elevator.getMotor());
                 }
 
                 if (RobotParams.Preferences.useIntake)
@@ -197,6 +201,7 @@ public class Robot
             RobotParams.Preferences.hasWebCam2 = false;
             RobotParams.Preferences.useExternalOdometry = true;
             RobotParams.Preferences.useSubsystems = true;
+            RobotParams.Preferences.useArm = false;
         }
         else if (RobotParams.Preferences.centerStageRobot)
         {
@@ -380,16 +385,17 @@ public class Robot
 
         if (elevator != null)
         {
+            FtcDcMotor elevatorMotor = elevator.getMotor();
             dashboard.displayPrintf(
-                lineNum++, "Elevator: power=%.1f, pos=%.1f, lowerLimitSw=%s",
-                elevator.getPower(), elevator.getPosition(), elevator.isLowerLimitSwitchActive());
+                lineNum++, "Arm: power=%.1f, pos=%.1f, lowerLimitSw=%s",
+                elevatorMotor.getPower(), elevatorMotor.getPosition(), elevatorMotor.isLowerLimitSwitchActive());
         }
 
         if (arm != null)
         {
+            FtcServo armServo = arm.getServo();
             dashboard.displayPrintf(
-                lineNum++, "Arm: power=%.1f, pos=%.1f, lowerLimitSw=%s",
-                arm.getPower(), arm.getPosition(), arm.isLowerLimitSwitchActive());
+                lineNum++, "FtcServoActuator: power=%.1f, pos=%.1f", armServo.getPower(), armServo.getPosition());
         }
 
         if (intake != null)
@@ -415,11 +421,6 @@ public class Robot
         if (elevator != null)
         {
             elevator.zeroCalibrate(owner, RobotParams.ELEVATOR_CAL_POWER);
-        }
-
-        if (arm != null)
-        {
-            arm.zeroCalibrate(owner, RobotParams.ARM_CAL_POWER);
         }
     }   //zeroCalibrate
 
@@ -563,7 +564,7 @@ public class Robot
             elevator.setPosition(
                 owner, elevatorDelay, elevatorPos, true, 1.0, event != null? elevatorEvent: null, timeout);
             arm.setPosition(
-                owner, armDelay, armPos, true, 1.0, event != null? armEvent: null, timeout);
+                owner, armDelay, armPos, event != null? armEvent: null, timeout);
         }
     }   //setupSubsystems
 

@@ -29,8 +29,10 @@ import java.util.Locale;
 import TrcCommonLib.trclib.TrcDriveBase;
 import TrcCommonLib.trclib.TrcGameController;
 import TrcCommonLib.trclib.TrcRobot;
+import TrcFtcLib.ftclib.FtcDcMotor;
 import TrcFtcLib.ftclib.FtcGamepad;
 import TrcFtcLib.ftclib.FtcOpMode;
+import TrcFtcLib.ftclib.FtcServo;
 import teamcode.drivebases.SwerveDrive;
 
 /**
@@ -181,27 +183,19 @@ public class FtcTeleOp extends FtcOpMode
                     double elevatorPower = operatorGamepad.getLeftStickY(true);
                     if (manualOverride)
                     {
-                        robot.elevator.setPower(elevatorPower);
+                        robot.elevator.setPower(null, 0.0, elevatorPower, 0.0, null);
                     }
                     else
                     {
                         robot.elevator.setPidPower(
-                            elevatorPower, RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS, true);
+                            null, elevatorPower, RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS, true);
                     }
                 }
 
                 if (robot.arm != null)
                 {
                     double armPower = operatorGamepad.getRightStickY(true);
-                    if (manualOverride)
-                    {
-                        robot.arm.setPower(armPower);
-                    }
-                    else
-                    {
-                        robot.arm.setPidPower(
-                            armPower, RobotParams.ARM_MIN_POS, RobotParams.ARM_MAX_POS, true);
-                    }
+                    robot.arm.setPower(null, 0.0, armPower);
                 }
             }
 
@@ -320,24 +314,18 @@ public class FtcTeleOp extends FtcOpMode
         switch (button)
         {
             case FtcGamepad.GAMEPAD_A:
-                if (robot.pixelTray != null)
+                if (robot.pixelTray != null && pressed)
                 {
-                    if(pressed)
-                    {
-                        pixelTrayGate1Opened = !pixelTrayGate1Opened;
-                        robot.pixelTray.setGate1Opened(pixelTrayGate1Opened, null);
-                    }
+                    pixelTrayGate1Opened = !pixelTrayGate1Opened;
+                    robot.pixelTray.setGate1Opened(pixelTrayGate1Opened, null);
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_B:
-                if (robot.pixelTray != null)
+                if (robot.pixelTray != null && pressed)
                 {
-                    if(pressed)
-                    {
-                        pixelTrayGate2Opened = !pixelTrayGate2Opened;
-                        robot.pixelTray.setGate2Opened(pixelTrayGate2Opened, null);
-                    }
+                    pixelTrayGate2Opened = !pixelTrayGate2Opened;
+                    robot.pixelTray.setGate2Opened(pixelTrayGate2Opened, null);
                 }
                 break;
 
@@ -363,15 +351,31 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_UP:
+                if (robot.elevator != null && pressed)
+                {
+                    robot.elevator.presetPositionUp(moduleName, 1.0);
+                }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_DOWN:
+                if (robot.elevator != null && pressed)
+                {
+                    robot.elevator.presetPositionDown(moduleName, 1.0);
+                }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_LEFT:
+                if (robot.arm != null && pressed)
+                {
+                    robot.arm.presetPositionDown(moduleName);
+                }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_RIGHT:
+                if (robot.arm != null && pressed)
+                {
+                    robot.arm.presetPositionUp(moduleName);
+                }
                 break;
 
             case FtcGamepad.GAMEPAD_BACK:

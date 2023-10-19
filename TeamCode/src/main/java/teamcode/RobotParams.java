@@ -330,7 +330,7 @@ public class RobotParams
     public static final double PPD_POS_TOLERANCE                = 2.0;
     public static final double PPD_TURN_TOLERANCE               = 1.0;
     //
-    // Elevator Subsystem
+    // Elevator Subsystem.
     //
     // Motor parameters.
     public static final boolean ELEVATOR_MOTOR_INVERTED         = false;
@@ -345,6 +345,7 @@ public class RobotParams
     public static final double ELEVATOR_OFFSET                  = 7.8;              // in inches
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
     public static final double ELEVATOR_MAX_POS                 = 34.0;
+    public static final double ELEVATOR_SAFE_HEIGHT             = 8.0;
     public static final double ELEVATOR_LEVEL1_POS              = 2.0;
     public static final double ELEVATOR_LEVEL2_POS              = 8.0;
     public static final double ELEVATOR_LEVEL3_POS              = 14.0;
@@ -354,6 +355,7 @@ public class RobotParams
     public static final double ELEVATOR_PRESET_TOLERANCE        = 2.0;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
         ELEVATOR_MIN_POS,
+        ELEVATOR_SAFE_HEIGHT,
         ELEVATOR_LEVEL1_POS,
         ELEVATOR_LEVEL2_POS,
         ELEVATOR_LEVEL3_POS,
@@ -362,30 +364,22 @@ public class RobotParams
     //
     // Arm subsystem.
     //
-    // Motor parameters.
-    public static final boolean ARM_MOTOR_INVERTED              = false;
-    public static final boolean ARM_HAS_LOWER_LIMIT_SWITCH      = true;
-    public static final boolean ARM_LOWER_LIMIT_INVERTED        = false;
-    public static final boolean ARM_HAS_UPPER_LIMIT_SWITCH      = false;
-    public static final boolean ARM_UPPER_LIMIT_INVERTED        = false;
-    public static final double ARM_ENCODER_PPR                  = GOBILDA_5203_435_ENCODER_PPR;
-    // https://www.gobilda.com/super-duty-worm-drive-pan-kit-28-1-ratio/
-    public static final double ARM_GEAR_RATIO                   = 28.0;
-    public static final double ARM_DEG_PER_COUNT                = (360.0/(ARM_ENCODER_PPR*ARM_GEAR_RATIO));
-    public static final double ARM_OFFSET                       = -8.0;
-    // Arm Zero-Calibrated to Up Position. Arm Max Position is Down.
-    public static final double ARM_MIN_POS                      = ARM_OFFSET;
-    public static final double ARM_MAX_POS                      = 145.0;
-    public static final double ARM_SCORE_BACKDROP_POS           = 175.0;
+    // Servo parameters.
+    public static final boolean ARM_SERVO_INVERTED              = false;
+    public static final double ARM_PHYSICAL_MIN_POS             = 45.0;
+    public static final double ARM_PHYSICAL_MAX_POS             = 240.0;
+    public static final double ARM_LOGICAL_MIN_POS              = 0.1;
+    public static final double ARM_LOGICAL_MAX_POS              = 0.8;
+    public static final double ARM_SCORE_BACKDROP_POS           = 210.0;
+    public static final double ARM_FREE_TO_MOVE_POSITION        = 60.0;
     // Power settings.
-    public static final double ARM_CAL_POWER                    = -0.5;
-    // Preset positions.
     public static final double ARM_PRESET_TOLERANCE             = 2.0;
     // Index 0 is a placeholder so index 1 is 1 cone, 2 is 2 cones, etc.
     public static final double[] ARM_PRESETS                    = new double[] {
-        ARM_MIN_POS,
+        ARM_PHYSICAL_MIN_POS,
+        ARM_FREE_TO_MOVE_POSITION,
         ARM_SCORE_BACKDROP_POS,
-        ARM_MAX_POS
+        ARM_PHYSICAL_MAX_POS
     };
 //    //
 //    // Grabber subsystem.
