@@ -30,26 +30,29 @@ import teamcode.RobotParams;
 
 public class Arm extends FtcServoActuator
 {
-    private static class SetPositionParams
+    private static class ActionParams
     {
         String owner;
         double delay;
         double position;
+        double power;
         TrcEvent completionEvent;
         double timeout;
 
-        void setParams(String owner, double delay, double position, TrcEvent completionEvent, double timeout)
+        void setParams(
+            String owner, double delay, double position, double power, TrcEvent completionEvent, double timeout)
         {
             this.owner = owner;
             this.delay = delay;
             this.position = position;
+            this.power = power;
             this.completionEvent = completionEvent;
             this.timeout = timeout;
         }   //setParams
 
-    }   //class SetPositionParams
+    }   //class ActionParams
 
-    private final SetPositionParams setPositionParams = new SetPositionParams();
+    private final ActionParams actionParams = new ActionParams();
     private final TrcEvent elevatorEvent;
     private FtcDcMotor elevatorActuator;
 
@@ -63,7 +66,7 @@ public class Arm extends FtcServoActuator
     {
         super(RobotParams.HWNAME_ARM, servoParams, msgTracer);
         elevatorEvent = new TrcEvent(instanceName + ".elevatorEvent");
-        elevatorEvent.setCallback(this::performSetPosition, setPositionParams);
+        elevatorEvent.setCallback(this::performSetPosition, null);
     }   //Arm
 
     /**
@@ -80,17 +83,24 @@ public class Arm extends FtcServoActuator
     /**
      * This method is a callback to perform the setPosition operation when it is safe to do so.
      *
-     * @param context specifies the setPosition parameters.
+     * @param context not used.
      */
     private void performSetPosition(Object context)
     {
-        SetPositionParams setPositionParams = (SetPositionParams) context;
-
         actuator.setPosition(
-            setPositionParams.owner, setPositionParams.delay, setPositionParams.position,
-            setPositionParams.completionEvent,
-            setPositionParams.timeout);
+            actionParams.owner, actionParams.delay, actionParams.position, actionParams.completionEvent,
+            actionParams.timeout);
     }   //performSetPosition
+
+    /**
+     * This method is a callback to perform the setPower operation when it is safe to do so.
+     *
+     * @param context not used.
+     */
+    private void performSetPower(Object context)
+    {
+        actuator.setPower(actionParams.owner, actionParams.delay, actionParams.power);
+    }   //performSetPower
 
     /**
      * This method sets the servo position. By default, the servo maps its physical position the same as its logical
@@ -112,16 +122,14 @@ public class Arm extends FtcServoActuator
      */
     public void setPosition(String owner, double delay, double position, TrcEvent completionEvent, double timeout)
     {
-        setPositionParams.setParams(owner, delay, position, completionEvent, timeout);
-        if (elevatorActuator.getPosition() < RobotParams.ELEVATOR_SAFE_HEIGHT &&
-            actuator.getPosition() < RobotParams.ARM_FREE_TO_MOVE_POSITION)
+        actionParams.setParams(owner, delay, position, 0.0, completionEvent, timeout);
+        if (safeToMove())
         {
-            // Raise elevator before moving the arm.
-            elevatorActuator.setPosition(owner, 0.0, RobotParams.ELEVATOR_SAFE_HEIGHT, true, 1.0, elevatorEvent, 0.0);
+            performSetPosition(null);
         }
         else
         {
-            performSetPosition(setPositionParams);
+            raiseElevatorToSafeHeight(owner);
         }
     }   //setPosition
 
@@ -134,8 +142,36 @@ public class Arm extends FtcServoActuator
      */
     public void setPower(String owner, double delay, double power)
     {
-        actuator.setPower(owner, delay, power);
+        actionParams.setParams(owner, delay, 0.0, power, null, 0.0);
+        if (safeToMove())
+        {
+            performSetPower(null);
+        }
+        else
+        {
+            raiseElevatorToSafeHeight(owner);
+        }
     }   //setPower
+
+    /**
+     * This method sets the servo to the specified preset position.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystem.
+     * @param delay specifies delay time in seconds before setting position, can be zero if no delay.
+     * @param presetIndex specifies the index to the preset position array.
+     * @param event specifies the event to signal when done, can be null if not provided.
+     * @param timeout specifies a timeout value in seconds. If the operation is not completed without the specified
+     *        timeout, the operation will be canceled and the event will be signaled. If no timeout is specified, it
+     *        should be set to zero.
+     */
+    public void setPresetPosition(
+        String owner, double delay, int presetIndex, TrcEvent event, double timeout)
+    {
+        if (actuator.validatePresetIndex(presetIndex))
+        {
+            setPosition(owner, delay, actuator.getPresetPosition(presetIndex), event, timeout);
+        }
+    }   //setPresetPosition
 
     /**
      * This method sets the actuator to the next preset position up from the current position.
@@ -146,7 +182,12 @@ public class Arm extends FtcServoActuator
      */
     public void presetPositionUp(String owner)
     {
-        actuator.presetPositionUp(owner);
+        int index = actuator.nextPresetIndexUp();
+
+        if (index != -1)
+        {
+            setPosition(owner, 0.0, actuator.getPresetPosition(index), null, 0.0);
+        }
     }   //presetPositionUp
 
     /**
@@ -158,7 +199,34 @@ public class Arm extends FtcServoActuator
      */
     public void presetPositionDown(String owner)
     {
-        actuator.presetPositionDown(owner);
+        int index = actuator.nextPresetIndexDown();
+
+        if (index != -1)
+        {
+            setPosition(owner, 0.0, actuator.getPresetPosition(index), null, 0.0);
+        }
     }   //presetPositionDown
+
+    /**
+     * This method checks if the arm is safe to move so it doesn't hit the intake.
+     *
+     * @return true if it is safe to move, false otherwise.
+     */
+    private boolean safeToMove()
+    {
+        return elevatorActuator.getPosition() < RobotParams.ELEVATOR_SAFE_HEIGHT &&
+               actuator.getPosition() < RobotParams.ARM_FREE_TO_MOVE_POSITION;
+    }   //safeToMove
+
+    /**
+     * This method raises the elevator to safe height before moving the arm.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystem.
+     */
+    private void raiseElevatorToSafeHeight(String owner)
+    {
+        // Raise elevator before moving the arm.
+        elevatorActuator.setPosition(owner, 0.0, RobotParams.ELEVATOR_SAFE_HEIGHT, true, 1.0, elevatorEvent, 0.0);
+    }   //raiseElevatorToSafeHeight
 
 }   //class Arm
