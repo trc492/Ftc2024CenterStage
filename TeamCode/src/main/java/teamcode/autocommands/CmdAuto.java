@@ -171,8 +171,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     targetPose = robot.adjustPoseByAlliance(targetPoseTile, autoChoices.alliance);
                     intermediate1 =
                         robot.adjustPoseByAlliance(
-                            targetPoseTile.x, targetPoseTile.y + 0.2, targetPose.angle, autoChoices.alliance);
-                    intermediate1.angle = robot.robotDrive.driveBase.getHeading();
+                            targetPoseTile.x, targetPoseTile.y + 0.2, 180.0, autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.PLACE_PURPLE_PIXEL);
