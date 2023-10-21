@@ -73,8 +73,7 @@ public class RobotParams
         public static boolean doSwervePhysicalAlignment = false;
         // Subsystems
         public static boolean useSubsystems = true;
-        public static boolean useElevator = true;
-        public static boolean useArm = true;
+        public static boolean useElevatorArm = true;
         public static boolean useIntake = false;
         public static boolean usePixelTray = false;
     }   //class Preferences
@@ -332,7 +331,7 @@ public class RobotParams
     //
     // Elevator Subsystem.
     //
-    // Motor parameters.
+    // Actuator parameters.
     public static final boolean ELEVATOR_MOTOR_INVERTED         = false;
     public static final boolean ELEVATOR_HAS_LOWER_LIMIT_SWITCH = true;
     public static final boolean ELEVATOR_LOWER_LIMIT_INVERTED   = false;
@@ -364,23 +363,28 @@ public class RobotParams
     //
     // Arm subsystem.
     //
-    // Servo parameters.
-    public static final boolean ARM_SERVO_INVERTED              = false;
-    public static final double ARM_PHYSICAL_MIN_POS             = 45.0;
-    public static final double ARM_PHYSICAL_MAX_POS             = 240.0;
-    public static final double ARM_LOGICAL_MIN_POS              = 0.1;
-    public static final double ARM_LOGICAL_MAX_POS              = 0.8;
+    // Actuator parameters.
+    public static final boolean ARM_MOTOR_INVERTED              = false;
+    public static final boolean ARM_HAS_LOWER_LIMIT_SWITCH      = true;
+    public static final boolean ARM_LOWER_LIMIT_INVERTED        = false;
+    public static final boolean ARM_HAS_UPPER_LIMIT_SWITCH      = false;
+    public static final boolean ARM_UPPER_LIMIT_INVERTED        = false;
+    public static final double ARM_DEG_SCALE                    = 1.0;
+    public static final double ARM_OFFSET                       = 7.8;
+    public static final double ARM_MIN_POS                      = ARM_OFFSET;
+    public static final double ARM_MAX_POS                      = 34.0;
     public static final double ARM_SCORE_BACKDROP_POS           = 210.0;
     public static final double ARM_FREE_TO_MOVE_POSITION        = 60.0;
-    public static final double ARM_TUGIN_THRESHOLD              = 50.0;
+    public static final double ARM_TUGGEDIN_THRESHOLD           = 50.0;
     // Power settings.
+    public static final double ARM_CAL_POWER                    = -0.1;
+    // Preset positions.
     public static final double ARM_PRESET_TOLERANCE             = 2.0;
-    // Index 0 is a placeholder so index 1 is 1 cone, 2 is 2 cones, etc.
     public static final double[] ARM_PRESETS                    = new double[] {
-        ARM_PHYSICAL_MIN_POS,
+        ARM_MIN_POS,
         ARM_FREE_TO_MOVE_POSITION,
         ARM_SCORE_BACKDROP_POS,
-        ARM_PHYSICAL_MAX_POS
+        ARM_MAX_POS
     };
 //    //
 //    // Grabber subsystem.

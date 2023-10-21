@@ -30,19 +30,14 @@ import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcServo;
 import TrcFtcLib.ftclib.FtcDashboard;
-import TrcFtcLib.ftclib.FtcDcMotor;
 import TrcFtcLib.ftclib.FtcMatchInfo;
-import TrcFtcLib.ftclib.FtcMotorActuator;
 import TrcFtcLib.ftclib.FtcOpMode;
 import TrcFtcLib.ftclib.FtcRobotBattery;
-import TrcFtcLib.ftclib.FtcServo;
-import TrcFtcLib.ftclib.FtcServoActuator;
 import teamcode.drivebases.MecanumDrive;
 import teamcode.drivebases.RobotDrive;
 import teamcode.drivebases.SwerveDrive;
-import teamcode.subsystems.Arm;
 import teamcode.subsystems.BlinkinLEDs;
-import teamcode.subsystems.Elevator;
+import teamcode.subsystems.ElevatorArm;
 import teamcode.subsystems.Intake;
 import teamcode.subsystems.PixelTray;
 import teamcode.vision.Vision;
@@ -73,8 +68,7 @@ public class Robot
     // Subsystems.
     //
     public RobotDrive robotDrive;
-    public Elevator elevator;
-    public Arm arm;
+    public ElevatorArm elevatorArm;
     public Intake intake;
     public PixelTray pixelTray;
 
@@ -132,38 +126,9 @@ public class Robot
             //
             if (RobotParams.Preferences.useSubsystems)
             {
-                if (RobotParams.Preferences.useElevator)
+                if (RobotParams.Preferences.useElevatorArm)
                 {
-                    FtcMotorActuator.MotorParams motorParams = new FtcMotorActuator.MotorParams()
-                        .setMotorInverted(RobotParams.ELEVATOR_MOTOR_INVERTED)
-                        .setLowerLimitSwitchEnabled(RobotParams.ELEVATOR_HAS_LOWER_LIMIT_SWITCH,
-                                                    RobotParams.ELEVATOR_LOWER_LIMIT_INVERTED)
-                        .setUpperLimitSwitchEnabled(RobotParams.ELEVATOR_HAS_UPPER_LIMIT_SWITCH,
-                                                    RobotParams.ELEVATOR_UPPER_LIMIT_INVERTED)
-                        .setPositionScaleAndOffset(RobotParams.ELEVATOR_INCHES_PER_COUNT, RobotParams.ELEVATOR_OFFSET)
-                        .setPositionPresets(RobotParams.ELEVATOR_PRESET_TOLERANCE, RobotParams.ELEVATOR_PRESETS);
-                    elevator = new Elevator(motorParams, globalTracer, false);
-                }
-
-                if (RobotParams.Preferences.useArm)
-                {
-                    FtcServoActuator.ServoParams servoParams = new FtcServoActuator.ServoParams()
-                        .setServoInverted(RobotParams.ARM_SERVO_INVERTED)
-                        .setPhysicalPosRange(RobotParams.ARM_PHYSICAL_MIN_POS, RobotParams.ARM_PHYSICAL_MAX_POS)
-                        .setLogicalPosRange(RobotParams.ARM_LOGICAL_MIN_POS, RobotParams.ARM_LOGICAL_MAX_POS)
-                        .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS);
-                    arm = new Arm(servoParams, globalTracer);
-                }
-
-                if (elevator != null && arm != null)
-                {
-                    elevator.setArmActuator(arm.getServo());
-                    arm.setElevatorActuator(elevator.getMotor());
-                }
-                else if (elevator != null || arm != null)
-                {
-                    throw new RuntimeException(
-                        "Elevator and Arm are dependent of each other. They must either both exist or not.");
+                    elevatorArm = new ElevatorArm(globalTracer, false);
                 }
 
                 if (RobotParams.Preferences.useIntake)
@@ -206,7 +171,7 @@ public class Robot
             RobotParams.Preferences.hasWebCam2 = false;
             RobotParams.Preferences.useExternalOdometry = true;
             RobotParams.Preferences.useSubsystems = true;
-            RobotParams.Preferences.useArm = false;
+            RobotParams.Preferences.useElevatorArm = false;
         }
         else if (RobotParams.Preferences.centerStageRobot)
         {
@@ -388,19 +353,15 @@ public class Robot
     {
         int lineNum = 2;
 
-        if (elevator != null)
+        if (elevatorArm != null)
         {
-            FtcDcMotor elevatorMotor = elevator.getMotor();
+            dashboard.displayPrintf(
+                lineNum++, "Elevator: power=%.1f, pos=%.1f, lowerLimitSw=%s",
+                elevatorArm.elevator.getPower(), elevatorArm.elevator.getPosition(),
+                elevatorArm.elevator.isLowerLimitSwitchActive());
             dashboard.displayPrintf(
                 lineNum++, "Arm: power=%.1f, pos=%.1f, lowerLimitSw=%s",
-                elevatorMotor.getPower(), elevatorMotor.getPosition(), elevatorMotor.isLowerLimitSwitchActive());
-        }
-
-        if (arm != null)
-        {
-            FtcServo armServo = arm.getServo();
-            dashboard.displayPrintf(
-                lineNum++, "FtcServoActuator: power=%.1f, pos=%.1f", armServo.getPower(), armServo.getPosition());
+                elevatorArm.arm.getPower(), elevatorArm.arm.getPosition(), elevatorArm.arm.isLowerLimitSwitchActive());
         }
 
         if (intake != null)
@@ -423,9 +384,9 @@ public class Robot
      */
     public void zeroCalibrate(String owner)
     {
-        if (elevator != null)
+        if (elevatorArm != null)
         {
-            elevator.zeroCalibrate(owner, RobotParams.ELEVATOR_CAL_POWER);
+            elevatorArm.zeroCalibrate(owner);
         }
     }   //zeroCalibrate
 
@@ -551,11 +512,11 @@ public class Robot
      * @param timeout specifies the maximum time allowed for the operation.
      * @param event specifies the event to signal when the operation is completed.
      */
-    public void setupSubsystems(
+    public void setupElevatorArm(
         String owner, double elevatorDelay, double elevatorPos, double armDelay, double armPos, double timeout,
         TrcEvent event)
     {
-        if (elevator != null && arm != null)
+        if (elevatorArm != null)
         {
             if (event != null)
             {
@@ -566,12 +527,12 @@ public class Robot
                 completionEvent = event;
             }
 
-            elevator.setPosition(
+            elevatorArm.setElevatorPosition(
                 owner, elevatorDelay, elevatorPos, true, 1.0, event != null? elevatorEvent: null, timeout);
-            arm.setPosition(
-                owner, armDelay, armPos, event != null? armEvent: null, timeout);
+            elevatorArm.setArmPosition(
+                owner, armDelay, armPos, true, 1.0, event != null? armEvent: null, timeout);
         }
-    }   //setupSubsystems
+    }   //setupElevatorArm
 
     /**
      * This method set up the elevator and arm subsystems for a certain operation.
@@ -582,11 +543,11 @@ public class Robot
      * @param timeout specifies the maximum time allowed for the operation.
      * @param event specifies the event to signal when the operation is completed.
      */
-    public void setupSubsystems(
+    public void setupElevatorArm(
         String owner, double elevatorPos, double armPos, double timeout, TrcEvent event)
     {
-        setupSubsystems(owner, 0.0, elevatorPos, 0.0, armPos, timeout, event);
-    }   //setupSubsystems
+        setupElevatorArm(owner, 0.0, elevatorPos, 0.0, armPos, timeout, event);
+    }   //setupElevatorArm
 
     /**
      * This method set up the elevator and arm subsystems for a certain operation.
@@ -598,11 +559,11 @@ public class Robot
      * @param armPos specifies the arm position.
      * @param timeout specifies the maximum time allowed for the operation.
      */
-    public void setupSubsystems(
+    public void setupElevatorArm(
         String owner, double elevatorDelay, double elevatorPos, double armDelay, double armPos, double timeout)
     {
-        setupSubsystems(owner, elevatorDelay, elevatorPos, armDelay, armPos, timeout, null);
-    }   //setupSubsystems
+        setupElevatorArm(owner, elevatorDelay, elevatorPos, armDelay, armPos, timeout, null);
+    }   //setupElevatorArm
 
     /**
      * This method set up the elevator and arm subsystems for a certain operation.
@@ -613,11 +574,11 @@ public class Robot
      * @param armDelay specifies the delay in seconds before moving arm.
      * @param armPos specifies the arm position.
      */
-    public void setupSubsystems(
+    public void setupElevatorArm(
         String owner, double elevatorDelay, double elevatorPos, double armDelay, double armPos)
     {
-        setupSubsystems(owner, elevatorDelay, elevatorPos, armDelay, armPos, 0.0, null);
-    }   //setupSubsystems
+        setupElevatorArm(owner, elevatorDelay, elevatorPos, armDelay, armPos, 0.0, null);
+    }   //setupElevatorArm
 
     /**
      * This method set up the elevator and arm subsystems for a certain operation.
@@ -627,10 +588,10 @@ public class Robot
      * @param armPos specifies the arm position.
      * @param timeout specifies the maximum time allowed for the operation.
      */
-    public void setupSubsystems(String owner, double elevatorPos, double armPos, double timeout)
+    public void setupElevatorArm(String owner, double elevatorPos, double armPos, double timeout)
     {
-        setupSubsystems(owner, 0.0, elevatorPos, 0.0, armPos, timeout, null);
-    }   //setupSubsystems
+        setupElevatorArm(owner, 0.0, elevatorPos, 0.0, armPos, timeout, null);
+    }   //setupElevatorArm
 
     /**
      * This method set up the elevator and arm subsystems for a certain operation.
@@ -639,10 +600,10 @@ public class Robot
      * @param elevatorPos specifies the elevator position.
      * @param armPos specifies the arm position.
      */
-    public void setupSubsystems(String owner, double elevatorPos, double armPos)
+    public void setupElevatorArm(String owner, double elevatorPos, double armPos)
     {
-        setupSubsystems(owner, 0.0, elevatorPos, 0.0, armPos, 0.0, null);
-    }   //setupSubsystems
+        setupElevatorArm(owner, 0.0, elevatorPos, 0.0, armPos, 0.0, null);
+    }   //setupElevatorArm
 
     /**
      * This method sends the text string to the Driver Station to be spoken using text to speech.
