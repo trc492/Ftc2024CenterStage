@@ -505,6 +505,7 @@ public class Robot
      * This method set up the elevator and arm subsystems for a certain operation.
      *
      * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param moveArmFirst specifies true to move the arm first then elevator, false the other way round.
      * @param elevatorDelay specifies the delay in seconds before moving elevator.
      * @param elevatorPos specifies the elevator position.
      * @param armDelay specifies the delay in seconds before moving arm.
@@ -513,7 +514,8 @@ public class Robot
      * @param event specifies the event to signal when the operation is completed.
      */
     public void setupElevatorArm(
-        String owner, double elevatorDelay, double elevatorPos, double armDelay, double armPos, double timeout,
+        String owner, boolean moveArmFirst, double elevatorDelay, double elevatorPos, double armDelay, double armPos,
+        double timeout,
         TrcEvent event)
     {
         if (elevatorArm != null)
@@ -527,10 +529,20 @@ public class Robot
                 completionEvent = event;
             }
 
-            elevatorArm.setElevatorPosition(
-                owner, elevatorDelay, elevatorPos, true, 1.0, event != null? elevatorEvent: null, timeout);
-            elevatorArm.setArmPosition(
-                owner, armDelay, armPos, true, 1.0, event != null? armEvent: null, timeout);
+            if (moveArmFirst)
+            {
+                elevatorArm.setArmPosition(
+                    owner, armDelay, armPos, true, 1.0, event != null ? armEvent : null, timeout);
+                elevatorArm.setElevatorPosition(
+                    owner, elevatorDelay, elevatorPos, true, 1.0, event != null ? elevatorEvent : null, timeout);
+            }
+            else
+            {
+                elevatorArm.setElevatorPosition(
+                    owner, elevatorDelay, elevatorPos, true, 1.0, event != null ? elevatorEvent : null, timeout);
+                elevatorArm.setArmPosition(
+                    owner, armDelay, armPos, true, 1.0, event != null ? armEvent : null, timeout);
+            }
         }
     }   //setupElevatorArm
 
@@ -538,21 +550,23 @@ public class Robot
      * This method set up the elevator and arm subsystems for a certain operation.
      *
      * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param moveArmFirst specifies true to move the arm first then elevator, false the other way round.
      * @param elevatorPos specifies the elevator position.
      * @param armPos specifies the arm position.
      * @param timeout specifies the maximum time allowed for the operation.
      * @param event specifies the event to signal when the operation is completed.
      */
     public void setupElevatorArm(
-        String owner, double elevatorPos, double armPos, double timeout, TrcEvent event)
+        String owner, boolean moveArmFirst, double elevatorPos, double armPos, double timeout, TrcEvent event)
     {
-        setupElevatorArm(owner, 0.0, elevatorPos, 0.0, armPos, timeout, event);
+        setupElevatorArm(owner, moveArmFirst, 0.0, elevatorPos, 0.0, armPos, timeout, event);
     }   //setupElevatorArm
 
     /**
      * This method set up the elevator and arm subsystems for a certain operation.
      *
      * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param moveArmFirst specifies true to move the arm first then elevator, false the other way round.
      * @param elevatorDelay specifies the delay in seconds before moving elevator.
      * @param elevatorPos specifies the elevator position.
      * @param armDelay specifies the delay in seconds before moving arm.
@@ -560,49 +574,53 @@ public class Robot
      * @param timeout specifies the maximum time allowed for the operation.
      */
     public void setupElevatorArm(
-        String owner, double elevatorDelay, double elevatorPos, double armDelay, double armPos, double timeout)
+        String owner, boolean moveArmFirst, double elevatorDelay, double elevatorPos, double armDelay, double armPos,
+        double timeout)
     {
-        setupElevatorArm(owner, elevatorDelay, elevatorPos, armDelay, armPos, timeout, null);
+        setupElevatorArm(owner, moveArmFirst, elevatorDelay, elevatorPos, armDelay, armPos, timeout, null);
     }   //setupElevatorArm
 
     /**
      * This method set up the elevator and arm subsystems for a certain operation.
      *
      * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param moveArmFirst specifies true to move the arm first then elevator, false the other way round.
      * @param elevatorDelay specifies the delay in seconds before moving elevator.
      * @param elevatorPos specifies the elevator position.
      * @param armDelay specifies the delay in seconds before moving arm.
      * @param armPos specifies the arm position.
      */
     public void setupElevatorArm(
-        String owner, double elevatorDelay, double elevatorPos, double armDelay, double armPos)
+        String owner, boolean moveArmFirst, double elevatorDelay, double elevatorPos, double armDelay, double armPos)
     {
-        setupElevatorArm(owner, elevatorDelay, elevatorPos, armDelay, armPos, 0.0, null);
+        setupElevatorArm(owner, moveArmFirst, elevatorDelay, elevatorPos, armDelay, armPos, 0.0, null);
     }   //setupElevatorArm
 
     /**
      * This method set up the elevator and arm subsystems for a certain operation.
      *
      * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param moveArmFirst specifies true to move the arm first then elevator, false the other way round.
      * @param elevatorPos specifies the elevator position.
      * @param armPos specifies the arm position.
      * @param timeout specifies the maximum time allowed for the operation.
      */
-    public void setupElevatorArm(String owner, double elevatorPos, double armPos, double timeout)
+    public void setupElevatorArm(String owner, boolean moveArmFirst, double elevatorPos, double armPos, double timeout)
     {
-        setupElevatorArm(owner, 0.0, elevatorPos, 0.0, armPos, timeout, null);
+        setupElevatorArm(owner, moveArmFirst, 0.0, elevatorPos, 0.0, armPos, timeout, null);
     }   //setupElevatorArm
 
     /**
      * This method set up the elevator and arm subsystems for a certain operation.
      *
      * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param moveArmFirst specifies true to move the arm first then elevator, false the other way round.
      * @param elevatorPos specifies the elevator position.
      * @param armPos specifies the arm position.
      */
-    public void setupElevatorArm(String owner, double elevatorPos, double armPos)
+    public void setupElevatorArm(String owner, boolean moveArmFirst, double elevatorPos, double armPos)
     {
-        setupElevatorArm(owner, 0.0, elevatorPos, 0.0, armPos, 0.0, null);
+        setupElevatorArm(owner, moveArmFirst, 0.0, elevatorPos, 0.0, armPos, 0.0, null);
     }   //setupElevatorArm
 
     /**
