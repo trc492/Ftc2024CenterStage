@@ -116,9 +116,9 @@ public class RobotParams
     //
     // Field dimensions.
     //
-    public static final double FULL_FIELD_INCHES                = 141.0;
+    public static final double FULL_FIELD_INCHES                = 141.24;
     public static final double HALF_FIELD_INCHES                = FULL_FIELD_INCHES/2.0;
-    public static final double FULL_TILE_INCHES                 = 23.75;
+    public static final double FULL_TILE_INCHES                 = FULL_FIELD_INCHES/6.0;
     //
     // Robot dimensions.
     //
@@ -163,14 +163,20 @@ public class RobotParams
     public static final int[] BLUE_BACKDROP_APRILTAGS           = new int[]{1, 2, 3};
     public static final int[] RED_BACKDROP_APRILTAGS            = new int[]{4, 5, 6};
     // AprilTag locations to place the pixel in inches.
-    public static final double APRILTAG_X                       = 2.0 * FULL_TILE_INCHES;
+    public static final double APRILTAG_BACKDROP_X              = 60.25;
+    public static final double APRILTAG_WALL_X                  = -70.25;
+    // All AprilTags are at the height of 4.0-inch except for AprilTag 7 and 10 which are at the height of 5.5-inch.
     public static final TrcPose2D[] APRILTAG_POSES              = new TrcPose2D[] {
-        new TrcPose2D(APRILTAG_X, 0, 90.0), // TagId 1
-        new TrcPose2D(APRILTAG_X, 0, 90.0), // TagId 2
-        new TrcPose2D(APRILTAG_X, 0, 90.0), // TagId 3
-        new TrcPose2D(APRILTAG_X, 0, 90.0), // TagId 4
-        new TrcPose2D(APRILTAG_X, 0, 90.0), // TagId 5
-        new TrcPose2D(APRILTAG_X, 0, 90.0)  // TagId 6
+        new TrcPose2D(APRILTAG_BACKDROP_X, 41.41, 90.0),        // TagId 1
+        new TrcPose2D(APRILTAG_BACKDROP_X, 35.41, 90.0),        // TagId 2
+        new TrcPose2D(APRILTAG_BACKDROP_X, 29.41, 90.0),        // TagId 3
+        new TrcPose2D(APRILTAG_BACKDROP_X, -29.41, 90.0),       // TagId 4
+        new TrcPose2D(APRILTAG_BACKDROP_X, -35.41, 90.0),       // TagId 5
+        new TrcPose2D(APRILTAG_BACKDROP_X, -41.41, 90.0),       // TagId 6
+        new TrcPose2D(APRILTAG_WALL_X, -40.63, -90.0),          // TagId 7
+        new TrcPose2D(APRILTAG_WALL_X, -35.13, -90.0),          // TagId 8
+        new TrcPose2D(APRILTAG_WALL_X, 35.13, -90.0),           // TagId 9
+        new TrcPose2D(APRILTAG_WALL_X, 40.63, -90.0)            // TagId 10
     };
     //
     // Vision subsystem.

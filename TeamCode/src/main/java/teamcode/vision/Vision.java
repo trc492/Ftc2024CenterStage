@@ -39,6 +39,7 @@ import java.util.Arrays;
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcOpenCvColorBlobPipeline;
 import TrcCommonLib.trclib.TrcOpenCvDetector;
+import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcVisionTargetInfo;
 import TrcFtcLib.ftclib.FtcEocvColorBlobProcessor;
 import TrcFtcLib.ftclib.FtcOpMode;
@@ -440,6 +441,37 @@ public class Vision
 
         return aprilTagInfo;
     }   //getDetectedAprilTag
+
+    /**
+     * This method uses vision to find an AprilTag and uses the AprilTag's absolute field location and its relative
+     * position from the camera to calculate the robot's absolute field location.
+     *
+     * @return robot field location.
+     */
+    public TrcPose2D getRobotFieldPose()
+    {
+        final String funcName = "getRobotFieldPose";
+        TrcPose2D robotPose = null;
+
+        if (aprilTagVision != null)
+        {
+            // Find any AprilTag in view.
+            TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo = getDetectedAprilTag(null, -1);
+
+            if (aprilTagInfo != null)
+            {
+                TrcPose2D aprilTagPose = RobotParams.APRILTAG_POSES[aprilTagInfo.detectedObj.aprilTagDetection.id - 1];
+                robotPose = aprilTagPose.subtractRelativePose(aprilTagInfo.objPose.toPose2D());
+                // TODO: adjust robot pose with respect to the camera location on the robot.
+                robot.globalTracer.traceInfo(
+                    funcName, "AprilTagId=%d, aprilTagFieldPose=%s, aprilTagPoseFromCamera=%s, robotPose=%s",
+                    aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagPose, aprilTagInfo.objPose.toPose2D(),
+                    robotPose);
+            }
+        }
+
+        return robotPose;
+    }   //getRobotFieldPose
 
     /**
      * This method enables/disables vision for the specified pixel type.
