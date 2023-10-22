@@ -278,7 +278,6 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Navigate robot to Apriltag.
                     if (aprilTagPose == null)
                     {
-                        // TODO: Determine all AprilTag poses.
                         // Vision did not see AprilTag, just go to it blindly using odometry and its known location.
                         aprilTagPose = RobotParams.APRILTAG_POSES[aprilTagId - 1];
                         robot.globalTracer.traceInfo(
