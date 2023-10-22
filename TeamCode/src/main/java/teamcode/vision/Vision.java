@@ -443,6 +443,31 @@ public class Vision
     }   //getDetectedAprilTag
 
     /**
+     * This method calculates the robot's absolute field location with the detected AprilTagInfo.
+     *
+     * @param aprilTagInfo specifies the detected AprilTag info.
+     * @return robot field location.
+     */
+    public TrcPose2D getRobotFieldPose(TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo)
+    {
+        final String funcName = "getRobotFieldPose";
+        TrcPose2D robotPose = null;
+
+        if (aprilTagInfo != null)
+        {
+            TrcPose2D aprilTagPose = RobotParams.APRILTAG_POSES[aprilTagInfo.detectedObj.aprilTagDetection.id - 1];
+            robotPose = aprilTagPose.subtractRelativePose(aprilTagInfo.objPose.toPose2D());
+            // TODO: adjust robot pose with respect to the camera location on the robot.
+            robot.globalTracer.traceInfo(
+                funcName, "AprilTagId=%d, aprilTagFieldPose=%s, aprilTagPoseFromCamera=%s, robotPose=%s",
+                aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagPose, aprilTagInfo.objPose.toPose2D(),
+                robotPose);
+        }
+
+        return robotPose;
+    }   //getRobotFieldPose
+
+    /**
      * This method uses vision to find an AprilTag and uses the AprilTag's absolute field location and its relative
      * position from the camera to calculate the robot's absolute field location.
      *
@@ -450,7 +475,6 @@ public class Vision
      */
     public TrcPose2D getRobotFieldPose()
     {
-        final String funcName = "getRobotFieldPose";
         TrcPose2D robotPose = null;
 
         if (aprilTagVision != null)
@@ -460,13 +484,7 @@ public class Vision
 
             if (aprilTagInfo != null)
             {
-                TrcPose2D aprilTagPose = RobotParams.APRILTAG_POSES[aprilTagInfo.detectedObj.aprilTagDetection.id - 1];
-                robotPose = aprilTagPose.subtractRelativePose(aprilTagInfo.objPose.toPose2D());
-                // TODO: adjust robot pose with respect to the camera location on the robot.
-                robot.globalTracer.traceInfo(
-                    funcName, "AprilTagId=%d, aprilTagFieldPose=%s, aprilTagPoseFromCamera=%s, robotPose=%s",
-                    aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagPose, aprilTagInfo.objPose.toPose2D(),
-                    robotPose);
+                robotPose = getRobotFieldPose(aprilTagInfo);
             }
         }
 
