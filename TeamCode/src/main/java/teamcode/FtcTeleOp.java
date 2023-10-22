@@ -203,7 +203,7 @@ public class FtcTeleOp extends FtcOpMode
                     else
                     {
                         robot.elevatorArm.setElevatorPidPower(
-                            null, elevatorPower, RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS, true);
+                            null, elevatorPower, RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS);
                     }
 
                     double armPower = operatorGamepad.getRightStickY(true);
@@ -214,7 +214,7 @@ public class FtcTeleOp extends FtcOpMode
                     else
                     {
                         robot.elevatorArm.setArmPidPower(
-                            null, armPower, RobotParams.ARM_MIN_POS, RobotParams.ARM_MAX_POS, true);
+                            null, armPower, RobotParams.ARM_MIN_POS, RobotParams.ARM_MAX_POS);
                     }
                 }
             }

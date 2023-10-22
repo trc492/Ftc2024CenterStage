@@ -350,7 +350,7 @@ public class RobotParams
     public static final double ELEVATOR_OFFSET                  = 7.8;              // in inches
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
     public static final double ELEVATOR_MAX_POS                 = 34.0;
-    public static final double ELEVATOR_SAFE_HEIGHT             = 8.0;
+    public static final double ELEVATOR_SAFE_POS                = 8.0;
     public static final double ELEVATOR_LEVEL1_POS              = 2.0;
     public static final double ELEVATOR_LEVEL2_POS              = 8.0;
     public static final double ELEVATOR_LEVEL3_POS              = 14.0;
@@ -360,7 +360,7 @@ public class RobotParams
     public static final double ELEVATOR_PRESET_TOLERANCE        = 2.0;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
         ELEVATOR_MIN_POS,
-        ELEVATOR_SAFE_HEIGHT,
+        ELEVATOR_SAFE_POS,
         ELEVATOR_LEVEL1_POS,
         ELEVATOR_LEVEL2_POS,
         ELEVATOR_LEVEL3_POS,
@@ -371,7 +371,7 @@ public class RobotParams
     //
     // Actuator parameters.
     public static final boolean ARM_MOTOR_INVERTED              = false;
-    public static final boolean ARM_HAS_LOWER_LIMIT_SWITCH      = true;
+    public static final boolean ARM_HAS_LOWER_LIMIT_SWITCH      = false;
     public static final boolean ARM_LOWER_LIMIT_INVERTED        = false;
     public static final boolean ARM_HAS_UPPER_LIMIT_SWITCH      = false;
     public static final boolean ARM_UPPER_LIMIT_INVERTED        = false;
@@ -380,15 +380,15 @@ public class RobotParams
     public static final double ARM_MIN_POS                      = ARM_OFFSET;
     public static final double ARM_MAX_POS                      = 34.0;
     public static final double ARM_SCORE_BACKDROP_POS           = 210.0;
-    public static final double ARM_FREE_TO_MOVE_POSITION        = 60.0;
-    public static final double ARM_TUGGEDIN_THRESHOLD           = 50.0;
+    public static final double ARM_SAFE_POS                     = 30.0;
+    public static final double ARM_FREE_TO_MOVE_POS             = 50.0;
     // Power settings.
-    public static final double ARM_CAL_POWER                    = -0.1;
     // Preset positions.
     public static final double ARM_PRESET_TOLERANCE             = 2.0;
     public static final double[] ARM_PRESETS                    = new double[] {
         ARM_MIN_POS,
-        ARM_FREE_TO_MOVE_POSITION,
+        ARM_SAFE_POS,
+        ARM_FREE_TO_MOVE_POS,
         ARM_SCORE_BACKDROP_POS,
         ARM_MAX_POS
     };

@@ -230,8 +230,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                 case FIND_APRILTAG:
                     // Set up elevator and arm for placing pixel on the Backdrop.
-                    robot.setupElevatorArm(
-                        null, false, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ARM_SCORE_BACKDROP_POS);
+                    robot.elevatorArm.setupPositions(
+                        null, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ARM_SCORE_BACKDROP_POS);
                     // Use vision to determine the appropriate AprilTag location.
                     if (robot.vision != null && robot.vision.aprilTagVision != null)
                     {
@@ -306,7 +306,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                 case PARK_AT_BACKSTAGE:
                     // Retract everything.
-                    robot.setupElevatorArm(null, true, RobotParams.ELEVATOR_MIN_POS, RobotParams.ARM_MIN_POS);
+                    robot.elevatorArm.setupPositions(null, RobotParams.ELEVATOR_MIN_POS, RobotParams.ARM_MIN_POS);
                     // Navigate robot to the backstage parking location.
                     targetPoseTile =
                         autoChoices.parkPos == FtcAuto.ParkPos.CORNER?
