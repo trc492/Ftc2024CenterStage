@@ -283,10 +283,12 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     if (robot.robotDrive.driveBase.isGyroAssistEnabled())
                     {
+                        // Disable GyroAssist drive.
                         robot.robotDrive.driveBase.setGyroAssistEnabled(null);
                     }
                     else
                     {
+                        // Enable GyroAssist drive.
                         robot.robotDrive.driveBase.setGyroAssistEnabled(robot.robotDrive.pidDrive.getTurnPidCtrl());
                     }
                 }
@@ -344,6 +346,7 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_BACK:
                 if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
                 {
+                    // Drive base is a Swerve Drive, align all steering wheels forward.
                     ((SwerveDrive) robot.robotDrive).setSteerAngle(0.0, false, false);
                 }
                 break;
