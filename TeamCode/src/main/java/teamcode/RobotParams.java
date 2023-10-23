@@ -69,7 +69,6 @@ public class RobotParams
         public static boolean swerveDualServoSteering = true;
         // Drive Base
         public static boolean useExternalOdometry = true;
-        public static boolean useVelocityControl = false;
         public static boolean doSwervePhysicalAlignment = false;
         // Subsystems
         public static boolean useSubsystems = true;

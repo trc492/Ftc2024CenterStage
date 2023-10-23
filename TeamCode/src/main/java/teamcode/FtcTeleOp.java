@@ -233,8 +233,11 @@ public class FtcTeleOp extends FtcOpMode
      */
     public void setDriveOrientation(TrcDriveBase.DriveOrientation orientation)
     {
+        final String funcName = "setDriveOrientation";
+
         if (robot.robotDrive != null)
         {
+            robot.globalTracer.traceInfo(funcName, "driveOrientation=%s", orientation);
             robot.robotDrive.driveBase.setDriveOrientation(
                 orientation, orientation == TrcDriveBase.DriveOrientation.FIELD);
             if (robot.blinkin != null)
@@ -276,6 +279,17 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_Y:
+                if (pressed && robot.robotDrive != null)
+                {
+                    if (robot.robotDrive.driveBase.isGyroAssistEnabled())
+                    {
+                        robot.robotDrive.driveBase.setGyroAssistEnabled(null);
+                    }
+                    else
+                    {
+                        robot.robotDrive.driveBase.setGyroAssistEnabled(robot.robotDrive.pidDrive.getTurnPidCtrl());
+                    }
+                }
                 break;
 
             case FtcGamepad.GAMEPAD_LBUMPER:
@@ -319,8 +333,9 @@ public class FtcTeleOp extends FtcOpMode
                     relocalizing = pressed;
                     if (!pressed && robotFieldPose != null)
                     {
-                        // Vision found an AprilTag, set the new robot field location.
-                        robot.robotDrive.driveBase.setFieldPosition(robotFieldPose);
+                        // Vision found an AprilTag, set the new robot field location but don't disturb the robot's
+                        // heading because it may be set for field oriented driving.
+                        robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, true);
                         robotFieldPose = null;
                     }
                 }
