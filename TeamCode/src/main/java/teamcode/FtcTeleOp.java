@@ -114,11 +114,15 @@ public class FtcTeleOp extends FtcOpMode
         // Tell robot object opmode is about to start so it can do the necessary start initialization for the mode.
         //
         robot.startMode(nextMode);
-        if (robot.vision.aprilTagVision != null)
+
+        if (robot.vision != null)
         {
             // Enabling AprilTag vision to support robot re-localization.
-            robot.globalTracer.traceInfo(funcName, "Enabling AprilTagVision.");
-            robot.vision.setAprilTagVisionEnabled(true);
+            if (robot.vision.aprilTagVision != null)
+            {
+                robot.globalTracer.traceInfo(funcName, "Enabling AprilTagVision.");
+                robot.vision.setAprilTagVisionEnabled(true);
+            }
         }
     }   //startMode
 
@@ -136,6 +140,7 @@ public class FtcTeleOp extends FtcOpMode
         // Tell robot object opmode is about to stop so it can do the necessary cleanup for the mode.
         //
         robot.stopMode(prevMode);
+
         printPerformanceMetrics(robot.globalTracer);
         robot.globalTracer.traceInfo(moduleName, "***** Stopping TeleOp *****");
 
