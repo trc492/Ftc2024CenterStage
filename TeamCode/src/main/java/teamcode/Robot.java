@@ -169,8 +169,7 @@ public class Robot
             RobotParams.Preferences.useBlinkin = true;
             RobotParams.Preferences.hasWebCam2 = false;
             RobotParams.Preferences.useExternalOdometry = true;
-            RobotParams.Preferences.useSubsystems = true;
-            RobotParams.Preferences.useElevatorArm = false;
+            RobotParams.Preferences.useSubsystems = false;
         }
         else if (RobotParams.Preferences.centerStageRobot)
         {
