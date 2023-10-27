@@ -31,7 +31,7 @@ public class PixelTray
 {
     private final String instanceName;
     private final TrcDbgTrace msgTracer;
-    private final FtcServo servo1, servo2;
+    private final FtcServo gate1, gate2;
     private boolean gate1Opened, gate2Opened;
 
     /**
@@ -44,8 +44,8 @@ public class PixelTray
     {
         this.instanceName = instanceName;
         this.msgTracer = msgTracer;
-        servo1 = new FtcServo(instanceName + ".servo1");
-        servo2 = new FtcServo(instanceName + ".servo2");
+        gate1 = new FtcServo(instanceName + ".gate1");
+        gate2 = new FtcServo(instanceName + ".gate2");
         setGate1Opened(false, null);
         setGate2Opened(false, null);
     }   //PixelTray
@@ -72,7 +72,7 @@ public class PixelTray
         final String funcName = "setGate1Opened";
 
         gate1Opened = opened;
-        servo1.setPosition(
+        gate1.setPosition(
             opened? RobotParams.PIXELTRAY_GATE1_OPEN: RobotParams.PIXELTRAY_GATE1_CLOSE,
             event, RobotParams.PIXELTRAY_OPEN_CLOSE_TIME);
         if (msgTracer != null)
@@ -102,7 +102,7 @@ public class PixelTray
         final String funcName = "setGate2Opened";
 
         gate2Opened = opened;
-        servo2.setPosition(
+        gate2.setPosition(
             opened? RobotParams.PIXELTRAY_GATE2_OPEN: RobotParams.PIXELTRAY_GATE2_CLOSE,
             event, RobotParams.PIXELTRAY_OPEN_CLOSE_TIME);
         if (msgTracer != null)

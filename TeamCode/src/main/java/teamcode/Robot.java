@@ -173,10 +173,10 @@ public class Robot
         }
         else if (RobotParams.Preferences.centerStageRobot)
         {
-            RobotParams.Preferences.useBlinkin = false;
-            RobotParams.Preferences.hasWebCam2 = true;
+            RobotParams.Preferences.useBlinkin = true;
+            RobotParams.Preferences.hasWebCam2 = false;
             RobotParams.Preferences.useExternalOdometry = false;
-            RobotParams.Preferences.useSubsystems = false;
+            RobotParams.Preferences.useSubsystems = true;
             RobotParams.Preferences.useAprilTagVision = true;
             RobotParams.Preferences.useColorBlobVision = true;
             RobotParams.Preferences.useTensorFlowVision = false;

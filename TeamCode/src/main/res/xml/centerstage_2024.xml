@@ -36,11 +36,11 @@ SOFTWARE.
             <goBILDA5202SeriesMotor name="lbDriveMotor" port="3"/>
             <ContinuousRotationServo name="arm.servo" port="0" />
             <ContinuousRotationServo name="arm.slaveServo" port="1" />
-            <Servo name="wrist.servo1" port="2" />
-            <Servo name="wrist.servo2" port="3" />
-            <Servo name="pixelTray.servo1" port="4" />
-            <Servo name="pixelTray.servo2" port="5" />
-            <AnalogInput name="arm.Encoder" port="0" />
+            <Servo name="wrist.servo" port="2" />
+            <Servo name="wrist.slaveServo" port="3" />
+            <Servo name="pixelTray.gate1" port="4" />
+            <Servo name="pixelTray.gate2" port="5" />
+            <AnalogInput name="arm.encoder" port="0" />
             <DigitalDevice name="elevator.lowerLimit" port="0" />
             <DigitalDevice name="arm.lowerLimit" port="1" />
         </LynxModule>

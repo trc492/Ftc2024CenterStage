@@ -73,7 +73,8 @@ public class RobotParams
         // Subsystems
         public static boolean useSubsystems = true;
         public static boolean useElevatorArm = true;
-        public static boolean useIntake = false;
+        public static boolean useIntake = true;
+        public static boolean intakeHasSensor = false;
         public static boolean usePixelTray = false;
     }   //class Preferences
 
@@ -343,13 +344,13 @@ public class RobotParams
     public static final boolean ELEVATOR_LOWER_LIMIT_INVERTED   = false;
     public static final boolean ELEVATOR_HAS_UPPER_LIMIT_SWITCH = false;
     public static final boolean ELEVATOR_UPPER_LIMIT_INVERTED   = false;
-    public static final double ELEVATOR_ENCODER_PPR             = GOBILDA_5203_435_ENCODER_PPR;
-    public static final double ELEVATOR_PULLEY_DIAMETER         = 1.5*1.0465;       // in inches
+    public static final double ELEVATOR_ENCODER_PPR             = GOBILDA_5203_312_ENCODER_PPR;
+    public static final double ELEVATOR_PULLEY_DIAMETER         = 1.42;
     public static final double ELEVATOR_PULLEY_CIRCUMFERENCE    = Math.PI*ELEVATOR_PULLEY_DIAMETER;
     public static final double ELEVATOR_INCHES_PER_COUNT        = ELEVATOR_PULLEY_CIRCUMFERENCE/ELEVATOR_ENCODER_PPR;
-    public static final double ELEVATOR_OFFSET                  = 7.8;              // in inches
+    public static final double ELEVATOR_OFFSET                  = 12.1;             // in inches
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
-    public static final double ELEVATOR_MAX_POS                 = 34.0;
+    public static final double ELEVATOR_MAX_POS                 = 22.25;
     public static final double ELEVATOR_SAFE_POS                = 8.0;
     public static final double ELEVATOR_LEVEL1_POS              = 2.0;
     public static final double ELEVATOR_LEVEL2_POS              = 8.0;

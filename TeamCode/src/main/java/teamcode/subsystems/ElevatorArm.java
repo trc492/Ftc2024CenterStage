@@ -146,7 +146,7 @@ public class ElevatorArm
         // Wrist subsystem.
         FtcServoActuator.Params wristParams = new FtcServoActuator.Params()
             .setServoInverted(RobotParams.WRIST_SERVO_INVERTED)
-            .setHasServo2(RobotParams.WRIST_HAS_SLAVE_SERVO, RobotParams.WRIST_SLAVE_SERVO_INVERTED)
+            .setHasSlaveServo(RobotParams.WRIST_HAS_SLAVE_SERVO, RobotParams.WRIST_SLAVE_SERVO_INVERTED)
             .setPhysicalPosRange(RobotParams.WRIST_MIN_POS, RobotParams.WRIST_MAX_POS)
             .setPositionPresets(RobotParams.WRIST_PRESET_TOLERANCE, RobotParams.WRIST_PRESETS);
         wrist = new FtcServoActuator(RobotParams.HWNAME_WRIST, wristParams, msgTracer).getActuator();

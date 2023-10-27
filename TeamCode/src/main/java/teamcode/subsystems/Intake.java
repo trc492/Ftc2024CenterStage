@@ -47,10 +47,17 @@ public class Intake
     {
         this.msgTracer = msgTracer;
         intakeMotor = new FtcDcMotor(instanceName + ".motor");
-        intakeSensor = new FtcDistanceSensor(instanceName + ".sensor");
-        TrcTriggerThresholdZones analogTrigger = new TrcTriggerThresholdZones(
-            instanceName + ".analogTrigger", this::getDistance, new double[]{RobotParams.INTAKE_SENSOR_THRESHOLD},
-            false);
+        if (RobotParams.Preferences.intakeHasSensor)
+        {
+            intakeSensor = new FtcDistanceSensor(instanceName + ".sensor");
+            TrcTriggerThresholdZones analogTrigger = new TrcTriggerThresholdZones(
+                instanceName + ".analogTrigger", this::getDistance, new double[]{RobotParams.INTAKE_SENSOR_THRESHOLD},
+                false);
+        }
+        else
+        {
+            intakeSensor = null;
+        }
     }   //Intake
 
     /**
@@ -117,7 +124,8 @@ public class Intake
      */
     private double getDistance()
     {
-        TrcSensor.SensorData<Double> data = intakeSensor.getProcessedData(0, FtcDistanceSensor.DataType.DISTANCE_INCH);
+        TrcSensor.SensorData<Double> data =
+            intakeSensor != null? intakeSensor.getProcessedData(0, FtcDistanceSensor.DataType.DISTANCE_INCH): null;
         return data != null && data.value != null? data.value: 0.0;
     }   //getDistance
 
