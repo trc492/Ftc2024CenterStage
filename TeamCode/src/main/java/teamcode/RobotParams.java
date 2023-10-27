@@ -64,11 +64,11 @@ public class RobotParams
         // Robot
         public static boolean noRobot = false;
         public static boolean swerveRobot = false;
-        public static boolean powerPlayRobot = true;
-        public static boolean centerStageRobot = false;
+        public static boolean powerPlayRobot = false;
+        public static boolean centerStageRobot = true;
         public static boolean swerveDualServoSteering = true;
         // Drive Base
-        public static boolean useExternalOdometry = true;
+        public static boolean useExternalOdometry = false;
         public static boolean doSwervePhysicalAlignment = false;
         // Subsystems
         public static boolean useSubsystems = true;
@@ -77,9 +77,9 @@ public class RobotParams
         public static boolean usePixelTray = false;
     }   //class Preferences
 
-    public static final String ROBOT_NAME                       = "Robot3543_CenterStage";
+    public static final String ROBOT_NAME                       = "CenterStage_2024";
     public static final RevHubOrientationOnRobot.LogoFacingDirection hubLogoDirection =
-        RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD;
+        RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
     public static final RevHubOrientationOnRobot.UsbFacingDirection hubUsbDirection =
         RevHubOrientationOnRobot.UsbFacingDirection.UP;
     public static final String TEAM_FOLDER_PATH                 =
@@ -110,6 +110,7 @@ public class RobotParams
     // Subsystems.
     public static final String HWNAME_ELEVATOR                  = "elevator";
     public static final String HWNAME_ARM                       = "arm";
+    public static final String HWNAME_WRIST                     = "wrist";
     public static final String HWNAME_INTAKE                    = "intake";
     public static final String HWNAME_PIXELTRAY                 = "pixelTray";
     //
@@ -121,10 +122,10 @@ public class RobotParams
     //
     // Robot dimensions.
     //
-    public static final double ROBOT_LENGTH                     = 17.000;
-    public static final double ROBOT_WIDTH                      = 17.000;
-    public static final double DRIVE_BASE_LENGTH                = (24.0 * 14)*TrcUtil.INCHES_PER_MM;
-    public static final double DRIVE_BASE_WIDTH                 = 16.0;
+    public static final double ROBOT_LENGTH                     = 18.00;
+    public static final double ROBOT_WIDTH                      = 17.25;
+    public static final double DRIVE_BASE_LENGTH                = (24.0 * 15)*TrcUtil.INCHES_PER_MM;
+    public static final double DRIVE_BASE_WIDTH                 = 15.75;
     //
     // Game related locations.
     //
@@ -370,6 +371,8 @@ public class RobotParams
     //
     // Actuator parameters.
     public static final boolean ARM_MOTOR_INVERTED              = false;
+    public static final boolean ARM_HAS_SLAVE_MOTOR             = true;
+    public static final boolean ARM_SLAVE_MOTOR_INVERTED        = true;
     public static final boolean ARM_HAS_LOWER_LIMIT_SWITCH      = true;
     public static final boolean ARM_LOWER_LIMIT_INVERTED        = false;
     public static final boolean ARM_HAS_UPPER_LIMIT_SWITCH      = false;
@@ -394,22 +397,27 @@ public class RobotParams
         ARM_SCORE_BACKDROP_POS,
         ARM_MAX_POS
     };
-//    //
-//    // Grabber subsystem.
-//    //
-//    // Servo Grabber parameters.
-//    public static final double GRABBER_MAX_STEPRATE             = 1.0;
-//    public static final double GRABBER_MIN_POS                  = 0.0;
-//    public static final double GRABBER_MAX_POS                  = 0.2;
-//    public static final boolean GRABBER_LSERVO_INVERTED         = false;
-//    public static final boolean GRABBER_RSERVO_INVERTED         = true;
-//    public static final boolean GRABBER_TRIGGER_INVERTED        = true;
-//    public static final double GRABBER_TRIGGER_THRESHOLD        = 1.5;  // in inches
-//    public static final double GRABBER_HAS_OBJECT_THRESHOLD     = 2.5;  // in inches
-//    public static final double GRABBER_OPEN_POS                 = GRABBER_MAX_POS;
-//    public static final double GRABBER_OPEN_TIME                = 0.5;
-//    public static final double GRABBER_CLOSE_POS                = GRABBER_MIN_POS;
-//    public static final double GRABBER_CLOSE_TIME               = 0.5;
+    //
+    // Wrist subsystem.
+    //
+    public static final boolean WRIST_SERVO_INVERTED            = false;
+    public static final boolean WRIST_HAS_SLAVE_SERVO           = true;
+    public static final boolean WRIST_SLAVE_SERVO_INVERTED      = true;
+    public static final double WRIST_TRAVEL_TIME                = 0.5;
+    public static final double WRIST_MIN_POS                    = 0.0;
+    public static final double WRIST_MAX_POS                    = 1.0;
+    public static final double WRIST_SAFE_POS                   = 0.1;
+    public static final double WRIST_COLLECT_POS                = WRIST_MIN_POS;
+    public static final double WRIST_DROP_POS                   = 0.8;
+    // Preset positions.
+    public static final double WRIST_PRESET_TOLERANCE           = 0.2;
+    public static final double[] WRIST_PRESETS                  = new double[] {
+        WRIST_MIN_POS,
+        WRIST_COLLECT_POS,
+        WRIST_SAFE_POS,
+        WRIST_DROP_POS,
+        WRIST_MAX_POS
+    };
     //
     // Intake subsystem.
     //

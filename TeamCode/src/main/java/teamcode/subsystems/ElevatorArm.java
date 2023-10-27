@@ -27,6 +27,8 @@ import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcMotor;
 import TrcCommonLib.trclib.TrcTimer;
 import TrcFtcLib.ftclib.FtcMotorActuator;
+import TrcFtcLib.ftclib.FtcServo;
+import TrcFtcLib.ftclib.FtcServoActuator;
 import teamcode.RobotParams;
 
 public class ElevatorArm
@@ -97,13 +99,16 @@ public class ElevatorArm
 
     }   //class ActionParams
 
+    // Elevator subsystem.
     private final ActionParams elevatorActionParams = new ActionParams();
     public final TrcMotor elevator;
     private final TrcEvent elevatorEvent;
-
+    // Arm subsystem.
     private final ActionParams armActionParams = new ActionParams();
     public final TrcMotor arm;
     private final TrcEvent armEvent;
+    // Wrist subsystem.
+    public final FtcServo wrist;
 
     /**
      * Constructor: Creates an instance of the object.
@@ -113,6 +118,7 @@ public class ElevatorArm
      */
     public ElevatorArm(TrcDbgTrace msgTracer, boolean tracePidInfo)
     {
+        // Elevator subsystem.
         FtcMotorActuator.Params elevatorParams = new FtcMotorActuator.Params()
             .setMotorInverted(RobotParams.ELEVATOR_MOTOR_INVERTED)
             .setLowerLimitSwitch(RobotParams.ELEVATOR_HAS_LOWER_LIMIT_SWITCH, RobotParams.ELEVATOR_LOWER_LIMIT_INVERTED)
@@ -123,9 +129,10 @@ public class ElevatorArm
             new FtcMotorActuator(RobotParams.HWNAME_ELEVATOR, elevatorParams, msgTracer, tracePidInfo).getActuator();
         elevatorEvent = new TrcEvent(RobotParams.HWNAME_ELEVATOR + ".event");
         elevatorEvent.setCallback(this::performAction, elevatorActionParams);
-
+        // Arm subsystem.
         FtcMotorActuator.Params armParams = new FtcMotorActuator.Params()
             .setMotorInverted(RobotParams.ARM_MOTOR_INVERTED)
+            .setSlaveMotor(RobotParams.ARM_HAS_SLAVE_MOTOR, RobotParams.ARM_SLAVE_MOTOR_INVERTED)
             .setLowerLimitSwitch(RobotParams.ARM_HAS_LOWER_LIMIT_SWITCH, RobotParams.ARM_LOWER_LIMIT_INVERTED)
             .setUpperLimitSwitch(RobotParams.ARM_HAS_UPPER_LIMIT_SWITCH, RobotParams.ARM_UPPER_LIMIT_INVERTED)
             .setExternalEncoder(
@@ -136,6 +143,13 @@ public class ElevatorArm
         arm = new FtcMotorActuator(RobotParams.HWNAME_ARM, true, armParams, msgTracer, tracePidInfo).getActuator();
         armEvent = new TrcEvent(RobotParams.HWNAME_ARM + ".event");
         armEvent.setCallback(this::performAction, armActionParams);
+        // Wrist subsystem.
+        FtcServoActuator.Params wristParams = new FtcServoActuator.Params()
+            .setServoInverted(RobotParams.WRIST_SERVO_INVERTED)
+            .setHasServo2(RobotParams.WRIST_HAS_SLAVE_SERVO, RobotParams.WRIST_SLAVE_SERVO_INVERTED)
+            .setPhysicalPosRange(RobotParams.WRIST_MIN_POS, RobotParams.WRIST_MAX_POS)
+            .setPositionPresets(RobotParams.WRIST_PRESET_TOLERANCE, RobotParams.WRIST_PRESETS);
+        wrist = new FtcServoActuator(RobotParams.HWNAME_WRIST, wristParams, msgTracer).getActuator();
     }   //ElevatorArm
 
     /**
