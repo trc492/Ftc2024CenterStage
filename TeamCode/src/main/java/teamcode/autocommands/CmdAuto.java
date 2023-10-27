@@ -178,7 +178,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case PLACE_PURPLE_PIXEL:
-                    // Place purple pixel on the spike position 1, 2 or 3.
+                    // Place purple pixel on the spike mark position 1, 2 or 3.
                     if (robot.intake != null)
                     {
                         robot.intake.spitOut(0.0, 1.0, event);
@@ -272,7 +272,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     }
                     else
                     {
-                        // AprilTag Vision is not enabled, move on.
+                        // AprilTag Vision is not enabled, moving on.
                         robot.globalTracer.traceInfo(moduleName, "AprilTag Vision not enabled.");
                         sm.setState(State.DRIVE_TO_APRILTAG);
                     }

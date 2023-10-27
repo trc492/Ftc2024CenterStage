@@ -370,10 +370,13 @@ public class RobotParams
     //
     // Actuator parameters.
     public static final boolean ARM_MOTOR_INVERTED              = false;
-    public static final boolean ARM_HAS_LOWER_LIMIT_SWITCH      = false;
+    public static final boolean ARM_HAS_LOWER_LIMIT_SWITCH      = true;
     public static final boolean ARM_LOWER_LIMIT_INVERTED        = false;
     public static final boolean ARM_HAS_UPPER_LIMIT_SWITCH      = false;
     public static final boolean ARM_UPPER_LIMIT_INVERTED        = false;
+    public static final boolean ARM_HAS_EXTERNAL_ENCODER        = true;
+    public static final boolean ARM_ENCODER_INVERTED            = false;
+    public static final boolean ARM_ENCODER_ABSOLUTE            = true;
     public static final double ARM_DEG_SCALE                    = 1.0;
     public static final double ARM_OFFSET                       = 7.8;
     public static final double ARM_MIN_POS                      = ARM_OFFSET;

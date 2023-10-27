@@ -128,9 +128,12 @@ public class ElevatorArm
             .setMotorInverted(RobotParams.ARM_MOTOR_INVERTED)
             .setLowerLimitSwitch(RobotParams.ARM_HAS_LOWER_LIMIT_SWITCH, RobotParams.ARM_LOWER_LIMIT_INVERTED)
             .setUpperLimitSwitch(RobotParams.ARM_HAS_UPPER_LIMIT_SWITCH, RobotParams.ARM_UPPER_LIMIT_INVERTED)
+            .setExternalEncoder(
+                RobotParams.ARM_HAS_EXTERNAL_ENCODER, RobotParams.ARM_ENCODER_INVERTED,
+                RobotParams.ARM_ENCODER_ABSOLUTE)
             .setPositionScaleAndOffset(RobotParams.ARM_DEG_SCALE, RobotParams.ARM_OFFSET)
             .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS);
-        arm = new FtcMotorActuator(RobotParams.HWNAME_ARM, armParams, msgTracer, tracePidInfo).getActuator();
+        arm = new FtcMotorActuator(RobotParams.HWNAME_ARM, true, armParams, msgTracer, tracePidInfo).getActuator();
         armEvent = new TrcEvent(RobotParams.HWNAME_ARM + ".event");
         armEvent.setCallback(this::performAction, armActionParams);
     }   //ElevatorArm
