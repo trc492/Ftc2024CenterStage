@@ -156,6 +156,9 @@ public class ElevatorArm
                 .setPositionScaleAndOffset(RobotParams.ARM_DEG_SCALE, RobotParams.ARM_OFFSET)
                 .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS);
             arm = new FtcMotorActuator(RobotParams.HWNAME_ARM, true, armParams, msgTracer, tracePidInfo).getActuator();
+            arm.setPositionPidCoefficients(
+                RobotParams.ARM_KP, RobotParams.ARM_KI, RobotParams.ARM_KD, RobotParams.ARM_KF, RobotParams.ARM_IZONE);
+            arm.setPositionPidTolerance(RobotParams.ARM_TOLERANCE);
             armEvent = new TrcEvent(RobotParams.HWNAME_ARM + ".event");
             armEvent.setCallback(this::performAction, armActionParams);
         }

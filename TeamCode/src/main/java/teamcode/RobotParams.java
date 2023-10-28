@@ -374,15 +374,15 @@ public class RobotParams
     // Arm subsystem.
     //
     // Actuator parameters.
-    public static final boolean ARM_MOTOR_INVERTED              = false;
+    public static final boolean ARM_MOTOR_INVERTED              = true;
     public static final boolean ARM_HAS_FOLLOWER_MOTOR          = true;
-    public static final boolean ARM_FOLLOWER_MOTOR_INVERTED     = true;
+    public static final boolean ARM_FOLLOWER_MOTOR_INVERTED     = false;
     public static final boolean ARM_HAS_LOWER_LIMIT_SWITCH      = false;
     public static final boolean ARM_LOWER_LIMIT_INVERTED        = false;
     public static final boolean ARM_HAS_UPPER_LIMIT_SWITCH      = false;
     public static final boolean ARM_UPPER_LIMIT_INVERTED        = false;
     public static final boolean ARM_HAS_EXTERNAL_ENCODER        = true;
-    public static final boolean ARM_ENCODER_INVERTED            = false;
+    public static final boolean ARM_ENCODER_INVERTED            = true;
     public static final boolean ARM_ENCODER_ABSOLUTE            = true;
     public static final double ARM_DEG_SCALE                    = 360.0;
     public static final double ARM_OFFSET                       = 0.0;
@@ -400,6 +400,12 @@ public class RobotParams
         ARM_SCORE_BACKDROP_POS,
         ARM_MAX_POS
     };
+    public static final double ARM_KP                           = 0.01;
+    public static final double ARM_KI                           = 0.0;
+    public static final double ARM_KD                           = 0.0;
+    public static final double ARM_KF                           = 0.0;
+    public static final double ARM_IZONE                        = 0.0;
+    public static final double ARM_TOLERANCE                    = 0.5;
     //
     // Wrist subsystem.
     //

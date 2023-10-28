@@ -183,7 +183,7 @@ public class FtcTeleOp extends FtcOpMode
                     robot.robotDrive.driveBase.arcadeDrive(inputs[1], inputs[2]);
                 }
                 robot.dashboard.displayPrintf(
-                    1, "DriveBase: Power=(%.2f,y=%.2f,rot=%.2f),Pose:%s,Mode=%s",
+                    1, "DriveBase: Power=(%.2f,y=%.2f,rot=%.2f),Mode:%s,Pose=%s",
                     inputs[0], inputs[1], inputs[2], robot.robotDrive.driveBase.getDriveOrientation(),
                     robot.robotDrive.driveBase.getFieldPosition());
 
