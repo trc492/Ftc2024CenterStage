@@ -27,7 +27,7 @@ SOFTWARE.
             <goBILDA5202SeriesMotor name="rfDriveMotor" port="2"/>
             <goBILDA5202SeriesMotor name="rbDriveMotor" port="3"/>
             <Servo name="pixelTray.lowerGate" port="0" />
-            <Servo name="wrist.slaveServo" port="1" />
+            <Servo name="wrist.followerServo" port="1" />
             <RevBlinkinLedDriver name="blinkin" port="5" />
             <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
         </LynxModule>
@@ -39,7 +39,7 @@ SOFTWARE.
             <ContinuousRotationServo name="arm.servo" port="2" />
             <Servo name="pixelTray.upperGate" port="3" />
             <Servo name="wrist.servo" port="4" />
-            <ContinuousRotationServo name="arm.slaveServo" port="5" />
+            <ContinuousRotationServo name="arm.followerServo" port="5" />
             <AnalogInput name="arm.encoder" port="0" />
             <DigitalDevice name="elevator.lowerLimit" port="0" />
         </LynxModule>

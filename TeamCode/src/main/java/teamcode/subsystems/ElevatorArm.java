@@ -147,7 +147,7 @@ public class ElevatorArm
         {
             FtcMotorActuator.Params armParams = new FtcMotorActuator.Params()
                 .setMotorInverted(RobotParams.ARM_MOTOR_INVERTED)
-                .setSlaveMotor(RobotParams.ARM_HAS_SLAVE_MOTOR, RobotParams.ARM_SLAVE_MOTOR_INVERTED)
+                .setFollowerMotor(RobotParams.ARM_HAS_FOLLOWER_MOTOR, RobotParams.ARM_FOLLOWER_MOTOR_INVERTED)
                 .setLowerLimitSwitch(RobotParams.ARM_HAS_LOWER_LIMIT_SWITCH, RobotParams.ARM_LOWER_LIMIT_INVERTED)
                 .setUpperLimitSwitch(RobotParams.ARM_HAS_UPPER_LIMIT_SWITCH, RobotParams.ARM_UPPER_LIMIT_INVERTED)
                 .setExternalEncoder(
@@ -169,7 +169,7 @@ public class ElevatorArm
         {
             FtcServoActuator.Params wristParams = new FtcServoActuator.Params()
                 .setServoInverted(RobotParams.WRIST_SERVO_INVERTED)
-                .setHasSlaveServo(RobotParams.WRIST_HAS_SLAVE_SERVO, RobotParams.WRIST_SLAVE_SERVO_INVERTED)
+                .setHasFollowerServo(RobotParams.WRIST_HAS_FOLLOWER_SERVO, RobotParams.WRIST_FOLLOWER_SERVO_INVERTED)
                 .setPhysicalPosRange(RobotParams.WRIST_MIN_POS, RobotParams.WRIST_MAX_POS);
             wrist = new FtcServoActuator(RobotParams.HWNAME_WRIST, wristParams, msgTracer).getActuator();
         }
