@@ -73,9 +73,12 @@ public class RobotParams
         // Subsystems
         public static boolean useSubsystems = true;
         public static boolean useElevatorArm = true;
+        public static boolean useElevator = true;
+        public static boolean useArm = true;
+        public static boolean useWrist = true;
         public static boolean useIntake = true;
         public static boolean intakeHasSensor = false;
-        public static boolean usePixelTray = false;
+        public static boolean usePixelTray = true;
     }   //class Preferences
 
     public static final String ROBOT_NAME                       = "CenterStage_2024";
@@ -290,7 +293,7 @@ public class RobotParams
     public static final double X_ODOMETRY_WHEEL_OFFSET          = ROBOT_LENGTH/2.0 - (3.875 + 9.5); //behind centroid
     public static final double Y_LEFT_ODOMETRY_WHEEL_OFFSET     = -15.25/2.0;
     public static final double Y_RIGHT_ODOMETRY_WHEEL_OFFSET    = 15.25/2.0;
-    public static final FtcGamepad.DriveMode ROBOT_DRIVE_MODE   = FtcGamepad.DriveMode.HOLONOMIC_MODE;
+    public static final FtcGamepad.DriveMode ROBOT_DRIVE_MODE   = FtcGamepad.DriveMode.ARCADE_MODE;
     //
     // Velocity controlled constants.
     //
@@ -351,7 +354,7 @@ public class RobotParams
     public static final double ELEVATOR_OFFSET                  = 12.1;             // in inches
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
     public static final double ELEVATOR_MAX_POS                 = 22.25;
-    public static final double ELEVATOR_SAFE_POS                = 8.0;
+    public static final double ELEVATOR_SAFE_POS                = 13.0;
     public static final double ELEVATOR_LEVEL1_POS              = 2.0;
     public static final double ELEVATOR_LEVEL2_POS              = 8.0;
     public static final double ELEVATOR_LEVEL3_POS              = 14.0;
@@ -374,21 +377,20 @@ public class RobotParams
     public static final boolean ARM_MOTOR_INVERTED              = false;
     public static final boolean ARM_HAS_SLAVE_MOTOR             = true;
     public static final boolean ARM_SLAVE_MOTOR_INVERTED        = true;
-    public static final boolean ARM_HAS_LOWER_LIMIT_SWITCH      = true;
+    public static final boolean ARM_HAS_LOWER_LIMIT_SWITCH      = false;
     public static final boolean ARM_LOWER_LIMIT_INVERTED        = false;
     public static final boolean ARM_HAS_UPPER_LIMIT_SWITCH      = false;
     public static final boolean ARM_UPPER_LIMIT_INVERTED        = false;
     public static final boolean ARM_HAS_EXTERNAL_ENCODER        = true;
     public static final boolean ARM_ENCODER_INVERTED            = false;
     public static final boolean ARM_ENCODER_ABSOLUTE            = true;
-    public static final double ARM_DEG_SCALE                    = 1.0;
-    public static final double ARM_OFFSET                       = 7.8;
+    public static final double ARM_DEG_SCALE                    = 360.0;
+    public static final double ARM_OFFSET                       = 0.0;
     public static final double ARM_MIN_POS                      = ARM_OFFSET;
-    public static final double ARM_MAX_POS                      = 34.0;
+    public static final double ARM_MAX_POS                      = 270.0;
     public static final double ARM_SCORE_BACKDROP_POS           = 210.0;
     public static final double ARM_SAFE_POS                     = 30.0;
     public static final double ARM_FREE_TO_MOVE_POS             = 50.0;
-    // Power settings.
     // Preset positions.
     public static final double ARM_PRESET_TOLERANCE             = 2.0;
     public static final double[] ARM_PRESETS                    = new double[] {
@@ -404,34 +406,24 @@ public class RobotParams
     public static final boolean WRIST_SERVO_INVERTED            = false;
     public static final boolean WRIST_HAS_SLAVE_SERVO           = true;
     public static final boolean WRIST_SLAVE_SERVO_INVERTED      = true;
-    public static final double WRIST_TRAVEL_TIME                = 0.5;
     public static final double WRIST_MIN_POS                    = 0.0;
     public static final double WRIST_MAX_POS                    = 1.0;
     public static final double WRIST_SAFE_POS                   = 0.1;
-    public static final double WRIST_COLLECT_POS                = WRIST_MIN_POS;
-    public static final double WRIST_DROP_POS                   = 0.8;
-    // Preset positions.
-    public static final double WRIST_PRESET_TOLERANCE           = 0.2;
-    public static final double[] WRIST_PRESETS                  = new double[] {
-        WRIST_MIN_POS,
-        WRIST_COLLECT_POS,
-        WRIST_SAFE_POS,
-        WRIST_DROP_POS,
-        WRIST_MAX_POS
-    };
+    public static final double WRIST_DOWN_POS                   = WRIST_MIN_POS;
+    public static final double WRIST_UP_POS                     = 0.17;
     //
     // Intake subsystem.
     //
-    public static final double INTAKE_SENSOR_THRESHOLD          = 5.0;
     public static final double INTAKE_PICKUP_POWER              = 1.0;
     public static final double INTAKE_SPITOUT_POWER             = -0.5;
+    public static final double INTAKE_SENSOR_THRESHOLD          = 5.0;
     //
     // Pixel Tray subsystem.
     //
-    public static final double PIXELTRAY_GATE1_OPEN             = 1.0;
-    public static final double PIXELTRAY_GATE1_CLOSE            = 0.0;
-    public static final double PIXELTRAY_GATE2_OPEN             = 1.0;
-    public static final double PIXELTRAY_GATE2_CLOSE            = 0.0;
-    public static final double PIXELTRAY_OPEN_CLOSE_TIME        = 0.2;  // in msec
+    public static final double PIXELTRAY_LOWER_GATE_OPEN        = 0.0;
+    public static final double PIXELTRAY_LOWER_GATE_CLOSE       = 0.25;
+    public static final double PIXELTRAY_UPPER_GATE_OPEN        = 0.3;
+    public static final double PIXELTRAY_UPPER_GATE_CLOSE       = 0.0;
+    public static final double PIXELTRAY_OPEN_CLOSE_TIME        = 0.2;  // in sec
 
 }   //class RobotParams

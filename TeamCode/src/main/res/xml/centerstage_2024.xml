@@ -26,7 +26,9 @@ SOFTWARE.
         <LynxModule name="Control Hub" port="173">
             <goBILDA5202SeriesMotor name="rfDriveMotor" port="2"/>
             <goBILDA5202SeriesMotor name="rbDriveMotor" port="3"/>
-            <RevBlinkinLedDriver name="blinkin" port="0" />
+            <Servo name="pixelTray.lowerGate" port="0" />
+            <Servo name="wrist.slaveServo" port="1" />
+            <RevBlinkinLedDriver name="blinkin" port="5" />
             <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
         </LynxModule>
         <LynxModule name="Expansion Hub 3" port="3">
@@ -34,16 +36,12 @@ SOFTWARE.
             <goBILDA5202SeriesMotor name="elevator.motor" port="1" />
             <goBILDA5202SeriesMotor name="lfDriveMotor" port="2"/>
             <goBILDA5202SeriesMotor name="lbDriveMotor" port="3"/>
-            <ContinuousRotationServo name="arm.servo" port="0" />
-            <ContinuousRotationServo name="arm.slaveServo" port="1" />
-            <Servo name="wrist.servo" port="2" />
-            <Servo name="wrist.slaveServo" port="3" />
-            <Servo name="pixelTray.gate1" port="4" />
-            <Servo name="pixelTray.gate2" port="5" />
+            <ContinuousRotationServo name="arm.servo" port="2" />
+            <Servo name="pixelTray.upperGate" port="3" />
+            <Servo name="wrist.servo" port="4" />
+            <ContinuousRotationServo name="arm.slaveServo" port="5" />
             <AnalogInput name="arm.encoder" port="0" />
             <DigitalDevice name="elevator.lowerLimit" port="0" />
-            <DigitalDevice name="arm.lowerLimit" port="1" />
         </LynxModule>
     </LynxUsbDevice>
-nxUsbDevice>
 </Robot>

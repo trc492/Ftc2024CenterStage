@@ -353,13 +353,21 @@ public class Robot
 
         if (elevatorArm != null)
         {
-            dashboard.displayPrintf(
-                lineNum++, "Elevator: power=%.1f, pos=%.1f, lowerLimitSw=%s",
-                elevatorArm.elevator.getPower(), elevatorArm.elevator.getPosition(),
-                elevatorArm.elevator.isLowerLimitSwitchActive());
-            dashboard.displayPrintf(
-                lineNum++, "Arm: power=%.1f, pos=%.1f, lowerLimitSw=%s",
-                elevatorArm.arm.getPower(), elevatorArm.arm.getPosition(), elevatorArm.arm.isLowerLimitSwitchActive());
+            if (elevatorArm.elevator != null)
+            {
+                dashboard.displayPrintf(
+                    lineNum++, "Elevator: power=%.1f, pos=%.1f, lowerLimitSw=%s",
+                    elevatorArm.elevator.getPower(), elevatorArm.elevator.getPosition(),
+                    elevatorArm.elevator.isLowerLimitSwitchActive());
+            }
+
+            if (elevatorArm.arm != null)
+            {
+                dashboard.displayPrintf(
+                    lineNum++, "Arm: power=%.1f, pos=%.1f, lowerLimitSw=%s",
+                    elevatorArm.arm.getPower(), elevatorArm.arm.getPosition(),
+                    elevatorArm.arm.isLowerLimitSwitchActive());
+            }
         }
 
         if (intake != null)
@@ -371,7 +379,8 @@ public class Robot
         if (pixelTray != null)
         {
             dashboard.displayPrintf(
-                lineNum++, "PixelTray: Gate1=%s, Gate2=%s", pixelTray.isGate1Opened(), pixelTray.isGate2Opened());
+                lineNum++, "PixelTray: LowerGate=%s, UpperGate=%s",
+                pixelTray.isLowerGateOpened(), pixelTray.isUpperGateOpened());
         }
     }   //updateStatus
 

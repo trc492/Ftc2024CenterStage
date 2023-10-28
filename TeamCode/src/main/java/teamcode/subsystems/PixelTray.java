@@ -31,8 +31,8 @@ public class PixelTray
 {
     private final String instanceName;
     private final TrcDbgTrace msgTracer;
-    private final FtcServo gate1, gate2;
-    private boolean gate1Opened, gate2Opened;
+    private final FtcServo lowerGate, upperGate;
+    private boolean lowerGateOpened, upperGateOpened;
 
     /**
      * Constructor: Creates an instance of the object.
@@ -44,10 +44,10 @@ public class PixelTray
     {
         this.instanceName = instanceName;
         this.msgTracer = msgTracer;
-        gate1 = new FtcServo(instanceName + ".gate1");
-        gate2 = new FtcServo(instanceName + ".gate2");
-        setGate1Opened(false, null);
-        setGate2Opened(false, null);
+        lowerGate = new FtcServo(instanceName + ".lowerGate");
+        upperGate = new FtcServo(instanceName + ".upperGate");
+        setLowerGateOpened(false, null);
+        setUpperGateOpened(false, null);
     }   //PixelTray
 
     /**
@@ -58,67 +58,67 @@ public class PixelTray
     @Override
     public String toString()
     {
-        return instanceName + ": gate1=" + gate1Opened + ", gate2=" + gate2Opened;
+        return instanceName + ": lowerGate=" + lowerGateOpened + ", upperGate=" + upperGateOpened;
     }   //toString
 
     /**
-     * This method opens and closes the pixel gate 1.
+     * This method opens and closes the pixel lower gate.
      *
      * @param opened specifies true to open the gate, false to close.
      * @param event specifies the event to signal after open/close wait time expired.
      */
-    public void setGate1Opened(boolean opened, TrcEvent event)
+    public void setLowerGateOpened(boolean opened, TrcEvent event)
     {
-        final String funcName = "setGate1Opened";
+        final String funcName = "setLowerGateOpened";
 
-        gate1Opened = opened;
-        gate1.setPosition(
-            opened? RobotParams.PIXELTRAY_GATE1_OPEN: RobotParams.PIXELTRAY_GATE1_CLOSE,
+        lowerGateOpened = opened;
+        lowerGate.setPosition(
+            opened? RobotParams.PIXELTRAY_LOWER_GATE_OPEN: RobotParams.PIXELTRAY_LOWER_GATE_CLOSE,
             event, RobotParams.PIXELTRAY_OPEN_CLOSE_TIME);
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(funcName, "Gate 1 set to opened = %s", opened);
+            msgTracer.traceInfo(funcName, "lowerGateOpened = %s", opened);
         }
-    }   //setGate1Opened
+    }   //setLowerGateOpened
 
     /**
-     * This method returns the state of gate 1.
+     * This method returns the state of the lower gate.
      *
      * @return true if gate is opened, false if closed.
      */
-    public boolean isGate1Opened()
+    public boolean isLowerGateOpened()
     {
-        return gate1Opened;
-    }   //isGate1Opened
+        return lowerGateOpened;
+    }   //isLowerGateOpened
 
     /**
-     * This method opens and closes the pixel gate 2.
+     * This method opens and closes the pixel upper gate.
      *
      * @param opened specifies true to open the gate, false to close.
      * @param event specifies the event to signal after open/close wait time expired.
      */
-    public void setGate2Opened(boolean opened, TrcEvent event)
+    public void setUpperGateOpened(boolean opened, TrcEvent event)
     {
-        final String funcName = "setGate2Opened";
+        final String funcName = "setUpperGateOpened";
 
-        gate2Opened = opened;
-        gate2.setPosition(
-            opened? RobotParams.PIXELTRAY_GATE2_OPEN: RobotParams.PIXELTRAY_GATE2_CLOSE,
+        upperGateOpened = opened;
+        upperGate.setPosition(
+            opened? RobotParams.PIXELTRAY_UPPER_GATE_OPEN: RobotParams.PIXELTRAY_UPPER_GATE_CLOSE,
             event, RobotParams.PIXELTRAY_OPEN_CLOSE_TIME);
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(funcName, "Gate 2 set to opened = %s", opened);
+            msgTracer.traceInfo(funcName, "upperGateOpened = %s", opened);
         }
-    }   //setGate2Opened
+    }   //setUpperGateOpened
 
     /**
-     * This method returns the state of gate 2.
+     * This method returns the state of the upper gate.
      *
      * @return true if gate is opened, false if closed.
      */
-    public boolean isGate2Opened()
+    public boolean isUpperGateOpened()
     {
-        return gate2Opened;
-    }   //isGate2Opened
+        return upperGateOpened;
+    }   //isUpperGateOpened
 
 }   //class PixelTray

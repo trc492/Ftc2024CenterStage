@@ -119,37 +119,64 @@ public class ElevatorArm
     public ElevatorArm(TrcDbgTrace msgTracer, boolean tracePidInfo)
     {
         // Elevator subsystem.
-        FtcMotorActuator.Params elevatorParams = new FtcMotorActuator.Params()
-            .setMotorInverted(RobotParams.ELEVATOR_MOTOR_INVERTED)
-            .setLowerLimitSwitch(RobotParams.ELEVATOR_HAS_LOWER_LIMIT_SWITCH, RobotParams.ELEVATOR_LOWER_LIMIT_INVERTED)
-            .setUpperLimitSwitch(RobotParams.ELEVATOR_HAS_UPPER_LIMIT_SWITCH, RobotParams.ELEVATOR_UPPER_LIMIT_INVERTED)
-            .setPositionScaleAndOffset(RobotParams.ELEVATOR_INCHES_PER_COUNT, RobotParams.ELEVATOR_OFFSET)
-            .setPositionPresets(RobotParams.ELEVATOR_PRESET_TOLERANCE, RobotParams.ELEVATOR_PRESETS);
-        elevator =
-            new FtcMotorActuator(RobotParams.HWNAME_ELEVATOR, elevatorParams, msgTracer, tracePidInfo).getActuator();
-        elevatorEvent = new TrcEvent(RobotParams.HWNAME_ELEVATOR + ".event");
-        elevatorEvent.setCallback(this::performAction, elevatorActionParams);
+        if (RobotParams.Preferences.useElevator)
+        {
+            FtcMotorActuator.Params elevatorParams = new FtcMotorActuator.Params()
+                .setMotorInverted(RobotParams.ELEVATOR_MOTOR_INVERTED)
+                .setLowerLimitSwitch(
+                    RobotParams.ELEVATOR_HAS_LOWER_LIMIT_SWITCH,
+                    RobotParams.ELEVATOR_LOWER_LIMIT_INVERTED)
+                .setUpperLimitSwitch(
+                    RobotParams.ELEVATOR_HAS_UPPER_LIMIT_SWITCH,
+                    RobotParams.ELEVATOR_UPPER_LIMIT_INVERTED)
+                .setPositionScaleAndOffset(RobotParams.ELEVATOR_INCHES_PER_COUNT, RobotParams.ELEVATOR_OFFSET)
+                .setPositionPresets(RobotParams.ELEVATOR_PRESET_TOLERANCE, RobotParams.ELEVATOR_PRESETS);
+            elevator =
+                new FtcMotorActuator(
+                    RobotParams.HWNAME_ELEVATOR, elevatorParams, msgTracer, tracePidInfo).getActuator();
+            elevatorEvent = new TrcEvent(RobotParams.HWNAME_ELEVATOR + ".event");
+            elevatorEvent.setCallback(this::performAction, elevatorActionParams);
+        }
+        else
+        {
+            elevator = null;
+            elevatorEvent = null;
+        }
         // Arm subsystem.
-        FtcMotorActuator.Params armParams = new FtcMotorActuator.Params()
-            .setMotorInverted(RobotParams.ARM_MOTOR_INVERTED)
-            .setSlaveMotor(RobotParams.ARM_HAS_SLAVE_MOTOR, RobotParams.ARM_SLAVE_MOTOR_INVERTED)
-            .setLowerLimitSwitch(RobotParams.ARM_HAS_LOWER_LIMIT_SWITCH, RobotParams.ARM_LOWER_LIMIT_INVERTED)
-            .setUpperLimitSwitch(RobotParams.ARM_HAS_UPPER_LIMIT_SWITCH, RobotParams.ARM_UPPER_LIMIT_INVERTED)
-            .setExternalEncoder(
-                RobotParams.ARM_HAS_EXTERNAL_ENCODER, RobotParams.ARM_ENCODER_INVERTED,
-                RobotParams.ARM_ENCODER_ABSOLUTE)
-            .setPositionScaleAndOffset(RobotParams.ARM_DEG_SCALE, RobotParams.ARM_OFFSET)
-            .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS);
-        arm = new FtcMotorActuator(RobotParams.HWNAME_ARM, true, armParams, msgTracer, tracePidInfo).getActuator();
-        armEvent = new TrcEvent(RobotParams.HWNAME_ARM + ".event");
-        armEvent.setCallback(this::performAction, armActionParams);
+        if (RobotParams.Preferences.useArm)
+        {
+            FtcMotorActuator.Params armParams = new FtcMotorActuator.Params()
+                .setMotorInverted(RobotParams.ARM_MOTOR_INVERTED)
+                .setSlaveMotor(RobotParams.ARM_HAS_SLAVE_MOTOR, RobotParams.ARM_SLAVE_MOTOR_INVERTED)
+                .setLowerLimitSwitch(RobotParams.ARM_HAS_LOWER_LIMIT_SWITCH, RobotParams.ARM_LOWER_LIMIT_INVERTED)
+                .setUpperLimitSwitch(RobotParams.ARM_HAS_UPPER_LIMIT_SWITCH, RobotParams.ARM_UPPER_LIMIT_INVERTED)
+                .setExternalEncoder(
+                    RobotParams.ARM_HAS_EXTERNAL_ENCODER, RobotParams.ARM_ENCODER_INVERTED,
+                    RobotParams.ARM_ENCODER_ABSOLUTE)
+                .setPositionScaleAndOffset(RobotParams.ARM_DEG_SCALE, RobotParams.ARM_OFFSET)
+                .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS);
+            arm = new FtcMotorActuator(RobotParams.HWNAME_ARM, true, armParams, msgTracer, tracePidInfo).getActuator();
+            armEvent = new TrcEvent(RobotParams.HWNAME_ARM + ".event");
+            armEvent.setCallback(this::performAction, armActionParams);
+        }
+        else
+        {
+            arm = null;
+            armEvent = null;
+        }
         // Wrist subsystem.
-        FtcServoActuator.Params wristParams = new FtcServoActuator.Params()
-            .setServoInverted(RobotParams.WRIST_SERVO_INVERTED)
-            .setHasSlaveServo(RobotParams.WRIST_HAS_SLAVE_SERVO, RobotParams.WRIST_SLAVE_SERVO_INVERTED)
-            .setPhysicalPosRange(RobotParams.WRIST_MIN_POS, RobotParams.WRIST_MAX_POS)
-            .setPositionPresets(RobotParams.WRIST_PRESET_TOLERANCE, RobotParams.WRIST_PRESETS);
-        wrist = new FtcServoActuator(RobotParams.HWNAME_WRIST, wristParams, msgTracer).getActuator();
+        if (RobotParams.Preferences.useWrist)
+        {
+            FtcServoActuator.Params wristParams = new FtcServoActuator.Params()
+                .setServoInverted(RobotParams.WRIST_SERVO_INVERTED)
+                .setHasSlaveServo(RobotParams.WRIST_HAS_SLAVE_SERVO, RobotParams.WRIST_SLAVE_SERVO_INVERTED)
+                .setPhysicalPosRange(RobotParams.WRIST_MIN_POS, RobotParams.WRIST_MAX_POS);
+            wrist = new FtcServoActuator(RobotParams.HWNAME_WRIST, wristParams, msgTracer).getActuator();
+        }
+        else
+        {
+            wrist = null;
+        }
     }   //ElevatorArm
 
     /**
@@ -160,7 +187,7 @@ public class ElevatorArm
      */
     public void zeroCalibrate(String owner)
     {
-        if (arm.getPosition() <= RobotParams.ARM_SAFE_POS)
+        if (elevator != null && arm != null  && arm.getPosition() <= RobotParams.ARM_SAFE_POS)
         {
             elevator.zeroCalibrate(owner, RobotParams.ELEVATOR_CAL_POWER);
         }
@@ -297,7 +324,7 @@ public class ElevatorArm
         String owner, double delay, double elevatorPos, double elevatorPowerLimit, double armPos, double armPowerLimit,
         TrcEvent event, double timeout)
     {
-        double expiredTime = timeout == 0.0? 0.0: TrcTimer.getCurrentTime() + timeout;
+        double expiredTime = timeout == 0.0 ? 0.0 : TrcTimer.getCurrentTime() + timeout;
         boolean currPosIsHome = isHomePosition(elevator.getPosition(), arm.getPosition());
         boolean targetIsHome = isHomePosition(elevatorPos, armPos);
 
@@ -308,8 +335,8 @@ public class ElevatorArm
         if (currPosIsHome ^ targetIsHome)
         {
             // Either current position is home and target is not home or current position is not home and target is
-            // home. In either of these scenarios, we must move the elevator and arm to safe positions first which is
-            // ELEVATOR_SAFE_POS and ARM_MIN_POS.
+            // home. In either of these scenarios, we must move the elevator and arm to safe positions first which
+            // is ELEVATOR_SAFE_POS and ARM_MIN_POS.
             elevatorEvent.clear();
             armEvent.clear();
             elevator.setPosition(

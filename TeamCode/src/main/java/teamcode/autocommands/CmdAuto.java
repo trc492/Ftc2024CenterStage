@@ -298,7 +298,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Place yellow pixel at the appropriate location on the backdrop.
                     if (robot.pixelTray != null)
                     {
-                        robot.pixelTray.setGate2Opened(true, event);
+                        robot.pixelTray.setLowerGateOpened(true, event);
                         sm.waitForSingleEvent(event, State.PARK_AT_BACKSTAGE);
                     }
                     else

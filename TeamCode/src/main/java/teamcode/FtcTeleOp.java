@@ -51,6 +51,7 @@ public class FtcTeleOp extends FtcOpMode
     private TrcPose2D robotFieldPose = null;
     private boolean pixelTrayGate1Opened = false;
     private boolean pixelTrayGate2Opened = false;
+    private boolean wristUp = false;
 
     //
     // Implements FtcOpMode abstract method.
@@ -172,8 +173,7 @@ public class FtcTeleOp extends FtcOpMode
                 double[] inputs = driverGamepad.getDriveInputs(
                     RobotParams.ROBOT_DRIVE_MODE, true, drivePowerScale, turnPowerScale);
 
-                if (RobotParams.ROBOT_DRIVE_MODE == FtcGamepad.DriveMode.HOLONOMIC_MODE &&
-                    robot.robotDrive.driveBase.supportsHolonomicDrive())
+                if (robot.robotDrive.driveBase.supportsHolonomicDrive())
                 {
                     robot.robotDrive.driveBase.holonomicDrive(
                         null, inputs[0], inputs[1], inputs[2], robot.robotDrive.driveBase.getDriveGyroAngle(inputs[2]));
@@ -200,6 +200,7 @@ public class FtcTeleOp extends FtcOpMode
             {
                 if (robot.elevatorArm != null)
                 {
+                    // Elevator subsystem.
                     double elevatorPower = operatorGamepad.getLeftStickY(true);
                     if (manualOverride)
                     {
@@ -210,7 +211,7 @@ public class FtcTeleOp extends FtcOpMode
                         robot.elevatorArm.setElevatorPidPower(
                             null, elevatorPower, RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS);
                     }
-
+                    // Arm subsystem.
                     double armPower = operatorGamepad.getRightStickY(true);
                     if (manualOverride)
                     {
@@ -375,7 +376,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (robot.pixelTray != null && pressed)
                 {
                     pixelTrayGate1Opened = !pixelTrayGate1Opened;
-                    robot.pixelTray.setGate1Opened(pixelTrayGate1Opened, null);
+                    robot.pixelTray.setLowerGateOpened(pixelTrayGate1Opened, null);
                 }
                 break;
 
@@ -383,7 +384,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (robot.pixelTray != null && pressed)
                 {
                     pixelTrayGate2Opened = !pixelTrayGate2Opened;
-                    robot.pixelTray.setGate2Opened(pixelTrayGate2Opened, null);
+                    robot.pixelTray.setUpperGateOpened(pixelTrayGate2Opened, null);
                 }
                 break;
 
@@ -402,6 +403,11 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_LBUMPER:
+                if (robot.elevatorArm != null && pressed)
+                {
+                    wristUp = !wristUp;
+                    robot.elevatorArm.wrist.setPosition(wristUp? RobotParams.WRIST_UP_POS: RobotParams.WRIST_DOWN_POS);
+                }
                 break;
 
             case FtcGamepad.GAMEPAD_RBUMPER:
