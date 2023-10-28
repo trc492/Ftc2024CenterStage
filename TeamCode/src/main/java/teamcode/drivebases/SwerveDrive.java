@@ -169,8 +169,7 @@ public class SwerveDrive extends RobotDrive
         for (int i = 0; i < steerEncoderNames.length; i++)
         {
             encoders[i] = new FtcAnalogEncoder(encoderNames[i]);
-            encoders[i].setScaleAndOffset(180.0, 0.0);
-            encoders[i].setZeroOffset(zeroOffsets[i]);
+            encoders[i].setScaleAndOffset(180.0, 0.0, zeroOffsets[i]);
             // Enable Cartesian converter.
             encoders[i].setEnabled(true);
         }

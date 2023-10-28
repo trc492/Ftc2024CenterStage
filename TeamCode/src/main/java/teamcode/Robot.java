@@ -369,12 +369,13 @@ public class Robot
             if (elevatorArm.arm != null)
             {
                 dashboard.displayPrintf(
-                    lineNum++, "Arm: power=%.1f, pos=%.1f", elevatorArm.arm.getPower(), elevatorArm.arm.getPosition());
+                    lineNum++, "Arm: power=%.1f, pos=%.1f/%f",
+                    elevatorArm.arm.getPower(), elevatorArm.arm.getPosition(), elevatorArm.arm.getEncoderRawPosition());
             }
 
             if (elevatorArm.wrist != null)
             {
-                dashboard.displayPrintf(lineNum++, "Wrist: pos=%.1f", elevatorArm.wrist.getController());
+                dashboard.displayPrintf(lineNum++, "Wrist: pos=%.1f", elevatorArm.wrist.getPosition());
             }
         }
 

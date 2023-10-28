@@ -153,7 +153,8 @@ public class ElevatorArm
                 .setExternalEncoder(
                     RobotParams.ARM_HAS_EXTERNAL_ENCODER, RobotParams.ARM_ENCODER_INVERTED,
                     RobotParams.ARM_ENCODER_ABSOLUTE)
-                .setPositionScaleAndOffset(RobotParams.ARM_DEG_SCALE, RobotParams.ARM_OFFSET)
+                .setPositionScaleAndOffset(RobotParams.ARM_DEG_SCALE, RobotParams.ARM_OFFSET,
+                                           RobotParams.ARM_ZERO_OFFSET)
                 .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS);
             arm = new FtcMotorActuator(RobotParams.HWNAME_ARM, true, armParams, msgTracer, tracePidInfo).getActuator();
             arm.setPositionPidCoefficients(

@@ -386,11 +386,12 @@ public class RobotParams
     public static final boolean ARM_ENCODER_ABSOLUTE            = true;
     public static final double ARM_DEG_SCALE                    = 360.0;
     public static final double ARM_OFFSET                       = 0.0;
-    public static final double ARM_MIN_POS                      = ARM_OFFSET;
-    public static final double ARM_MAX_POS                      = 270.0;
-    public static final double ARM_SCORE_BACKDROP_POS           = 210.0;
-    public static final double ARM_SAFE_POS                     = 30.0;
+    public static final double ARM_ZERO_OFFSET                  = 0.015152;
+    public static final double ARM_MIN_POS                      = 20.0;
+    public static final double ARM_MAX_POS                      = 300.0;
+    public static final double ARM_SAFE_POS                     = 26.0;
     public static final double ARM_FREE_TO_MOVE_POS             = 50.0;
+    public static final double ARM_SCORE_BACKDROP_POS           = 270.0;
     // Preset positions.
     public static final double ARM_PRESET_TOLERANCE             = 2.0;
     public static final double[] ARM_PRESETS                    = new double[] {
@@ -426,10 +427,10 @@ public class RobotParams
     //
     // Pixel Tray subsystem.
     //
-    public static final double PIXELTRAY_LOWER_GATE_OPEN        = 0.0;
-    public static final double PIXELTRAY_LOWER_GATE_CLOSE       = 0.25;
-    public static final double PIXELTRAY_UPPER_GATE_OPEN        = 0.3;
-    public static final double PIXELTRAY_UPPER_GATE_CLOSE       = 0.0;
+    public static final double PIXELTRAY_LOWER_GATE_CLOSE       = 0.0;
+    public static final double PIXELTRAY_LOWER_GATE_OPEN        = 0.25;
+    public static final double PIXELTRAY_UPPER_GATE_CLOSE       = 0.3;
+    public static final double PIXELTRAY_UPPER_GATE_OPEN        = 0.0;
     public static final double PIXELTRAY_OPEN_CLOSE_TIME        = 0.2;  // in sec
 
 }   //class RobotParams
