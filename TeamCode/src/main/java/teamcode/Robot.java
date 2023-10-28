@@ -351,6 +351,11 @@ public class Robot
     {
         int lineNum = 2;
 
+        if (robotDrive != null)
+        {
+            dashboard.displayPrintf(lineNum++, "DriveBase: Pose=%s", robotDrive.driveBase.getFieldPosition());
+        }
+
         if (elevatorArm != null)
         {
             if (elevatorArm.elevator != null)
@@ -366,6 +371,11 @@ public class Robot
                 dashboard.displayPrintf(
                     lineNum++, "Arm: power=%.1f, pos=%.1f", elevatorArm.arm.getPower(), elevatorArm.arm.getPosition());
             }
+
+            if (elevatorArm.wrist != null)
+            {
+                dashboard.displayPrintf(lineNum++, "Wrist: pos=%.1f", elevatorArm.wrist.getController());
+            }
         }
 
         if (intake != null)
@@ -377,7 +387,7 @@ public class Robot
         if (pixelTray != null)
         {
             dashboard.displayPrintf(
-                lineNum++, "PixelTray: LowerGate=%s, UpperGate=%s",
+                lineNum++, "PixelTray: lowerGateOpened=%s, upperGateOpened=%s",
                 pixelTray.isLowerGateOpened(), pixelTray.isUpperGateOpened());
         }
     }   //updateStatus

@@ -183,9 +183,8 @@ public class FtcTeleOp extends FtcOpMode
                     robot.robotDrive.driveBase.arcadeDrive(inputs[1], inputs[2]);
                 }
                 robot.dashboard.displayPrintf(
-                    1, "DriveBase: Power=(%.2f,y=%.2f,rot=%.2f),Mode:%s,Pose=%s",
-                    inputs[0], inputs[1], inputs[2], robot.robotDrive.driveBase.getDriveOrientation(),
-                    robot.robotDrive.driveBase.getFieldPosition());
+                    1, "RobotDrive: Power=(%.2f,y=%.2f,rot=%.2f),Mode:%s",
+                    inputs[0], inputs[1], inputs[2], robot.robotDrive.driveBase.getDriveOrientation());
 
                 // We are trying to re-localize the robot and vision hasn't seen AprilTag yet.
                 if (relocalizing && robotFieldPose == null)
