@@ -179,8 +179,7 @@ public class ElevatorArm
         {
             FtcServoActuator.Params wristParams = new FtcServoActuator.Params()
                 .setServoInverted(RobotParams.WRIST_SERVO_INVERTED)
-                .setHasFollowerServo(RobotParams.WRIST_HAS_FOLLOWER_SERVO, RobotParams.WRIST_FOLLOWER_SERVO_INVERTED)
-                .setPhysicalPosRange(RobotParams.WRIST_MIN_POS, RobotParams.WRIST_MAX_POS);
+                .setHasFollowerServo(RobotParams.WRIST_HAS_FOLLOWER_SERVO, RobotParams.WRIST_FOLLOWER_SERVO_INVERTED);
             wrist = new FtcServoActuator(RobotParams.HWNAME_WRIST, wristParams, msgTracer).getActuator();
         }
         else
@@ -591,7 +590,6 @@ public class ElevatorArm
     {
         double armAngle = arm.getPosition();
         double powerComp = RobotParams.ARM_MAX_GRAVITY_COMP_POWER * Math.sin(Math.toRadians(armAngle));
-        TrcDbgTrace.globalTraceInfo("getArmPowerComp", "angle=%f, PowerComp=%f", armAngle, powerComp);
         return powerComp;
     }   //getArmPowerComp
 

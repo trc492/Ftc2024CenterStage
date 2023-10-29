@@ -129,7 +129,7 @@ public class RobotParams
     public static final double ROBOT_LENGTH                     = 18.00;
     public static final double ROBOT_WIDTH                      = 17.25;
     public static final double DRIVE_BASE_LENGTH                = (24.0 * 15)*TrcUtil.INCHES_PER_MM;
-    public static final double DRIVE_BASE_WIDTH                 = 15.75;
+    public static final double DRIVE_BASE_WIDTH                 = 15.382765354330708661417322834646;
     //
     // Game related locations.
     //
@@ -348,12 +348,12 @@ public class RobotParams
     public static final boolean ELEVATOR_HAS_UPPER_LIMIT_SWITCH = false;
     public static final boolean ELEVATOR_UPPER_LIMIT_INVERTED   = false;
     public static final double ELEVATOR_ENCODER_PPR             = GOBILDA_5203_312_ENCODER_PPR;
-    public static final double ELEVATOR_PULLEY_DIAMETER         = 1.42;
+    public static final double ELEVATOR_PULLEY_DIAMETER         = 1.405;
     public static final double ELEVATOR_PULLEY_CIRCUMFERENCE    = Math.PI*ELEVATOR_PULLEY_DIAMETER;
     public static final double ELEVATOR_INCHES_PER_COUNT        = ELEVATOR_PULLEY_CIRCUMFERENCE/ELEVATOR_ENCODER_PPR;
     public static final double ELEVATOR_OFFSET                  = 12.1;             // in inches
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
-    public static final double ELEVATOR_MAX_POS                 = 22.25;
+    public static final double ELEVATOR_MAX_POS                 = 24.0;
     public static final double ELEVATOR_SAFE_POS                = 13.0;
     public static final double ELEVATOR_LEVEL1_POS              = 2.0;
     public static final double ELEVATOR_LEVEL2_POS              = 8.0;
@@ -393,7 +393,7 @@ public class RobotParams
     public static final boolean ARM_ENCODER_INVERTED            = true;
     public static final boolean ARM_ENCODER_ABSOLUTE            = true;
     public static final double ARM_DEG_SCALE                    = 360.0;
-    public static final double ARM_POWER_LIMIT                  = 0.2;
+    public static final double ARM_POWER_LIMIT                  = 0.1;
     public static final double ARM_OFFSET                       = 0.0;
     public static final double ARM_ZERO_OFFSET                  = 0.015152;
     public static final double ARM_MIN_POS                      = 20.0;
@@ -412,24 +412,24 @@ public class RobotParams
 //        ARM_MAX_POS
     };
     // PID Actuator parameters.
-    public static final double ARM_KP                           = 0.0115;
+    public static final double ARM_KP                           = 0.011;
     public static final double ARM_KI                           = 0.0;
     public static final double ARM_KD                           = 0.0;
     public static final double ARM_KF                           = 0.0;
     public static final double ARM_IZONE                        = 0.0;
     public static final double ARM_TOLERANCE                    = 2.0;
-    public static final double ARM_MAX_GRAVITY_COMP_POWER       = 0.25; //0.12
+    public static final double ARM_MAX_GRAVITY_COMP_POWER       = 0.12;
     //
     // Wrist subsystem.
     //
     public static final boolean WRIST_SERVO_INVERTED            = false;
-    public static final boolean WRIST_HAS_FOLLOWER_SERVO        = true;
+    public static final boolean WRIST_HAS_FOLLOWER_SERVO        = false;
     public static final boolean WRIST_FOLLOWER_SERVO_INVERTED   = true;
     public static final double WRIST_MIN_POS                    = 0.0;
-    public static final double WRIST_MAX_POS                    = 1.0;
-    public static final double WRIST_SAFE_POS                   = 0.1;
-    public static final double WRIST_DOWN_POS                   = WRIST_MIN_POS;
-    public static final double WRIST_UP_POS                     = 0.17;
+    public static final double WRIST_MAX_POS                    = 0.38;
+    public static final double WRIST_DOWN_POS                   = 0.19;
+    public static final double WRIST_UP_POS                     = WRIST_MIN_POS;
+    public static final double WRIST_SAFE_POS                   = WRIST_DOWN_POS;
     //
     // Intake subsystem.
     //
