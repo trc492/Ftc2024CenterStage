@@ -374,9 +374,9 @@ public class RobotParams
     // Arm subsystem.
     //
     // Actuator parameters.
-    public static final boolean ARM_MOTOR_INVERTED              = true;
+    public static final boolean ARM_MOTOR_INVERTED              = false;
     public static final boolean ARM_HAS_FOLLOWER_MOTOR          = true;
-    public static final boolean ARM_FOLLOWER_MOTOR_INVERTED     = false;
+    public static final boolean ARM_FOLLOWER_MOTOR_INVERTED     = true;
     public static final boolean ARM_HAS_LOWER_LIMIT_SWITCH      = false;
     public static final boolean ARM_LOWER_LIMIT_INVERTED        = false;
     public static final boolean ARM_HAS_UPPER_LIMIT_SWITCH      = false;
@@ -407,6 +407,7 @@ public class RobotParams
     public static final double ARM_KF                           = 0.0;
     public static final double ARM_IZONE                        = 0.0;
     public static final double ARM_TOLERANCE                    = 0.5;
+    public static final double ARM_MAX_GRAVITY_COMP_POWER       = 0.2;
     //
     // Wrist subsystem.
     //

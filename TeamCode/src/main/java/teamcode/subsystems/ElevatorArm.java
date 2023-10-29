@@ -160,6 +160,7 @@ public class ElevatorArm
             arm.setPositionPidCoefficients(
                 RobotParams.ARM_KP, RobotParams.ARM_KI, RobotParams.ARM_KD, RobotParams.ARM_KF, RobotParams.ARM_IZONE);
             arm.setPositionPidTolerance(RobotParams.ARM_TOLERANCE);
+            arm.setPositionPidPowerComp(this::getArmPowerComp);
             armEvent = new TrcEvent(RobotParams.HWNAME_ARM + ".event");
             armEvent.setCallback(this::performAction, armActionParams);
         }
@@ -574,6 +575,17 @@ public class ElevatorArm
     //
     // Arm subsystem methods.
     //
+
+    /**
+     * This method is called to compute the power compensation to counteract gravity on the Arm.
+     *
+     * @param currPower specifies the current motor power (not used).
+     * @return gravity compensation for the arm.
+     */
+    private double getArmPowerComp(double currPower)
+    {
+        return RobotParams.ARM_MAX_GRAVITY_COMP_POWER * Math.sin(Math.toRadians(arm.getPosition()));
+    }   //getArmPowerComp
 
     /**
      * This method checks if the arm is safe to move so it doesn't hit the intake.
