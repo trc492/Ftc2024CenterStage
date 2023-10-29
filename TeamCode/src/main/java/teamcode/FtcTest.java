@@ -401,6 +401,7 @@ public class FtcTest extends FtcTeleOp
         //
         // Display test status.
         //
+        int lineNum = 9;
         switch (testChoices.test)
         {
             case DRIVE_SPEED_TEST:
@@ -429,8 +430,9 @@ public class FtcTest extends FtcTeleOp
                     prevTime = currTime;
                     prevVelocity = velocity;
 
-                    robot.dashboard.displayPrintf(8, "Drive Vel: (%.1f/%.1f)", velocity, maxDriveVelocity);
-                    robot.dashboard.displayPrintf(9, "Drive Accel: (%.1f/%.1f)", acceleration, maxDriveAcceleration);
+                    robot.dashboard.displayPrintf(lineNum++, "Drive Vel: (%.1f/%.1f)", velocity, maxDriveVelocity);
+                    robot.dashboard.displayPrintf(
+                        lineNum++, "Drive Accel: (%.1f/%.1f)", acceleration, maxDriveAcceleration);
                 }
                 break;
 
@@ -438,10 +440,11 @@ public class FtcTest extends FtcTeleOp
             case Y_TIMED_DRIVE:
                 if (!RobotParams.Preferences.noRobot)
                 {
-                    robot.dashboard.displayPrintf(8, "Timed Drive: %.0f sec", testChoices.driveTime);
-                    robot.dashboard.displayPrintf(9, "RobotPose=%s", robot.robotDrive.driveBase.getFieldPosition());
+                    robot.dashboard.displayPrintf(lineNum++, "Timed Drive: %.0f sec", testChoices.driveTime);
                     robot.dashboard.displayPrintf(
-                        10, "rawEnc=lf:%.0f,rf:%.0f,lb:%.0f,rb:%.0f",
+                        lineNum++, "RobotPose=%s", robot.robotDrive.driveBase.getFieldPosition());
+                    robot.dashboard.displayPrintf(
+                        lineNum++, "rawEnc=lf:%.0f,rf:%.0f,lb:%.0f,rb:%.0f",
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_LEFT_FRONT].getPosition(),
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_RIGHT_FRONT].getPosition(),
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_LEFT_BACK].getPosition(),
@@ -454,7 +457,7 @@ public class FtcTest extends FtcTeleOp
             case TUNE_TURN_PID:
                 if (!RobotParams.Preferences.noRobot && testChoices.tunePidCoeff != null)
                 {
-                    robot.dashboard.displayPrintf(6, "TunePid=%s", testChoices.tunePidCoeff);
+                    robot.dashboard.displayPrintf(7, "TunePid=%s", testChoices.tunePidCoeff);
                 }
                 //
                 // Intentionally falling through.
@@ -478,13 +481,12 @@ public class FtcTest extends FtcTeleOp
                     }
 
                     robot.dashboard.displayPrintf(
-                        8, "RobotPose=%s,rawEnc=lf:%.0f,rf:%.0f,lb:%.0f,rb:%.0f",
+                        lineNum++, "RobotPose=%s,rawEnc=lf:%.0f,rf:%.0f,lb:%.0f,rb:%.0f",
                         robot.robotDrive.driveBase.getFieldPosition(),
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_LEFT_FRONT].getPosition(),
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_RIGHT_FRONT].getPosition(),
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_LEFT_BACK].getPosition(),
                         robot.robotDrive.driveMotors[RobotDrive.INDEX_RIGHT_BACK].getPosition());
-                    int lineNum = 9;
                     if (xPidCtrl != null)
                     {
                         xPidCtrl.displayPidInfo(lineNum);
@@ -535,21 +537,21 @@ public class FtcTest extends FtcTeleOp
                         swerveDrive.runSteeringCalibration();
                         if (swerveDrive.calibrationCount > 0)
                         {
-                            robot.dashboard.displayPrintf(8, "Count = %d", swerveDrive.calibrationCount);
+                            robot.dashboard.displayPrintf(lineNum++, "Count = %d", swerveDrive.calibrationCount);
                             robot.dashboard.displayPrintf(
-                                9, "Encoder: lf=%.3f/%f",
+                                lineNum++, "Encoder: lf=%.3f/%f",
                                 swerveDrive.steerEncoders[SwerveDrive.INDEX_LEFT_FRONT].getRawPosition(),
                                 swerveDrive.zeroPositions[SwerveDrive.INDEX_LEFT_FRONT]/swerveDrive.calibrationCount);
                             robot.dashboard.displayPrintf(
-                                10, "Encoder: rf=%.3f/%f",
+                                lineNum++, "Encoder: rf=%.3f/%f",
                                 swerveDrive.steerEncoders[SwerveDrive.INDEX_RIGHT_FRONT].getRawPosition(),
                                 swerveDrive.zeroPositions[SwerveDrive.INDEX_RIGHT_FRONT]/swerveDrive.calibrationCount);
                             robot.dashboard.displayPrintf(
-                                11, "Encoder: lb=%.3f/%f",
+                                lineNum++, "Encoder: lb=%.3f/%f",
                                 swerveDrive.steerEncoders[SwerveDrive.INDEX_LEFT_BACK].getRawPosition(),
                                 swerveDrive.zeroPositions[SwerveDrive.INDEX_LEFT_BACK]/swerveDrive.calibrationCount);
                             robot.dashboard.displayPrintf(
-                                12, "Encoder: rb=%.3f/%f",
+                                lineNum++, "Encoder: rb=%.3f/%f",
                                 swerveDrive.steerEncoders[SwerveDrive.INDEX_RIGHT_BACK].getRawPosition(),
                                 swerveDrive.zeroPositions[SwerveDrive.INDEX_RIGHT_BACK]/swerveDrive.calibrationCount);
                         }
@@ -581,7 +583,7 @@ public class FtcTest extends FtcTeleOp
             // In addition to or instead of the gamepad controls handled by FtcTeleOp, we can add to or override the
             // FtcTeleOp gamepad actions.
             //
-            robot.dashboard.displayPrintf(7, "%s: %04x->%s", gamepad, button, pressed ? "Pressed" : "Released");
+            robot.dashboard.displayPrintf(8, "%s: %04x->%s", gamepad, button, pressed ? "Pressed" : "Released");
             switch (button)
             {
                 case FtcGamepad.GAMEPAD_A:
@@ -812,7 +814,7 @@ public class FtcTest extends FtcTeleOp
             // In addition to or instead of the gamepad controls handled by FtcTeleOp, we can add to or override the
             // FtcTeleOp gamepad actions.
             //
-            robot.dashboard.displayPrintf(7, "%s: %04x->%s", gamepad, button, pressed ? "Pressed" : "Released");
+            robot.dashboard.displayPrintf(8, "%s: %04x->%s", gamepad, button, pressed ? "Pressed" : "Released");
             switch (button)
             {
                 case FtcGamepad.GAMEPAD_A:
@@ -854,7 +856,7 @@ public class FtcTest extends FtcTeleOp
      */
     private void updateColorThresholds()
     {
-        robot.dashboard.displayPrintf(6, "Thresholds: %s", Arrays.toString(colorThresholds));
+        robot.dashboard.displayPrintf(7, "Thresholds: %s", Arrays.toString(colorThresholds));
     }   //updateColorThresholds
 
     /**
@@ -956,7 +958,7 @@ public class FtcTest extends FtcTeleOp
         //
         // Show choices.
         //
-        robot.dashboard.displayPrintf(0, "Test Choices: %s", testChoices);
+        robot.dashboard.displayPrintf(1, "Test Choices: %s", testChoices);
     }   //doTestMenus
 
     /**
@@ -1069,7 +1071,7 @@ public class FtcTest extends FtcTeleOp
      */
     private void doSensorsTest()
     {
-        int lineNum = 8;
+        int lineNum = 9;
         //
         // Read all sensors and display on the dashboard.
         // Drive the robot around to sample different locations of the field.
@@ -1118,7 +1120,7 @@ public class FtcTest extends FtcTeleOp
     {
         if (robot.vision != null)
         {
-            int lineNum = 8;
+            int lineNum = 9;
 
             robot.vision.displayExposureSettings(lineNum++);
             if (robot.vision.rawColorBlobVision != null)

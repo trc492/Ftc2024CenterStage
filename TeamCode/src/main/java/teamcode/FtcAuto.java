@@ -389,7 +389,7 @@ public class FtcAuto extends FtcOpMode
         //
         // Show choices.
         //
-        robot.dashboard.displayPrintf(2, "Auto Choices: %s", autoChoices);
+        robot.dashboard.displayPrintf(1, "Auto Choices: %s", autoChoices);
     }   //doAutoChoicesMenus
 
 }   //class FtcAuto

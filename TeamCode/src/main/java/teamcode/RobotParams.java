@@ -363,13 +363,21 @@ public class RobotParams
     // Preset positions.
     public static final double ELEVATOR_PRESET_TOLERANCE        = 2.0;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
-        ELEVATOR_MIN_POS,
-        ELEVATOR_SAFE_POS,
-        ELEVATOR_LEVEL1_POS,
-        ELEVATOR_LEVEL2_POS,
-        ELEVATOR_LEVEL3_POS,
-        ELEVATOR_MAX_POS
+        14.0, 16.0, 20.0, 22.0
+//        ELEVATOR_MIN_POS,
+//        ELEVATOR_SAFE_POS,
+//        ELEVATOR_LEVEL1_POS,
+//        ELEVATOR_LEVEL2_POS,
+//        ELEVATOR_LEVEL3_POS,
+//        ELEVATOR_MAX_POS
     };
+    // PID Actuator parameters.
+    public static final double ELEVATOR_KP                      = 0.3;
+    public static final double ELEVATOR_KI                      = 0.0;
+    public static final double ELEVATOR_KD                      = 0.025;
+    public static final double ELEVATOR_KF                      = 0.0;
+    public static final double ELEVATOR_TOLERANCE               = 2.0;
+    public static final double ELEVATOR_IZONE                   = 10.0;
     //
     // Arm subsystem.
     //
@@ -385,6 +393,7 @@ public class RobotParams
     public static final boolean ARM_ENCODER_INVERTED            = true;
     public static final boolean ARM_ENCODER_ABSOLUTE            = true;
     public static final double ARM_DEG_SCALE                    = 360.0;
+    public static final double ARM_POWER_LIMIT                  = 0.2;
     public static final double ARM_OFFSET                       = 0.0;
     public static final double ARM_ZERO_OFFSET                  = 0.015152;
     public static final double ARM_MIN_POS                      = 20.0;
@@ -393,21 +402,23 @@ public class RobotParams
     public static final double ARM_FREE_TO_MOVE_POS             = 50.0;
     public static final double ARM_SCORE_BACKDROP_POS           = 270.0;
     // Preset positions.
-    public static final double ARM_PRESET_TOLERANCE             = 2.0;
+    public static final double ARM_PRESET_TOLERANCE             = 10.0;
     public static final double[] ARM_PRESETS                    = new double[] {
-        ARM_MIN_POS,
-        ARM_SAFE_POS,
-        ARM_FREE_TO_MOVE_POS,
-        ARM_SCORE_BACKDROP_POS,
-        ARM_MAX_POS
+        30.0, 60.0, 90.0, 120, 150.0, 180.0
+//        ARM_MIN_POS,
+//        ARM_SAFE_POS,
+//        ARM_FREE_TO_MOVE_POS,
+//        ARM_SCORE_BACKDROP_POS,
+//        ARM_MAX_POS
     };
-    public static final double ARM_KP                           = 0.01;
+    // PID Actuator parameters.
+    public static final double ARM_KP                           = 0.0115;
     public static final double ARM_KI                           = 0.0;
     public static final double ARM_KD                           = 0.0;
     public static final double ARM_KF                           = 0.0;
     public static final double ARM_IZONE                        = 0.0;
-    public static final double ARM_TOLERANCE                    = 0.5;
-    public static final double ARM_MAX_GRAVITY_COMP_POWER       = 0.2;
+    public static final double ARM_TOLERANCE                    = 2.0;
+    public static final double ARM_MAX_GRAVITY_COMP_POWER       = 0.25; //0.12
     //
     // Wrist subsystem.
     //

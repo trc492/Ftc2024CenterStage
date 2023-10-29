@@ -361,7 +361,7 @@ public class Robot
             if (elevatorArm.elevator != null)
             {
                 dashboard.displayPrintf(
-                    lineNum++, "Elevator: power=%.1f, pos=%.1f, lowerLimitSw=%s",
+                    lineNum++, "Elevator: power=%.3f, pos=%.1f, lowerLimitSw=%s",
                     elevatorArm.elevator.getPower(), elevatorArm.elevator.getPosition(),
                     elevatorArm.elevator.isLowerLimitSwitchActive());
             }
@@ -369,7 +369,7 @@ public class Robot
             if (elevatorArm.arm != null)
             {
                 dashboard.displayPrintf(
-                    lineNum++, "Arm: power=%.1f, pos=%.1f/%f",
+                    lineNum++, "Arm: power=%.3f, pos=%.1f/%f",
                     elevatorArm.arm.getPower(), elevatorArm.arm.getPosition(), elevatorArm.arm.getEncoderRawPosition());
             }
 

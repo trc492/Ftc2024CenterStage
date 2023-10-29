@@ -211,7 +211,7 @@ public class FtcTeleOp extends FtcOpMode
                             null, elevatorPower, RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS);
                     }
                     // Arm subsystem.
-                    double armPower = operatorGamepad.getRightStickY(true);
+                    double armPower = operatorGamepad.getRightStickY(true) * RobotParams.ARM_POWER_LIMIT;
                     if (manualOverride)
                     {
                         robot.elevatorArm.setArmPower(null, 0.0, armPower, 0.0, null);
@@ -265,7 +265,7 @@ public class FtcTeleOp extends FtcOpMode
      */
     public void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
-        robot.dashboard.displayPrintf(7, "%s: %04x->%s", gamepad, button, pressed? "Pressed": "Released");
+        robot.dashboard.displayPrintf(8, "%s: %04x->%s", gamepad, button, pressed? "Pressed": "Released");
 
         switch (button)
         {
@@ -367,7 +367,7 @@ public class FtcTeleOp extends FtcOpMode
      */
     public void operatorButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
-        robot.dashboard.displayPrintf(7, "%s: %04x->%s", gamepad, button, pressed? "Pressed": "Released");
+        robot.dashboard.displayPrintf(8, "%s: %04x->%s", gamepad, button, pressed? "Pressed": "Released");
 
         switch (button)
         {
@@ -416,28 +416,28 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_DPAD_UP:
                 if (robot.elevatorArm != null && pressed)
                 {
-                    robot.elevatorArm.elevatorPresetPositionUp(moduleName, 1.0);
+                    robot.elevatorArm.elevatorPresetPositionUp(moduleName, RobotParams.ARM_POWER_LIMIT);
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_DOWN:
                 if (robot.elevatorArm != null && pressed)
                 {
-                    robot.elevatorArm.elevatorPresetPositionDown(moduleName, 1.0);
+                    robot.elevatorArm.elevatorPresetPositionDown(moduleName, RobotParams.ARM_POWER_LIMIT);
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_LEFT:
                 if (robot.elevatorArm != null && pressed)
                 {
-                    robot.elevatorArm.armPresetPositionDown(moduleName, 1.0);
+                    robot.elevatorArm.armPresetPositionDown(moduleName, RobotParams.ARM_POWER_LIMIT);
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_RIGHT:
                 if (robot.elevatorArm != null && pressed)
                 {
-                    robot.elevatorArm.armPresetPositionUp(moduleName, 1.0);
+                    robot.elevatorArm.armPresetPositionUp(moduleName, RobotParams.ARM_POWER_LIMIT);
                 }
                 break;
 

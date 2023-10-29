@@ -134,6 +134,11 @@ public class ElevatorArm
             elevator =
                 new FtcMotorActuator(
                     RobotParams.HWNAME_ELEVATOR, elevatorParams, msgTracer, tracePidInfo).getActuator();
+            elevator.setSoftwarePidEnabled(true);
+            elevator.setPositionPidCoefficients(
+                RobotParams.ELEVATOR_KP, RobotParams.ELEVATOR_KI, RobotParams.ELEVATOR_KD, RobotParams.ELEVATOR_KF,
+                RobotParams.ELEVATOR_IZONE);
+            elevator.setPositionPidTolerance(RobotParams.ELEVATOR_TOLERANCE);
             elevatorEvent = new TrcEvent(RobotParams.HWNAME_ELEVATOR + ".event");
             elevatorEvent.setCallback(this::performAction, elevatorActionParams);
         }
@@ -584,7 +589,10 @@ public class ElevatorArm
      */
     private double getArmPowerComp(double currPower)
     {
-        return RobotParams.ARM_MAX_GRAVITY_COMP_POWER * Math.sin(Math.toRadians(arm.getPosition()));
+        double armAngle = arm.getPosition();
+        double powerComp = RobotParams.ARM_MAX_GRAVITY_COMP_POWER * Math.sin(Math.toRadians(armAngle));
+        TrcDbgTrace.globalTraceInfo("getArmPowerComp", "angle=%f, PowerComp=%f", armAngle, powerComp);
+        return powerComp;
     }   //getArmPowerComp
 
     /**
