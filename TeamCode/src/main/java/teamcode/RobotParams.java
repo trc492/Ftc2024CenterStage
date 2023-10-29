@@ -398,7 +398,7 @@ public class RobotParams
     public static final double ARM_ZERO_OFFSET                  = 0.015152;
     public static final double ARM_MIN_POS                      = 20.0;
     public static final double ARM_MAX_POS                      = 300.0;
-    public static final double ARM_SAFE_POS                     = 26.0;
+    public static final double ARM_SAFE_POS                     = 37.0;
     public static final double ARM_FREE_TO_MOVE_POS             = 50.0;
     public static final double ARM_SCORE_BACKDROP_POS           = 270.0;
     // Preset positions.
@@ -427,8 +427,9 @@ public class RobotParams
     public static final boolean WRIST_FOLLOWER_SERVO_INVERTED   = true;
     public static final double WRIST_MIN_POS                    = 0.0;
     public static final double WRIST_MAX_POS                    = 0.38;
-    public static final double WRIST_DOWN_POS                   = 0.19;
-    public static final double WRIST_UP_POS                     = WRIST_MIN_POS;
+    public static final double WRIST_DOWN_POS                   = 0.225;
+    public static final double WRIST_DOWN_POS                   = 0.225;
+    public static final double WRIST_UP_POS                     = 0.35;
     public static final double WRIST_SAFE_POS                   = WRIST_DOWN_POS;
     //
     // Intake subsystem.
