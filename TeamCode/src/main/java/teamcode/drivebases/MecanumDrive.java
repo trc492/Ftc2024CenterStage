@@ -60,23 +60,23 @@ public class MecanumDrive extends RobotDrive
             // odometry.
             //
             TrcDriveBaseOdometry driveBaseOdometry = new TrcDriveBaseOdometry(
-                new TrcDriveBaseOdometry.AxisSensor(driveMotors[INDEX_RIGHT_BACK], RobotParams.X_ODOMETRY_WHEEL_OFFSET),
+                new TrcDriveBaseOdometry.AxisSensor(driveMotors[INDEX_RIGHT_BACK], RobotParams.X_ODWHEEL_Y_OFFSET),
                 new TrcDriveBaseOdometry.AxisSensor[] {
                     new TrcDriveBaseOdometry.AxisSensor(
-                        driveMotors[INDEX_LEFT_FRONT], RobotParams.Y_LEFT_ODOMETRY_WHEEL_OFFSET),
+                        driveMotors[INDEX_LEFT_FRONT], RobotParams.YLEFT_ODWHEEL_X_OFFSET),
                     new TrcDriveBaseOdometry.AxisSensor(
-                        driveMotors[INDEX_RIGHT_FRONT], RobotParams.Y_RIGHT_ODOMETRY_WHEEL_OFFSET)},
+                        driveMotors[INDEX_RIGHT_FRONT], RobotParams.YRIGHT_ODWHEEL_X_OFFSET)},
                 gyro);
             //
             // Set the drive base to use the external odometry device overriding the built-in one.
             //
             driveBase.setDriveBaseOdometry(driveBaseOdometry);
             driveBase.setOdometryScales(
-                RobotParams.X_ODWHEEL_INCHES_PER_COUNT, RobotParams.Y_ODWHEEL_INCHES_PER_COUNT);
+                RobotParams.ODWHEEL_INCHES_PER_COUNT, RobotParams.ODWHEEL_INCHES_PER_COUNT);
         }
         else
         {
-            driveBase.setOdometryScales(RobotParams.XPOS_INCHES_PER_COUNT, RobotParams.Y_ODWHEEL_INCHES_PER_COUNT);
+            driveBase.setOdometryScales(RobotParams.XPOS_INCHES_PER_COUNT, RobotParams.YPOS_INCHES_PER_COUNT);
         }
         //
         // Create and initialize PID controllers.

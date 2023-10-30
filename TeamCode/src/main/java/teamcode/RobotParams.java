@@ -129,7 +129,7 @@ public class RobotParams
     public static final double ROBOT_LENGTH                     = 18.00;
     public static final double ROBOT_WIDTH                      = 17.25;
     public static final double DRIVE_BASE_LENGTH                = (24.0 * 15)*TrcUtil.INCHES_PER_MM;
-    public static final double DRIVE_BASE_WIDTH                 = 15.382765354330708661417322834646;
+    public static final double DRIVE_BASE_WIDTH                 = 390.0 * TrcUtil.INCHES_PER_MM;
     //
     // Game related locations.
     //
@@ -290,9 +290,22 @@ public class RobotParams
     public static final double DRIVE_POWER_SCALE_NORMAL         = 1.0;
     public static final double TURN_POWER_SCALE_SLOW            = 0.5;
     public static final double TURN_POWER_SCALE_NORMAL          = 1.0;
-    public static final double X_ODOMETRY_WHEEL_OFFSET          = ROBOT_LENGTH/2.0 - (3.875 + 9.5); //behind centroid
-    public static final double Y_LEFT_ODOMETRY_WHEEL_OFFSET     = -15.25/2.0;
-    public static final double Y_RIGHT_ODOMETRY_WHEEL_OFFSET    = 15.25/2.0;
+    // Optii Odometry Wheel:
+    public static final double ODWHEEL_DIAMETER                 = 35.0 * TrcUtil.INCHES_PER_MM;
+    public static final double ODWHEEL_CPR                      = 4096.0;
+    public static final double ODWHEEL_INCHES_PER_COUNT         = Math.PI*ODWHEEL_DIAMETER/ODWHEEL_CPR;
+    // Scale = 0.00105687652708656383937269814237 inches/count
+    public static final double YLEFT_ODWHEEL_X_OFFSET           = -144.0 * TrcUtil.INCHES_PER_MM;
+    public static final double YLEFT_ODWHEEL_Y_OFFSET           = -12.0 * TrcUtil.INCHES_PER_MM;
+    public static final double YRIGHT_ODWHEEL_X_OFFSET           = 144.0 * TrcUtil.INCHES_PER_MM;
+    public static final double YRIGHT_ODWHEEL_Y_OFFSET          = -12.0 * TrcUtil.INCHES_PER_MM;
+    public static final double X_ODWHEEL_X_OFFSET               = 0.0;
+    public static final double X_ODWHEEL_Y_OFFSET               = -168.0 * TrcUtil.INCHES_PER_MM;
+//    public static final double X_ODWHEEL_INCHES_PER_COUNT       = 7.6150160901199168116026724971383e-4;
+//    public static final double Y_ODWHEEL_INCHES_PER_COUNT       = 7.6301149255006038191364659148717e-4;
+//    public static final double X_ODOMETRY_WHEEL_OFFSET          = ROBOT_LENGTH/2.0 - (3.875 + 9.5); //behind centroid
+//    public static final double Y_LEFT_ODOMETRY_WHEEL_OFFSET     = -15.25/2.0;
+//    public static final double Y_RIGHT_ODOMETRY_WHEEL_OFFSET    = 15.25/2.0;
     public static final FtcGamepad.DriveMode ROBOT_DRIVE_MODE   = FtcGamepad.DriveMode.ARCADE_MODE;
     //
     // Velocity controlled constants.
@@ -318,9 +331,6 @@ public class RobotParams
     public static final double TURN_STEADY_STATE_ERR            = 2.0;
     public static final double TURN_STALL_ERRRATE_THRESHOLD     = 1.0;
     public static final Double TURN_RAMP_RATE                   = null;//10.0;
-
-    public static final double X_ODWHEEL_INCHES_PER_COUNT       = 7.6150160901199168116026724971383e-4;
-    public static final double Y_ODWHEEL_INCHES_PER_COUNT       = 7.6301149255006038191364659148717e-4;
     //
     // Pure Pursuit parameters.
     //
@@ -427,7 +437,6 @@ public class RobotParams
     public static final boolean WRIST_FOLLOWER_SERVO_INVERTED   = true;
     public static final double WRIST_MIN_POS                    = 0.0;
     public static final double WRIST_MAX_POS                    = 0.38;
-    public static final double WRIST_DOWN_POS                   = 0.225;
     public static final double WRIST_DOWN_POS                   = 0.225;
     public static final double WRIST_UP_POS                     = 0.35;
     public static final double WRIST_SAFE_POS                   = WRIST_DOWN_POS;
