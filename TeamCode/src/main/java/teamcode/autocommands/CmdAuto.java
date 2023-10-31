@@ -168,10 +168,14 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
                             RobotParams.BLUE_AUDIENCE_SPIKE_MARKS[spikeMarkIndex]:
                             RobotParams.BLUE_BACKSTAGE_SPIKE_MARKS[spikeMarkIndex];
+                    if (teamPropPos != 2)
+                    {
+                        targetPoseTile.y = 1.7;
+                    }
                     targetPose = robot.adjustPoseByAlliance(targetPoseTile, autoChoices.alliance);
                     intermediate1 =
                         robot.adjustPoseByAlliance(
-                            targetPoseTile.x, targetPoseTile.y + 0.2, 180.0, autoChoices.alliance);
+                            targetPoseTile.x, 1.8, 180.0, autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.PLACE_PURPLE_PIXEL);
@@ -208,8 +212,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     if (autoChoices.startPos == FtcAuto.StartPos.BACKSTAGE)
                     {
                         intermediate1 = robot.adjustPoseByAlliance(0.5, 2.0, 180.0, autoChoices.alliance);
-                        intermediate2 = robot.adjustPoseByAlliance(1.5, 2.0, 90.0, autoChoices.alliance);
-                        targetPose = robot.adjustPoseByAlliance(1.5, 1.5, 90.0, autoChoices.alliance);
+                        intermediate2 = robot.adjustPoseByAlliance(1.5, 2.0, -90.0, autoChoices.alliance);
+                        targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
                             event, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, targetPose);
@@ -219,8 +223,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         intermediate1 = robot.adjustPoseByAlliance(-1.5, 2.5, 180.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(-2.5, 2.5, 180.0, autoChoices.alliance);
                         intermediate3 = robot.adjustPoseByAlliance(-2.5, 0.5, 180.0, autoChoices.alliance);
-                        intermediate4 = robot.adjustPoseByAlliance(1.5, 0.5, 90.0, autoChoices.alliance);
-                        targetPose = robot.adjustPoseByAlliance(1.5, 1.5, 90.0, autoChoices.alliance);
+                        intermediate4 = robot.adjustPoseByAlliance(1.5, 0.5, -90.0, autoChoices.alliance);
+                        targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
                             event, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, intermediate3, intermediate4, targetPose);
@@ -244,10 +248,10 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         {
                             // Determine the absolute field location of the AprilTag.
                             aprilTagPose =
-                                robot.robotDrive.driveBase.getFieldPosition().addRelativePose(
+                                robot.robotDrive.driveBase.getFieldPosition().subtractRelativePose(
                                     new TrcPose2D(
                                         aprilTagInfo.objPose.x, aprilTagInfo.objPose.y,
-                                        90.0 - robot.robotDrive.driveBase.getHeading()));
+                                        -90.0 - robot.robotDrive.driveBase.getHeading()));
                             robot.globalTracer.traceInfo(
                                 moduleName, "AprilTag %d found at %s (absPose=%s)",
                                 aprilTagId, aprilTagInfo.objPose, aprilTagPose);
@@ -289,9 +293,10 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     }
                     // Account for end-effector offset from the camera.
                     aprilTagPose.x -= 6.0;
+                    aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
-                    sm.waitForSingleEvent(event,State.PLACE_YELLOW_PIXEL);
+                    sm.waitForSingleEvent(event,State.PARK_AT_BACKSTAGE);//PLACE_YELLOW_PIXEL);
                     break;
 
                 case PLACE_YELLOW_PIXEL:

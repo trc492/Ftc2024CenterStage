@@ -146,14 +146,14 @@ public class RobotParams
     public static final double PARKPOS_BLUE_CORNER_Y            = 2.5;
     public static final double PARKPOS_BLUE_CENTER_Y            = 0.5;
     public static final TrcPose2D PARKPOS_BLUE_CORNER           = new TrcPose2D(
-        PARKPOS_X, PARKPOS_BLUE_CORNER_Y, 90.0);
+        PARKPOS_X, PARKPOS_BLUE_CORNER_Y, -90.0);
     public static final TrcPose2D PARKPOS_BLUE_CENTER           = new TrcPose2D(
-        PARKPOS_X, PARKPOS_BLUE_CENTER_Y, 90.0);
+        PARKPOS_X, PARKPOS_BLUE_CENTER_Y, -90.0);
     // Spike Mark locations to place the pixel in tile units.
     public static final double SPIKE_MARK_ANGLE_OFFSET          = 45.0;
     public static final double AUDIENCE_SPIKES_X                = -1.5;
     public static final double BACKSTAGE_SPIKES_X               = 0.5;
-    public static final double BLUE_SPIKES_Y                    = 1.8;
+    public static final double BLUE_SPIKES_Y                    = 1.5;
     public static final TrcPose2D[] BLUE_AUDIENCE_SPIKE_MARKS   = new TrcPose2D[] {
         new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y, 180.0 - SPIKE_MARK_ANGLE_OFFSET),
         new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y, 180.0),
