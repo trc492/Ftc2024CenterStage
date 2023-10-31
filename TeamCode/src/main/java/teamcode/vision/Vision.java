@@ -108,7 +108,7 @@ public class Vision
             .setHeightRange(80.0, 1000.0)
             .setSolidityRange(0.0, 100.0)
             .setVerticesRange(0.0, 1000.0)
-            .setAspectRatioRange(0.3, 1.0);
+            .setAspectRatioRange(0.8, 1.25);
     private static final String TFOD_MODEL_ASSET = "CenterStage.tflite";
     private static final String TFOD_MODEL_FILENAME = "TrcCenterStage.tflite";
     private static final float TFOD_MIN_CONFIDENCE = 0.90f;

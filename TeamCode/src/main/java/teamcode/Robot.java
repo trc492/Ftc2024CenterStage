@@ -209,26 +209,13 @@ public class Robot
             // Enable odometry for all opmodes. We may need odometry in TeleOp for auto-assist drive.
             //
             robotDrive.driveBase.setOdometryEnabled(true);
-            if (runMode != TrcRobot.RunMode.AUTO_MODE)
+            if (runMode == TrcRobot.RunMode.TELEOP_MODE)
             {
-                // In TeleOp or Test mode. If we are not running a competition match, autonomous may not have run
-                // prior to this. Therefore, we cannot inherit the robot position from previous autonomous mode.
-                // In this case, we will just assume previous robot start position.
                 if (endOfAutoRobotPose != null)
                 {
                     // We had a previous autonomous run that saved the robot position at the end, use it.
                     robotDrive.driveBase.setFieldPosition(endOfAutoRobotPose);
                     globalTracer.traceInfo(funcName, "Restore saved RobotPose=%s", endOfAutoRobotPose);
-                }
-                else
-                {
-                    // There was no saved robotPose, use previous autonomous start position. In case we didn't even
-                    // have a previous autonomous run (e.g. just powering up the robot and go into TeleOp), then we
-                    // will default to starting position of the AutoChoices default.
-                    setRobotStartPosition(FtcAuto.autoChoices);
-                    globalTracer.traceInfo(
-                        funcName, "No saved RobotPose, use autoChoiceStartPos=%s",
-                        robotDrive.driveBase.getFieldPosition());
                 }
             }
             // Consume it so it's no longer valid for next run.
