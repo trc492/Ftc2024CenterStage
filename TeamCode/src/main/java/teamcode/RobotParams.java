@@ -68,7 +68,7 @@ public class RobotParams
         public static boolean centerStageRobot = true;
         public static boolean swerveDualServoSteering = true;
         // Drive Base
-        public static boolean useExternalOdometry = false;
+        public static boolean useExternalOdometry = true;
         public static boolean doSwervePhysicalAlignment = false;
         // Subsystems
         public static boolean useSubsystems = true;
@@ -313,19 +313,19 @@ public class RobotParams
     public static final double DRIVE_MOTOR_MAX_VELOCITY_PPS     = GOBILDA_5203_312_MAX_VELOCITY_PPS;
 
     public static final TrcPidController.PidCoefficients xPosPidCoeff =
-        new TrcPidController.PidCoefficients(0.095, 0.0, 0.001, 0.0);
+        new TrcPidController.PidCoefficients(0.095, 0.0, 0.006, 0.0);
     public static final double XPOS_TOLERANCE                   = 1.0;
     public static final double XPOS_INCHES_PER_COUNT            = 0.01924724265461924299065420560748;
     public static final Double X_RAMP_RATE                      = null;//10.0;
 
     public static final TrcPidController.PidCoefficients yPosPidCoeff =
-        new TrcPidController.PidCoefficients(0.06, 0.0, 0.002, 0.0);
+        new TrcPidController.PidCoefficients(0.022, 0.0, 0.0018, 0.0);
     public static final double YPOS_TOLERANCE                   = 1.0;
     public static final double YPOS_INCHES_PER_COUNT            = 0.02166184604662450653409090909091;
     public static final Double Y_RAMP_RATE                      = null;//10.0;
 
     public static final TrcPidController.PidCoefficients turnPidCoeff =
-        new TrcPidController.PidCoefficients(0.02, 0.08, 0.003, 0.0, 30.0);
+        new TrcPidController.PidCoefficients(0.022, 0.0, 0.0018, 0.0, 0.0);
     public static final double TURN_TOLERANCE                   = 1.0;
     public static final double TURN_SETTLING                    = TrcPidController.DEF_SETTLING_TIME;
     public static final double TURN_STEADY_STATE_ERR            = 2.0;
@@ -357,6 +357,7 @@ public class RobotParams
     public static final boolean ELEVATOR_LOWER_LIMIT_INVERTED   = false;
     public static final boolean ELEVATOR_HAS_UPPER_LIMIT_SWITCH = false;
     public static final boolean ELEVATOR_UPPER_LIMIT_INVERTED   = false;
+    public static final boolean ELEVATOR_VOLTAGE_COMP_ENABLED   = true;
     public static final double ELEVATOR_ENCODER_PPR             = GOBILDA_5203_312_ENCODER_PPR;
     public static final double ELEVATOR_PULLEY_DIAMETER         = 1.405;
     public static final double ELEVATOR_PULLEY_CIRCUMFERENCE    = Math.PI*ELEVATOR_PULLEY_DIAMETER;
@@ -402,6 +403,7 @@ public class RobotParams
     public static final boolean ARM_HAS_EXTERNAL_ENCODER        = true;
     public static final boolean ARM_ENCODER_INVERTED            = true;
     public static final boolean ARM_ENCODER_ABSOLUTE            = true;
+    public static final boolean ARM_VOLTAGE_COMP_ENABLED        = true;
     public static final double ARM_DEG_SCALE                    = 360.0;
     public static final double ARM_POWER_LIMIT                  = 0.1;
     public static final double ARM_OFFSET                       = 0.0;

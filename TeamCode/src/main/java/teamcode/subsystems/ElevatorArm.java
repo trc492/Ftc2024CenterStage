@@ -129,6 +129,7 @@ public class ElevatorArm
                 .setUpperLimitSwitch(
                     RobotParams.ELEVATOR_HAS_UPPER_LIMIT_SWITCH,
                     RobotParams.ELEVATOR_UPPER_LIMIT_INVERTED)
+                .setVoltageCompensationEnabled(RobotParams.ELEVATOR_VOLTAGE_COMP_ENABLED)
                 .setPositionScaleAndOffset(RobotParams.ELEVATOR_INCHES_PER_COUNT, RobotParams.ELEVATOR_OFFSET)
                 .setPositionPresets(RobotParams.ELEVATOR_PRESET_TOLERANCE, RobotParams.ELEVATOR_PRESETS);
             elevator =
@@ -158,6 +159,7 @@ public class ElevatorArm
                 .setExternalEncoder(
                     RobotParams.ARM_HAS_EXTERNAL_ENCODER, RobotParams.ARM_ENCODER_INVERTED,
                     RobotParams.ARM_ENCODER_ABSOLUTE)
+                .setVoltageCompensationEnabled(RobotParams.ARM_VOLTAGE_COMP_ENABLED)
                 .setPositionScaleAndOffset(RobotParams.ARM_DEG_SCALE, RobotParams.ARM_OFFSET,
                                            RobotParams.ARM_ZERO_OFFSET)
                 .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS);

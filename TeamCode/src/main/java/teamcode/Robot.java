@@ -175,7 +175,7 @@ public class Robot
         {
             RobotParams.Preferences.useBlinkin = true;
             RobotParams.Preferences.hasWebCam2 = false;
-            RobotParams.Preferences.useExternalOdometry = false;
+            RobotParams.Preferences.useExternalOdometry = true;
             RobotParams.Preferences.useSubsystems = true;
             RobotParams.Preferences.useAprilTagVision = true;
             RobotParams.Preferences.useColorBlobVision = true;
