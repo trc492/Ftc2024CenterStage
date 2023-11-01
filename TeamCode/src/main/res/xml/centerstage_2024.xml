@@ -24,6 +24,7 @@ SOFTWARE.
     <Webcam name="Webcam 1" serialNumber="5DCAD5AF"/>
     <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
         <LynxModule name="Control Hub" port="173">
+            <goBILDA5202SeriesMotor name="launcher" port="1"/>
             <goBILDA5202SeriesMotor name="rfDriveMotor" port="2"/>
             <goBILDA5202SeriesMotor name="rbDriveMotor" port="3"/>
             <Servo name="pixelTray.lowerGate" port="0" />

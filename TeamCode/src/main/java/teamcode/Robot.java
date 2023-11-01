@@ -29,6 +29,7 @@ import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcServo;
 import TrcFtcLib.ftclib.FtcDashboard;
+import TrcFtcLib.ftclib.FtcDcMotor;
 import TrcFtcLib.ftclib.FtcMatchInfo;
 import TrcFtcLib.ftclib.FtcOpMode;
 import TrcFtcLib.ftclib.FtcRobotBattery;
@@ -70,6 +71,7 @@ public class Robot
     public ElevatorArm elevatorArm;
     public Intake intake;
     public PixelTray pixelTray;
+    public FtcDcMotor launcher;
 
     /**
      * Constructor: Create an instance of the object.
@@ -138,6 +140,11 @@ public class Robot
                 if (RobotParams.Preferences.usePixelTray)
                 {
                     pixelTray = new PixelTray(RobotParams.HWNAME_PIXELTRAY, globalTracer);
+                }
+
+                if (RobotParams.Preferences.useLauncher)
+                {
+                    launcher = new FtcDcMotor(RobotParams.HWNAME_LAUNCHER);
                 }
             }
         }
