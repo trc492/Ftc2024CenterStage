@@ -288,7 +288,7 @@ public class RobotParams
         new TrcPidController.PidCoefficients(1.0, 0.0, 0.0, 0.0);
     public static final boolean DRIVE_WHEEL_BRAKE_MODE_ON       = true;
     public static final double TURN_POWER_LIMIT                 = 0.5;
-    public static final double DRIVE_POWER_SCALE_SLOW           = 0.5;
+    public static final double DRIVE_POWER_SCALE_SLOW           = 0.3;
     public static final double DRIVE_POWER_SCALE_NORMAL         = 1.0;
     public static final double TURN_POWER_SCALE_SLOW            = 0.5;
     public static final double TURN_POWER_SCALE_NORMAL          = 1.0;
@@ -444,7 +444,7 @@ public class RobotParams
     public static final boolean WRIST_FOLLOWER_SERVO_INVERTED   = true;
     public static final double WRIST_MIN_POS                    = 0.0;
     public static final double WRIST_MAX_POS                    = 0.38;
-    public static final double WRIST_DOWN_POS                   = 0.225;
+    public static final double WRIST_DOWN_POS                   = 0.235;
     public static final double WRIST_UP_POS                     = WRIST_MAX_POS;
     public static final double WRIST_SAFE_POS                   = WRIST_DOWN_POS;
     //

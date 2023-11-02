@@ -723,7 +723,7 @@ public class ElevatorArm
 
         if (index != -1)
         {
-            setArmPosition(owner, 0.0, arm.getPresetPosition(index), powerLimit, null, 0.0);
+            setArmPosition(owner, 0.0, arm.getPresetPosition(index), powerLimit, null, 3.0);
         }
     }   //armPresetPositionUp
 
@@ -741,7 +741,7 @@ public class ElevatorArm
 
         if (index != -1)
         {
-            setArmPosition(owner, 0.0, arm.getPresetPosition(index), powerLimit, null, 0.0);
+            setArmPosition(owner, 0.0, arm.getPresetPosition(index), powerLimit, null, 3.0);
         }
     }   //armPresetPositionDown
 

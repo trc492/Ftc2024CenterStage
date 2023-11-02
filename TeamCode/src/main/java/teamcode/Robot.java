@@ -145,6 +145,7 @@ public class Robot
                 if (RobotParams.Preferences.useLauncher)
                 {
                     launcher = new FtcDcMotor(RobotParams.HWNAME_LAUNCHER);
+                    launcher.setMotorInverted(true);
                 }
             }
         }
