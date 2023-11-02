@@ -364,17 +364,18 @@ public class RobotParams
     public static final double ELEVATOR_PULLEY_DIAMETER         = 1.405;
     public static final double ELEVATOR_PULLEY_CIRCUMFERENCE    = Math.PI*ELEVATOR_PULLEY_DIAMETER;
     public static final double ELEVATOR_INCHES_PER_COUNT        = ELEVATOR_PULLEY_CIRCUMFERENCE/ELEVATOR_ENCODER_PPR;
-    public static final double ELEVATOR_OFFSET                  = 12.1;             // in inches
+    public static final double ELEVATOR_POWER_LIMIT             = 1.0;
+    public static final double ELEVATOR_OFFSET                  = 11.6;             // in inches
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
     public static final double ELEVATOR_MAX_POS                 = 24.0;
-    public static final double ELEVATOR_SAFE_POS                = 13.0;
+    public static final double ELEVATOR_SAFE_POS                = 14.5;
     public static final double ELEVATOR_LEVEL1_POS              = 2.0;
     public static final double ELEVATOR_LEVEL2_POS              = 8.0;
     public static final double ELEVATOR_LEVEL3_POS              = 14.0;
     // Power settings.
     public static final double ELEVATOR_CAL_POWER               = -0.1;
     // Preset positions.
-    public static final double ELEVATOR_PRESET_TOLERANCE        = 2.0;
+    public static final double ELEVATOR_PRESET_TOLERANCE        = 0.5;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
         14.0, 16.0, 20.0, 22.0
 //        ELEVATOR_MIN_POS,
@@ -385,7 +386,7 @@ public class RobotParams
 //        ELEVATOR_MAX_POS
     };
     // PID Actuator parameters.
-    public static final double ELEVATOR_KP                      = 0.3;
+    public static final double ELEVATOR_KP                      = 0.5;
     public static final double ELEVATOR_KI                      = 0.0;
     public static final double ELEVATOR_KD                      = 0.025;
     public static final double ELEVATOR_KF                      = 0.0;
@@ -414,11 +415,11 @@ public class RobotParams
     public static final double ARM_MAX_POS                      = 300.0;
     public static final double ARM_SAFE_POS                     = 37.0;
     public static final double ARM_FREE_TO_MOVE_POS             = 50.0;
-    public static final double ARM_SCORE_BACKDROP_POS           = 270.0;
+    public static final double ARM_SCORE_BACKDROP_POS           = 260.0;
     // Preset positions.
     public static final double ARM_PRESET_TOLERANCE             = 10.0;
     public static final double[] ARM_PRESETS                    = new double[] {
-        30.0, 60.0, 90.0, 120, 150.0, 180.0
+        30.0, 60.0, 90.0, 120, 150.0, 180.0, 210.0, 240.0, 270.0
 //        ARM_MIN_POS,
 //        ARM_SAFE_POS,
 //        ARM_FREE_TO_MOVE_POS,
@@ -442,7 +443,7 @@ public class RobotParams
     public static final double WRIST_MIN_POS                    = 0.0;
     public static final double WRIST_MAX_POS                    = 0.38;
     public static final double WRIST_DOWN_POS                   = 0.225;
-    public static final double WRIST_UP_POS                     = 0.35;
+    public static final double WRIST_UP_POS                     = WRIST_MAX_POS;
     public static final double WRIST_SAFE_POS                   = WRIST_DOWN_POS;
     //
     // Intake subsystem.

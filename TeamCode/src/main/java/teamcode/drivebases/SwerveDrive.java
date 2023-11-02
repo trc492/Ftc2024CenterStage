@@ -31,6 +31,7 @@ import java.util.Scanner;
 
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcDriveBaseOdometry;
+import TrcCommonLib.trclib.TrcOdometryWheel;
 import TrcCommonLib.trclib.TrcPidController;
 import TrcCommonLib.trclib.TrcPidDrive;
 import TrcCommonLib.trclib.TrcPurePursuitDrive;
@@ -100,21 +101,22 @@ public class SwerveDrive extends RobotDrive
              // the left and right front encoder ports as the Y1 and Y2 odometry. Gyro will serve as the angle
              // odometry.
              //
-             TrcDriveBaseOdometry driveBaseOdometry = new TrcDriveBaseOdometry(
-                 new TrcDriveBaseOdometry.AxisSensor(
-                     driveMotors[INDEX_RIGHT_BACK], RobotParams.X_ODWHEEL_Y_OFFSET),
-                 new TrcDriveBaseOdometry.AxisSensor[] {
-                     new TrcDriveBaseOdometry.AxisSensor(
-                         driveMotors[INDEX_LEFT_FRONT], RobotParams.YLEFT_ODWHEEL_X_OFFSET),
-                     new TrcDriveBaseOdometry.AxisSensor(
-                         driveMotors[INDEX_RIGHT_FRONT], RobotParams.YRIGHT_ODWHEEL_X_OFFSET)},
+             TrcOdometryWheel driveBaseOdometry = new TrcOdometryWheel(
+                 new TrcOdometryWheel.AxisSensor(
+                     driveMotors[INDEX_RIGHT_BACK], RobotParams.X_ODWHEEL_Y_OFFSET, RobotParams.X_ODWHEEL_X_OFFSET),
+                 new TrcOdometryWheel.AxisSensor[] {
+                     new TrcOdometryWheel.AxisSensor(
+                         driveMotors[INDEX_LEFT_FRONT], RobotParams.YLEFT_ODWHEEL_X_OFFSET,
+                         RobotParams.YLEFT_ODWHEEL_Y_OFFSET),
+                     new TrcOdometryWheel.AxisSensor(
+                         driveMotors[INDEX_RIGHT_FRONT], RobotParams.YRIGHT_ODWHEEL_X_OFFSET,
+                         RobotParams.YRIGHT_ODWHEEL_Y_OFFSET)},
                  gyro);
              //
              // Set the drive base to use the external odometry device overriding the built-in one.
              //
              driveBase.setDriveBaseOdometry(driveBaseOdometry);
-             driveBase.setOdometryScales(
-                 RobotParams.ODWHEEL_INCHES_PER_COUNT, RobotParams.ODWHEEL_INCHES_PER_COUNT);
+             driveBase.setOdometryScales(RobotParams.ODWHEEL_INCHES_PER_COUNT, RobotParams.ODWHEEL_INCHES_PER_COUNT);
          }
          else
          {

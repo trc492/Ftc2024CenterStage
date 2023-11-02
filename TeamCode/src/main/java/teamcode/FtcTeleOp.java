@@ -420,14 +420,14 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_DPAD_UP:
                 if (robot.elevatorArm != null && pressed)
                 {
-                    robot.elevatorArm.elevatorPresetPositionUp(moduleName, RobotParams.ARM_POWER_LIMIT);
+                    robot.elevatorArm.elevatorPresetPositionUp(moduleName, RobotParams.ELEVATOR_POWER_LIMIT);
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_DOWN:
                 if (robot.elevatorArm != null && pressed)
                 {
-                    robot.elevatorArm.elevatorPresetPositionDown(moduleName, RobotParams.ARM_POWER_LIMIT);
+                    robot.elevatorArm.elevatorPresetPositionDown(moduleName, RobotParams.ELEVATOR_POWER_LIMIT);
                 }
                 break;
 
