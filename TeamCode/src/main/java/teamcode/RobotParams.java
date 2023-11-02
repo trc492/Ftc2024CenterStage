@@ -64,8 +64,8 @@ public class RobotParams
         // Robot
         public static boolean noRobot = false;
         public static boolean swerveRobot = false;
-        public static boolean powerPlayRobot = false;
-        public static boolean centerStageRobot = true;
+        public static boolean powerPlayRobot = true;
+        public static boolean centerStageRobot = false;
         public static boolean swerveDualServoSteering = true;
         // Drive Base
         public static boolean useExternalOdometry = true;
@@ -83,9 +83,9 @@ public class RobotParams
     }   //class Preferences
 
     public static final String ROBOT_NAME                       = "CenterStage_2024";
-    public static final RevHubOrientationOnRobot.LogoFacingDirection hubLogoDirection =
+    public static RevHubOrientationOnRobot.LogoFacingDirection hubLogoDirection =
         RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
-    public static final RevHubOrientationOnRobot.UsbFacingDirection hubUsbDirection =
+    public static RevHubOrientationOnRobot.UsbFacingDirection hubUsbDirection =
         RevHubOrientationOnRobot.UsbFacingDirection.UP;
     public static final String TEAM_FOLDER_PATH                 =
         Environment.getExternalStorageDirectory().getPath() + "/FIRST/ftc3543";

@@ -22,6 +22,8 @@
 
 package teamcode;
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcDigitalInput;
 import TrcCommonLib.trclib.TrcMotor;
@@ -178,6 +180,8 @@ public class Robot
             RobotParams.Preferences.hasWebCam2 = false;
             RobotParams.Preferences.useExternalOdometry = true;
             RobotParams.Preferences.useSubsystems = false;
+            RobotParams.hubUsbDirection = RevHubOrientationOnRobot.UsbFacingDirection.UP;
+            RobotParams.hubLogoDirection = RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD;
         }
         else if (RobotParams.Preferences.centerStageRobot)
         {
