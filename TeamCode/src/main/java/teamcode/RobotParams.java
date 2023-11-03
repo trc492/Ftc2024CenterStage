@@ -64,8 +64,8 @@ public class RobotParams
         // Robot
         public static boolean noRobot = false;
         public static boolean swerveRobot = false;
-        public static boolean powerPlayRobot = true;
-        public static boolean centerStageRobot = false;
+        public static boolean powerPlayRobot = false;
+        public static boolean centerStageRobot = true;
         public static boolean swerveDualServoSteering = true;
         // Drive Base
         public static boolean useExternalOdometry = true;
@@ -418,7 +418,7 @@ public class RobotParams
     public static final double ARM_FREE_TO_MOVE_POS             = 50.0;
     public static final double ARM_SCORE_BACKDROP_POS           = 260.0;
     // Preset positions.
-    public static final double ARM_PRESET_TOLERANCE             = 10.0;
+    public static final double ARM_PRESET_TOLERANCE             = 5.0;
     public static final double[] ARM_PRESETS                    = new double[] {
 //        30.0, 60.0, 90.0, 120, 150.0, 180.0, 210.0, 240.0, 270.0
           22.5, ARM_SCORE_BACKDROP_POS

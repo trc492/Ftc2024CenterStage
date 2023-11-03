@@ -168,11 +168,15 @@ public class Robot
 
     private void checkRobotSupport()
     {
-        if (RobotParams.Preferences.swerveRobot)
+        if (RobotParams.Preferences.centerStageRobot)
         {
-            RobotParams.Preferences.useBlinkin = false;
-            RobotParams.Preferences.useExternalOdometry = false;
-            RobotParams.Preferences.useSubsystems = false;
+            RobotParams.Preferences.useBlinkin = true;
+            RobotParams.Preferences.hasWebCam2 = false;
+            RobotParams.Preferences.useExternalOdometry = true;
+            RobotParams.Preferences.useSubsystems = true;
+            RobotParams.Preferences.useAprilTagVision = true;
+            RobotParams.Preferences.useColorBlobVision = true;
+            RobotParams.Preferences.useTensorFlowVision = false;
         }
         else if (RobotParams.Preferences.powerPlayRobot)
         {
@@ -183,15 +187,11 @@ public class Robot
             RobotParams.hubUsbDirection = RevHubOrientationOnRobot.UsbFacingDirection.UP;
             RobotParams.hubLogoDirection = RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD;
         }
-        else if (RobotParams.Preferences.centerStageRobot)
+        else if (RobotParams.Preferences.swerveRobot)
         {
-            RobotParams.Preferences.useBlinkin = true;
-            RobotParams.Preferences.hasWebCam2 = false;
-            RobotParams.Preferences.useExternalOdometry = true;
-            RobotParams.Preferences.useSubsystems = true;
-            RobotParams.Preferences.useAprilTagVision = true;
-            RobotParams.Preferences.useColorBlobVision = true;
-            RobotParams.Preferences.useTensorFlowVision = false;
+            RobotParams.Preferences.useBlinkin = false;
+            RobotParams.Preferences.useExternalOdometry = false;
+            RobotParams.Preferences.useSubsystems = false;
         }
     }   //checkRobotSupport
 
@@ -360,16 +360,17 @@ public class Robot
             if (elevatorArm.elevator != null)
             {
                 dashboard.displayPrintf(
-                    lineNum++, "Elevator: power=%.3f, pos=%.1f, lowerLimitSw=%s",
+                    lineNum++, "Elevator: power=%.3f, pos=%.1f, target=%.1f, lowerLimitSw=%s",
                     elevatorArm.elevator.getPower(), elevatorArm.elevator.getPosition(),
-                    elevatorArm.elevator.isLowerLimitSwitchActive());
+                    elevatorArm.elevator.getPidTarget(), elevatorArm.elevator.isLowerLimitSwitchActive());
             }
 
             if (elevatorArm.arm != null)
             {
                 dashboard.displayPrintf(
-                    lineNum++, "Arm: power=%.3f, pos=%.1f/%f",
-                    elevatorArm.arm.getPower(), elevatorArm.arm.getPosition(), elevatorArm.arm.getEncoderRawPosition());
+                    lineNum++, "Arm: power=%.3f, pos=%.1f/%f, target=%.1f",
+                    elevatorArm.arm.getPower(), elevatorArm.arm.getPosition(),
+                    elevatorArm.arm.getEncoderRawPosition(), elevatorArm.arm.getPidTarget());
             }
 
             if (elevatorArm.wrist != null)
