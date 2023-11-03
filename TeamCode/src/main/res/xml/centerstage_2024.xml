@@ -21,7 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <Robot type="FirstInspires-FTC" name="CenterStage2024">
-    <Webcam name="Webcam 1" serialNumber="5DCAD5AF"/>
+    <Webcam name="Webcam 1" serialNumber="679ED7BF"/>
+    <Webcam name="Webcam 2" serialNumber="5DCAD5AF"/>
     <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
         <LynxModule name="Control Hub" port="173">
             <goBILDA5202SeriesMotor name="launcher" port="1"/>

@@ -24,6 +24,8 @@ package teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -135,6 +137,8 @@ public class FtcTest extends FtcTeleOp
     private double colorThresholdMultiplier = 1.0;
     private boolean teleOpControlEnabled = true;
     private long exposure;
+    private WebcamName frontWebcam = null;
+    private WebcamName rearWebcam = null;
 
     //
     // Overrides FtcOpMode abstract method.
@@ -151,6 +155,13 @@ public class FtcTest extends FtcTeleOp
         // TeleOp initialization.
         //
         super.robotInit();
+
+        if (robot.vision != null)
+        {
+            frontWebcam = robot.vision.getFrontWebcam();
+            rearWebcam = robot.vision.getRearWebcam();
+        }
+
         if (RobotParams.Preferences.useLoopPerformanceMonitor)
         {
             elapsedTimer = new TrcElapsedTimer("TestLoopMonitor", 2.0);
@@ -610,9 +621,11 @@ public class FtcTest extends FtcTeleOp
                     else if ((testChoices.test == Test.TUNE_COLORBLOB_VISION || testChoices.test == Test.VISION_TEST) &&
                              robot.vision != null)
                     {
-                        if (pressed)
+                        // Can only switch camera if we have two.
+                        if (pressed && frontWebcam != null && rearWebcam != null)
                         {
-                            robot.vision.switchCamera();
+                            robot.vision.setActiveWebcam(
+                                robot.vision.getActiveWebcam() != frontWebcam? frontWebcam: rearWebcam);
                         }
                         processed = true;
                     }
@@ -1133,6 +1146,16 @@ public class FtcTest extends FtcTeleOp
                 robot.vision.getDetectedAprilTag(null, lineNum++);
             }
 
+            if (robot.vision.redConeVision != null)
+            {
+                robot.vision.getDetectedTeamPropPosition(FtcAuto.Alliance.RED_ALLIANCE, lineNum++);
+            }
+
+            if (robot.vision.blueConeVision != null)
+            {
+                robot.vision.getDetectedTeamPropPosition(FtcAuto.Alliance.BLUE_ALLIANCE, lineNum++);
+            }
+
             if (robot.vision.purplePixelVision != null)
             {
                 robot.vision.getDetectedPixel(Vision.PixelType.PurplePixel, lineNum++);
@@ -1151,16 +1174,6 @@ public class FtcTest extends FtcTeleOp
             if (robot.vision.whitePixelVision != null)
             {
                 robot.vision.getDetectedPixel(Vision.PixelType.WhitePixel, lineNum++);
-            }
-
-            if (robot.vision.redConeVision != null)
-            {
-                robot.vision.getDetectedTeamPropPosition(FtcAuto.Alliance.RED_ALLIANCE, lineNum++);
-            }
-
-            if (robot.vision.blueConeVision != null)
-            {
-                robot.vision.getDetectedTeamPropPosition(FtcAuto.Alliance.BLUE_ALLIANCE, lineNum++);
             }
 
             if (robot.vision.tensorFlowVision != null)

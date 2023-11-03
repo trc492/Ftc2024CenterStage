@@ -180,6 +180,7 @@ public class FtcAuto extends FtcOpMode
         if (robot.vision != null)
         {
             // Enabling vision early so we can detect team prop position before match starts.
+            robot.vision.setActiveWebcam(robot.vision.getFrontWebcam());
             if (autoChoices.alliance == Alliance.RED_ALLIANCE)
             {
                 if (robot.vision.redConeVision != null)
@@ -257,6 +258,7 @@ public class FtcAuto extends FtcOpMode
             }
             robot.vision.setRedConeVisionEnabled(false);
             robot.vision.setBlueConeVisionEnabled(false);
+            robot.vision.setActiveWebcam(robot.vision.getRearWebcam());
             robot.vision.setAprilTagVisionEnabled(true);
         }
 

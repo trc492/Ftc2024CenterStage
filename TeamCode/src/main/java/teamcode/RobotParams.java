@@ -53,7 +53,7 @@ public class RobotParams
         public static boolean doStatusUpdate = true;
         // Vision
         public static boolean useWebCam = true;
-        public static boolean hasWebCam2 = false;
+        public static boolean hasWebCam2 = true;
         public static boolean useBuiltinCamBack = false;
         public static boolean tuneColorBlobVision = false;
         public static boolean useAprilTagVision = true;
@@ -152,7 +152,7 @@ public class RobotParams
     public static final TrcPose2D PARKPOS_BLUE_CENTER           = new TrcPose2D(
         PARKPOS_X, PARKPOS_BLUE_CENTER_Y, -90.0);
     // Spike Mark locations to place the pixel in tile units.
-    public static final double SPIKE_MARK_ANGLE_OFFSET          = 45.0;
+    public static final double SPIKE_MARK_ANGLE_OFFSET          = 90.0;
     public static final double AUDIENCE_SPIKES_X                = -1.5;
     public static final double BACKSTAGE_SPIKES_X               = 0.5;
     public static final double BLUE_SPIKES_Y                    = 1.5;
@@ -320,8 +320,9 @@ public class RobotParams
     public static final double XPOS_INCHES_PER_COUNT            = 0.01924724265461924299065420560748;
     public static final Double X_RAMP_RATE                      = null;//10.0;
 
+    // 0.022, 0.0, 0.0018
     public static final TrcPidController.PidCoefficients yPosPidCoeff =
-        new TrcPidController.PidCoefficients(0.022, 0.0, 0.0018, 0.0);
+        new TrcPidController.PidCoefficients(0.03, 0.0, 0.003, 0.0);
     public static final double YPOS_TOLERANCE                   = 1.0;
     public static final double YPOS_INCHES_PER_COUNT            = 0.02166184604662450653409090909091;
     public static final Double Y_RAMP_RATE                      = null;//10.0;

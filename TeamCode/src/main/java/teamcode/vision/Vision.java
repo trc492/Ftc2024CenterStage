@@ -102,10 +102,10 @@ public class Vision
             .setAspectRatioRange(0.2, 5.0);
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams coneFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
-            .setMinArea(5000.0)
+            .setMinArea(2000.0)
             .setMinPerimeter(200.0)
-            .setWidthRange(50.0, 1000.0)
-            .setHeightRange(80.0, 1000.0)
+            .setWidthRange(30.0, 1000.0)
+            .setHeightRange(30.0, 1000.0)
             .setSolidityRange(0.0, 100.0)
             .setVerticesRange(0.0, 1000.0)
             .setAspectRatioRange(0.8, 1.25);
@@ -284,31 +284,44 @@ public class Vision
     }   //Vision
 
     /**
+     * This method returns the front webcam.
+     *
+     * @return front webcam.
+     */
+    public WebcamName getFrontWebcam()
+    {
+        return webcam1;
+    }   //getFrontWebcam
+
+    /**
+     * This method returns the rear webcam.
+     *
+     * @return rear webcam.
+     */
+    public WebcamName getRearWebcam()
+    {
+        return webcam2;
+    }   //getRearWebcam
+
+    /**
      * This method returns the active camera if we have two webcams.
      *
      * @return active camera.
      */
-    public WebcamName getActiveCamera()
+    public WebcamName getActiveWebcam()
     {
-        return vision.getActiveCamera();
-    }   //getActiveCamera
+        return vision.getActiveWebcam();
+    }   //getActiveWebcam
 
     /**
-     * This method switch the active camera to the other camera if we have two webcams.
+     * This method sets the active webcam.
+     *
+     * @param webcam specifies the webcam to be set as active.
      */
-    public void switchCamera()
+    public void setActiveWebcam(WebcamName webcam)
     {
-        WebcamName activeCamera = getActiveCamera();
-
-        if (activeCamera == webcam1 && webcam2 != null)
-        {
-            vision.setActiveCamera(webcam2);
-        }
-        else if (activeCamera == webcam2 && webcam1 != null)
-        {
-            vision.setActiveCamera(webcam1);
-        }
-    }   //switchCamera
+        vision.setActiveWebcam(webcam);
+    }   //setActiveWebcam
 
     /**
      * This method displays the exposure settings on the dashboard. This helps tuning camera exposure.
