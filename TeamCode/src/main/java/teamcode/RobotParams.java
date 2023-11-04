@@ -380,7 +380,7 @@ public class RobotParams
     public static final double ELEVATOR_PRESET_TOLERANCE        = 0.5;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
 //        14.0, 16.0, 20.0, 22.0
-          11.8, ELEVATOR_LEVEL1_POS, ELEVATOR_LEVEL2_POS
+          12, ELEVATOR_LEVEL1_POS, ELEVATOR_LEVEL2_POS
 //        ELEVATOR_MIN_POS,
 //        ELEVATOR_SAFE_POS,
 //        ELEVATOR_LEVEL1_POS,
@@ -414,7 +414,7 @@ public class RobotParams
     public static final double ARM_POWER_LIMIT                  = 0.1;
     public static final double ARM_OFFSET                       = 0.0;
     public static final double ARM_ZERO_OFFSET                  = 0.015152;
-    public static final double ARM_MIN_POS                      = 20.0;
+    public static final double ARM_MIN_POS                      = 25.6;
     public static final double ARM_MAX_POS                      = 300.0;
     public static final double ARM_SAFE_POS                     = 37.0;
     public static final double ARM_FREE_TO_MOVE_POS             = 50.0;
@@ -423,7 +423,7 @@ public class RobotParams
     public static final double ARM_PRESET_TOLERANCE             = 5.0;
     public static final double[] ARM_PRESETS                    = new double[] {
 //        30.0, 60.0, 90.0, 120, 150.0, 180.0, 210.0, 240.0, 270.0
-          22.5, ARM_SCORE_BACKDROP_POS
+          25.6, ARM_SCORE_BACKDROP_POS
 //        ARM_MIN_POS,
 //        ARM_SAFE_POS,
 //        ARM_FREE_TO_MOVE_POS,
@@ -446,7 +446,7 @@ public class RobotParams
     public static final boolean WRIST_FOLLOWER_SERVO_INVERTED   = true;
     public static final double WRIST_MIN_POS                    = 0.0;
     public static final double WRIST_MAX_POS                    = 0.38;
-    public static final double WRIST_DOWN_POS                   = 0.235;
+    public static final double WRIST_DOWN_POS                   = 0.225;
     public static final double WRIST_UP_POS                     = WRIST_MAX_POS;
     public static final double WRIST_SAFE_POS                   = WRIST_DOWN_POS;
     //
@@ -458,8 +458,8 @@ public class RobotParams
     //
     // Pixel Tray subsystem.
     //
-    public static final double PIXELTRAY_LOWER_GATE_CLOSE       = 0.0;
-    public static final double PIXELTRAY_LOWER_GATE_OPEN        = 0.25;
+    public static final double PIXELTRAY_LOWER_GATE_CLOSE       = 0.7; //0.0;
+    public static final double PIXELTRAY_LOWER_GATE_OPEN        = 0.7; //0.25;
     public static final double PIXELTRAY_UPPER_GATE_CLOSE       = 0.3;
     public static final double PIXELTRAY_UPPER_GATE_OPEN        = 0.0;
     public static final double PIXELTRAY_OPEN_CLOSE_TIME        = 0.2;  // in sec
