@@ -119,7 +119,6 @@ public class FtcTest extends FtcTeleOp
 
     private final FtcPidCoeffCache pidCoeffCache = new FtcPidCoeffCache(RobotParams.TEAM_FOLDER_PATH);
     private final TestChoices testChoices = new TestChoices();
-    private final TrcEvent testEvent = new TrcEvent(moduleName);
     private TrcElapsedTimer elapsedTimer = null;
     private FtcChoiceMenu<Test> testMenu = null;
 
@@ -354,8 +353,7 @@ public class FtcTest extends FtcTeleOp
                     // Set the current position as the absolute field origin so the path can be an absolute path.
                     TrcPose2D startPose = new TrcPose2D(0.0, 0.0, 0.0);
                     robot.robotDrive.driveBase.setFieldPosition(startPose);
-                    robot.robotDrive.purePursuitDrive.start(
-                        testEvent, startPose, false, new TrcPose2D(0.0, 48.0, 90.0));
+                    robot.robotDrive.purePursuitDrive.start(startPose, false, new TrcPose2D(0.0, 48.0, 90.0));
                 }
                 break;
         }
@@ -466,9 +464,9 @@ public class FtcTest extends FtcTeleOp
                 //
                 // Intentionally falling through.
                 //
-            case PID_DRIVE:
             case PURE_PURSUIT_DRIVE:
-                if (robot.robotDrive != null && !testEvent.isSignaled() && testEvent.isCanceled())
+            case PID_DRIVE:
+                if (robot.robotDrive != null)
                 {
                     TrcPidController xPidCtrl, yPidCtrl, turnPidCtrl;
                     if (testChoices.test == Test.PURE_PURSUIT_DRIVE)

@@ -133,6 +133,9 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     String msg;
                     // Set robot's start position on the field.
                     robot.setRobotStartPosition(autoChoices);
+                    // Setup ElevatorArm.
+                    robot.elevatorArm.wrist.setPosition(RobotParams.WRIST_DOWN_POS);
+                    robot.elevatorArm.setupPositions(null, RobotParams.ELEVATOR_LOAD_POS, RobotParams.ARM_LOAD_POS);
                     // Use vision to determine team prop position (0: not found, 1, 2, 3).
                     if (robot.vision != null)
                     {
@@ -168,16 +171,15 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
                             RobotParams.BLUE_AUDIENCE_SPIKE_MARKS[spikeMarkIndex]:
                             RobotParams.BLUE_BACKSTAGE_SPIKE_MARKS[spikeMarkIndex];
-                    if (teamPropPos != 2)
-                    {
-                        targetPoseTile.y = 1.7;
-                    }
                     targetPose = robot.adjustPoseByAlliance(targetPoseTile, autoChoices.alliance);
+//                    double xTileOffset = spikeMarkIndex == 0? 0.45: spikeMarkIndex == 2? -0.45: 0.0;
+//                    targetPose = robot.adjustPoseByAlliance(
+//                        targetPoseTile.x + xTileOffset, targetPoseTile.y, targetPoseTile.angle, autoChoices.alliance);
                     intermediate1 =
                         robot.adjustPoseByAlliance(
-                            targetPoseTile.x, 1.8, 180.0, autoChoices.alliance);
+                            targetPoseTile.x, targetPoseTile.y + 0.1, 180.0, autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
-                        event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
+                        event, 3.0, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.PLACE_PURPLE_PIXEL);
                     break;
 

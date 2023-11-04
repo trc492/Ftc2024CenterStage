@@ -156,7 +156,7 @@ public class RobotParams
     public static final double SPIKE_MARK_Y_OFFSET              = 0.3;
     public static final double AUDIENCE_SPIKES_X                = -1.5;
     public static final double BACKSTAGE_SPIKES_X               = 0.5;
-    public static final double BLUE_SPIKES_Y                    = 1.4;
+    public static final double BLUE_SPIKES_Y                    = 1.5;
     public static final TrcPose2D[] BLUE_AUDIENCE_SPIKE_MARKS   = new TrcPose2D[] {
         new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y - SPIKE_MARK_Y_OFFSET, 180.0 - SPIKE_MARK_ANGLE_OFFSET),
         new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y, 180.0),
@@ -323,14 +323,14 @@ public class RobotParams
 
     // 0.022, 0.0, 0.0018
     public static final TrcPidController.PidCoefficients yPosPidCoeff =
-        new TrcPidController.PidCoefficients(0.03, 0.0, 0.002, 0.0);
-    public static final double YPOS_TOLERANCE                   = 1.0;
+        new TrcPidController.PidCoefficients(0.035, 0.0, 0.0035, 0.0);
+    public static final double YPOS_TOLERANCE                   = 2.0;
     public static final double YPOS_INCHES_PER_COUNT            = 0.02166184604662450653409090909091;
     public static final Double Y_RAMP_RATE                      = null;//10.0;
 
     public static final TrcPidController.PidCoefficients turnPidCoeff =
-        new TrcPidController.PidCoefficients(0.012, 0.0, 0.0, 0.0, 0.0);
-    public static final double TURN_TOLERANCE                   = 1.0;
+        new TrcPidController.PidCoefficients(0.012, 0.0, 0.0012, 0.0, 0.0);
+    public static final double TURN_TOLERANCE                   = 2.0;
     public static final double TURN_SETTLING                    = TrcPidController.DEF_SETTLING_TIME;
     public static final double TURN_STEADY_STATE_ERR            = 2.0;
     public static final double TURN_STALL_ERRRATE_THRESHOLD     = 1.0;
@@ -371,6 +371,7 @@ public class RobotParams
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
     public static final double ELEVATOR_MAX_POS                 = 24.0;
     public static final double ELEVATOR_SAFE_POS                = 14.5;
+    public static final double ELEVATOR_LOAD_POS                = 12.0;
     public static final double ELEVATOR_LEVEL1_POS              = 14.5;
     public static final double ELEVATOR_LEVEL2_POS              = 21.5;
     public static final double ELEVATOR_LEVEL3_POS              = 21.5;             // Unreachable
@@ -380,7 +381,7 @@ public class RobotParams
     public static final double ELEVATOR_PRESET_TOLERANCE        = 0.5;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
 //        14.0, 16.0, 20.0, 22.0
-          12, ELEVATOR_LEVEL1_POS, ELEVATOR_LEVEL2_POS
+          ELEVATOR_LOAD_POS, ELEVATOR_LEVEL1_POS, ELEVATOR_LEVEL2_POS
 //        ELEVATOR_MIN_POS,
 //        ELEVATOR_SAFE_POS,
 //        ELEVATOR_LEVEL1_POS,
@@ -416,6 +417,7 @@ public class RobotParams
     public static final double ARM_ZERO_OFFSET                  = 0.015152;
     public static final double ARM_MIN_POS                      = 25.6;
     public static final double ARM_MAX_POS                      = 300.0;
+    public static final double ARM_LOAD_POS                     = 25.6;
     public static final double ARM_SAFE_POS                     = 37.0;
     public static final double ARM_FREE_TO_MOVE_POS             = 50.0;
     public static final double ARM_SCORE_BACKDROP_POS           = 260.0;
@@ -423,7 +425,7 @@ public class RobotParams
     public static final double ARM_PRESET_TOLERANCE             = 5.0;
     public static final double[] ARM_PRESETS                    = new double[] {
 //        30.0, 60.0, 90.0, 120, 150.0, 180.0, 210.0, 240.0, 270.0
-          25.6, ARM_SCORE_BACKDROP_POS
+          ARM_LOAD_POS, ARM_SCORE_BACKDROP_POS
 //        ARM_MIN_POS,
 //        ARM_SAFE_POS,
 //        ARM_FREE_TO_MOVE_POS,
@@ -458,8 +460,8 @@ public class RobotParams
     //
     // Pixel Tray subsystem.
     //
-    public static final double PIXELTRAY_LOWER_GATE_CLOSE       = 0.7; //0.0;
-    public static final double PIXELTRAY_LOWER_GATE_OPEN        = 0.7; //0.25;
+    public static final double PIXELTRAY_LOWER_GATE_CLOSE       = 0.0;
+    public static final double PIXELTRAY_LOWER_GATE_OPEN        = 0.25;
     public static final double PIXELTRAY_UPPER_GATE_CLOSE       = 0.3;
     public static final double PIXELTRAY_UPPER_GATE_OPEN        = 0.0;
     public static final double PIXELTRAY_OPEN_CLOSE_TIME        = 0.2;  // in sec
