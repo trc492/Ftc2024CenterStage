@@ -745,4 +745,59 @@ public class ElevatorArm
         }
     }   //armPresetPositionDown
 
+    /**
+     * This method sets the wrist position while observing whether it's safe to do so.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystem.
+     * @param delay specifies the delay in seconds before setting the position of the servo, can be zero if no delay.
+     * @param position specifies the physical position of the servo motor. This value may be in degrees if
+     *        setPhysicalPosRange is called with the degree range.
+     * @param completionEvent specifies an event object to signal when the timeout event has expired.
+     * @param timeout specifies a maximum time value the operation should be completed in seconds.
+     */
+    public void setWristPosition(String owner, double delay, double position, TrcEvent completionEvent, double timeout)
+    {
+        if (elevator.getPosition() >= RobotParams.ELEVATOR_SAFE_POS)
+        {
+            wrist.setPosition(owner, delay, position, completionEvent, timeout);
+        }
+    }   //setWristPosition
+
+    /**
+     * This method sets the wrist position while observing whether it's safe to do so.
+     *
+     * @param delay specifies the delay in seconds before setting the position of the servo, can be zero if no delay.
+     * @param position specifies the physical position of the servo motor. This value may be in degrees if
+     *        setPhysicalPosRange is called with the degree range.
+     * @param completionEvent specifies an event object to signal when the timeout event has expired.
+     * @param timeout specifies a maximum time value the operation should be completed in seconds.
+     */
+    public void setWristPosition(double delay, double position, TrcEvent completionEvent, double timeout)
+    {
+        setWristPosition(null, delay, position, completionEvent, timeout);
+    }   //setWristPosition
+
+    /**
+     * This method sets the wrist position while observing whether it's safe to do so.
+     *
+     * @param delay specifies the delay in seconds before setting the position of the servo, can be zero if no delay.
+     * @param position specifies the physical position of the servo motor. This value may be in degrees if
+     *        setPhysicalPosRange is called with the degree range.
+     */
+    public void setWristPosition(double delay, double position)
+    {
+        setWristPosition(null, delay, position, null, 0.0);
+    }   //setWristPosition
+
+    /**
+     * This method sets the wrist position while observing whether it's safe to do so.
+     *
+     * @param position specifies the physical position of the servo motor. This value may be in degrees if
+     *        setPhysicalPosRange is called with the degree range.
+     */
+    public void setWristPosition(double position)
+    {
+        setWristPosition(null, 0.0, position, null, 0.0);
+    }   //setWristPosition
+
 }   //class ElevatorArm
