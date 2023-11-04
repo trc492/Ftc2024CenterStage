@@ -31,10 +31,10 @@ import java.util.Locale;
 
 import TrcCommonLib.command.CmdDriveMotorsTest;
 import TrcCommonLib.command.CmdPidDrive;
-import TrcCommonLib.command.CmdPurePursuitDrive;
 import TrcCommonLib.command.CmdTimedDrive;
 
 import TrcCommonLib.trclib.TrcElapsedTimer;
+import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcGameController;
 import TrcCommonLib.trclib.TrcPidController;
 import TrcCommonLib.trclib.TrcPose2D;
@@ -58,6 +58,7 @@ import teamcode.vision.Vision;
 @TeleOp(name="FtcTest", group="Ftc3543")
 public class FtcTest extends FtcTeleOp
 {
+    private static final String moduleName = "FtcTest";
     private static final boolean logEvents = true;
     private static final boolean debugPid = true;
 
@@ -118,6 +119,7 @@ public class FtcTest extends FtcTeleOp
 
     private final FtcPidCoeffCache pidCoeffCache = new FtcPidCoeffCache(RobotParams.TEAM_FOLDER_PATH);
     private final TestChoices testChoices = new TestChoices();
+    private final TrcEvent testEvent = new TrcEvent(moduleName);
     private TrcElapsedTimer elapsedTimer = null;
     private FtcChoiceMenu<Test> testMenu = null;
 
@@ -155,7 +157,6 @@ public class FtcTest extends FtcTeleOp
         // TeleOp initialization.
         //
         super.robotInit();
-
         if (robot.vision != null)
         {
             frontWebcam = robot.vision.getFrontWebcam();
@@ -176,14 +177,14 @@ public class FtcTest extends FtcTeleOp
         switch (testChoices.test)
         {
             case DRIVE_MOTORS_TEST:
-                if (!RobotParams.Preferences.noRobot)
+                if (robot.robotDrive != null)
                 {
                     testCommand = new CmdDriveMotorsTest(robot.robotDrive.driveMotors, 5.0, 0.5);
                 }
                 break;
 
             case X_TIMED_DRIVE:
-                if (!RobotParams.Preferences.noRobot)
+                if (robot.robotDrive != null)
                 {
                     testCommand = new CmdTimedDrive(
                         robot.robotDrive.driveBase, 0.0, testChoices.driveTime, testChoices.drivePower, 0.0, 0.0);
@@ -191,7 +192,7 @@ public class FtcTest extends FtcTeleOp
                 break;
 
             case Y_TIMED_DRIVE:
-                if (!RobotParams.Preferences.noRobot)
+                if (robot.robotDrive != null)
                 {
                     testCommand = new CmdTimedDrive(
                         robot.robotDrive.driveBase, 0.0, testChoices.driveTime, 0.0, testChoices.drivePower, 0.0);
@@ -199,7 +200,7 @@ public class FtcTest extends FtcTeleOp
                 break;
 
             case PID_DRIVE:
-                if (!RobotParams.Preferences.noRobot)
+                if (robot.robotDrive != null)
                 {
                     // Distance targets are in feet, so convert them into inches.
                     testCommand = new CmdPidDrive(
@@ -209,7 +210,7 @@ public class FtcTest extends FtcTeleOp
                 break;
 
             case TUNE_X_PID:
-                if (!RobotParams.Preferences.noRobot)
+                if (robot.robotDrive != null)
                 {
                     // Distance target is in feet, so convert it into inches.
                     testCommand = new CmdPidDrive(
@@ -219,7 +220,7 @@ public class FtcTest extends FtcTeleOp
                 break;
 
             case TUNE_Y_PID:
-                if (!RobotParams.Preferences.noRobot)
+                if (robot.robotDrive != null)
                 {
                     // Distance target is in feet, so convert it into inches.
                     testCommand = new CmdPidDrive(
@@ -229,20 +230,11 @@ public class FtcTest extends FtcTeleOp
                 break;
 
             case TUNE_TURN_PID:
-                if (!RobotParams.Preferences.noRobot)
+                if (robot.robotDrive != null)
                 {
                     testCommand = new CmdPidDrive(
                         robot.robotDrive.driveBase, robot.robotDrive.pidDrive, 0.0, testChoices.tuneDrivePower,
                         testChoices.tunePidCoeff, new TrcPose2D(0.0, 0.0, testChoices.tuneHeading));
-                }
-                break;
-
-            case PURE_PURSUIT_DRIVE:
-                if (!RobotParams.Preferences.noRobot)
-                {
-                    testCommand = new CmdPurePursuitDrive(
-                        robot.robotDrive.driveBase, RobotParams.xPosPidCoeff, RobotParams.yPosPidCoeff,
-                        RobotParams.turnPidCoeff, RobotParams.velPidCoeff);
                 }
                 break;
         }
@@ -360,14 +352,10 @@ public class FtcTest extends FtcTeleOp
                     // Doing a 48x48-inch square box with robot heading always pointing to the center of the box.
                     //
                     // Set the current position as the absolute field origin so the path can be an absolute path.
-                    robot.robotDrive.driveBase.setFieldPosition(new TrcPose2D(0.0, 0.0, 0.0));
-                    ((CmdPurePursuitDrive)testCommand).start(
-                        robot.robotDrive.driveBase.getFieldPosition(), false,
-                        new TrcPose2D(-24.0, 0, 45.0),
-                        new TrcPose2D(-24.0, 48.0, 135.0),
-                        new TrcPose2D(24.0, 48.0, 225.0),
-                        new TrcPose2D(24.0, 0.0, 315.0),
-                        new TrcPose2D(0.0, 0.0, 0.0));
+                    TrcPose2D startPose = new TrcPose2D(0.0, 0.0, 0.0);
+                    robot.robotDrive.driveBase.setFieldPosition(startPose);
+                    robot.robotDrive.purePursuitDrive.start(
+                        testEvent, startPose, false, new TrcPose2D(0.0, 48.0, 90.0));
                 }
                 break;
         }
@@ -385,6 +373,11 @@ public class FtcTest extends FtcTeleOp
         if (testCommand != null)
         {
             testCommand.cancel();
+        }
+
+        if (robot.robotDrive != null)
+        {
+            robot.robotDrive.cancel();
         }
 
         super.stopMode(prevMode, nextMode);
@@ -416,7 +409,7 @@ public class FtcTest extends FtcTeleOp
         switch (testChoices.test)
         {
             case DRIVE_SPEED_TEST:
-                if (!RobotParams.Preferences.noRobot)
+                if (robot.robotDrive != null)
                 {
                     double currTime = TrcTimer.getCurrentTime();
                     TrcPose2D velPose = robot.robotDrive.driveBase.getFieldVelocity();
@@ -449,7 +442,7 @@ public class FtcTest extends FtcTeleOp
 
             case X_TIMED_DRIVE:
             case Y_TIMED_DRIVE:
-                if (!RobotParams.Preferences.noRobot)
+                if (robot.robotDrive != null)
                 {
                     robot.dashboard.displayPrintf(lineNum++, "Timed Drive: %.0f sec", testChoices.driveTime);
                     robot.dashboard.displayPrintf(
@@ -466,7 +459,7 @@ public class FtcTest extends FtcTeleOp
             case TUNE_X_PID:
             case TUNE_Y_PID:
             case TUNE_TURN_PID:
-                if (!RobotParams.Preferences.noRobot && testChoices.tunePidCoeff != null)
+                if (robot.robotDrive != null && testChoices.tunePidCoeff != null)
                 {
                     robot.dashboard.displayPrintf(7, "TunePid=%s", testChoices.tunePidCoeff);
                 }
@@ -475,7 +468,7 @@ public class FtcTest extends FtcTeleOp
                 //
             case PID_DRIVE:
             case PURE_PURSUIT_DRIVE:
-                if (!RobotParams.Preferences.noRobot)
+                if (robot.robotDrive != null && !testEvent.isSignaled() && testEvent.isCanceled())
                 {
                     TrcPidController xPidCtrl, yPidCtrl, turnPidCtrl;
                     if (testChoices.test == Test.PURE_PURSUIT_DRIVE)
@@ -1089,7 +1082,7 @@ public class FtcTest extends FtcTeleOp
         // Read all sensors and display on the dashboard.
         // Drive the robot around to sample different locations of the field.
         //
-        if (!RobotParams.Preferences.noRobot)
+        if (robot.robotDrive != null)
         {
             robot.dashboard.displayPrintf(
                 lineNum++, "DriveEnc: lf=%.0f,rf=%.0f,lb=%.0f,rb=%.0f",
@@ -1114,15 +1107,15 @@ public class FtcTest extends FtcTeleOp
                     swerveDrive.steerEncoders[RobotDrive.INDEX_LEFT_BACK].getRawPosition(),
                     swerveDrive.steerEncoders[RobotDrive.INDEX_RIGHT_BACK].getRawPosition());
             }
-        }
 
-        if (robot.robotDrive.gyro != null)
-        {
-            robot.dashboard.displayPrintf(
-                lineNum++, "Gyro(x,y,z): Heading=(%.1f,%.1f,%.1f), Rate=(%.3f,%.3f,%.3f)",
-                robot.robotDrive.gyro.getXHeading().value, robot.robotDrive.gyro.getYHeading().value,
-                robot.robotDrive.gyro.getZHeading().value, robot.robotDrive.gyro.getXRotationRate().value,
-                robot.robotDrive.gyro.getYRotationRate().value, robot.robotDrive.gyro.getZRotationRate().value);
+            if (robot.robotDrive.gyro != null)
+            {
+                robot.dashboard.displayPrintf(
+                    lineNum++, "Gyro(x,y,z): Heading=(%.1f,%.1f,%.1f), Rate=(%.3f,%.3f,%.3f)",
+                    robot.robotDrive.gyro.getXHeading().value, robot.robotDrive.gyro.getYHeading().value,
+                    robot.robotDrive.gyro.getZHeading().value, robot.robotDrive.gyro.getXRotationRate().value,
+                    robot.robotDrive.gyro.getYRotationRate().value, robot.robotDrive.gyro.getZRotationRate().value);
+            }
         }
     }   //doSensorsTest
 
@@ -1190,7 +1183,7 @@ public class FtcTest extends FtcTeleOp
      */
     private boolean allowTeleOp()
     {
-        return teleOpControlEnabled && !RobotParams.Preferences.noRobot &&
+        return teleOpControlEnabled && robot.robotDrive != null &&
                (testChoices.test == Test.SUBSYSTEMS_TEST || testChoices.test == Test.DRIVE_SPEED_TEST);
     }   //allowTeleOp
 
@@ -1201,7 +1194,7 @@ public class FtcTest extends FtcTeleOp
      */
     private boolean allowButtonControl()
     {
-        return !RobotParams.Preferences.noRobot &&
+        return robot.robotDrive != null &&
                (testChoices.test == Test.SUBSYSTEMS_TEST ||
                 testChoices.test == Test.DRIVE_SPEED_TEST ||
                 testChoices.test == Test.CALIBRATE_SWERVE_STEERING);

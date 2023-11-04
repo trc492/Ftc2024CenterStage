@@ -153,13 +153,14 @@ public class RobotParams
         PARKPOS_X, PARKPOS_BLUE_CENTER_Y, -90.0);
     // Spike Mark locations to place the pixel in tile units.
     public static final double SPIKE_MARK_ANGLE_OFFSET          = 90.0;
+    public static final double SPIKE_MARK_Y_OFFSET              = 0.3;
     public static final double AUDIENCE_SPIKES_X                = -1.5;
     public static final double BACKSTAGE_SPIKES_X               = 0.5;
-    public static final double BLUE_SPIKES_Y                    = 1.5;
+    public static final double BLUE_SPIKES_Y                    = 1.4;
     public static final TrcPose2D[] BLUE_AUDIENCE_SPIKE_MARKS   = new TrcPose2D[] {
-        new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y, 180.0 - SPIKE_MARK_ANGLE_OFFSET),
+        new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y - SPIKE_MARK_Y_OFFSET, 180.0 - SPIKE_MARK_ANGLE_OFFSET),
         new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y, 180.0),
-        new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y, 180.0 + SPIKE_MARK_ANGLE_OFFSET)
+        new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y - SPIKE_MARK_Y_OFFSET, 180.0 + SPIKE_MARK_ANGLE_OFFSET)
     };
     public static final TrcPose2D[] BLUE_BACKSTAGE_SPIKE_MARKS  = new TrcPose2D[] {
         new TrcPose2D(BACKSTAGE_SPIKES_X, BLUE_SPIKES_Y, 180.0 - SPIKE_MARK_ANGLE_OFFSET),
@@ -322,13 +323,13 @@ public class RobotParams
 
     // 0.022, 0.0, 0.0018
     public static final TrcPidController.PidCoefficients yPosPidCoeff =
-        new TrcPidController.PidCoefficients(0.03, 0.0, 0.003, 0.0);
+        new TrcPidController.PidCoefficients(0.03, 0.0, 0.002, 0.0);
     public static final double YPOS_TOLERANCE                   = 1.0;
     public static final double YPOS_INCHES_PER_COUNT            = 0.02166184604662450653409090909091;
     public static final Double Y_RAMP_RATE                      = null;//10.0;
 
     public static final TrcPidController.PidCoefficients turnPidCoeff =
-        new TrcPidController.PidCoefficients(0.022, 0.0, 0.0018, 0.0, 0.0);
+        new TrcPidController.PidCoefficients(0.012, 0.0, 0.0, 0.0, 0.0);
     public static final double TURN_TOLERANCE                   = 1.0;
     public static final double TURN_SETTLING                    = TrcPidController.DEF_SETTLING_TIME;
     public static final double TURN_STEADY_STATE_ERR            = 2.0;
@@ -451,8 +452,8 @@ public class RobotParams
     //
     // Intake subsystem.
     //
-    public static final double INTAKE_PICKUP_POWER              = 1.0;
-    public static final double INTAKE_SPITOUT_POWER             = -0.5;
+    public static final double INTAKE_PICKUP_POWER              = -1.0;
+    public static final double INTAKE_SPITOUT_POWER             = 0.7;
     public static final double INTAKE_SENSOR_THRESHOLD          = 5.0;
     //
     // Pixel Tray subsystem.

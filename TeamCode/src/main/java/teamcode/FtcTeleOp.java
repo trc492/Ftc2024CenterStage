@@ -49,8 +49,8 @@ public class FtcTeleOp extends FtcOpMode
     private boolean manualOverride = false;
     private boolean relocalizing = false;
     private TrcPose2D robotFieldPose = null;
-    private boolean pixelTrayGate1Opened = false;
-    private boolean pixelTrayGate2Opened = false;
+    private boolean pixelTrayLowerGateOpened = false;
+    private boolean pixelTrayUpperGateOpened = false;
     private boolean wristUp = false;
 
     //
@@ -288,19 +288,19 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_Y:
-                if (pressed && robot.robotDrive != null)
-                {
-                    if (robot.robotDrive.driveBase.isGyroAssistEnabled())
-                    {
-                        // Disable GyroAssist drive.
-                        robot.robotDrive.driveBase.setGyroAssistEnabled(null);
-                    }
-                    else
-                    {
-                        // Enable GyroAssist drive.
-                        robot.robotDrive.driveBase.setGyroAssistEnabled(robot.robotDrive.pidDrive.getTurnPidCtrl());
-                    }
-                }
+//                if (pressed && robot.robotDrive != null)
+//                {
+//                    if (robot.robotDrive.driveBase.isGyroAssistEnabled())
+//                    {
+//                        // Disable GyroAssist drive.
+//                        robot.robotDrive.driveBase.setGyroAssistEnabled(null);
+//                    }
+//                    else
+//                    {
+//                        // Enable GyroAssist drive.
+//                        robot.robotDrive.driveBase.setGyroAssistEnabled(robot.robotDrive.pidDrive.getTurnPidCtrl());
+//                    }
+//                }
                 break;
 
             case FtcGamepad.GAMEPAD_LBUMPER:
@@ -378,16 +378,16 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_A:
                 if (robot.pixelTray != null && pressed)
                 {
-                    pixelTrayGate1Opened = !pixelTrayGate1Opened;
-                    robot.pixelTray.setLowerGateOpened(pixelTrayGate1Opened, null);
+                    pixelTrayLowerGateOpened = !pixelTrayLowerGateOpened;
+                    robot.pixelTray.setLowerGateOpened(pixelTrayLowerGateOpened, null);
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_B:
                 if (robot.pixelTray != null && pressed)
                 {
-                    pixelTrayGate2Opened = !pixelTrayGate2Opened;
-                    robot.pixelTray.setUpperGateOpened(pixelTrayGate2Opened, null);
+                    pixelTrayUpperGateOpened = !pixelTrayUpperGateOpened;
+                    robot.pixelTray.setUpperGateOpened(pixelTrayUpperGateOpened, null);
                 }
                 break;
 
