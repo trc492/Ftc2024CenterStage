@@ -82,7 +82,7 @@ public class Vision
     private static final double[] yellowPixelColorThresholds = {150.0, 250.0, 110.0, 160.0, 20.0, 100.0};
     private static final double[] whitePixelColorThresholds = {250.0, 255.0, 100.0, 130.0, 120.0, 140.0};
     private static final double[] redConeColorThresholds = {20.0, 120.0, 180.0, 240.0, 90.0, 120.0};
-    private static final double[] blueConeColorThresholds = {40.0, 140.0, 100.0, 150.0, 150.0, 200.0};
+    private static final double[] blueConeColorThresholds = {0.0, 250.0, 40.0, 250.0, 160.0, 240.0};
 //    // HSV Color Space.
 //    private static final int colorConversion = Imgproc.COLOR_RGB2HSV_FULL;
 //    private static final double[] purplePixelColorThresholds = {170.0, 200.0, 40.0, 160.0, 100.0, 255.0};
@@ -102,10 +102,10 @@ public class Vision
             .setAspectRatioRange(0.2, 5.0);
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams coneFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
-            .setMinArea(2000.0)
-            .setMinPerimeter(200.0)
-            .setWidthRange(30.0, 1000.0)
-            .setHeightRange(30.0, 1000.0)
+            .setMinArea(1000.0)
+            .setMinPerimeter(100.0)
+            .setWidthRange(20.0, 1000.0)
+            .setHeightRange(20.0, 1000.0)
             .setSolidityRange(0.0, 100.0)
             .setVerticesRange(0.0, 1000.0)
             .setAspectRatioRange(0.8, 1.25);

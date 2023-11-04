@@ -1128,7 +1128,7 @@ public class FtcTest extends FtcTeleOp
         {
             int lineNum = 9;
 
-            robot.vision.displayExposureSettings(lineNum++);
+//            robot.vision.displayExposureSettings(lineNum++);
             if (robot.vision.rawColorBlobVision != null)
             {
                 robot.vision.getDetectedRawColorBlob(lineNum++);

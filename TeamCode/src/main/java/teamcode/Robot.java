@@ -171,7 +171,7 @@ public class Robot
         if (RobotParams.Preferences.centerStageRobot)
         {
             RobotParams.Preferences.useBlinkin = true;
-            RobotParams.Preferences.hasWebCam2 = false;
+            RobotParams.Preferences.hasWebCam2 = true;
             RobotParams.Preferences.useExternalOdometry = true;
             RobotParams.Preferences.useSubsystems = true;
             RobotParams.Preferences.useAprilTagVision = true;
