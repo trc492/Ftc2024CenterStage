@@ -160,7 +160,9 @@ public class Robot
                     launcher = new FtcDcMotor(RobotParams.HWNAME_LAUNCHER);
                     launcher.setMotorInverted(true);
                 }
-
+                //
+                // Create auto tasks here.
+                //
                 placePixelTask = new TaskAutoPlacePixel("PlacePixelTask", this, globalTracer);
             }
         }
