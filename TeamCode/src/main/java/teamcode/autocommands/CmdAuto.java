@@ -217,7 +217,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         intermediate2 = robot.adjustPoseByAlliance(1.5, 2.0, -90.0, autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
-                            event, robot.robotDrive.driveBase.getFieldPosition(), false,
+                            event, 5.0, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, targetPose);
                     }
                     else
@@ -228,7 +228,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         intermediate4 = robot.adjustPoseByAlliance(1.5, 0.5, -90.0, autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
-                            event, robot.robotDrive.driveBase.getFieldPosition(), false,
+                            event, 9.0, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, intermediate3, intermediate4, targetPose);
                     }
                     sm.waitForSingleEvent(event, State.FIND_APRILTAG);
@@ -297,8 +297,9 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     aprilTagPose.x -= 6.0;
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
-                        event, robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
-                    sm.waitForSingleEvent(event,State.PARK_AT_BACKSTAGE);//PLACE_YELLOW_PIXEL);
+                        event, 3.0,  robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
+                    robot.elevatorArm.setupPositions(null, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ARM_SCORE_BACKDROP_POS);
+                    sm.waitForSingleEvent(event,State.PLACE_YELLOW_PIXEL);
                     break;
 
                 case PLACE_YELLOW_PIXEL:
@@ -306,6 +307,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     if (robot.pixelTray != null)
                     {
                         robot.pixelTray.setLowerGateOpened(true, event);
+                        robot.pixelTray.setUpperGateOpened(true, event);
                         sm.waitForSingleEvent(event, State.PARK_AT_BACKSTAGE);
                     }
                     else

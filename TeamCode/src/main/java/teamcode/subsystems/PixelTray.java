@@ -46,8 +46,8 @@ public class PixelTray
         this.msgTracer = msgTracer;
         lowerGate = new FtcServo(instanceName + ".lowerGate");
         upperGate = new FtcServo(instanceName + ".upperGate");
-        setLowerGateOpened(false, null);
-        setUpperGateOpened(false, null);
+//        setLowerGateOpened(false, null);
+//        setUpperGateOpened(false, null);
     }   //PixelTray
 
     /**

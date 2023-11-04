@@ -86,6 +86,7 @@ public class FtcTeleOp extends FtcOpMode
         driverGamepad.setYInverted(true);
         operatorGamepad.setYInverted(true);
         setDriveOrientation(TrcDriveBase.DriveOrientation.ROBOT);
+
     }   //robotInit
 
     //
@@ -274,6 +275,7 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     // Cancel all auto-assist driving.
                     robot.robotDrive.cancel();
+                    robot.placePixelTask.autoAssistCancel();
                 }
                 break;
 
@@ -285,6 +287,12 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_X:
+                if (pressed && robot.elevatorArm != null && robot.vision != null) {
+                    robot.placePixelTask.autoAssistPlace(
+                            null,
+                            FtcAuto.autoChoices.alliance
+                    );
+                }
                 break;
 
             case FtcGamepad.GAMEPAD_Y:
@@ -395,6 +403,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (robot.intake != null)
                 {
                     robot.intake.pickUp(pressed);
+
                 }
                 break;
 
@@ -409,7 +418,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (robot.elevatorArm != null && pressed)
                 {
                     wristUp = !wristUp;
-                    robot.elevatorArm.wrist.setPosition(wristUp? RobotParams.WRIST_UP_POS: RobotParams.WRIST_DOWN_POS);
+                    robot.elevatorArm.setWristPosition(wristUp? RobotParams.WRIST_UP_POS: RobotParams.WRIST_DOWN_POS);
                 }
                 break;
 
@@ -436,7 +445,7 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     wristUp = false;
                     robot.elevatorArm.armPresetPositionDown(moduleName, RobotParams.ARM_POWER_LIMIT);
-                    robot.elevatorArm.wrist.setPosition(wristUp? RobotParams.WRIST_UP_POS: RobotParams.WRIST_DOWN_POS);
+                    robot.elevatorArm.setWristPosition(wristUp? RobotParams.WRIST_UP_POS: RobotParams.WRIST_DOWN_POS);
                 }
                 break;
 
@@ -445,7 +454,7 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     wristUp = true;
                     robot.elevatorArm.armPresetPositionUp(moduleName, RobotParams.ARM_POWER_LIMIT);
-                    robot.elevatorArm.wrist.setPosition(wristUp? RobotParams.WRIST_UP_POS: RobotParams.WRIST_DOWN_POS);
+                    robot.elevatorArm.setWristPosition(wristUp? RobotParams.WRIST_UP_POS: RobotParams.WRIST_DOWN_POS);
                 }
                 break;
 

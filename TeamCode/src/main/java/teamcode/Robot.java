@@ -35,6 +35,7 @@ import TrcFtcLib.ftclib.FtcDcMotor;
 import TrcFtcLib.ftclib.FtcMatchInfo;
 import TrcFtcLib.ftclib.FtcOpMode;
 import TrcFtcLib.ftclib.FtcRobotBattery;
+import teamcode.autotasks.TaskAutoPlacePixel;
 import teamcode.drivebases.MecanumDrive;
 import teamcode.drivebases.RobotDrive;
 import teamcode.drivebases.SwerveDrive;
@@ -74,6 +75,8 @@ public class Robot
     public Intake intake;
     public PixelTray pixelTray;
     public FtcDcMotor launcher;
+
+    public TaskAutoPlacePixel placePixelTask;
 
     /**
      * Constructor: Create an instance of the object.
@@ -142,6 +145,14 @@ public class Robot
                 if (RobotParams.Preferences.usePixelTray)
                 {
                     pixelTray = new PixelTray(RobotParams.HWNAME_PIXELTRAY, globalTracer);
+                    if (runMode == TrcRobot.RunMode.TELEOP_MODE) {
+                        pixelTray.setUpperGateOpened(true, null);
+                        pixelTray.setLowerGateOpened(true, null);
+                    }
+                    else {
+                        pixelTray.setUpperGateOpened(false, null);
+                        pixelTray.setLowerGateOpened(false, null);
+                    }
                 }
 
                 if (RobotParams.Preferences.useLauncher)
@@ -149,6 +160,8 @@ public class Robot
                     launcher = new FtcDcMotor(RobotParams.HWNAME_LAUNCHER);
                     launcher.setMotorInverted(true);
                 }
+
+                placePixelTask = new TaskAutoPlacePixel("PlacePixelTask", this, globalTracer);
             }
         }
 
