@@ -289,7 +289,7 @@ public class RobotParams
         new TrcPidController.PidCoefficients(1.0, 0.0, 0.0, 0.0);
     public static final boolean DRIVE_WHEEL_BRAKE_MODE_ON       = true;
     public static final double TURN_POWER_LIMIT                 = 0.5;
-    public static final double DRIVE_POWER_SCALE_SLOW           = 0.3;
+    public static final double DRIVE_POWER_SCALE_SLOW           = 0.25;
     public static final double DRIVE_POWER_SCALE_NORMAL         = 1.0;
     public static final double TURN_POWER_SCALE_SLOW            = 0.5;
     public static final double TURN_POWER_SCALE_NORMAL          = 1.0;
@@ -376,7 +376,7 @@ public class RobotParams
     public static final double ELEVATOR_LEVEL2_POS              = 21.5;
     public static final double ELEVATOR_LEVEL3_POS              = 21.5;             // Unreachable
     // Power settings.
-    public static final double ELEVATOR_CAL_POWER               = -0.1;
+    public static final double ELEVATOR_CAL_POWER               = -0.15;
     // Preset positions.
     public static final double ELEVATOR_PRESET_TOLERANCE        = 0.5;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
@@ -413,8 +413,8 @@ public class RobotParams
     public static final boolean ARM_VOLTAGE_COMP_ENABLED        = true;
     public static final double ARM_DEG_SCALE                    = 360.0;
     public static final double ARM_POWER_LIMIT                  = 0.1;
-    public static final double ARM_OFFSET                       = 0.0;
-    public static final double ARM_ZERO_OFFSET                  = 0.015152;
+    public static final double ARM_OFFSET                       = 30.0;
+    public static final double ARM_ZERO_OFFSET                  = 1.0 - 0.954848;
     public static final double ARM_MIN_POS                      = 25.6;
     public static final double ARM_MAX_POS                      = 300.0;
     public static final double ARM_LOAD_POS                     = 25.6;

@@ -135,6 +135,9 @@ public class Robot
                 if (RobotParams.Preferences.useElevatorArm)
                 {
                     elevatorArm = new ElevatorArm(globalTracer, false);
+                    if (runMode == TrcRobot.RunMode.TELEOP_MODE) {
+                        elevatorArm.wristSetPosition(RobotParams.WRIST_DOWN_POS);
+                    }
                 }
 
                 if (RobotParams.Preferences.useIntake)
