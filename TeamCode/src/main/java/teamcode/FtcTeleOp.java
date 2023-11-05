@@ -293,6 +293,7 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_Y:
+                  // Toggle between field or robot oriented driving, only applicable for holonomic drive base.
 //                if (pressed && robot.robotDrive != null)
 //                {
 //                    if (robot.robotDrive.driveBase.isGyroAssistEnabled())
@@ -306,16 +307,6 @@ public class FtcTeleOp extends FtcOpMode
 //                        robot.robotDrive.driveBase.setGyroAssistEnabled(robot.robotDrive.pidDrive.getTurnPidCtrl());
 //                    }
 //                }
-                break;
-
-            case FtcGamepad.GAMEPAD_LBUMPER:
-                // Press and hold for slow drive.
-                drivePowerScale = pressed? RobotParams.DRIVE_POWER_SCALE_SLOW: RobotParams.DRIVE_POWER_SCALE_NORMAL;
-                turnPowerScale = pressed? RobotParams.TURN_POWER_SCALE_SLOW: RobotParams.TURN_POWER_SCALE_NORMAL;
-                break;
-
-            case FtcGamepad.GAMEPAD_RBUMPER:
-                // Toggle between field or robot oriented driving, only applicable for holonomic drive base.
                 if (pressed && robot.robotDrive != null && robot.robotDrive.driveBase.supportsHolonomicDrive())
                 {
                     if (robot.robotDrive.driveBase.getDriveOrientation() != TrcDriveBase.DriveOrientation.FIELD)
@@ -327,6 +318,18 @@ public class FtcTeleOp extends FtcOpMode
                         setDriveOrientation(TrcDriveBase.DriveOrientation.ROBOT);
                     }
                 }
+                break;
+
+            case FtcGamepad.GAMEPAD_LBUMPER:
+                // Press and hold for slow drive.
+                drivePowerScale = pressed? RobotParams.DRIVE_POWER_SCALE_SLOW: RobotParams.DRIVE_POWER_SCALE_NORMAL;
+                turnPowerScale = pressed? RobotParams.TURN_POWER_SCALE_SLOW: RobotParams.TURN_POWER_SCALE_NORMAL;
+                break;
+
+            case FtcGamepad.GAMEPAD_RBUMPER:
+                drivePowerScale = pressed? RobotParams.DRIVE_POWER_SCALE_SLOW: RobotParams.DRIVE_POWER_SCALE_NORMAL;
+                turnPowerScale = pressed? RobotParams.TURN_POWER_SCALE_SLOW: RobotParams.TURN_POWER_SCALE_NORMAL;
+
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_UP:
