@@ -269,7 +269,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 if (aprilTagPose != null)
                 {
                     // Account for end-effector offset from the camera.
-                    aprilTagPose.x -= 6.0;
+                    aprilTagPose.x -= 1.0;
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
                         event, 3.0,  robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
