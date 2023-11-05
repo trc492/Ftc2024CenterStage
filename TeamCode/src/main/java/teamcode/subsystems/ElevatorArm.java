@@ -212,7 +212,9 @@ public class ElevatorArm
     private void performAction(Object context)
     {
         ActionParams actionParams = (ActionParams) context;
-
+        TrcDbgTrace.globalTraceInfo("PerformAction", "ActionType=%s,ElevatorEvent=%s,ArmEvent=%s,SafeToMove=%s",
+                actionParams.actionType, elevatorEvent, armEvent, actionParams.safeToMove
+        );
         switch (actionParams.actionType)
         {
             case SetupPositions:
@@ -351,8 +353,10 @@ public class ElevatorArm
             elevatorEvent.clear();
             armEvent.clear();
             elevator.setPosition(
-                owner, delay, RobotParams.ELEVATOR_SAFE_POS, true, elevatorPowerLimit, elevatorEvent, timeout);
-            arm.setPosition(owner, delay, RobotParams.ARM_MIN_POS, true, armPowerLimit, armEvent, timeout);
+                owner, delay, RobotParams.ELEVATOR_SAFE_POS + RobotParams.ELEVATOR_TOLERANCE, true,
+                elevatorPowerLimit, elevatorEvent, timeout);
+            arm.setPosition(owner, delay, RobotParams.ARM_MIN_POS + RobotParams.ARM_TOLERANCE, true,
+                armPowerLimit, armEvent, timeout);
         }
         else
         {

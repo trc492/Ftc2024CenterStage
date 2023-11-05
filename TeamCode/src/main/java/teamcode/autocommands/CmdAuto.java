@@ -50,7 +50,10 @@ public class CmdAuto implements TrcRobot.RobotCommand
         DRIVE_TO_LOOKOUT,
         FIND_APRILTAG,
         DRIVE_TO_APRILTAG,
+        MOVE_ARM,
         PLACE_YELLOW_PIXEL,
+        RETRACT_ARM,
+        RETRACT_ELEVATOR,
         PARK_AT_BACKSTAGE,
         DONE
     }   //enum State
@@ -59,6 +62,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
     private final FtcAuto.AutoChoices autoChoices;
     private final TrcTimer timer;
     private final TrcEvent event;
+    private final TrcEvent elevatorArmEvent;
     private final TrcStateMachine<State> sm;
     private int aprilTagId = 0;
     private TrcPose2D aprilTagPose = null;
@@ -77,6 +81,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
         timer = new TrcTimer(moduleName);
         event = new TrcEvent(moduleName);
+        elevatorArmEvent = new TrcEvent(moduleName + ".elevatorArm");
         sm = new TrcStateMachine<>(moduleName);
         sm.start(State.START);
     }   //CmdAuto
@@ -175,9 +180,16 @@ public class CmdAuto implements TrcRobot.RobotCommand
 //                    double xTileOffset = spikeMarkIndex == 0? 0.45: spikeMarkIndex == 2? -0.45: 0.0;
 //                    targetPose = robot.adjustPoseByAlliance(
 //                        targetPoseTile.x + xTileOffset, targetPoseTile.y, targetPoseTile.angle, autoChoices.alliance);
-                    intermediate1 =
-                        robot.adjustPoseByAlliance(
-                            targetPoseTile.x, targetPoseTile.y + 0.1, 180.0, autoChoices.alliance);
+                    if (teamPropPos != 2) {
+                        intermediate1 =
+                                robot.adjustPoseByAlliance(
+                                        targetPoseTile.x, targetPoseTile.y + 0.1, 180.0, autoChoices.alliance);
+                    }
+                    else {
+                        intermediate1 =
+                                robot.adjustPoseByAlliance(
+                                        targetPoseTile.x, targetPoseTile.y - 0.1, 180.0, autoChoices.alliance);
+                    }
                     robot.robotDrive.purePursuitDrive.start(
                         event, 3.0, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.PLACE_PURPLE_PIXEL);
@@ -294,34 +306,52 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             moduleName, "Drive to AprilTag using blind odometry (pose=%s).", aprilTagPose);
                     }
                     // Account for end-effector offset from the camera.
-                    aprilTagPose.x -= 6.0;
+                    aprilTagPose.x -= 1.0;
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
                         event, 3.0,  robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
-                    robot.elevatorArm.setupPositions(null, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ARM_SCORE_BACKDROP_POS);
-                    sm.waitForSingleEvent(event,State.PLACE_YELLOW_PIXEL);
+                    sm.addEvent(event);
+//                    robot.elevatorArm.setupPositions(null, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ARM_SCORE_BACKDROP_POS, elevatorArmEvent, 0.0);
+                    robot.elevatorArm.setElevatorPosition(null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ELEVATOR_POWER_LIMIT, elevatorArmEvent, 0.0);
+                    sm.addEvent(elevatorArmEvent);
+                    sm.waitForEvents(State.MOVE_ARM, true);
                     break;
-
+                case MOVE_ARM:
+                    robot.elevatorArm.setArmPosition(null, 0.0, RobotParams.ARM_SCORE_BACKDROP_POS, RobotParams.ARM_POWER_LIMIT, event, 6.0);
+                    robot.elevatorArm.wristSetPosition(RobotParams.WRIST_UP_POS);
+                    sm.waitForSingleEvent(event, State.PLACE_YELLOW_PIXEL);
+                    break;
                 case PLACE_YELLOW_PIXEL:
                     // Place yellow pixel at the appropriate location on the backdrop.
                     if (robot.pixelTray != null)
                     {
                         robot.pixelTray.setLowerGateOpened(true, event);
                         robot.pixelTray.setUpperGateOpened(true, event);
-                        sm.waitForSingleEvent(event, State.PARK_AT_BACKSTAGE);
+                        sm.waitForSingleEvent(event, State.RETRACT_ARM);
                     }
                     else
                     {
-                        sm.setState(State.PARK_AT_BACKSTAGE);
+                        sm.setState(State.RETRACT_ARM);
                     }
                     break;
-
-                case PARK_AT_BACKSTAGE:
-                    // Retract everything.
+                case RETRACT_ARM:
+                    // Retract arm.
                     if (robot.elevatorArm != null)
                     {
-                        robot.elevatorArm.setupPositions(null, RobotParams.ELEVATOR_MIN_POS, RobotParams.ARM_MIN_POS);
+                        robot.elevatorArm.setArmPosition(null, 0.0, RobotParams.ARM_MIN_POS, RobotParams.ARM_POWER_LIMIT, event, 5.0);
+                        robot.elevatorArm.wristSetPosition(RobotParams.WRIST_DOWN_POS);
                     }
+                    sm.waitForSingleEvent(event, State.RETRACT_ELEVATOR);
+                    break;
+                case RETRACT_ELEVATOR:
+                    // Retract arm.
+                    if (robot.elevatorArm != null)
+                    {
+                        robot.elevatorArm.setElevatorPosition(null, 0.0, RobotParams.ELEVATOR_LOAD_POS, RobotParams.ELEVATOR_POWER_LIMIT, event, 5.0);
+                    }
+                    sm.waitForSingleEvent(event, State.PARK_AT_BACKSTAGE);
+                    break;
+                case PARK_AT_BACKSTAGE:
                     // Navigate robot to the backstage parking location.
                     targetPoseTile =
                         autoChoices.parkPos == FtcAuto.ParkPos.CORNER?
