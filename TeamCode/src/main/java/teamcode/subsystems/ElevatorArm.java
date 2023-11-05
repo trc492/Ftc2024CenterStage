@@ -212,9 +212,7 @@ public class ElevatorArm
     private void performAction(Object context)
     {
         ActionParams actionParams = (ActionParams) context;
-        TrcDbgTrace.globalTraceInfo("PerformAction", "ActionType=%s,ElevatorEvent=%s,ArmEvent=%s,SafeToMove=%s",
-                actionParams.actionType, elevatorEvent, armEvent, actionParams.safeToMove
-        );
+
         switch (actionParams.actionType)
         {
             case SetupPositions:

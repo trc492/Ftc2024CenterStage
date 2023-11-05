@@ -180,15 +180,17 @@ public class CmdAuto implements TrcRobot.RobotCommand
 //                    double xTileOffset = spikeMarkIndex == 0? 0.45: spikeMarkIndex == 2? -0.45: 0.0;
 //                    targetPose = robot.adjustPoseByAlliance(
 //                        targetPoseTile.x + xTileOffset, targetPoseTile.y, targetPoseTile.angle, autoChoices.alliance);
-                    if (teamPropPos != 2) {
+                    if (teamPropPos != 2)
+                    {
                         intermediate1 =
-                                robot.adjustPoseByAlliance(
-                                        targetPoseTile.x, targetPoseTile.y + 0.1, 180.0, autoChoices.alliance);
+                            robot.adjustPoseByAlliance(
+                                targetPoseTile.x, targetPoseTile.y + 0.1, 180.0, autoChoices.alliance);
                     }
-                    else {
+                    else
+                    {
                         intermediate1 =
-                                robot.adjustPoseByAlliance(
-                                        targetPoseTile.x, targetPoseTile.y - 0.1, 180.0, autoChoices.alliance);
+                            robot.adjustPoseByAlliance(
+                                targetPoseTile.x, targetPoseTile.y - 0.1, 180.0, autoChoices.alliance);
                     }
                     robot.robotDrive.purePursuitDrive.start(
                         event, 3.0, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
@@ -316,6 +318,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     sm.addEvent(elevatorArmEvent);
                     sm.waitForEvents(State.MOVE_ARM, true);
                     break;
+
                 case MOVE_ARM:
                     robot.elevatorArm.setArmPosition(null, 0.0, RobotParams.ARM_SCORE_BACKDROP_POS, RobotParams.ARM_POWER_LIMIT, event, 6.0);
                     robot.elevatorArm.wristSetPosition(RobotParams.WRIST_UP_POS);
