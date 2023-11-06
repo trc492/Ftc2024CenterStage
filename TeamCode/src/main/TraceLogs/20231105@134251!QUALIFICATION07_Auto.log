@@ -1,0 +1,247 @@
+globalTracer.FtcAuto_Info: ***** Starting autonomous *****
+globalTracer.FtcAuto_Info: <Info name="MatchInfo" date="Sun Nov 05 13:42:48 PST 2023" type="QUALIFICATION" number=7 />
+globalTracer.FtcAuto_Info: <Info name="AutoChoices" delay=0 alliance="BLUE_ALLIANCE" startPos="BACKSTAGE" strategy="AUTO" parkPos="CENTER" xTarget=4.0 yTarget=4.0 turnTarget=90 driveTime=5 drivePower=0.5 />
+globalTracer.CmdAuto_Info: Team Prop found at position 1
+globalTracer.start_Info: Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=11.8,y=61.6,angle=180.0),vel=0.00), TrcWaypoint(pose=(x=11.8,y=37.7,angle=180.0),vel=0.00), TrcWaypoint(pose=(x=11.8,y=35.3,angle=90.0),vel=0.00)])
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="0.568" tag="^^^^^" CmdAuto.state="START" RobotPose=(x=11.8,y=61.6,angle=180.0) TargetPose=(x=11.8,y=35.3,angle=90.0) vel=(x=0.0,y=0.0,angle=0.0) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.00), TrcWaypoint(pose=(x=0.0,y=24.0,angle=0.0),vel=0.00), TrcWaypoint(pose=(x=0.0,y=26.3,angle=-90.0),vel=0.00)]) />
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(elevator.event=CLEARED)
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=true, event=(arm.event=CLEARED)
+globalTracer.getFollowingPoint_Info: Segment[1:TrcWaypoint(pose=(x=0.0,y=24.0,angle=0.0),vel=0.00)->2:TrcWaypoint(pose=(x=0.0,y=26.3,angle=-90.0),vel=0.00)] PrevIndex=1, Target=TrcWaypoint(simple=false,timestep=0.000,pose=(x=0.0,y=26.3,angle=-90.0),vel=0.00,encPos=0.0,accel=0.00,jerk=0.00)
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(elevator.event=CLEARED)
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=true, event=(arm.event=CLEARED)
+globalTracer.TrcPurePursuitDrive.driveTask_Info: Done [index=2/3]: stalled=false, timeout=true, posOnTarget=true, headingOnTarget=false
+globalTracer.printPidInfo_Info: [4.614859] purePursuitDrive.xPosPid: Target=   9.9, Input=  11.2, dT=0.060866, CurrErr=  -1.3, ErrRate=  -0.0, Output=-0.122(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [4.616743] purePursuitDrive.yPosPid: Target=  34.6, Input=  34.1, dT=0.060867, CurrErr=   0.5, ErrRate=   0.0, Output= 0.019(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [4.618274] purePursuitDrive.turnPid: Target=  90.0, Input=  92.5, dT=0.060866, CurrErr=  -2.5, ErrRate=  -0.1, Output=-0.030(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [4.619538] purePursuitDrive.velPid: Target=   0.0, Input=   0.0, dT=0.000000, CurrErr=   0.0, ErrRate=   0.0, Output= 0.000(-1.000/ 1.000)
+globalTracer.TrcPurePursuitDrive.driveTask_Info: Signal completion event (CmdAuto=CLEARED).
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="4.671" tag="^^^^^" CmdAuto.state="PLACE_PURPLE_PIXEL" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="5.685" tag="^^^^^" CmdAuto.state="DO_DELAY" />
+globalTracer.start_Info: Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=11.2,y=34.0,angle=92.5),vel=0.00), TrcWaypoint(pose=(x=11.8,y=47.1,angle=180.0),vel=0.00), TrcWaypoint(pose=(x=35.3,y=47.1,angle=-90.0),vel=0.00), TrcWaypoint(pose=(x=35.3,y=35.3,angle=-90.0),vel=0.00)])
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="5.697" tag="^^^^^" CmdAuto.state="DRIVE_TO_LOOKOUT" RobotPose=(x=11.2,y=34.0,angle=92.5) TargetPose=(x=35.3,y=35.3,angle=-90.0) vel=(x=-0.0,y=0.0,angle=0.4) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.00), TrcWaypoint(pose=(x=-13.1,y=0.0,angle=87.5),vel=0.00), TrcWaypoint(pose=(x=-14.1,y=23.5,angle=-182.5),vel=0.00), TrcWaypoint(pose=(x=-2.3,y=24.1,angle=-182.5),vel=0.00)]) />
+globalTracer.getFollowingPoint_Info: Segment[1:TrcWaypoint(pose=(x=-13.1,y=0.0,angle=87.5),vel=0.00)->2:TrcWaypoint(pose=(x=-14.1,y=23.5,angle=-182.5),vel=0.00)] PrevIndex=1, Target=TrcWaypoint(simple=false,timestep=0.000,pose=(x=-14.1,y=23.5,angle=177.5),vel=0.00,encPos=0.0,accel=0.00,jerk=0.00)
+globalTracer.getFollowingPoint_Info: Segment[2:TrcWaypoint(pose=(x=-14.1,y=23.5,angle=-182.5),vel=0.00)->3:TrcWaypoint(pose=(x=-2.3,y=24.1,angle=-182.5),vel=0.00)] PrevIndex=2, Target=TrcWaypoint(simple=false,timestep=0.000,pose=(x=-2.3,y=24.1,angle=-182.5),vel=0.00,encPos=0.0,accel=0.00,jerk=0.00)
+globalTracer.TrcPurePursuitDrive.driveTask_Info: Done [index=3/4]: stalled=false, timeout=false, posOnTarget=true, headingOnTarget=true
+globalTracer.printPidInfo_Info: [8.130260] purePursuitDrive.xPosPid: Target=  37.3, Input=  36.1, dT=0.059769, CurrErr=   1.2, ErrRate=  -0.3, Output= 0.109(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [8.132324] purePursuitDrive.yPosPid: Target=  34.9, Input=  34.1, dT=0.059769, CurrErr=   0.8, ErrRate=   0.8, Output= 0.031(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [8.135023] purePursuitDrive.turnPid: Target= 270.0, Input= 270.1, dT=0.059770, CurrErr=  -0.1, ErrRate=   1.3, Output= 0.000(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [8.137374] purePursuitDrive.velPid: Target=   0.0, Input=   0.0, dT=0.000000, CurrErr=  -0.0, ErrRate=   0.0, Output= 0.000(-1.000/ 1.000)
+globalTracer.TrcPurePursuitDrive.driveTask_Info: Signal completion event (CmdAuto=CLEARED).
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.168" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.171" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.174" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.195" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.204" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.206" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.209" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.225" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.231" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.234" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.245" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.266" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.290" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.293" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.296" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.306" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.315" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.321" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.324" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.328" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.340" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.351" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.355" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.358" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.372" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.374" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.376" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.383" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.390" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.397" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.404" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.412" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.414" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.420" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.425" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.430" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.435" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.442" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.447" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.454" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.470" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.474" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.477" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.480" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.482" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.496" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.503" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.517" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.520" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.524" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.527" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.529" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.540" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.545" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.549" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.553" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.557" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.572" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.576" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.583" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.592" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.599" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.612" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.616" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.619" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.621" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.631" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.641" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.645" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.660" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.663" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.666" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.677" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.686" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.690" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.696" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.705" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.711" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.715" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.722" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.730" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.732" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.736" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.746" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.759" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.769" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.777" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.780" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.792" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.797" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.800" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.809" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.818" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.821" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.824" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.829" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.835" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.838" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.843" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.858" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.862" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.872" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.874" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.879" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.882" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.895" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.908" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.913" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.920" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.930" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.936" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.957" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.968" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.972" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.981" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.984" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.987" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="8.990" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.000" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.005" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.009" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.012" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.015" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.019" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.032" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.042" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.045" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.057" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.065" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.068" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.071" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.082" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.088" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.094" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.097" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.100" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.110" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.120" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.123" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.130" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.138" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.142" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.150" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.165" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.CmdAuto_Info: AprilTag 1 not found.
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.173" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.CmdAuto_Info: Drive to AprilTag using blind odometry (pose=(x=60.3,y=41.4,angle=90.0)).
+globalTracer.start_Info: Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=36.3,y=34.1,angle=270.1),vel=0.00), TrcWaypoint(pose=(x=59.3,y=41.4,angle=-90.0),vel=0.00)])
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="9.184" tag="^^^^^" CmdAuto.state="DRIVE_TO_APRILTAG" RobotPose=(x=36.3,y=34.1,angle=270.1) TargetPose=(x=59.3,y=41.4,angle=-90.0) vel=(x=2.2,y=-0.0,angle=0.3) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.00), TrcWaypoint(pose=(x=7.3,y=-22.9,angle=-360.1),vel=0.00)]) />
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(CmdAuto.elevatorArm=CLEARED)
+globalTracer.TrcPurePursuitDrive.driveTask_Info: Done [index=1/2]: stalled=false, timeout=true, posOnTarget=false, headingOnTarget=false
+globalTracer.printPidInfo_Info: [11.703582] purePursuitDrive.xPosPid: Target=  52.1, Input=  50.4, dT=0.049996, CurrErr=   1.7, ErrRate=  -0.0, Output= 0.164(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [11.704512] purePursuitDrive.yPosPid: Target=  31.1, Input=  39.9, dT=0.050000, CurrErr=  -8.8, ErrRate=  -0.0, Output=-0.309(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [11.707309] purePursuitDrive.turnPid: Target= 270.0, Input= 271.4, dT=0.050001, CurrErr=  -1.4, ErrRate=  -0.1, Output=-0.017(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [11.708749] purePursuitDrive.velPid: Target=   0.0, Input=   2.2, dT=0.000000, CurrErr=  -2.2, ErrRate=   0.0, Output= 0.000(-1.000/ 1.000)
+globalTracer.TrcPurePursuitDrive.driveTask_Info: Signal completion event (CmdAuto=CLEARED).
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="11.739" tag="^^^^^" CmdAuto.state="MOVE_ARM" />
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=false, event=(CmdAuto=CLEARED)
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="14.255" tag="^^^^^" CmdAuto.state="LOWER_ELEVATOR" />
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(CmdAuto.elevatorArm=CLEARED)
+globalTracer.setLowerGateOpened_Info: lowerGateOpened = true
+globalTracer.setUpperGateOpened_Info: upperGateOpened = true
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="14.572" tag="^^^^^" CmdAuto.state="PLACE_YELLOW_PIXEL" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="14.764" tag="^^^^^" CmdAuto.state="RAISE_ELEVATOR" />
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(CmdAuto.elevatorArm=CLEARED)
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="15.074" tag="^^^^^" CmdAuto.state="RETRACT_ARM" />
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=false, event=(CmdAuto=CLEARED)
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="20.096" tag="^^^^^" CmdAuto.state="RETRACT_ELEVATOR" />
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(CmdAuto=CLEARED)
+globalTracer.CmdAuto_Info: TargetPoseAngle=-90.0,Intermediate1Angle=-90.0
+globalTracer.start_Info: Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=49.8,y=39.9,angle=271.4),vel=0.00), TrcWaypoint(pose=(x=47.1,y=11.8,angle=-90.0),vel=0.00), TrcWaypoint(pose=(x=63.6,y=11.8,angle=-90.0),vel=0.00)])
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="20.392" tag="^^^^^" CmdAuto.state="PARK_AT_BACKSTAGE" RobotPose=(x=49.8,y=39.9,angle=271.4) TargetPose=(x=63.6,y=11.8,angle=-90.0) vel=(x=0.5,y=-0.2,angle=1.2) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.00), TrcWaypoint(pose=(x=-28.2,y=2.0,angle=-361.4),vel=0.00), TrcWaypoint(pose=(x=-27.8,y=-14.4,angle=-361.4),vel=0.00)]) />
+globalTracer.getFollowingPoint_Info: Segment[1:TrcWaypoint(pose=(x=-28.2,y=2.0,angle=-361.4),vel=0.00)->2:TrcWaypoint(pose=(x=-27.8,y=-14.4,angle=-361.4),vel=0.00)] PrevIndex=1, Target=TrcWaypoint(simple=false,timestep=0.000,pose=(x=-27.8,y=-14.4,angle=-361.4),vel=0.00,encPos=0.0,accel=0.00,jerk=0.00)
+globalTracer.printElapsedTime_Info: imu.getGyroData: avgElapsed=0.000010, minElapsed=0.000001, maxElapsed=0.002713
+globalTracer.printElapsedTime_Info: TrcDigitalInput.getInput: avgElapsed=0.000617, minElapsed=0.000024, maxElapsed=0.006749
+globalTracer.printElapsedTime_Info: TrcMotor.getPos: avgElapsed=0.000410, minElapsed=0.000003, maxElapsed=0.026233
+globalTracer.printElapsedTime_Info: TrcMotor.setPower: avgElapsed=0.003331, minElapsed=0.000006, maxElapsed=0.029555
+globalTracer.printElapsedTime_Info: TrcMotor.setVel: avgElapsed=0.000000, minElapsed=9223372036.854776, maxElapsed=0.000000
+globalTracer.printElapsedTime_Info: TrcMotor.setPos: avgElapsed=0.000000, minElapsed=9223372036.854776, maxElapsed=0.000000
+globalTracer.printElapsedTime_Info: TrcMotor.setCurrent: avgElapsed=0.000000, minElapsed=9223372036.854776, maxElapsed=0.000000
+globalTracer.printElapsedTime_Info: TrcServo.setPos: avgElapsed=0.010301, minElapsed=0.003945, maxElapsed=0.013095
+globalTracer.stopMode_Info: Disabling AprilTagVision.
+globalTracer.stopMode_Info: Disabling PurplePixelVision.
+globalTracer.stopMode_Info: Disabling GreenPixelVision.
+globalTracer.stopMode_Info: Disabling YellowPixelVision.
+globalTracer.stopMode_Info: Disabling WhitePixelVision.
+globalTracer.stopMode_Info: Disabling RedConeVision.
+globalTracer.stopMode_Info: Disabling BlueConeVision.
+globalTracer.stopMode_Info: Saved robot pose=(x=58.0,y=10.5,angle=268.0)
+globalTracer.TaskPerformance_Info: TrcWatchdogMgr: STANDALONE_TASK=0.000138/0.989214
+globalTracer.TaskPerformance_Info: blinkin: OUTPUT_TASK=0.000116/0.013380
+globalTracer.TaskPerformance_Info: imu.converterTask: INPUT_TASK=0.000061/0.026550
+globalTracer.TaskPerformance_Info: imu.gyroTask: INPUT_TASK=0.019832/0.026573
+globalTracer.TaskPerformance_Info: lfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000027/0.013380
+globalTracer.TaskPerformance_Info: TrcMotor.odometryTask: STANDALONE_TASK=0.000603/0.000697
+globalTracer.TaskPerformance_Info: rfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000021/0.013380
+globalTracer.TaskPerformance_Info: lbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000023/0.013380
+globalTracer.TaskPerformance_Info: rbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000020/0.013380
+globalTracer.TaskPerformance_Info: TrcDriveBase.odometryTask: PRE_PERIODIC_TASK=0.000615/0.003024
+globalTracer.TaskPerformance_Info: purePursuitDrive.driveTask: POST_PERIODIC_TASK=0.047991/0.080798
+globalTracer.TaskPerformance_Info: elevator.motor.pidCtrlTask: OUTPUT_TASK=0.000264/0.013383
+globalTracer.TaskPerformance_Info: arm.encoder.converterTask: INPUT_TASK=0.003364/0.013384
+globalTracer.TaskPerformance_Info: arm.servo.pidCtrlTask: OUTPUT_TASK=0.000729/0.013384
+globalTracer.TaskPerformance_Info: arm.followerServo.pidCtrlTask: OUTPUT_TASK=0.000003/0.013383
+globalTracer.TaskPerformance_Info: intake.motor.pidCtrlTask: OUTPUT_TASK=0.000004/0.013383
+globalTracer.TaskPerformance_Info: launcher.pidCtrlTask: OUTPUT_TASK=0.000003/0.013383
+globalTracer.FtcOpMode_Info: [FtcAutonomous] Main robot thread average elapsed times:
+       robotInit=12.712395s
+    initPeriodic=0.000002s
+       startMode=0.000042s
+    loopInterval=0.003024s (330.710Hz)
+             sdk=0.000117s
+ prePeriodicTask=0.000676s
+        periodic=0.000293s
+postPeriodicTask=0.001855s
+         loopSum=0.002913s
+        stopMode=0.000000s
+globalTracer.FtcAuto_Info: ***** Stopping autonomous *****

@@ -1,0 +1,105 @@
+globalTracer.FtcAuto_Info: ***** Starting autonomous *****
+globalTracer.FtcAuto_Info: <Info name="MatchInfo" date="Sun Nov 05 13:26:16 PST 2023" type="QUALIFICATION" number=5 />
+globalTracer.FtcAuto_Info: <Info name="AutoChoices" delay=0 alliance="BLUE_ALLIANCE" startPos="BACKSTAGE" strategy="AUTO" parkPos="CENTER" xTarget=4.0 yTarget=4.0 turnTarget=90 driveTime=5 drivePower=0.5 />
+globalTracer.CmdAuto_Info: Team Prop found at position 3
+globalTracer.start_Info: Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=11.8,y=61.6,angle=180.0),vel=0.00), TrcWaypoint(pose=(x=11.8,y=37.7,angle=180.0),vel=0.00), TrcWaypoint(pose=(x=11.8,y=35.3,angle=270.0),vel=0.00)])
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="0.496" tag="^^^^^" CmdAuto.state="START" RobotPose=(x=11.8,y=61.6,angle=180.0) TargetPose=(x=11.8,y=35.3,angle=270.0) vel=(x=0.0,y=0.0,angle=-0.0) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.00), TrcWaypoint(pose=(x=0.0,y=24.0,angle=0.0),vel=0.00), TrcWaypoint(pose=(x=0.0,y=26.3,angle=90.0),vel=0.00)]) />
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(elevator.event=CLEARED)
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=true, event=(arm.event=CLEARED)
+globalTracer.getFollowingPoint_Info: Segment[1:TrcWaypoint(pose=(x=0.0,y=24.0,angle=0.0),vel=0.00)->2:TrcWaypoint(pose=(x=0.0,y=26.3,angle=90.0),vel=0.00)] PrevIndex=1, Target=TrcWaypoint(simple=false,timestep=0.000,pose=(x=0.0,y=26.3,angle=90.0),vel=0.00,encPos=0.0,accel=0.00,jerk=0.00)
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(elevator.event=CLEARED)
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=true, event=(arm.event=CLEARED)
+globalTracer.TrcPurePursuitDrive.driveTask_Info: Done [index=2/3]: stalled=false, timeout=true, posOnTarget=true, headingOnTarget=false
+globalTracer.printPidInfo_Info: [4.510537] purePursuitDrive.xPosPid: Target=  13.7, Input=  12.4, dT=0.049391, CurrErr=   1.2, ErrRate=  -0.0, Output= 0.119(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [4.512566] purePursuitDrive.yPosPid: Target=  34.7, Input=  34.1, dT=0.049395, CurrErr=   0.6, ErrRate=  -0.0, Output= 0.022(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [4.515317] purePursuitDrive.turnPid: Target= 270.0, Input= 267.8, dT=0.049397, CurrErr=   2.2, ErrRate=  -0.1, Output= 0.026(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [4.517772] purePursuitDrive.velPid: Target=   0.0, Input=   0.0, dT=0.000000, CurrErr=   0.0, ErrRate=   0.0, Output= 0.000(-1.000/ 1.000)
+globalTracer.TrcPurePursuitDrive.driveTask_Info: Signal completion event (CmdAuto=CLEARED).
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="4.561" tag="^^^^^" CmdAuto.state="PLACE_PURPLE_PIXEL" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="5.570" tag="^^^^^" CmdAuto.state="DO_DELAY" />
+globalTracer.start_Info: Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=12.4,y=34.1,angle=267.8),vel=0.00), TrcWaypoint(pose=(x=11.8,y=47.1,angle=180.0),vel=0.00), TrcWaypoint(pose=(x=35.3,y=47.1,angle=-90.0),vel=0.00), TrcWaypoint(pose=(x=35.3,y=35.3,angle=-90.0),vel=0.00)])
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="5.584" tag="^^^^^" CmdAuto.state="DRIVE_TO_LOOKOUT" RobotPose=(x=12.4,y=34.1,angle=267.8) TargetPose=(x=35.3,y=35.3,angle=-90.0) vel=(x=0.0,y=0.0,angle=-0.2) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.00), TrcWaypoint(pose=(x=13.0,y=0.2,angle=-87.8),vel=0.00), TrcWaypoint(pose=(x=12.1,y=-23.3,angle=-357.8),vel=0.00), TrcWaypoint(pose=(x=0.4,y=-22.9,angle=-357.8),vel=0.00)]) />
+globalTracer.getFollowingPoint_Info: Segment[1:TrcWaypoint(pose=(x=13.0,y=0.2,angle=-87.8),vel=0.00)->2:TrcWaypoint(pose=(x=12.1,y=-23.3,angle=-357.8),vel=0.00)] PrevIndex=1, Target=TrcWaypoint(simple=false,timestep=0.000,pose=(x=12.1,y=-23.3,angle=2.2),vel=0.00,encPos=0.0,accel=0.00,jerk=0.00)
+globalTracer.getFollowingPoint_Info: Segment[2:TrcWaypoint(pose=(x=12.1,y=-23.3,angle=-357.8),vel=0.00)->3:TrcWaypoint(pose=(x=0.4,y=-22.9,angle=-357.8),vel=0.00)] PrevIndex=2, Target=TrcWaypoint(simple=false,timestep=0.000,pose=(x=0.4,y=-22.9,angle=-357.8),vel=0.00,encPos=0.0,accel=0.00,jerk=0.00)
+globalTracer.TrcPurePursuitDrive.driveTask_Info: Done [index=3/4]: stalled=false, timeout=true, posOnTarget=true, headingOnTarget=false
+globalTracer.printPidInfo_Info: [10.096159] purePursuitDrive.xPosPid: Target=  32.7, Input=  33.5, dT=0.046386, CurrErr=  -0.8, ErrRate=   0.0, Output=-0.073(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [10.097083] purePursuitDrive.yPosPid: Target=  34.3, Input=  36.1, dT=0.046386, CurrErr=  -1.9, ErrRate=  -0.0, Output=-0.065(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [10.101797] purePursuitDrive.turnPid: Target= 270.0, Input= 271.4, dT=0.046386, CurrErr=  -1.4, ErrRate=   0.0, Output=-0.017(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [10.103216] purePursuitDrive.velPid: Target=   0.0, Input=   0.0, dT=0.000000, CurrErr=  -0.0, ErrRate=   0.0, Output= 0.000(-1.000/ 1.000)
+globalTracer.TrcPurePursuitDrive.driveTask_Info: Signal completion event (CmdAuto=CLEARED).
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="10.127" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="10.135" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.CmdAuto_Info: AprilTag 3 found at (x=6.3,y=23.2,z=-3.7,yaw=3.2,pitch=-32.0,roll=1.1) (absPose=(x=56.5,y=29.3,angle=632.8))
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="10.152" tag="^^^^^" CmdAuto.state="FIND_APRILTAG" />
+globalTracer.start_Info: Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=33.5,y=36.1,angle=271.4),vel=0.00), TrcWaypoint(pose=(x=55.5,y=29.3,angle=-90.0),vel=0.00)])
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="10.167" tag="^^^^^" CmdAuto.state="DRIVE_TO_APRILTAG" RobotPose=(x=33.5,y=36.1,angle=271.4) TargetPose=(x=55.5,y=29.3,angle=-90.0) vel=(x=-0.1,y=0.0,angle=0.2) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.00), TrcWaypoint(pose=(x=-6.3,y=-22.2,angle=-361.4),vel=0.00)]) />
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(CmdAuto.elevatorArm=CLEARED)
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=true, event=(arm.event=CLEARED)
+globalTracer.TrcPurePursuitDrive.driveTask_Info: Done [index=1/2]: stalled=false, timeout=true, posOnTarget=true, headingOnTarget=false
+globalTracer.printPidInfo_Info: [12.691336] purePursuitDrive.xPosPid: Target=  54.8, Input=  53.9, dT=0.043691, CurrErr=   0.9, ErrRate=   0.0, Output= 0.087(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [12.694110] purePursuitDrive.yPosPid: Target=  26.8, Input=  28.4, dT=0.043692, CurrErr=  -1.6, ErrRate=   0.0, Output=-0.057(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [12.696097] purePursuitDrive.turnPid: Target= 270.0, Input= 271.2, dT=0.043644, CurrErr=  -1.2, ErrRate=   0.0, Output=-0.015(-1.000/ 1.000)
+globalTracer.printPidInfo_Info: [12.699359] purePursuitDrive.velPid: Target=   0.0, Input=   0.1, dT=0.000000, CurrErr=  -0.1, ErrRate=   0.0, Output= 0.000(-1.000/ 1.000)
+globalTracer.TrcPurePursuitDrive.driveTask_Info: Signal completion event (CmdAuto=CLEARED).
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="12.732" tag="^^^^^" CmdAuto.state="MOVE_ARM" />
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=true, event=(CmdAuto=CLEARED)
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="14.971" tag="^^^^^" CmdAuto.state="LOWER_ELEVATOR" />
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(CmdAuto.elevatorArm=CLEARED)
+globalTracer.setLowerGateOpened_Info: lowerGateOpened = true
+globalTracer.setUpperGateOpened_Info: upperGateOpened = true
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="15.304" tag="^^^^^" CmdAuto.state="PLACE_YELLOW_PIXEL" />
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="15.486" tag="^^^^^" CmdAuto.state="RAISE_ELEVATOR" />
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(CmdAuto.elevatorArm=CLEARED)
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="15.813" tag="^^^^^" CmdAuto.state="RETRACT_ARM" />
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=false, event=(CmdAuto=CLEARED)
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="20.828" tag="^^^^^" CmdAuto.state="RETRACT_ELEVATOR" />
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(CmdAuto=CLEARED)
+globalTracer.CmdAuto_Info: TargetPoseAngle=-90.0,Intermediate1Angle=-90.0
+globalTracer.start_Info: Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=53.7,y=28.4,angle=271.2),vel=0.00), TrcWaypoint(pose=(x=47.1,y=11.8,angle=-90.0),vel=0.00), TrcWaypoint(pose=(x=63.6,y=11.8,angle=-90.0),vel=0.00)])
+globalTracer.traceStateInfo_Info: <Event name="StateInfo" time="21.161" tag="^^^^^" CmdAuto.state="PARK_AT_BACKSTAGE" RobotPose=(x=53.7,y=28.4,angle=271.2) TargetPose=(x=63.6,y=11.8,angle=-90.0) vel=(x=-0.2,y=0.1,angle=-0.9) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.00), TrcWaypoint(pose=(x=-16.8,y=6.3,angle=-361.2),vel=0.00), TrcWaypoint(pose=(x=-16.4,y=-10.2,angle=-361.2),vel=0.00)]) />
+globalTracer.getFollowingPoint_Info: Segment[1:TrcWaypoint(pose=(x=-16.8,y=6.3,angle=-361.2),vel=0.00)->2:TrcWaypoint(pose=(x=-16.4,y=-10.2,angle=-361.2),vel=0.00)] PrevIndex=1, Target=TrcWaypoint(simple=false,timestep=0.000,pose=(x=-16.4,y=-10.2,angle=-361.2),vel=0.00,encPos=0.0,accel=0.00,jerk=0.00)
+globalTracer.printElapsedTime_Info: imu.getGyroData: avgElapsed=0.000012, minElapsed=0.000001, maxElapsed=0.004750
+globalTracer.printElapsedTime_Info: TrcDigitalInput.getInput: avgElapsed=0.006991, minElapsed=0.005908, maxElapsed=0.008075
+globalTracer.printElapsedTime_Info: TrcMotor.getPos: avgElapsed=0.000514, minElapsed=0.000008, maxElapsed=0.026883
+globalTracer.printElapsedTime_Info: TrcMotor.setPower: avgElapsed=0.003423, minElapsed=0.000006, maxElapsed=0.023146
+globalTracer.printElapsedTime_Info: TrcMotor.setVel: avgElapsed=0.000000, minElapsed=9223372036.854776, maxElapsed=0.000000
+globalTracer.printElapsedTime_Info: TrcMotor.setPos: avgElapsed=0.000000, minElapsed=9223372036.854776, maxElapsed=0.000000
+globalTracer.printElapsedTime_Info: TrcMotor.setCurrent: avgElapsed=0.000000, minElapsed=9223372036.854776, maxElapsed=0.000000
+globalTracer.printElapsedTime_Info: TrcServo.setPos: avgElapsed=0.010044, minElapsed=0.006764, maxElapsed=0.015542
+globalTracer.stopMode_Info: Disabling AprilTagVision.
+globalTracer.stopMode_Info: Disabling PurplePixelVision.
+globalTracer.stopMode_Info: Disabling GreenPixelVision.
+globalTracer.stopMode_Info: Disabling YellowPixelVision.
+globalTracer.stopMode_Info: Disabling WhitePixelVision.
+globalTracer.stopMode_Info: Disabling RedConeVision.
+globalTracer.stopMode_Info: Disabling BlueConeVision.
+globalTracer.stopMode_Info: Saved robot pose=(x=60.9,y=12.8,angle=272.6)
+globalTracer.TaskPerformance_Info: TrcWatchdogMgr: STANDALONE_TASK=0.000165/0.992739
+globalTracer.TaskPerformance_Info: blinkin: OUTPUT_TASK=0.000087/0.012513
+globalTracer.TaskPerformance_Info: imu.converterTask: INPUT_TASK=0.000072/0.028449
+globalTracer.TaskPerformance_Info: imu.gyroTask: INPUT_TASK=0.020747/0.028476
+globalTracer.TaskPerformance_Info: lfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000023/0.012513
+globalTracer.TaskPerformance_Info: TrcMotor.odometryTask: STANDALONE_TASK=0.000551/0.000646
+globalTracer.TaskPerformance_Info: rfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000014/0.012513
+globalTracer.TaskPerformance_Info: lbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000020/0.012513
+globalTracer.TaskPerformance_Info: rbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000015/0.012513
+globalTracer.TaskPerformance_Info: TrcDriveBase.odometryTask: PRE_PERIODIC_TASK=0.000726/0.003835
+globalTracer.TaskPerformance_Info: purePursuitDrive.driveTask: POST_PERIODIC_TASK=0.050999/0.080918
+globalTracer.TaskPerformance_Info: elevator.motor.pidCtrlTask: OUTPUT_TASK=0.000116/0.012513
+globalTracer.TaskPerformance_Info: arm.encoder.converterTask: INPUT_TASK=0.003622/0.012516
+globalTracer.TaskPerformance_Info: arm.servo.pidCtrlTask: OUTPUT_TASK=0.000505/0.012515
+globalTracer.TaskPerformance_Info: arm.followerServo.pidCtrlTask: OUTPUT_TASK=0.000003/0.012515
+globalTracer.TaskPerformance_Info: intake.motor.pidCtrlTask: OUTPUT_TASK=0.000003/0.012515
+globalTracer.TaskPerformance_Info: launcher.pidCtrlTask: OUTPUT_TASK=0.000003/0.012515
+globalTracer.FtcOpMode_Info: [FtcAutonomous] Main robot thread average elapsed times:
+       robotInit=18.302443s
+    initPeriodic=0.000003s
+       startMode=0.000077s
+    loopInterval=0.003835s (260.738Hz)
+             sdk=0.000169s
+ prePeriodicTask=0.000808s
+        periodic=0.000271s
+postPeriodicTask=0.002493s
+         loopSum=0.003672s
+        stopMode=0.000000s
+globalTracer.FtcAuto_Info: ***** Stopping autonomous *****

@@ -1,0 +1,96 @@
+globalTracer.FtcTeleOp_Info: ***** Starting TeleOp *****
+globalTracer.startMode_Info: Restore saved RobotPose=(x=60.9,y=12.8,angle=272.6)
+globalTracer.startMode_Info: Enabling AprilTagVision.
+globalTracer.acquireOwnership_Info: elevator.motor: Acquired ownership on behalf of the FtcTeleOp.
+globalTracer.releaseOwnership_Info: elevator.motor: Released ownership on behalf of the FtcTeleOp.
+globalTracer.setLowerGateOpened_Info: lowerGateOpened = true
+globalTracer.acquireOwnership_Info: elevator.motor: Acquired ownership on behalf of the FtcTeleOp.
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(elevator.motor.releaseOwnership=CLEARED)
+globalTracer.releaseOwnership_Info: elevator.motor: Released ownership on behalf of the FtcTeleOp.
+globalTracer.setUpperGateOpened_Info: upperGateOpened = true
+globalTracer.setUpperGateOpened_Info: upperGateOpened = false
+globalTracer.acquireOwnership_Info: elevator.motor: Acquired ownership on behalf of the FtcTeleOp.
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(elevator.motor.releaseOwnership=CLEARED)
+globalTracer.releaseOwnership_Info: elevator.motor: Released ownership on behalf of the FtcTeleOp.
+globalTracer.acquireOwnership_Info: arm.servo: Acquired ownership on behalf of the FtcTeleOp.
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=true, event=(arm.servo.releaseOwnership=CLEARED)
+globalTracer.releaseOwnership_Info: arm.servo: Released ownership on behalf of the FtcTeleOp.
+globalTracer.acquireOwnership_Info: arm.servo: Acquired ownership on behalf of the FtcTeleOp.
+globalTracer.acquireOwnership_Info: elevator.motor: Acquired ownership on behalf of the FtcTeleOp.
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(elevator.motor.releaseOwnership=CLEARED)
+globalTracer.releaseOwnership_Info: elevator.motor: Released ownership on behalf of the FtcTeleOp.
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=true, event=(arm.servo.releaseOwnership=CLEARED)
+globalTracer.releaseOwnership_Info: arm.servo: Released ownership on behalf of the FtcTeleOp.
+globalTracer.setUpperGateOpened_Info: upperGateOpened = true
+globalTracer.setUpperGateOpened_Info: upperGateOpened = false
+globalTracer.acquireOwnership_Info: arm.servo: Acquired ownership on behalf of the FtcTeleOp.
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=true, event=(arm.servo.releaseOwnership=CLEARED)
+globalTracer.releaseOwnership_Info: arm.servo: Released ownership on behalf of the FtcTeleOp.
+globalTracer.setUpperGateOpened_Info: upperGateOpened = true
+globalTracer.acquireOwnership_Info: arm.servo: Acquired ownership on behalf of the FtcTeleOp.
+globalTracer.acquireOwnership_Info: elevator.motor: Acquired ownership on behalf of the FtcTeleOp.
+globalTracer.pidCtrlTask_Info: TrcMotor.elevator.motor: onTarget=true, event=(elevator.motor.releaseOwnership=CLEARED)
+globalTracer.releaseOwnership_Info: elevator.motor: Released ownership on behalf of the FtcTeleOp.
+globalTracer.acquireOwnership_Info: elevator.motor: Acquired ownership on behalf of the FtcTeleOp.
+globalTracer.setUpperGateOpened_Info: upperGateOpened = false
+globalTracer.setUpperGateOpened_Info: upperGateOpened = true
+globalTracer.setLowerGateOpened_Info: lowerGateOpened = false
+globalTracer.setUpperGateOpened_Info: upperGateOpened = false
+globalTracer.setUpperGateOpened_Info: upperGateOpened = true
+globalTracer.setUpperGateOpened_Info: upperGateOpened = false
+globalTracer.setUpperGateOpened_Info: upperGateOpened = true
+globalTracer.setUpperGateOpened_Info: upperGateOpened = false
+globalTracer.setUpperGateOpened_Info: upperGateOpened = true
+globalTracer.setLowerGateOpened_Info: lowerGateOpened = true
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=false, event=(arm.event=CLEARED)
+globalTracer.setLowerGateOpened_Info: lowerGateOpened = false
+globalTracer.setUpperGateOpened_Info: upperGateOpened = false
+globalTracer.setUpperGateOpened_Info: upperGateOpened = true
+globalTracer.setLowerGateOpened_Info: lowerGateOpened = true
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=true, event=(arm.event=CLEARED)
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=false, event=(arm.event=CLEARED)
+globalTracer.pidCtrlTask_Info: TrcMotor.arm.servo: onTarget=true, event=(arm.event=CLEARED)
+globalTracer.printElapsedTime_Info: imu.getGyroData: avgElapsed=0.000005, minElapsed=0.000002, maxElapsed=0.002320
+globalTracer.printElapsedTime_Info: TrcDigitalInput.getInput: avgElapsed=0.001427, minElapsed=0.000021, maxElapsed=0.019361
+globalTracer.printElapsedTime_Info: TrcMotor.getPos: avgElapsed=0.000116, minElapsed=0.000010, maxElapsed=0.032327
+globalTracer.printElapsedTime_Info: TrcMotor.setPower: avgElapsed=0.001544, minElapsed=0.000002, maxElapsed=0.033365
+globalTracer.printElapsedTime_Info: TrcMotor.setVel: avgElapsed=0.000000, minElapsed=9223372036.854776, maxElapsed=0.000000
+globalTracer.printElapsedTime_Info: TrcMotor.setPos: avgElapsed=0.000000, minElapsed=9223372036.854776, maxElapsed=0.000000
+globalTracer.printElapsedTime_Info: TrcMotor.setCurrent: avgElapsed=0.000000, minElapsed=9223372036.854776, maxElapsed=0.000000
+globalTracer.printElapsedTime_Info: TrcServo.setPos: avgElapsed=0.012277, minElapsed=0.005517, maxElapsed=0.036599
+globalTracer.stopMode_Info: Disabling AprilTagVision.
+globalTracer.stopMode_Info: Disabling PurplePixelVision.
+globalTracer.stopMode_Info: Disabling GreenPixelVision.
+globalTracer.stopMode_Info: Disabling YellowPixelVision.
+globalTracer.stopMode_Info: Disabling WhitePixelVision.
+globalTracer.stopMode_Info: Disabling RedConeVision.
+globalTracer.stopMode_Info: Disabling BlueConeVision.
+globalTracer.TaskPerformance_Info: blinkin: OUTPUT_TASK=0.000019/0.024152
+globalTracer.TaskPerformance_Info: imu.converterTask: INPUT_TASK=0.000037/0.024725
+globalTracer.TaskPerformance_Info: imu.gyroTask: INPUT_TASK=0.019003/0.024730
+globalTracer.TaskPerformance_Info: lfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000164/0.024152
+globalTracer.TaskPerformance_Info: TrcMotor.odometryTask: STANDALONE_TASK=0.002490/0.003006
+globalTracer.TaskPerformance_Info: rfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000080/0.024152
+globalTracer.TaskPerformance_Info: lbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000154/0.024152
+globalTracer.TaskPerformance_Info: rbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000103/0.024152
+globalTracer.TaskPerformance_Info: TrcDriveBase.odometryTask: PRE_PERIODIC_TASK=0.001966/0.078298
+globalTracer.TaskPerformance_Info: elevator.motor.pidCtrlTask: OUTPUT_TASK=0.000764/0.024152
+globalTracer.TaskPerformance_Info: arm.encoder.converterTask: INPUT_TASK=0.000322/0.024155
+globalTracer.TaskPerformance_Info: arm.servo.pidCtrlTask: OUTPUT_TASK=0.003653/0.024152
+globalTracer.TaskPerformance_Info: arm.followerServo.pidCtrlTask: OUTPUT_TASK=0.000005/0.024154
+globalTracer.TaskPerformance_Info: intake.motor.pidCtrlTask: OUTPUT_TASK=0.000011/0.024154
+globalTracer.TaskPerformance_Info: launcher.pidCtrlTask: OUTPUT_TASK=0.000003/0.024154
+globalTracer.TaskPerformance_Info: DriverGamepad.buttonEventTask: PRE_PERIODIC_TASK=0.000089/0.078295
+globalTracer.TaskPerformance_Info: OperatorGamepad.buttonEventTask: PRE_PERIODIC_TASK=0.001002/0.078294
+globalTracer.FtcOpMode_Info: [FtcTeleOp] Main robot thread average elapsed times:
+       robotInit=2.454811s
+    initPeriodic=0.005482s
+       startMode=0.000046s
+    loopInterval=0.078296s (12.772Hz)
+             sdk=0.000149s
+ prePeriodicTask=0.003199s
+        periodic=0.069778s
+postPeriodicTask=0.000123s
+         loopSum=0.078195s
+        stopMode=0.000000s
+globalTracer.FtcTeleOp_Info: ***** Stopping TeleOp *****
