@@ -378,7 +378,7 @@ public class RobotParams
     // Power settings.
     public static final double ELEVATOR_CAL_POWER               = -0.15;
     // Preset positions.
-    public static final double ELEVATOR_PRESET_TOLERANCE        = 0.5;
+    public static final double ELEVATOR_PRESET_TOLERANCE        = 0.4;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
 //        14.0, 16.0, 20.0, 22.0
           ELEVATOR_LOAD_POS, ELEVATOR_LEVEL1_POS, ELEVATOR_LEVEL2_POS
@@ -412,7 +412,7 @@ public class RobotParams
     public static final boolean ARM_ENCODER_ABSOLUTE            = true;
     public static final boolean ARM_VOLTAGE_COMP_ENABLED        = true;
     public static final double ARM_DEG_SCALE                    = 360.0;
-    public static final double ARM_POWER_LIMIT                  = 0.1;
+    public static final double ARM_POWER_LIMIT                  = 0.11;
     public static final double ARM_OFFSET                       = 27.0;
     public static final double ARM_ZERO_OFFSET                  = 0.949697;
     public static final double ARM_MIN_POS                      = 25.6;
@@ -444,7 +444,7 @@ public class RobotParams
     // Wrist subsystem.
     //
     public static final boolean WRIST_SERVO_INVERTED            = false;
-    public static final boolean WRIST_HAS_FOLLOWER_SERVO        = false;
+    public static final boolean WRIST_HAS_FOLLOWER_SERVO        = true;
     public static final boolean WRIST_FOLLOWER_SERVO_INVERTED   = true;
     public static final double WRIST_MIN_POS                    = 0.0;
     public static final double WRIST_MAX_POS                    = 0.38;

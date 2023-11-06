@@ -51,7 +51,9 @@ public class CmdAuto implements TrcRobot.RobotCommand
         FIND_APRILTAG,
         DRIVE_TO_APRILTAG,
         MOVE_ARM,
+        LOWER_ELEVATOR,
         PLACE_YELLOW_PIXEL,
+        RAISE_ELEVATOR,
         RETRACT_ARM,
         RETRACT_ELEVATOR,
         PARK_AT_BACKSTAGE,
@@ -193,7 +195,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                                 targetPoseTile.x, targetPoseTile.y - 0.1, 180.0, autoChoices.alliance);
                     }
                     robot.robotDrive.purePursuitDrive.start(
-                        event, 3.0, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
+                        event, 4.0, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.PLACE_PURPLE_PIXEL);
                     break;
 
@@ -231,7 +233,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         intermediate2 = robot.adjustPoseByAlliance(1.5, 2.0, -90.0, autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
-                            event, 5.0, robot.robotDrive.driveBase.getFieldPosition(), false,
+                            event, 4.5, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, targetPose);
                     }
                     else
@@ -309,20 +311,26 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     }
                     // Account for end-effector offset from the camera.
                     aprilTagPose.x -= 1.0;
+
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
-                        event, 3.0,  robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
+                        event, 2.5,  robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
                     sm.addEvent(event);
 //                    robot.elevatorArm.setupPositions(null, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ARM_SCORE_BACKDROP_POS, elevatorArmEvent, 0.0);
-                    robot.elevatorArm.setElevatorPosition(null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ELEVATOR_POWER_LIMIT, elevatorArmEvent, 0.0);
+                    robot.elevatorArm.setElevatorPosition(null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ELEVATOR_POWER_LIMIT, elevatorArmEvent, 2.0);
                     sm.addEvent(elevatorArmEvent);
                     sm.waitForEvents(State.MOVE_ARM, true);
                     break;
 
                 case MOVE_ARM:
-                    robot.elevatorArm.setArmPosition(null, 0.0, RobotParams.ARM_SCORE_BACKDROP_POS, RobotParams.ARM_POWER_LIMIT, event, 6.0);
+                    robot.elevatorArm.setArmPosition(null, 0.0, RobotParams.ARM_SCORE_BACKDROP_POS, RobotParams.ARM_POWER_LIMIT, event, 2.5);
                     robot.elevatorArm.wristSetPosition(RobotParams.WRIST_UP_POS);
-                    sm.waitForSingleEvent(event, State.PLACE_YELLOW_PIXEL);
+                    sm.waitForSingleEvent(event, State.LOWER_ELEVATOR);
+                    break;
+
+                case LOWER_ELEVATOR:
+                    robot.elevatorArm.setElevatorPosition(null, 0.0, RobotParams.ELEVATOR_LOAD_POS, RobotParams.ELEVATOR_POWER_LIMIT, elevatorArmEvent, 2.0);
+                    sm.waitForSingleEvent(elevatorArmEvent, State.PLACE_YELLOW_PIXEL);
                     break;
                 case PLACE_YELLOW_PIXEL:
                     // Place yellow pixel at the appropriate location on the backdrop.
@@ -330,12 +338,16 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     {
                         robot.pixelTray.setLowerGateOpened(true, event);
                         robot.pixelTray.setUpperGateOpened(true, event);
-                        sm.waitForSingleEvent(event, State.RETRACT_ARM);
+                        sm.waitForSingleEvent(event, State.RAISE_ELEVATOR);
                     }
                     else
                     {
-                        sm.setState(State.RETRACT_ARM);
+                        sm.setState(State.RAISE_ELEVATOR);
                     }
+                    break;
+                case RAISE_ELEVATOR:
+                    robot.elevatorArm.setElevatorPosition(null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ELEVATOR_POWER_LIMIT, elevatorArmEvent, 5.0);
+                    sm.waitForSingleEvent(elevatorArmEvent, State.RETRACT_ARM);
                     break;
                 case RETRACT_ARM:
                     // Retract arm.
@@ -362,6 +374,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     targetPose = robot.adjustPoseByAlliance(targetPoseTile, autoChoices.alliance);
                     intermediate1 = robot.adjustPoseByAlliance(
                         2.0, targetPoseTile.y, targetPoseTile.angle, autoChoices.alliance);
+
+                    robot.globalTracer.traceInfo(moduleName, "TargetPoseAngle=%s,Intermediate1Angle=%s", targetPose.angle, intermediate1.angle);
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event,State.DONE);
