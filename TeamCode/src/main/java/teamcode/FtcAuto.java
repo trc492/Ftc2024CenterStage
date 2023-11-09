@@ -183,18 +183,18 @@ public class FtcAuto extends FtcOpMode
             robot.vision.setActiveWebcam(robot.vision.getFrontWebcam());
             if (autoChoices.alliance == Alliance.RED_ALLIANCE)
             {
-                if (robot.vision.redConeVision != null)
+                if (robot.vision.redBlobVision != null)
                 {
-                    robot.globalTracer.traceInfo(funcName, "Enabling RedConeVision.");
-                    robot.vision.setRedConeVisionEnabled(true);
+                    robot.globalTracer.traceInfo(funcName, "Enabling RedBlobVision.");
+                    robot.vision.setRedBlobVisionEnabled(true);
                 }
             }
             else
             {
-                if (robot.vision.blueConeVision != null)
+                if (robot.vision.blueBlobVision != null)
                 {
-                    robot.globalTracer.traceInfo(funcName, "Enabling BlueConeVision.");
-                    robot.vision.setBlueConeVisionEnabled(true);
+                    robot.globalTracer.traceInfo(funcName, "Enabling BlueBlobVision.");
+                    robot.vision.setBlueBlobVisionEnabled(true);
                 }
             }
         }
@@ -256,8 +256,8 @@ public class FtcAuto extends FtcOpMode
                 robot.globalTracer.traceInfo(funcName, "Disabling TensorFlowVision.");
                 robot.vision.setTensorFlowVisionEnabled(false);
             }
-            robot.vision.setRedConeVisionEnabled(false);
-            robot.vision.setBlueConeVisionEnabled(false);
+            robot.vision.setRedBlobVisionEnabled(false);
+            robot.vision.setBlueBlobVisionEnabled(false);
             robot.vision.setActiveWebcam(robot.vision.getRearWebcam());
             robot.vision.setAprilTagVisionEnabled(true);
         }

@@ -35,14 +35,12 @@ public class ElevatorArm
 {
     private enum ActionType
     {
-        SetupPositions,
-        SetupCompleted,
-        SetElevatorPosition,
-        SetElevatorPower,
-        SetElevatorPidPower,
-        SetArmPosition,
-        SetArmPower,
-        SetArmPidPower
+        ElevatorSetPosition,
+        ElevatorSetPower,
+        ElevatorSetPidPower,
+        ArmSetPosition,
+        ArmSetPower,
+        ArmSetPidPower
     }   //enum ActionType
 
     private static class ActionParams
@@ -99,14 +97,14 @@ public class ElevatorArm
 
     }   //class ActionParams
 
-    // Elevator subsystem.
     private final ActionParams elevatorActionParams = new ActionParams();
-    public final TrcMotor elevator;
-    private final TrcEvent elevatorEvent;
-    // Arm subsystem.
     private final ActionParams armActionParams = new ActionParams();
+    // Elevator subsystem.
+    public final TrcMotor elevator;
+    public final TrcEvent elevatorEvent;
+    // Arm subsystem.
     public final TrcMotor arm;
-    private final TrcEvent armEvent;
+    public final TrcEvent armEvent;
     // Wrist subsystem.
     public final FtcServo wrist;
 
@@ -141,7 +139,7 @@ public class ElevatorArm
                 RobotParams.ELEVATOR_IZONE);
             elevator.setPositionPidTolerance(RobotParams.ELEVATOR_TOLERANCE);
             elevatorEvent = new TrcEvent(RobotParams.HWNAME_ELEVATOR + ".event");
-            elevatorEvent.setCallback(this::performAction, elevatorActionParams);
+            elevatorEvent.setCallback(this::performAction, elevatorEvent);
         }
         else
         {
@@ -167,9 +165,9 @@ public class ElevatorArm
             arm.setPositionPidCoefficients(
                 RobotParams.ARM_KP, RobotParams.ARM_KI, RobotParams.ARM_KD, RobotParams.ARM_KF, RobotParams.ARM_IZONE);
             arm.setPositionPidTolerance(RobotParams.ARM_TOLERANCE);
-            arm.setPositionPidPowerComp(this::getArmPowerComp);
+            arm.setPositionPidPowerComp(this::armGetPowerComp);
             armEvent = new TrcEvent(RobotParams.HWNAME_ARM + ".event");
-            armEvent.setCallback(this::performAction, armActionParams);
+            armEvent.setCallback(this::performAction, armEvent);
         }
         else
         {
@@ -191,6 +189,25 @@ public class ElevatorArm
     }   //ElevatorArm
 
     /**
+     * This method cancels the elevator and arm operation if there is any.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     */
+    public void cancel(String owner)
+    {
+        elevator.stop(owner);
+        arm.stop(owner);
+    }   //cancel
+
+    /**
+     * This method cancels the elevator and arm operation if there is any.
+     */
+    public void cancel()
+    {
+        cancel(null);
+    }   //cancel
+
+    /**
      * This method zero calibrates the elevator. Arm has absolute encoder and doesn't need zero calibration.
      * Note: This assumes the arm is at safe position or elevator zero calibration won't happen.
      *
@@ -200,6 +217,13 @@ public class ElevatorArm
     {
         if (elevator != null && arm != null  && arm.getPosition() <= RobotParams.ARM_SAFE_POS)
         {
+            if (wrist != null)
+            {
+                // Holding wrist in loading position while zero calibrating.
+                wrist.setPosition(RobotParams.WRIST_DOWN_POS);
+            }
+            // Holding arm in loading position while zero calibrating.
+            arm.setPosition(owner, 0.0, RobotParams.ARM_LOAD_POS, true, RobotParams.ARM_POWER_LIMIT, null, 0.0);
             elevator.zeroCalibrate(owner, RobotParams.ELEVATOR_CAL_POWER);
         }
     }   //zeroCalibrate
@@ -215,91 +239,86 @@ public class ElevatorArm
 
         switch (actionParams.actionType)
         {
-            case SetupPositions:
-                if (actionParams.safeToMove || elevatorEvent.isSignaled() && armEvent.isSignaled())
-                {
-                    double delay = actionParams.safeToMove? actionParams.delay: 0.0;
-                    double timeout =
-                        actionParams.expiredTime == 0.0? 0.0: actionParams.expiredTime - TrcTimer.getCurrentTime();
-
-                    actionParams.actionType = ActionType.SetupCompleted;
-                    elevatorEvent.clear();
-                    armEvent.clear();
-                    elevator.setPosition(
-                        elevatorActionParams.owner, delay, elevatorActionParams.pos, true,
-                        elevatorActionParams.powerLimit, elevatorEvent, timeout);
-                    arm.setPosition(
-                        armActionParams.owner, delay, armActionParams.pos, true, armActionParams.powerLimit, armEvent,
-                        timeout);
-                }
-                break;
-
-            case SetupCompleted:
-                if (elevatorEvent.isSignaled() && armEvent.isSignaled() && actionParams.completionEvent != null)
-                {
-                    actionParams.completionEvent.signal();
-                }
-                break;
-
-            case SetElevatorPosition:
+            case ElevatorSetPosition:
+                // Perform action only if already in safe position or arm has moved to safe position.
                 if (actionParams.safeToMove || armEvent.isSignaled())
                 {
+                    // Delay is only applicable for first movement. If arm has moved, it already applied delay.
                     double delay = actionParams.safeToMove? actionParams.delay: 0.0;
                     double timeout =
                         actionParams.expiredTime == 0.0? 0.0: actionParams.expiredTime - TrcTimer.getCurrentTime();
-
+                    // Move elevator to desired position.
                     elevator.setPosition(
                         actionParams.owner, delay, actionParams.pos, true, actionParams.powerLimit,
                         actionParams.completionEvent, timeout);
                 }
                 break;
 
-            case SetElevatorPower:
+            case ElevatorSetPower:
+                // Perform action only if already in safe position or arm has moved to safe position.
                 if (actionParams.safeToMove || armEvent.isSignaled())
                 {
+                    // Delay is only applicable for first movement. If arm has moved, it already applied delay.
                     double delay = actionParams.safeToMove? actionParams.delay: 0.0;
-
+                    // Move elevator with desired power.
                     elevator.setPower(
                         actionParams.owner, delay, actionParams.power, actionParams.duration,
                         actionParams.completionEvent);
                 }
                 break;
 
-            case SetElevatorPidPower:
+            case ElevatorSetPidPower:
+                // Perform action only if already in safe position or arm has moved to safe position.
                 if (actionParams.safeToMove || armEvent.isSignaled())
                 {
+                    // Move elevator with desired power with PID control.
                     elevator.setPidPower(
                         actionParams.owner, actionParams.power, actionParams.minPos, actionParams.maxPos, true);
                 }
                 break;
 
-            case SetArmPosition:
+            case ArmSetPosition:
+                // Perform action only if already in safe position or elevator has moved to safe height.
                 if (actionParams.safeToMove || elevatorEvent.isSignaled())
                 {
+                    // Delay is only applicable for first movement. If elevator has moved, it already applied delay.
                     double delay = actionParams.safeToMove? actionParams.delay: 0.0;
                     double timeout =
                         actionParams.expiredTime == 0.0? 0.0: actionParams.expiredTime - TrcTimer.getCurrentTime();
-
+                    // Make sure wrist is at appropriate position.
+                    if (actionParams.pos == RobotParams.ARM_SCORE_BACKDROP_POS)
+                    {
+                        wrist.setPosition(RobotParams.WRIST_UP_POS);
+                    }
+                    else if (actionParams.pos == RobotParams.ARM_LOAD_POS)
+                    {
+                        wrist.setPosition(RobotParams.WRIST_DOWN_POS);
+                    }
+                    // Move arm to desired position.
                     arm.setPosition(
                         actionParams.owner, delay, actionParams.pos, true, actionParams.powerLimit,
                         actionParams.completionEvent, timeout);
                 }
                 break;
 
-            case SetArmPower:
+            case ArmSetPower:
+                // Perform action only if already in safe position or elevator has moved to safe height.
                 if (actionParams.safeToMove || elevatorEvent.isSignaled())
                 {
+                    // Delay is only applicable for first movement. If elevator has moved, it already applied delay.
                     double delay = actionParams.safeToMove? actionParams.delay: 0.0;
-
+                    // Move arm with desired power.
                     arm.setPower(
                         actionParams.owner, delay, actionParams.power, actionParams.duration,
                         actionParams.completionEvent);
                 }
                 break;
 
-            case SetArmPidPower:
+            case ArmSetPidPower:
+                // Perform action only if already in safe position or elevator has moved to safe height.
                 if (actionParams.safeToMove || elevatorEvent.isSignaled())
                 {
+                    // Move arm with desired power with PID control.
                     arm.setPidPower(
                         actionParams.owner, actionParams.power, actionParams.minPos, actionParams.maxPos, true);
                 }
@@ -308,120 +327,55 @@ public class ElevatorArm
     }   //performAction
 
     /**
-     * This method checks if the specified elevator and arm positions are at home positions.
-     *
-     * @param elevatorPos specifies the elevator position.
-     * @param armPos specifies the arm position.
-     * @return true if both positions are at home.
-     */
-    private boolean isHomePosition(double elevatorPos, double armPos)
-    {
-        return elevatorPos < RobotParams.ELEVATOR_SAFE_POS && armPos < RobotParams.ARM_SAFE_POS;
-    }   //isHomePosition
-
-    /**
-     * This method set up the elevator and arm to the given positions.
+     * This method sets the elevator, arm, wrist to the loading position and makes sure it doesn't hit the intake on
+     * its way.
      *
      * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
      * @param delay specifies the delay before moving in seconds.
-     * @param elevatorPos specifies the elevator position.
-     * @param elevatorPowerLimit specifies the elevator power limit.
-     * @param armPos specifies the arm position.
-     * @param armPowerLimit specifies the arm power limit.
      * @param event specifies the event to signal when the operation is completed.
      * @param timeout specifies the maximum time allowed for the operation, can be zero if no timeout.
      */
-    public void setupPositions(
-        String owner, double delay, double elevatorPos, double elevatorPowerLimit, double armPos, double armPowerLimit,
-        TrcEvent event, double timeout)
+    public void setLoadingPosition(String owner, double delay, TrcEvent event, double timeout)
     {
         double expiredTime = timeout == 0.0 ? 0.0 : TrcTimer.getCurrentTime() + timeout;
-        boolean currPosIsHome = isHomePosition(elevator.getPosition(), arm.getPosition());
-        boolean targetIsHome = isHomePosition(elevatorPos, armPos);
-
-        elevatorActionParams.setPositionParams(
-            ActionType.SetupPositions, owner, delay, elevatorPos, elevatorPowerLimit, event, expiredTime);
+        // Move the wrist in loading position before lowering the elevator.
+        wrist.setPosition(owner, 0.0, RobotParams.WRIST_DOWN_POS, null, 0.0);
+        // Setting up the elevator operation after the arm is in loading position.
         armActionParams.setPositionParams(
-            ActionType.SetupPositions, owner, delay, armPos, armPowerLimit, event, expiredTime);
-        if (currPosIsHome ^ targetIsHome)
+            ActionType.ElevatorSetPosition, owner, 0.0, RobotParams.ELEVATOR_LOAD_POS, RobotParams.ELEVATOR_POWER_LIMIT,
+            event, expiredTime);
+        // Move the arm to loading position before lowering the elevator.
+        if (!armIsSafeToMove(RobotParams.ARM_LOAD_POS))
         {
-            // Either current position is home and target is not home or current position is not home and target is
-            // home. In either of these scenarios, we must move the elevator and arm to safe positions first which
-            // is ELEVATOR_SAFE_POS and ARM_MIN_POS.
-            elevatorEvent.clear();
-            armEvent.clear();
+            // Move elevator to safe position first. Elevator is fast and arm is slow, so we don't have to wait for
+            // the elevator to complete its movement.
             elevator.setPosition(
-                owner, delay, RobotParams.ELEVATOR_SAFE_POS + RobotParams.ELEVATOR_TOLERANCE, true,
-                elevatorPowerLimit, elevatorEvent, timeout);
-            arm.setPosition(owner, delay, RobotParams.ARM_MIN_POS + RobotParams.ARM_TOLERANCE, true,
-                armPowerLimit, armEvent, timeout);
+                owner, 0.0, RobotParams.ELEVATOR_SAFE_POS, true, RobotParams.ELEVATOR_POWER_LIMIT, null, 0.0);
         }
-        else
-        {
-            elevatorActionParams.safeToMove = true;
-            performAction(elevatorActionParams);
-        }
-    }   //setupPositions
+        armSetPosition(owner, delay, RobotParams.ARM_LOAD_POS, RobotParams.ARM_POWER_LIMIT, armEvent, 3.0);
+    }   //setLoadingPosition
 
     /**
-     * This method set up the elevator and arm to the given positions.
+     * This method sets the elevator, arm, wrist to the scoring position and makes sure it doesn't hit the intake on
+     * its way.
      *
      * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
-     * @param elevatorPos specifies the elevator position.
-     * @param elevatorPowerLimit specifies the elevator power limit.
-     * @param armPos specifies the arm position.
-     * @param armPowerLimit specifies the arm power limit.
+     * @param delay specifies the delay before moving in seconds.
+     * @param elevatorPos specifies the elevator scoring level.
      * @param event specifies the event to signal when the operation is completed.
      * @param timeout specifies the maximum time allowed for the operation, can be zero if no timeout.
      */
-    public void setupPositions(
-        String owner, double elevatorPos, double elevatorPowerLimit, double armPos, double armPowerLimit,
-        TrcEvent event, double timeout)
+    public void setScoringPosition(String owner, double delay, double elevatorPos, TrcEvent event, double timeout)
     {
-        setupPositions(owner, 0.0, elevatorPos, elevatorPowerLimit, armPos, armPowerLimit, event, timeout);
-    }   //setupPositions
-
-    /**
-     * This method set up the elevator and arm to the given positions.
-     *
-     * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
-     * @param elevatorPos specifies the elevator position.
-     * @param elevatorPowerLimit specifies the elevator power limit.
-     * @param armPos specifies the arm position.
-     * @param armPowerLimit specifies the arm power limit.
-     */
-    public void setupPositions(
-        String owner, double elevatorPos, double elevatorPowerLimit, double armPos, double armPowerLimit)
-    {
-        setupPositions(owner, 0.0, elevatorPos, elevatorPowerLimit, armPos, armPowerLimit, null, 0.0);
-    }   //setupPositions
-
-    /**
-     * This method set up the elevator and arm to the given positions.
-     *
-     * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
-     * @param elevatorPos specifies the elevator position.
-     * @param armPos specifies the arm position.
-     * @param event specifies the event to signal when the operation is completed.
-     * @param timeout specifies the maximum time allowed for the operation, can be zero if no timeout.
-     */
-    public void setupPositions(
-        String owner, double elevatorPos, double armPos, TrcEvent event, double timeout)
-    {
-        setupPositions(owner, 0.0, elevatorPos, 1.0, armPos, 1.0, event, timeout);
-    }   //setupPositions
-
-    /**
-     * This method set up the elevator and arm to the given positions.
-     *
-     * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
-     * @param elevatorPos specifies the elevator position.
-     * @param armPos specifies the arm position.
-     */
-    public void setupPositions(String owner, double elevatorPos, double armPos)
-    {
-        setupPositions(owner, 0.0, elevatorPos, 1.0, armPos, 1.0, null, 0.0);
-    }   //setupPositions
+        double expiredTime = timeout == 0.0 ? 0.0 : TrcTimer.getCurrentTime() + timeout;
+        // Setting up the arm operation after the elevator is in scoring height.
+        // Wrist position will be set in the arm operation.
+        elevatorActionParams.setPositionParams(
+            ActionType.ArmSetPosition, owner, 0.0, RobotParams.ARM_SCORE_BACKDROP_POS, RobotParams.ARM_POWER_LIMIT,
+            event, expiredTime);
+        // Move the elevator to scoring height before moving the arm to scoring position.
+        elevatorSetPosition(owner, delay, elevatorPos, RobotParams.ELEVATOR_POWER_LIMIT, elevatorEvent, 1.0);
+    }   //setScoringPosition
 
     //
     // Elevator subsystem methods.
@@ -433,14 +387,14 @@ public class ElevatorArm
      * @param elevatorTargetPos specifies the elevator target position.
      * @return true if it is safe to move, false otherwise.
      */
-    private boolean isElevatorSafeToMove(double elevatorTargetPos)
+    private boolean elevatorIsSafeToMove(double elevatorTargetPos)
     {
         double currArmPos = arm.getPosition();
 
         return currArmPos <= RobotParams.ARM_SAFE_POS ||
                currArmPos >= RobotParams.ARM_FREE_TO_MOVE_POS ||
                elevatorTargetPos >= RobotParams.ELEVATOR_SAFE_POS;
-    }   //isElevatorSafeToMove
+    }   //elevatorIsSafeToMove
 
     /**
      * This method sets the elevator position.
@@ -453,24 +407,24 @@ public class ElevatorArm
      * @param event specifies the event to signal when the motor operation is completed.
      * @param timeout specifies timeout in seconds.
      */
-    public void setElevatorPosition(
+    public void elevatorSetPosition(
         String owner, double delay, double pos, double powerLimit, TrcEvent event, double timeout)
     {
         double expiredTime = timeout == 0.0? 0.0: TrcTimer.getCurrentTime() + timeout;
 
-        elevatorActionParams.setPositionParams(
-            ActionType.SetElevatorPosition, owner, delay, pos, powerLimit, event, expiredTime);
-        if (isElevatorSafeToMove(pos))
+        armActionParams.setPositionParams(
+            ActionType.ElevatorSetPosition, owner, delay, pos, powerLimit, event, expiredTime);
+        if (elevatorIsSafeToMove(pos))
         {
-            elevatorActionParams.safeToMove = true;
-            performAction(elevatorActionParams);
+            armActionParams.safeToMove = true;
+            performAction(armActionParams);
         }
         else
         {
             armEvent.clear();
             arm.setPosition(owner, delay, RobotParams.ARM_MIN_POS, true, powerLimit, armEvent, timeout);
         }
-    }   //setElevatorPosition
+    }   //elevatorSetPosition
 
     /**
      * This method sets the elevator power.
@@ -483,21 +437,21 @@ public class ElevatorArm
      *        turning off.
      * @param event specifies the event to signal when the motor operation is completed.
      */
-    public void setElevatorPower(String owner, double delay, double power, double duration, TrcEvent event)
+    public void elevatorSetPower(String owner, double delay, double power, double duration, TrcEvent event)
     {
-        elevatorActionParams.setPowerParams(ActionType.SetElevatorPower, owner, delay, power, duration, event);
+        armActionParams.setPowerParams(ActionType.ElevatorSetPower, owner, delay, power, duration, event);
         if (power == 0.0 ||
-            isElevatorSafeToMove(power > 0.0? RobotParams.ELEVATOR_MAX_POS: RobotParams.ELEVATOR_MIN_POS))
+            elevatorIsSafeToMove(power > 0.0? RobotParams.ELEVATOR_MAX_POS: RobotParams.ELEVATOR_MIN_POS))
         {
-            elevatorActionParams.safeToMove = true;
-            performAction(elevatorActionParams);
+            armActionParams.safeToMove = true;
+            performAction(armActionParams);
         }
         else
         {
             armEvent.clear();
             arm.setPosition(owner, delay, RobotParams.ARM_MIN_POS, true, 1.0, armEvent, 0.0);
         }
-    }   //setElevatorPower
+    }   //elevatorSetPower
 
     /**
      * This method sets the elevator power with PID control.
@@ -507,20 +461,20 @@ public class ElevatorArm
      * @param minPos specifies the minimum of the position range.
      * @param maxPos specifies the maximum of the position range.
      */
-    public void setElevatorPidPower(String owner, double power, double minPos, double maxPos)
+    public void elevatorSetPidPower(String owner, double power, double minPos, double maxPos)
     {
-        elevatorActionParams.setPidPowerParams(ActionType.SetElevatorPidPower, owner, power, minPos, maxPos);
-        if (power == 0.0 || isElevatorSafeToMove(power > 0.0? maxPos: minPos))
+        armActionParams.setPidPowerParams(ActionType.ElevatorSetPidPower, owner, power, minPos, maxPos);
+        if (power == 0.0 || elevatorIsSafeToMove(power > 0.0? maxPos: minPos))
         {
-            elevatorActionParams.safeToMove = true;
-            performAction(elevatorActionParams);
+            armActionParams.safeToMove = true;
+            performAction(armActionParams);
         }
         else
         {
             armEvent.clear();
             arm.setPosition(owner, 0.0, RobotParams.ARM_MIN_POS, true, 1.0, armEvent, 0.0);
         }
-    }   //setElevatorPidPower
+    }   //elevatorSetPidPower
 
     /**
      * This method sets the elevator to the specified preset position.
@@ -534,15 +488,14 @@ public class ElevatorArm
      *        timeout, the operation will be canceled and the event will be signaled. If no timeout is specified, it
      *        should be set to zero.
      */
-    public void setElevatorPresetPosition(
+    public void elevatorSetPresetPosition(
         String owner, double delay, int presetIndex, double powerLimit, TrcEvent event, double timeout)
     {
         if (elevator.validatePresetIndex(presetIndex))
         {
-            setElevatorPosition(
-                owner, delay, elevator.getPresetPosition(presetIndex), powerLimit, event, timeout);
+            elevatorSetPosition(owner, delay, elevator.getPresetPosition(presetIndex), powerLimit, event, timeout);
         }
-    }   //setElevatorPresetPosition
+    }   //elevatorSetPresetPosition
 
     /**
      * This method sets the elevator to the next preset position up from the current position.
@@ -558,7 +511,7 @@ public class ElevatorArm
 
         if (index != -1)
         {
-            setElevatorPosition(owner, 0.0, elevator.getPresetPosition(index), powerLimit, null, 1.0);
+            elevatorSetPosition(owner, 0.0, elevator.getPresetPosition(index), powerLimit, null, 1.0);
         }
     }   //elevatorPresetPositionUp
 
@@ -576,7 +529,7 @@ public class ElevatorArm
 
         if (index != -1)
         {
-            setElevatorPosition(owner, 0.0, elevator.getPresetPosition(index), powerLimit, null, 1.0);
+            elevatorSetPosition(owner, 0.0, elevator.getPresetPosition(index), powerLimit, null, 1.0);
         }
     }   //elevatorPresetPositionDown
 
@@ -590,12 +543,10 @@ public class ElevatorArm
      * @param currPower specifies the current motor power (not used).
      * @return gravity compensation for the arm.
      */
-    private double getArmPowerComp(double currPower)
+    private double armGetPowerComp(double currPower)
     {
-        double armAngle = arm.getPosition();
-        double powerComp = RobotParams.ARM_MAX_GRAVITY_COMP_POWER * Math.sin(Math.toRadians(armAngle));
-        return powerComp;
-    }   //getArmPowerComp
+        return RobotParams.ARM_MAX_GRAVITY_COMP_POWER * Math.sin(Math.toRadians(arm.getPosition()));
+    }   //armGetPowerComp
 
     /**
      * This method checks if the arm is safe to move so it doesn't hit the intake.
@@ -603,12 +554,12 @@ public class ElevatorArm
      * @param armTargetPos specifies the arm target position.
      * @return true if it is safe to move, false otherwise.
      */
-    private boolean isArmSafeToMove(double armTargetPos)
+    private boolean armIsSafeToMove(double armTargetPos)
     {
         return elevator.getPosition() >= RobotParams.ELEVATOR_SAFE_POS ||
                arm.getPosition() >= RobotParams.ARM_FREE_TO_MOVE_POS &&
                armTargetPos >= RobotParams.ARM_FREE_TO_MOVE_POS;
-    }   //isArmSafeToMove
+    }   //armIsSafeToMove
 
     /**
      * This method sets the arm position.
@@ -621,24 +572,24 @@ public class ElevatorArm
      * @param event specifies the event to signal when the motor operation is completed.
      * @param timeout specifies timeout in seconds.
      */
-    public void setArmPosition(
+    public void armSetPosition(
         String owner, double delay, double pos, double powerLimit, TrcEvent event, double timeout)
     {
         double expiredTime = timeout == 0.0? 0.0: TrcTimer.getCurrentTime() + timeout;
 
-        armActionParams.setPositionParams(
-            ActionType.SetArmPosition, owner, delay, pos, powerLimit, event, expiredTime);
-        if (isArmSafeToMove(pos))
+        elevatorActionParams.setPositionParams(
+            ActionType.ArmSetPosition, owner, delay, pos, powerLimit, event, expiredTime);
+        if (armIsSafeToMove(pos))
         {
-            armActionParams.safeToMove = true;
-            performAction(armActionParams);
+            elevatorActionParams.safeToMove = true;
+            performAction(elevatorActionParams);
         }
         else
         {
             elevatorEvent.clear();
             elevator.setPosition(owner, delay, RobotParams.ELEVATOR_SAFE_POS, true, powerLimit, elevatorEvent, timeout);
         }
-    }   //setArmPosition
+    }   //armSetPosition
 
     /**
      * This method sets the arm power.
@@ -651,21 +602,21 @@ public class ElevatorArm
      *        turning off.
      * @param event specifies the event to signal when the motor operation is completed.
      */
-    public void setArmPower(String owner, double delay, double power, double duration, TrcEvent event)
+    public void armSetPower(String owner, double delay, double power, double duration, TrcEvent event)
     {
-        armActionParams.setPowerParams(ActionType.SetArmPower, owner, delay, power, duration, event);
+        elevatorActionParams.setPowerParams(ActionType.ArmSetPower, owner, delay, power, duration, event);
         if (power == 0.0 ||
-            isArmSafeToMove(power > 0.0? RobotParams.ARM_MAX_POS: RobotParams.ARM_MIN_POS))
+            armIsSafeToMove(power > 0.0? RobotParams.ARM_MAX_POS: RobotParams.ARM_MIN_POS))
         {
-            armActionParams.safeToMove = true;
-            performAction(armActionParams);
+            elevatorActionParams.safeToMove = true;
+            performAction(elevatorActionParams);
         }
         else
         {
             elevatorEvent.clear();
             elevator.setPosition(owner, delay, RobotParams.ELEVATOR_SAFE_POS, true, 1.0, elevatorEvent, 0.0);
         }
-    }   //setArmPower
+    }   //armSetPower
 
     /**
      * This method sets the arm power with PID control.
@@ -675,20 +626,20 @@ public class ElevatorArm
      * @param minPos specifies the minimum of the position range.
      * @param maxPos specifies the maximum of the position range.
      */
-    public void setArmPidPower(String owner, double power, double minPos, double maxPos)
+    public void armSetPidPower(String owner, double power, double minPos, double maxPos)
     {
-        armActionParams.setPidPowerParams(ActionType.SetArmPidPower, owner, power, minPos, maxPos);
-        if (power == 0.0 || isArmSafeToMove(power > 0.0? maxPos: minPos))
+        elevatorActionParams.setPidPowerParams(ActionType.ArmSetPidPower, owner, power, minPos, maxPos);
+        if (power == 0.0 || armIsSafeToMove(power > 0.0? maxPos: minPos))
         {
-            armActionParams.safeToMove = true;
-            performAction(armActionParams);
+            elevatorActionParams.safeToMove = true;
+            performAction(elevatorActionParams);
         }
         else
         {
             elevatorEvent.clear();
             elevator.setPosition(owner, 0.0, RobotParams.ELEVATOR_SAFE_POS, true, 1.0, elevatorEvent, 0.0);
         }
-    }   //setArmPidPower
+    }   //armSetPidPower
 
     /**
      * This method sets the arm to the specified preset position.
@@ -702,14 +653,14 @@ public class ElevatorArm
      *        timeout, the operation will be canceled and the event will be signaled. If no timeout is specified, it
      *        should be set to zero.
      */
-    public void setArmPresetPosition(
+    public void armSetPresetPosition(
         String owner, double delay, int presetIndex, double powerLimit, TrcEvent event, double timeout)
     {
         if (arm.validatePresetIndex(presetIndex))
         {
-            setArmPosition(owner, delay, arm.getPresetPosition(presetIndex), powerLimit, event, timeout);
+            armSetPosition(owner, delay, arm.getPresetPosition(presetIndex), powerLimit, event, timeout);
         }
-    }   //setArmPresetPosition
+    }   //armSetPresetPosition
 
     /**
      * This method sets the arm to the next preset position up from the current position.
@@ -725,7 +676,7 @@ public class ElevatorArm
 
         if (index != -1)
         {
-            setArmPosition(owner, 0.0, arm.getPresetPosition(index), powerLimit, null, 3.0);
+            armSetPosition(owner, 0.0, arm.getPresetPosition(index), powerLimit, null, 3.0);
         }
     }   //armPresetPositionUp
 
@@ -743,7 +694,7 @@ public class ElevatorArm
 
         if (index != -1)
         {
-            setArmPosition(owner, 0.0, arm.getPresetPosition(index), powerLimit, null, 3.0);
+            armSetPosition(owner, 0.0, arm.getPresetPosition(index), powerLimit, null, 3.0);
         }
     }   //armPresetPositionDown
 

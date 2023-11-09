@@ -301,16 +301,16 @@ public class FtcTest extends FtcTeleOp
                         robot.vision.setPixelVisionEnabled(Vision.PixelType.WhitePixel, true);
                     }
 
-                    if (robot.vision.redConeVision != null)
+                    if (robot.vision.redBlobVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling RedConeVision.");
-                        robot.vision.setRedConeVisionEnabled(true);
+                        robot.globalTracer.traceInfo(funcName, "Enabling RedBlobVision.");
+                        robot.vision.setRedBlobVisionEnabled(true);
                     }
 
-                    if (robot.vision.blueConeVision != null)
+                    if (robot.vision.blueBlobVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling BlueConeVision.");
-                        robot.vision.setBlueConeVisionEnabled(true);
+                        robot.globalTracer.traceInfo(funcName, "Enabling BlueBlobVision.");
+                        robot.vision.setBlueBlobVisionEnabled(true);
                     }
 
                     if (robot.vision.tensorFlowVision != null)
@@ -1137,12 +1137,12 @@ public class FtcTest extends FtcTeleOp
                 robot.vision.getDetectedAprilTag(null, lineNum++);
             }
 
-            if (robot.vision.redConeVision != null)
+            if (robot.vision.redBlobVision != null)
             {
                 robot.vision.getDetectedTeamPropPosition(FtcAuto.Alliance.RED_ALLIANCE, lineNum++);
             }
 
-            if (robot.vision.blueConeVision != null)
+            if (robot.vision.blueBlobVision != null)
             {
                 robot.vision.getDetectedTeamPropPosition(FtcAuto.Alliance.BLUE_ALLIANCE, lineNum++);
             }

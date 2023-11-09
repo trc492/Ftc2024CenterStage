@@ -81,16 +81,16 @@ public class Vision
     private static final double[] greenPixelColorThresholds = {40.0, 200.0, 60.0, 120.0, 60.0, 120.0};
     private static final double[] yellowPixelColorThresholds = {150.0, 250.0, 110.0, 160.0, 20.0, 100.0};
     private static final double[] whitePixelColorThresholds = {250.0, 255.0, 100.0, 130.0, 120.0, 140.0};
-    private static final double[] redConeColorThresholds = {20.0, 120.0, 180.0, 240.0, 90.0, 120.0};
-    private static final double[] blueConeColorThresholds = {0.0, 250.0, 40.0, 250.0, 160.0, 240.0};
+    private static final double[] redBlobColorThresholds = {20.0, 120.0, 180.0, 240.0, 90.0, 120.0};
+    private static final double[] blueBlobColorThresholds = {0.0, 250.0, 40.0, 250.0, 160.0, 240.0};
 //    // HSV Color Space.
 //    private static final int colorConversion = Imgproc.COLOR_RGB2HSV_FULL;
 //    private static final double[] purplePixelColorThresholds = {170.0, 200.0, 40.0, 160.0, 100.0, 255.0};
 //    private static final double[] greenPixelColorThresholds = {60.0, 120.0, 60.0, 255.0, 60.0, 255.0};
 //    private static final double[] yellowPixelColorThresholds = {30.0, 60.0, 120.0, 225.0, 200.0, 255.0};
 //    private static final double[] whitePixelColorThresholds = {70.0, 120.0, 0.0, 255.0, 230.0, 255.0};
-//    private static final double[] redConeColorThresholds = {0.0, 10.0, 120.0, 255.0, 100.0, 255.0};
-//    private static final double[] blueConeColorThresholds = {160.0, 200.0, 120.0, 255.0, 100.0, 255.0};
+//    private static final double[] redBlobColorThresholds = {0.0, 10.0, 120.0, 255.0, 100.0, 255.0};
+//    private static final double[] blueBlobColorThresholds = {160.0, 200.0, 120.0, 255.0, 100.0, 255.0};
     private static final TrcOpenCvColorBlobPipeline.FilterContourParams pixelFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
             .setMinArea(1000.0)
@@ -100,7 +100,7 @@ public class Vision
             .setSolidityRange(0.0, 100.0)
             .setVerticesRange(0.0, 1000.0)
             .setAspectRatioRange(0.2, 5.0);
-    private static final TrcOpenCvColorBlobPipeline.FilterContourParams coneFilterContourParams =
+    private static final TrcOpenCvColorBlobPipeline.FilterContourParams blobFilterContourParams =
         new TrcOpenCvColorBlobPipeline.FilterContourParams()
             .setMinArea(1000.0)
             .setMinPerimeter(100.0)
@@ -130,10 +130,10 @@ public class Vision
     private FtcEocvColorBlobProcessor yellowPixelProcessor;
     public FtcVisionEocvColorBlob whitePixelVision;
     private FtcEocvColorBlobProcessor whitePixelProcessor;
-    public FtcVisionEocvColorBlob redConeVision;
-    private FtcEocvColorBlobProcessor redConeProcessor;
-    public FtcVisionEocvColorBlob blueConeVision;
-    private FtcEocvColorBlobProcessor blueConeProcessor;
+    public FtcVisionEocvColorBlob redBlobVision;
+    private FtcEocvColorBlobProcessor redBlobProcessor;
+    public FtcVisionEocvColorBlob blueBlobVision;
+    private FtcEocvColorBlobProcessor blueBlobProcessor;
     public FtcVisionTensorFlow tensorFlowVision;
     private TfodProcessor tensorFlowProcessor;
     public FtcVision vision;
@@ -230,17 +230,17 @@ public class Vision
                 whitePixelProcessor = whitePixelVision.getVisionProcessor();
                 visionProcessorsList.add(whitePixelProcessor);
 
-                redConeVision = new FtcVisionEocvColorBlob(
-                    "RedCone", colorConversion, redConeColorThresholds, coneFilterContourParams, true,
+                redBlobVision = new FtcVisionEocvColorBlob(
+                    "RedBlob", colorConversion, redBlobColorThresholds, blobFilterContourParams, true,
                     RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
-                redConeProcessor = redConeVision.getVisionProcessor();
-                visionProcessorsList.add(redConeProcessor);
+                redBlobProcessor = redBlobVision.getVisionProcessor();
+                visionProcessorsList.add(redBlobProcessor);
 
-                blueConeVision = new FtcVisionEocvColorBlob(
-                    "BlueCone", colorConversion, blueConeColorThresholds, coneFilterContourParams, true,
+                blueBlobVision = new FtcVisionEocvColorBlob(
+                    "BlueBlob", colorConversion, blueBlobColorThresholds, blobFilterContourParams, true,
                     RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
-                blueConeProcessor = blueConeVision.getVisionProcessor();
-                visionProcessorsList.add(blueConeProcessor);
+                blueBlobProcessor = blueBlobVision.getVisionProcessor();
+                visionProcessorsList.add(blueBlobProcessor);
             }
 
             if (RobotParams.Preferences.useTensorFlowVision)
@@ -699,50 +699,50 @@ public class Vision
     }   //getDetectedPixel
 
     /**
-     * This method enables/disables RedCone vision.
+     * This method enables/disables RedBlob vision.
      *
      * @param enabled specifies true to enable, false to disable.
      */
-    public void setRedConeVisionEnabled(boolean enabled)
+    public void setRedBlobVisionEnabled(boolean enabled)
     {
-        if (redConeProcessor != null)
+        if (redBlobProcessor != null)
         {
-            vision.setProcessorEnabled(redConeProcessor, enabled);
+            vision.setProcessorEnabled(redBlobProcessor, enabled);
         }
-    }   //setRedConeVisionEnabled
+    }   //setRedBlobVisionEnabled
 
     /**
-     * This method checks if RedCone vision is enabled.
+     * This method checks if RedBlob vision is enabled.
      *
      * @return true if enabled, false if disabled.
      */
-    public boolean isRedConeVisionEnabled()
+    public boolean isRedBlobVisionEnabled()
     {
-        return redConeProcessor != null && vision.isVisionProcessorEnabled(redConeProcessor);
-    }   //isRedConeVisionEnabled
+        return redBlobProcessor != null && vision.isVisionProcessorEnabled(redBlobProcessor);
+    }   //isRedBlobVisionEnabled
 
     /**
-     * This method enables/disables BlueCone vision.
+     * This method enables/disables BlueBlob vision.
      *
      * @param enabled specifies true to enable, false to disable.
      */
-    public void setBlueConeVisionEnabled(boolean enabled)
+    public void setBlueBlobVisionEnabled(boolean enabled)
     {
-        if (blueConeProcessor != null)
+        if (blueBlobProcessor != null)
         {
-            vision.setProcessorEnabled(blueConeProcessor, enabled);
+            vision.setProcessorEnabled(blueBlobProcessor, enabled);
         }
-    }   //setBlueConeVisionEnabled
+    }   //setBlueBlobVisionEnabled
 
     /**
-     * This method checks if BlueCone vision is enabled.
+     * This method checks if BlueBlob vision is enabled.
      *
      * @return true if enabled, false if disabled.
      */
-    public boolean isBlueConeVisionEnabled()
+    public boolean isBlueBlobVisionEnabled()
     {
-        return blueConeProcessor != null && vision.isVisionProcessorEnabled(blueConeProcessor);
-    }   //isBlueConeVisionEnabled
+        return blueBlobProcessor != null && vision.isVisionProcessorEnabled(blueBlobProcessor);
+    }   //isBlueBlobVisionEnabled
 
     /**
      * This method detects the team prop and determine its position.
@@ -758,16 +758,16 @@ public class Vision
 
         if (alliance == FtcAuto.Alliance.RED_ALLIANCE)
         {
-            if (redConeVision != null)
+            if (redBlobVision != null)
             {
-                teamPropInfo = redConeVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                teamPropInfo = redBlobVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
             }
         }
         else
         {
-            if (blueConeVision != null)
+            if (blueBlobVision != null)
             {
-                teamPropInfo = blueConeVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
+                teamPropInfo = blueBlobVision.getBestDetectedTargetInfo(null, null, 0.0, 0.0);
             }
         }
 
@@ -781,19 +781,19 @@ public class Vision
             {
                 pos = 1;
                 ledLabel = alliance == FtcAuto.Alliance.RED_ALLIANCE?
-                    BlinkinLEDs.RED_CONE_POS_1: BlinkinLEDs.BLUE_CONE_POS_1;
+                    BlinkinLEDs.RED_BLOB_POS_1: BlinkinLEDs.BLUE_BLOB_POS_1;
             }
             else if (teamPropXPos < oneThirdScreenWidth*2)
             {
                 pos = 2;
                 ledLabel = alliance == FtcAuto.Alliance.RED_ALLIANCE?
-                    BlinkinLEDs.RED_CONE_POS_2: BlinkinLEDs.BLUE_CONE_POS_2;
+                    BlinkinLEDs.RED_BLOB_POS_2: BlinkinLEDs.BLUE_BLOB_POS_2;
             }
             else
             {
                 pos = 3;
                 ledLabel = alliance == FtcAuto.Alliance.RED_ALLIANCE?
-                    BlinkinLEDs.RED_CONE_POS_3: BlinkinLEDs.BLUE_CONE_POS_3;
+                    BlinkinLEDs.RED_BLOB_POS_3: BlinkinLEDs.BLUE_BLOB_POS_3;
             }
 
             if (robot.blinkin != null)
@@ -806,7 +806,7 @@ public class Vision
         {
             robot.dashboard.displayPrintf(
                 lineNum, "%s: %s (pos=%d)",
-                alliance == FtcAuto.Alliance.RED_ALLIANCE? "RedCone": "BlueCone",
+                alliance == FtcAuto.Alliance.RED_ALLIANCE? "RedBlob": "BlueBlob",
                 teamPropInfo != null? teamPropInfo: "Not found", pos);
         }
 

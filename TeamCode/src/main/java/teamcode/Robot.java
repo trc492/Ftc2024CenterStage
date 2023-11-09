@@ -320,16 +320,16 @@ public class Robot
                 vision.setPixelVisionEnabled(Vision.PixelType.WhitePixel, false);
             }
 
-            if (vision.redConeVision != null)
+            if (vision.redBlobVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling RedConeVision.");
-                vision.setRedConeVisionEnabled(false);
+                globalTracer.traceInfo(funcName, "Disabling RedBlobVision.");
+                vision.setRedBlobVisionEnabled(false);
             }
 
-            if (vision.blueConeVision != null)
+            if (vision.blueBlobVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling BlueConeVision.");
-                vision.setBlueConeVisionEnabled(false);
+                globalTracer.traceInfo(funcName, "Disabling BlueBlobVision.");
+                vision.setBlueBlobVisionEnabled(false);
             }
 
             if (vision.tensorFlowVision != null)

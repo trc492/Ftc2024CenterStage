@@ -38,12 +38,12 @@ public class BlinkinLEDs extends FtcRevBlinkin
     public static final String GREEN_PIXEL = "GreenPixel";
     public static final String YELLOW_PIXEL = "YellowPixel";
     public static final String WHITE_PIXEL = "WhitePixel";
-    public static final String RED_CONE_POS_1 = "RedCone1";
-    public static final String RED_CONE_POS_2 = "RedCone2";
-    public static final String RED_CONE_POS_3 = "RedCone3";
-    public static final String BLUE_CONE_POS_1 = "BlueCone1";
-    public static final String BLUE_CONE_POS_2 = "BlueCone2";
-    public static final String BLUE_CONE_POS_3 = "BlueCone3";
+    public static final String RED_BLOB_POS_1 = "RedBlob1";
+    public static final String RED_BLOB_POS_2 = "RedBlob2";
+    public static final String RED_BLOB_POS_3 = "RedBlob3";
+    public static final String BLUE_BLOB_POS_1 = "BlueBlob1";
+    public static final String BLUE_BLOB_POS_2 = "BlueBlob2";
+    public static final String BLUE_BLOB_POS_3 = "BlueBlob3";
     public static final String TENSOR_FLOW = "TensorFlow";
     public static final String DRIVE_ORIENTATION_FIELD = "FieldMode";
     public static final String DRIVE_ORIENTATION_ROBOT = "RobotMode";
@@ -61,12 +61,12 @@ public class BlinkinLEDs extends FtcRevBlinkin
         // LED Patterns are sorted in decreasing priority order.
         final TrcRevBlinkin.Pattern[] ledPatternPriorities = {
             // Highest priority.
-            new TrcRevBlinkin.Pattern(RED_CONE_POS_1, RevLedPattern.SolidRed),
-            new TrcRevBlinkin.Pattern(RED_CONE_POS_2, RevLedPattern.SolidGreen),
-            new TrcRevBlinkin.Pattern(RED_CONE_POS_3, RevLedPattern.SolidBlue),
-            new TrcRevBlinkin.Pattern(BLUE_CONE_POS_1, RevLedPattern.SolidRed),
-            new TrcRevBlinkin.Pattern(BLUE_CONE_POS_2, RevLedPattern.SolidGreen),
-            new TrcRevBlinkin.Pattern(BLUE_CONE_POS_3, RevLedPattern.SolidBlue),
+            new TrcRevBlinkin.Pattern(RED_BLOB_POS_1, RevLedPattern.SolidRed),
+            new TrcRevBlinkin.Pattern(RED_BLOB_POS_2, RevLedPattern.SolidGreen),
+            new TrcRevBlinkin.Pattern(RED_BLOB_POS_3, RevLedPattern.SolidBlue),
+            new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_1, RevLedPattern.SolidRed),
+            new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_2, RevLedPattern.SolidGreen),
+            new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_3, RevLedPattern.SolidBlue),
             new TrcRevBlinkin.Pattern(APRIL_TAG, RevLedPattern.SolidAqua),
             new TrcRevBlinkin.Pattern(PURPLE_PIXEL, RevLedPattern.SolidViolet),
             new TrcRevBlinkin.Pattern(GREEN_PIXEL, RevLedPattern.SolidGreen),
