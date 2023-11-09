@@ -283,11 +283,15 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
 
             case PICK_UP_PIXEL:
                 // Pick up pixel.
+                robot.intake.pickUp(0.0, 6.0 , event);
+
+                sm.waitForSingleEvent(event, State.DONE);
                 break;
 
             default:
             case DONE:
                 // Stop task.
+                robot.pixelTray.setUpperGateOpened(false, null);
                 if (robot.vision != null)
                 {
                     robot.vision.setPixelVisionEnabled(Vision.PixelType.AnyPixel, false);

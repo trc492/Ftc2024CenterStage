@@ -137,7 +137,9 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
     {
         final String funcName = "acquireSubsystemsOwnership";
         boolean success = ownerName == null ||
-                          (robot.robotDrive.driveBase.acquireExclusiveAccess(ownerName));
+                          (robot.robotDrive.driveBase.acquireExclusiveAccess(ownerName) &&
+                                  robot.elevatorArm.elevator.acquireExclusiveAccess(ownerName) &&
+                                  robot.elevatorArm.arm.acquireExclusiveAccess(ownerName));
 
         if (success)
         {
@@ -223,12 +225,11 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 break;
 
             case FIND_APRILTAG:
-                // Set up elevator and arm for placing pixel on the Backdrop.
-//                if (robot.elevatorArm != null)
-//                {
-//                    robot.elevatorArm.setupPositions(
-//                            null, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ARM_SCORE_BACKDROP_POS);
-//                }
+//              Set up elevator and arm for placing pixel on the Backdrop.
+                if (robot.elevatorArm != null)
+                {
+                    robot.elevatorArm.setScoringPosition(null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, null, 0.0);
+                }
                 // Use vision to determine the appropriate AprilTag location.
                 if (robot.vision != null && robot.vision.aprilTagVision != null)
                 {
@@ -273,7 +274,6 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
                         event, 3.0,  robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
-//                    robot.elevatorArm.setupPositions(null, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ARM_SCORE_BACKDROP_POS);
                     sm.waitForSingleEvent(event, State.PLACE_PIXEL);
                 }
                 else
@@ -286,7 +286,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 // Place pixel at the appropriate location on the backdrop.
                 if (robot.pixelTray != null)
                 {
-                    robot.pixelTray.setLowerGateOpened(true, event);
+//                    robot.pixelTray.setLowerGateOpened(true, event);
                     robot.pixelTray.setUpperGateOpened(true, event);
                     sm.waitForSingleEvent(event, State.DONE);
                 }

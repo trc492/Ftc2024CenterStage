@@ -80,7 +80,12 @@ public class Intake
         intakeMotor.setPower(on? RobotParams.INTAKE_PICKUP_POWER: 0.0);
     }   //pickUp
 
-    public void spitOut(boolean on)
+    public void pickUp(double delay, double duration, TrcEvent event)
+    {
+        intakeMotor.setPower(delay, RobotParams.INTAKE_PICKUP_POWER, duration, event);
+    }   //pickUp
+
+     public void spitOut(boolean on)
     {
         intakeMotor.setPower(on? RobotParams.INTAKE_SPITOUT_POWER: 0.0);
     }   //spitOut
