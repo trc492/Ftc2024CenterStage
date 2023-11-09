@@ -33,6 +33,7 @@ import TrcFtcLib.ftclib.FtcRevBlinkin;
 public class BlinkinLEDs extends FtcRevBlinkin
 {
     // LED pattern names.
+    public static final String DETECTED_NOTHING = "NoDetection";
     public static final String APRIL_TAG = "AprilTag";
     public static final String PURPLE_PIXEL = "PurplePixel";
     public static final String GREEN_PIXEL = "GreenPixel";
@@ -67,6 +68,7 @@ public class BlinkinLEDs extends FtcRevBlinkin
             new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_1, RevLedPattern.SolidRed),
             new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_2, RevLedPattern.SolidGreen),
             new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_3, RevLedPattern.SolidBlue),
+            new TrcRevBlinkin.Pattern(DETECTED_NOTHING, RevLedPattern.SolidRed),
             new TrcRevBlinkin.Pattern(APRIL_TAG, RevLedPattern.SolidAqua),
             new TrcRevBlinkin.Pattern(PURPLE_PIXEL, RevLedPattern.SolidViolet),
             new TrcRevBlinkin.Pattern(GREEN_PIXEL, RevLedPattern.SolidGreen),

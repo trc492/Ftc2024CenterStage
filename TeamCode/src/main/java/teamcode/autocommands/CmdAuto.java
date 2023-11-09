@@ -53,7 +53,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
         DRIVE_TO_APRILTAG,
         PLACE_YELLOW_PIXEL,
         RAISE_ELEVATOR,
-        RETRACT_ELEVATOR_ARM,
+        RETRACT_ALL,
         PARK_AT_BACKSTAGE,
         DONE
     }   //enum State
@@ -354,15 +354,15 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         robot.elevatorArm.elevatorSetPosition(
                             null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ELEVATOR_POWER_LIMIT,
                             elevatorArmEvent, 5.0);
-                        sm.waitForSingleEvent(elevatorArmEvent, State.RETRACT_ELEVATOR_ARM);
+                        sm.waitForSingleEvent(elevatorArmEvent, State.RETRACT_ALL);
                     }
                     else
                     {
-                        sm.setState(State.RETRACT_ELEVATOR_ARM);
+                        sm.setState(State.RETRACT_ALL);
                     }
                     break;
 
-                case RETRACT_ELEVATOR_ARM:
+                case RETRACT_ALL:
                     // Retract everything.
                     if (robot.elevatorArm != null)
                     {

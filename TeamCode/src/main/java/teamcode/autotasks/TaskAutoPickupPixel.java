@@ -35,6 +35,7 @@ import TrcCommonLib.trclib.TrcTaskMgr;
 import TrcCommonLib.trclib.TrcTimer;
 import TrcCommonLib.trclib.TrcVisionTargetInfo;
 import teamcode.Robot;
+import teamcode.subsystems.BlinkinLEDs;
 import teamcode.vision.Vision;
 
 /**
@@ -68,6 +69,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
     private final TrcEvent event;
 
     private String currOwner = null;
+    private Vision.PixelType pixelType = null;
     private TrcPose2D pixelPose = null;
     private Double visionExpiredTime = null;
 
@@ -102,6 +104,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
             msgTracer.traceInfo(funcName, "%s: pixelType=%s, event=%s", moduleName, pixelType, completionEvent);
         }
 
+        this.pixelType = pixelType;
         startAutoTask(State.START, new TaskParams(pixelType), completionEvent);
     }   //autoAssistPickup
 
@@ -117,9 +120,10 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
             msgTracer.traceInfo(funcName, "%s: Canceling auto-assist.", moduleName);
         }
 
-        if (robot.vision != null)
+        if (robot.vision != null && pixelType != null)
         {
-            robot.vision.setPixelVisionEnabled(Vision.PixelType.AnyPixel, false);
+            robot.vision.setPixelVisionEnabled(pixelType, false);
+            pixelType = null;
         }
         stopAutoTask(false);
     }   //autoAssistCancel
@@ -203,6 +207,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
         }
 
         robot.robotDrive.cancel(currOwner);
+        robot.intake.stop();
     }   //stopSubsystems
 
     /**
@@ -225,15 +230,33 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
         {
             case START:
                 // Set up robot.
+                pixelPose = null;
                 if (robot.vision != null)
                 {
-                    robot.vision.setPixelVisionEnabled(Vision.PixelType.AnyPixel, true);
+                    // Set up vision: turn on rear camera and enable AprilTag detection pipeline.
+                    robot.vision.setActiveWebcam(robot.vision.getFrontWebcam());
+                    robot.vision.setPixelVisionEnabled(taskParams.pixelType, true);
+                    if (robot.elevatorArm != null)
+                    {
+                        // Make sure the ElevatorArm is at loading position.
+                        robot.elevatorArm.setLoadingPosition(null, 0.0, event, 0.0);
+                        sm.waitForSingleEvent(event, State.FIND_PIXEL);
+                    }
+                    else
+                    {
+                        sm.setState(State.FIND_PIXEL);
+                    }
+                }
+                else
+                {
+                    // Vision is not enabled, there is nothing to do.
+                    sm.setState(State.DONE);
                 }
                 break;
 
             case FIND_PIXEL:
                 // Use vision to locate pixel.
-                if (robot.vision != null)
+                if (robot.vision.isPixelVisionEnabled(taskParams.pixelType))
                 {
                     TrcVisionTargetInfo<TrcOpenCvColorBlobPipeline.DetectedObject> pixelInfo =
                         robot.vision.getDetectedPixel(taskParams.pixelType, -1);
@@ -245,8 +268,8 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
                             Locale.US, "%s is found at x %.1f, y %.1f, angle=%.1f",
                             taskParams.pixelType, pixelInfo.objPose.x, pixelInfo.objPose.y, pixelInfo.objPose.yaw);
                         robot.globalTracer.traceInfo(moduleName, msg);
-                        robot.dashboard.displayPrintf(3, "%s", msg);
-                        robot.speak(msg);
+//                        robot.dashboard.displayPrintf(3, "%s", msg);
+//                        robot.speak(msg);
                         sm.setState(State.ALIGN_TO_PIXEL);
                     }
                     else if (visionExpiredTime == null)
@@ -257,12 +280,19 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
                     else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
                     {
                         // Timing out, moving on.
+                        robot.globalTracer.traceInfo(moduleName, "%s not found.", taskParams.pixelType);
+                        if (robot.blinkin != null)
+                        {
+                            // Tell the drivers vision doesn't see anything so they can score manually.
+                            robot.blinkin.setDetectedPattern(BlinkinLEDs.DETECTED_NOTHING);
+                        }
                         sm.setState(State.DONE);
                     }
                 }
                 else
                 {
-                    // Vision is not enable, move on.
+                    // Vision is not enable, moving on.
+                    robot.globalTracer.traceInfo(moduleName, "Vision not enabled.");
                     sm.setState(State.DONE);
                 }
                 break;
@@ -284,7 +314,6 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
             case PICK_UP_PIXEL:
                 // Pick up pixel.
                 robot.intake.pickUp(0.0, 6.0 , event);
-
                 sm.waitForSingleEvent(event, State.DONE);
                 break;
 
@@ -292,10 +321,6 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
             case DONE:
                 // Stop task.
                 robot.pixelTray.setUpperGateOpened(false, null);
-                if (robot.vision != null)
-                {
-                    robot.vision.setPixelVisionEnabled(Vision.PixelType.AnyPixel, false);
-                }
                 stopAutoTask(true);
                 break;
         }

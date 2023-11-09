@@ -35,6 +35,7 @@ import TrcFtcLib.ftclib.FtcVisionAprilTag;
 import teamcode.FtcAuto;
 import teamcode.Robot;
 import teamcode.RobotParams;
+import teamcode.subsystems.BlinkinLEDs;
 
 /**
  * This class implements auto-assist place pixel task.
@@ -49,22 +50,24 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         FIND_APRILTAG,
         DRIVE_TO_APRILTAG,
         PLACE_PIXEL,
+        RETRACT_ALL,
         DONE
     }   //enum State
 
-//    private static class TaskParams
-//    {
-//        Vision.PixelType pixelType;
-//        TaskParams(Vision.PixelType pixelType)
-//        {
-//            this.pixelType = pixelType;
-//        }   //TaskParams
-//    }   //class TaskParams
+    private static class TaskParams
+    {
+        double scoreLevel;
+        TaskParams(double scoreLevel)
+        {
+            this.scoreLevel = scoreLevel;
+        }   //TaskParams
+    }   //class TaskParams
 
     private final String ownerName;
     private final Robot robot;
     private final TrcDbgTrace msgTracer;
     private final TrcEvent event;
+    private final TrcEvent elevatorArmEvent;
 
     private TrcPose2D aprilTagPose = null;
     private Double visionExpiredTime = null;
@@ -84,26 +87,30 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         this.ownerName = ownerName;
         this.robot = robot;
         this.msgTracer = msgTracer;
-        event = new TrcEvent(moduleName);
+        event = new TrcEvent(moduleName + ".event");
+        elevatorArmEvent = new TrcEvent(moduleName + ".elevatorArmEvent");
     }   //TaskAuto
 
     /**
      * This method starts the auto-assist place operation.
      *
      * @param alliance specifies the alliance color.
+     * @param scoreLevel specifies the score level.
      * @param completionEvent specifies the event to signal when done, can be null if none provided.
      */
-    public void autoAssistPlace(FtcAuto.Alliance alliance, TrcEvent completionEvent)
+    public void autoAssistPlace(FtcAuto.Alliance alliance, double scoreLevel, TrcEvent completionEvent)
     {
         final String funcName = "autoAssistPlace";
 
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(funcName, "%s: event=%s", moduleName, completionEvent);
+            msgTracer.traceInfo(
+                funcName, "%s: alliance=%s, scoreLevel=%d, event=%s",
+                moduleName, alliance, scoreLevel, completionEvent);
         }
         aprilTagId = alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
             RobotParams.BLUE_BACKDROP_APRILTAGS[1] : RobotParams.RED_BACKDROP_APRILTAGS[1];
-        startAutoTask(State.START, null, completionEvent);
+        startAutoTask(State.START, new TaskParams(scoreLevel), completionEvent);
     }   //autoAssistPlace
 
     /**
@@ -138,8 +145,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         final String funcName = "acquireSubsystemsOwnership";
         boolean success = ownerName == null ||
                           (robot.robotDrive.driveBase.acquireExclusiveAccess(ownerName) &&
-                                  robot.elevatorArm.elevator.acquireExclusiveAccess(ownerName) &&
-                                  robot.elevatorArm.arm.acquireExclusiveAccess(ownerName));
+                           robot.elevatorArm.elevator.acquireExclusiveAccess(ownerName) &&
+                           robot.elevatorArm.arm.acquireExclusiveAccess(ownerName));
 
         if (success)
         {
@@ -184,6 +191,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
             }
 
             robot.robotDrive.driveBase.releaseExclusiveAccess(currOwner);
+            robot.elevatorArm.elevator.releaseExclusiveAccess(currOwner);
+            robot.elevatorArm.arm.releaseExclusiveAccess(currOwner);
             currOwner = null;
         }
     }   //releaseSubsystemsOwnership
@@ -202,6 +211,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         }
 
         robot.robotDrive.cancel(currOwner);
+        robot.elevatorArm.cancel(currOwner);
     }   //stopSubsystems
 
     /**
@@ -218,54 +228,71 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
     protected void runTaskState(
         Object params, State state, TrcTaskMgr.TaskType taskType, TrcRobot.RunMode runMode, boolean slowPeriodicLoop)
     {
+        TaskParams taskParams = (TaskParams) params;
+
         switch (state)
         {
             case START:
-                sm.setState(State.FIND_APRILTAG);
+                if (robot.vision != null && robot.vision.aprilTagVision != null)
+                {
+                    // Set up vision: turn on rear camera and enable AprilTag detection pipeline.
+                    robot.vision.setActiveWebcam(robot.vision.getRearWebcam());
+                    robot.vision.setAprilTagVisionEnabled(true);
+                    sm.setState(State.FIND_APRILTAG);
+                }
+                else
+                {
+                    // Vision is not enabled, there is nothing to do.
+                    sm.setState(State.DONE);
+                }
                 break;
 
             case FIND_APRILTAG:
-//              Set up elevator and arm for placing pixel on the Backdrop.
-                if (robot.elevatorArm != null)
-                {
-                    robot.elevatorArm.setScoringPosition(null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, null, 0.0);
-                }
                 // Use vision to determine the appropriate AprilTag location.
-                if (robot.vision != null && robot.vision.aprilTagVision != null)
+                TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
+                    robot.vision.getDetectedAprilTag(aprilTagId, -1);
+
+                if (aprilTagInfo != null)
                 {
-                    TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
-                            robot.vision.getDetectedAprilTag(aprilTagId, -1);
-                    if (aprilTagInfo != null)
+                    // In case we ran this in TeleOp where we don't know where the robot is, we can use the
+                    // AprilTag to re-localize.
+                    robot.robotDrive.driveBase.setFieldPosition(robot.vision.getRobotFieldPose(aprilTagInfo), true);
+                    // Determine the absolute field location of the AprilTag.
+                    aprilTagPose =
+                        robot.robotDrive.driveBase.getFieldPosition().subtractRelativePose(
+                            new TrcPose2D(
+                                aprilTagInfo.objPose.x, aprilTagInfo.objPose.y,
+                                -90.0 - robot.robotDrive.driveBase.getHeading()));
+                    robot.globalTracer.traceInfo(
+                            moduleName, "AprilTag %d found at %s (absPose=%s)",
+                            aprilTagId, aprilTagInfo.objPose, aprilTagPose);
+                    sm.setState(State.DRIVE_TO_APRILTAG);
+                }
+                else if (visionExpiredTime == null)
+                {
+                    // Can't find AprilTag, set a timeout and try again.
+                    visionExpiredTime = TrcTimer.getCurrentTime() + 1.0;
+                }
+                else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
+                {
+                    // Timed out, moving on, let the driver manually score.
+                    robot.globalTracer.traceInfo(moduleName, "AprilTag %d not found.", aprilTagId);
+                    if (robot.blinkin != null)
                     {
-                        // In case we ran this in TeleOp where we don't know where the robot is, we can use the
-                        // AprilTag to re-localize.
-                        robot.robotDrive.driveBase.setFieldPosition(robot.vision.getRobotFieldPose(aprilTagInfo), true);
-                        // Determine the absolute field location of the AprilTag.
-                        aprilTagPose =
-                                robot.robotDrive.driveBase.getFieldPosition().subtractRelativePose(
-                                        new TrcPose2D(
-                                                aprilTagInfo.objPose.x, aprilTagInfo.objPose.y,
-                                                -90.0 - robot.robotDrive.driveBase.getHeading()));
-                        robot.globalTracer.traceInfo(
-                                moduleName, "AprilTag %d found at %s (absPose=%s)",
-                                aprilTagId, aprilTagInfo.objPose, aprilTagPose);
-                        sm.setState(State.DRIVE_TO_APRILTAG);
+                        // Tell the drivers vision doesn't see anything so they can score manually.
+                        robot.blinkin.setDetectedPattern(BlinkinLEDs.DETECTED_NOTHING);
                     }
-                    else if (visionExpiredTime == null)
-                    {
-                        // Can't find AprilTag, set a timeout and try again.
-                        visionExpiredTime = TrcTimer.getCurrentTime() + 1.0;
-                    }
-                    else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
-                    {
-                        // Timed out, moving on.
-                        robot.globalTracer.traceInfo(moduleName, "AprilTag %d not found.", aprilTagId);
-                        sm.setState(State.DRIVE_TO_APRILTAG);
-                    }
+                    sm.setState(State.DRIVE_TO_APRILTAG);
                 }
                 break;
 
             case DRIVE_TO_APRILTAG:
+                // Set up elevator and arm for placing pixel on the Backdrop.
+                if (robot.elevatorArm != null)
+                {
+                    robot.elevatorArm.setScoringPosition(null, 0.0, taskParams.scoreLevel, elevatorArmEvent, 0.0);
+                    sm.addEvent(elevatorArmEvent);
+                }
                 // Navigate robot to Apriltag.
                 if (aprilTagPose != null)
                 {
@@ -274,7 +301,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
                         event, 3.0,  robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
-                    sm.waitForSingleEvent(event, State.PLACE_PIXEL);
+                    sm.addEvent(event);
+                    sm.waitForEvents(State.PLACE_PIXEL, true);
                 }
                 else
                 {
@@ -288,7 +316,20 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 {
 //                    robot.pixelTray.setLowerGateOpened(true, event);
                     robot.pixelTray.setUpperGateOpened(true, event);
-                    sm.waitForSingleEvent(event, State.DONE);
+                    sm.waitForSingleEvent(event, State.RETRACT_ALL);
+                }
+                else
+                {
+                    sm.setState(State.RETRACT_ALL);
+                }
+                break;
+
+            case RETRACT_ALL:
+                // Retract everything.
+                if (robot.elevatorArm != null)
+                {
+                    robot.elevatorArm.setLoadingPosition(null, 0.0, elevatorArmEvent, 0.0);
+                    sm.waitForSingleEvent(elevatorArmEvent, State.DONE);
                 }
                 else
                 {
@@ -298,6 +339,10 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
             default:
             case DONE:
+                if (robot.vision != null && robot.vision.aprilTagVision != null)
+                {
+                    robot.vision.setAprilTagVisionEnabled(false);
+                }
                 // Stop task.
                 stopAutoTask(true);
                 break;
