@@ -120,11 +120,6 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
             msgTracer.traceInfo(funcName, "%s: Canceling auto-assist.", moduleName);
         }
 
-        if (robot.vision != null && pixelType != null)
-        {
-            robot.vision.setPixelVisionEnabled(pixelType, false);
-            pixelType = null;
-        }
         stopAutoTask(false);
     }   //autoAssistCancel
 
@@ -208,6 +203,12 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
 
         robot.robotDrive.cancel(currOwner);
         robot.intake.stop();
+
+        if (robot.vision != null && pixelType != null)
+        {
+            robot.vision.setPixelVisionEnabled(pixelType, false);
+            pixelType = null;
+        }
     }   //stopSubsystems
 
     /**
@@ -233,7 +234,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
                 pixelPose = null;
                 if (robot.vision != null)
                 {
-                    // Set up vision: turn on rear camera and enable AprilTag detection pipeline.
+                    // Set up vision: turn on front camera and enable pixel detection pipeline.
                     robot.vision.setActiveWebcam(robot.vision.getFrontWebcam());
                     robot.vision.setPixelVisionEnabled(taskParams.pixelType, true);
                     if (robot.elevatorArm != null)

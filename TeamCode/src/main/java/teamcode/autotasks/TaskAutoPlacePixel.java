@@ -212,6 +212,11 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
         robot.robotDrive.cancel(currOwner);
         robot.elevatorArm.cancel(currOwner);
+
+        if (robot.vision != null && robot.vision.aprilTagVision != null)
+        {
+            robot.vision.setAprilTagVisionEnabled(false);
+        }
     }   //stopSubsystems
 
     /**
@@ -339,10 +344,6 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
             default:
             case DONE:
-                if (robot.vision != null && robot.vision.aprilTagVision != null)
-                {
-                    robot.vision.setAprilTagVisionEnabled(false);
-                }
                 // Stop task.
                 stopAutoTask(true);
                 break;
