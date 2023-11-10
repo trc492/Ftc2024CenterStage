@@ -25,8 +25,8 @@ SOFTWARE.
     <Webcam name="Webcam 2" serialNumber="5DCAD5AF"/>
     <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
         <LynxModule name="Control Hub" port="173">
+            <goBILDA5202SeriesMotor name="rfDriveMotor" port="0"/>
             <goBILDA5202SeriesMotor name="launcher" port="1"/>
-            <goBILDA5202SeriesMotor name="rfDriveMotor" port="2"/>
             <goBILDA5202SeriesMotor name="rbDriveMotor" port="3"/>
             <Servo name="pixelTray.lowerGate" port="0" />
             <Servo name="wrist.followerServo" port="1" />
@@ -34,9 +34,9 @@ SOFTWARE.
             <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
         </LynxModule>
         <LynxModule name="Expansion Hub 3" port="3">
-            <RevRoboticsCoreHexMotor name="intake.motor" port="0" />
+            <goBILDA5202SeriesMotor name="lfDriveMotor" port="0"/>
             <goBILDA5202SeriesMotor name="elevator.motor" port="1" />
-            <goBILDA5202SeriesMotor name="lfDriveMotor" port="2"/>
+            <RevRoboticsCoreHexMotor name="intake.motor" port="2" />
             <goBILDA5202SeriesMotor name="lbDriveMotor" port="3"/>
             <ContinuousRotationServo name="arm.servo" port="2" />
             <Servo name="pixelTray.upperGate" port="3" />

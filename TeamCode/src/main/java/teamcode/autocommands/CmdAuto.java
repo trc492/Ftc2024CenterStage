@@ -144,7 +144,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     {
                         robot.elevatorArm.setLoadingPosition(null, 0.0, null, 0.0);
                     }
-                    // Use vision to determine team prop position (0: not found, 1, 2, 3).
+                    // If vision is enabled, use vision to determine team prop position (0: not found, 1, 2, 3).
                     if (robot.vision != null)
                     {
                         teamPropPos = robot.vision.getLastDetectedTeamPropPosition();
@@ -158,7 +158,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                     if (teamPropPos == 0)
                     {
-                        // Vision did not find the team prop, set to default position.
+                        // Either vision is not enabled, or vision did not find the team prop, set to default position.
                         teamPropPos = 2;
                         msg = "No team prop found, default to position " + teamPropPos;
                         robot.globalTracer.traceInfo(moduleName, msg);
@@ -182,12 +182,14 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     targetPose = robot.adjustPoseByAlliance(targetPoseTile, autoChoices.alliance);
                     if (teamPropPos != 2)
                     {
+                        // Intermediate point of pos 1 or 3 does go as far.
                         intermediate1 =
                             robot.adjustPoseByAlliance(
                                 targetPoseTile.x, targetPoseTile.y + 0.1, 180.0, autoChoices.alliance);
                     }
                     else
                     {
+                        // Intermediate point of pos 2 goes further to bump out the team prop.
                         intermediate1 =
                             robot.adjustPoseByAlliance(
                                 targetPoseTile.x, targetPoseTile.y - 0.1, 180.0, autoChoices.alliance);
@@ -206,6 +208,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     }
                     else
                     {
+                        // Intake does not exist, skip placing purple pixel.
                         sm.setState(State.DO_DELAY);
                     }
                     break;
@@ -214,10 +217,12 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Do delay waiting for alliance partner to get out of the way if necessary.
                     if (autoChoices.delay == 0.0)
                     {
+                        // No delay.
                         sm.setState(State.DRIVE_TO_LOOKOUT);
                     }
                     else
                     {
+                        // Do delay.
                         timer.set(autoChoices.delay, event);
                         sm.waitForSingleEvent(event, State.DRIVE_TO_LOOKOUT);
                     }
@@ -227,6 +232,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Drive to the lookout point where we can see the AprilTag clearly.
                     if (autoChoices.startPos == FtcAuto.StartPos.BACKSTAGE)
                     {
+                        // Backstage starting position takes a shorter path to the backdrop.
                         intermediate1 = robot.adjustPoseByAlliance(0.5, 2.0, 180.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(1.5, 2.0, -90.0, autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
@@ -236,6 +242,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     }
                     else
                     {
+                        // Audience starting position takes a longer path to the backdrop through the stage door.
                         intermediate1 = robot.adjustPoseByAlliance(-1.5, 2.5, 180.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(-2.5, 2.5, 180.0, autoChoices.alliance);
                         intermediate3 = robot.adjustPoseByAlliance(-2.5, 0.5, 180.0, autoChoices.alliance);
@@ -250,7 +257,10 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                 case FIND_APRILTAG:
                     // Use vision to determine the appropriate AprilTag location.
-                    if (robot.vision != null && robot.vision.aprilTagVision != null)
+                    // As an optimization for time, we could skip using vision to look for AprilTag. We have absolute
+                    // locations of all the AprilTag and we have absolute odometry, so we could navigate the robot
+                    // there with just odometry.
+                    if (autoChoices.useAprilTagVision && robot.vision != null && robot.vision.aprilTagVision != null)
                     {
                         TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
                             robot.vision.getDetectedAprilTag(aprilTagId, -1);
@@ -286,7 +296,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     }
                     else
                     {
-                        // AprilTag Vision is not enabled, moving on.
+                        // Not using vision or AprilTag Vision is not enabled, moving on.
                         robot.globalTracer.traceInfo(moduleName, "AprilTag Vision not enabled.");
                         sm.setState(State.DRIVE_TO_APRILTAG);
                     }
@@ -296,14 +306,14 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Navigate robot to Apriltag.
                     if (aprilTagPose == null)
                     {
-                        // Vision did not see AprilTag, just go to it blindly using odometry and its known location.
+                        // Not using vision or vision did not see AprilTag, just go to it blindly using odometry and
+                        // its known location.
                         aprilTagPose = RobotParams.APRILTAG_POSES[aprilTagId - 1];
                         robot.globalTracer.traceInfo(
-                            moduleName, "Drive to AprilTag using blind odometry (pose=%s).", aprilTagPose);
+                            moduleName, "Drive to AprilTag using absolute odometry (pose=%s).", aprilTagPose);
                     }
                     // Account for end-effector offset from the camera.
                     aprilTagPose.x -= 1.0;
-
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
                         event, 2.5,  robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
@@ -321,7 +331,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                 case LOWER_ELEVATOR:
                     if (robot.elevatorArm != null)
                     {
-                        // Lower elevator to the lowest height to minimize pixel bounce.
+                        // Lower elevator to the lowest height to minimize pixel bouncing off.
                         robot.elevatorArm.elevatorSetPosition(
                             null, 0.0, RobotParams.ELEVATOR_LOAD_POS, RobotParams.ELEVATOR_POWER_LIMIT,
                             elevatorArmEvent, 2.0);
@@ -343,14 +353,15 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     }
                     else
                     {
+                        // PixelTray does not exist, moving on.
                         sm.setState(State.RAISE_ELEVATOR);
                     }
                     break;
 
                 case RAISE_ELEVATOR:
-                    // Raise elevator back to the height that we can safely retract everything.
                     if (robot.elevatorArm != null)
                     {
+                        // Raise elevator back to the height that we can safely retract everything.
                         robot.elevatorArm.elevatorSetPosition(
                             null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ELEVATOR_POWER_LIMIT,
                             elevatorArmEvent, 5.0);

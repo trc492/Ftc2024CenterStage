@@ -78,6 +78,7 @@ public class FtcAuto extends FtcOpMode
         public Alliance alliance = Alliance.RED_ALLIANCE;
         public StartPos startPos = StartPos.BACKSTAGE;
         public AutoStrategy strategy = AutoStrategy.DO_NOTHING;
+        public boolean useAprilTagVision = true;
         public ParkPos parkPos = ParkPos.CORNER;
         public double xTarget = 0.0;
         public double yTarget = 0.0;
@@ -94,13 +95,15 @@ public class FtcAuto extends FtcOpMode
                 "alliance=\"%s\" " +
                 "startPos=\"%s\" " +
                 "strategy=\"%s\" " +
+                "useAprilTagVision=\"%s\" " +
                 "parkPos=\"%s\" " +
                 "xTarget=%.1f " +
                 "yTarget=%.1f " +
                 "turnTarget=%.0f " +
                 "driveTime=%.0f " +
                 "drivePower=%.1f",
-                delay, alliance, startPos, strategy, parkPos, xTarget, yTarget, turnTarget, driveTime, drivePower);
+                delay, alliance, startPos, strategy, useAprilTagVision, parkPos, xTarget, yTarget, turnTarget,
+                driveTime, drivePower);
         }   //toString
 
     }   //class AutoChoices
@@ -337,7 +340,8 @@ public class FtcAuto extends FtcOpMode
         FtcChoiceMenu<Alliance> allianceMenu = new FtcChoiceMenu<>("Alliance:", delayMenu);
         FtcChoiceMenu<StartPos> startPosMenu = new FtcChoiceMenu<>("Start Position:", allianceMenu);
         FtcChoiceMenu<AutoStrategy> strategyMenu = new FtcChoiceMenu<>("Auto Strategies:", startPosMenu);
-        FtcChoiceMenu<ParkPos> parkPosMenu = new FtcChoiceMenu<>("Park Position:", strategyMenu);
+        FtcChoiceMenu<Boolean> useAprilTagVisionMenu = new FtcChoiceMenu<>("AprilTag Vision:", strategyMenu);
+        FtcChoiceMenu<ParkPos> parkPosMenu = new FtcChoiceMenu<>("Park Position:", useAprilTagVisionMenu);
 
         FtcValueMenu xTargetMenu = new FtcValueMenu(
             "xTarget:", strategyMenu, -12.0, 12.0, 0.5, 4.0, " %.1f ft");
@@ -364,10 +368,13 @@ public class FtcAuto extends FtcOpMode
         startPosMenu.addChoice("Start Position Audience", StartPos.AUDIENCE, true, strategyMenu);
         startPosMenu.addChoice("Start Position Backstage", StartPos.BACKSTAGE, false, strategyMenu);
 
-        strategyMenu.addChoice("Autonomous", AutoStrategy.AUTO, true, parkPosMenu);
+        strategyMenu.addChoice("Autonomous", AutoStrategy.AUTO, true, useAprilTagVisionMenu);
         strategyMenu.addChoice("PID Drive", AutoStrategy.PID_DRIVE, false, xTargetMenu);
         strategyMenu.addChoice("Timed Drive", AutoStrategy.TIMED_DRIVE, false, driveTimeMenu);
         strategyMenu.addChoice("Do nothing", AutoStrategy.DO_NOTHING, false);
+
+        useAprilTagVisionMenu.addChoice("Use Vision", true, true, parkPosMenu);
+        useAprilTagVisionMenu.addChoice("No Vision", false, false, parkPosMenu);
 
         parkPosMenu.addChoice("Park at Corner", ParkPos.CORNER, true);
         parkPosMenu.addChoice("Park at Center", ParkPos.CENTER, false);
@@ -382,6 +389,7 @@ public class FtcAuto extends FtcOpMode
         autoChoices.alliance = allianceMenu.getCurrentChoiceObject();
         autoChoices.startPos = startPosMenu.getCurrentChoiceObject();
         autoChoices.strategy = strategyMenu.getCurrentChoiceObject();
+        autoChoices.useAprilTagVision = useAprilTagVisionMenu.getCurrentChoiceObject();
         autoChoices.parkPos = parkPosMenu.getCurrentChoiceObject();
         autoChoices.xTarget = xTargetMenu.getCurrentValue();
         autoChoices.yTarget = yTargetMenu.getCurrentValue();

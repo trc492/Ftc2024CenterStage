@@ -186,7 +186,7 @@ public class Robot
 
     private void checkRobotSupport()
     {
-        if (RobotParams.Preferences.centerStageRobot)
+        if (RobotParams.Preferences.robotCenterStage)
         {
             RobotParams.Preferences.useBlinkin = true;
             RobotParams.Preferences.hasWebCam2 = true;
@@ -196,7 +196,7 @@ public class Robot
             RobotParams.Preferences.useColorBlobVision = true;
             RobotParams.Preferences.useTensorFlowVision = false;
         }
-        else if (RobotParams.Preferences.powerPlayRobot)
+        else if (RobotParams.Preferences.robotPowerPlay)
         {
             RobotParams.Preferences.useBlinkin = true;
             RobotParams.Preferences.hasWebCam2 = false;
