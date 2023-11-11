@@ -118,7 +118,6 @@ public class RobotParams
     public static final String HWNAME_INTAKE                    = "intake";
     public static final String HWNAME_PIXELTRAY                 = "pixelTray";
     public static final String HWNAME_LAUNCHER                  = "launcher";
-    public static final String HWNAME_CLIMBER                   = "climber";
     //
     // Field dimensions.
     //
@@ -374,14 +373,8 @@ public class RobotParams
     // Preset positions.
     public static final double ELEVATOR_PRESET_TOLERANCE        = 0.4;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
+        ELEVATOR_LOAD_POS, ELEVATOR_LEVEL1_POS, ELEVATOR_LEVEL2_POS
 //        14.0, 16.0, 20.0, 22.0
-          ELEVATOR_LOAD_POS, ELEVATOR_LEVEL1_POS, ELEVATOR_LEVEL2_POS
-//        ELEVATOR_MIN_POS,
-//        ELEVATOR_SAFE_POS,
-//        ELEVATOR_LEVEL1_POS,
-//        ELEVATOR_LEVEL2_POS,
-//        ELEVATOR_LEVEL3_POS,
-//        ELEVATOR_MAX_POS
     };
     // PID Actuator parameters.
     public static final double ELEVATOR_KP                      = 0.5;
@@ -419,13 +412,8 @@ public class RobotParams
     // Preset positions.
     public static final double ARM_PRESET_TOLERANCE             = 5.0;
     public static final double[] ARM_PRESETS                    = new double[] {
+        ARM_LOAD_POS, ARM_SCORE_BACKDROP_POS
 //        30.0, 60.0, 90.0, 120, 150.0, 180.0, 210.0, 240.0, 270.0
-          ARM_LOAD_POS, ARM_SCORE_BACKDROP_POS
-//        ARM_MIN_POS,
-//        ARM_SAFE_POS,
-//        ARM_FREE_TO_MOVE_POS,
-//        ARM_SCORE_BACKDROP_POS,
-//        ARM_MAX_POS
     };
     // PID Actuator parameters.
     public static final double ARM_KP                           = 0.011;
@@ -448,9 +436,9 @@ public class RobotParams
     //
     // Intake subsystem.
     //
+    public static final boolean INTAKE_MOTOR_INVERTED           = false;
     public static final double INTAKE_PICKUP_POWER              = -1.0;
     public static final double INTAKE_SPITOUT_POWER             = 0.7;
-    public static final boolean INTAKE_MOTOR_INVERTED           = true;
     public static final double INTAKE_SENSOR_THRESHOLD          = 5.0;
     //
     // Pixel Tray subsystem.

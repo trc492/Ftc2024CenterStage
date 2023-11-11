@@ -47,9 +47,7 @@ public class Intake
     {
         this.msgTracer = msgTracer;
         intakeMotor = new FtcDcMotor(instanceName + ".motor");
-        if (RobotParams.INTAKE_MOTOR_INVERTED) {
-            intakeMotor.setMotorInverted(true);
-        }
+        intakeMotor.setMotorInverted(RobotParams.INTAKE_MOTOR_INVERTED);
         if (RobotParams.Preferences.intakeHasSensor)
         {
             intakeSensor = new FtcDistanceSensor(instanceName + ".sensor");
@@ -78,24 +76,24 @@ public class Intake
         intakeMotor.stop();
     }   //stop
 
-    public void pickUp(boolean on)
-    {
-        intakeMotor.setPower(on? RobotParams.INTAKE_PICKUP_POWER: 0.0);
-    }   //pickUp
-
     public void pickUp(double delay, double duration, TrcEvent event)
     {
         intakeMotor.setPower(delay, RobotParams.INTAKE_PICKUP_POWER, duration, event);
     }   //pickUp
 
-     public void spitOut(boolean on)
+    public void pickUp(boolean on)
     {
-        intakeMotor.setPower(on? RobotParams.INTAKE_SPITOUT_POWER: 0.0);
-    }   //spitOut
+        intakeMotor.setPower(on? RobotParams.INTAKE_PICKUP_POWER: 0.0);
+    }   //pickUp
 
     public void spitOut(double delay, double duration, TrcEvent event)
     {
         intakeMotor.setPower(delay, RobotParams.INTAKE_SPITOUT_POWER, duration, event);
+    }   //spitOut
+
+    public void spitOut(boolean on)
+    {
+        intakeMotor.setPower(on? RobotParams.INTAKE_SPITOUT_POWER: 0.0);
     }   //spitOut
 
     /**
