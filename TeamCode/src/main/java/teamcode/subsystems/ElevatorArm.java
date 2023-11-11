@@ -377,6 +377,27 @@ public class ElevatorArm
         elevatorSetPosition(owner, delay, elevatorPos, RobotParams.ELEVATOR_POWER_LIMIT, elevatorEvent, 1.0);
     }   //setScoringPosition
 
+    /**
+     * This method sets the elevator and arm the climbing position and makes sure it doesn't hit the intake on
+     * its way.
+     *
+     * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
+     * @param delay specifies the delay before moving in seconds.
+     * @param event specifies the event to signal when the operation is completed.
+     * @param timeout specifies the maximum time allowed for the operation, can be zero if no timeout.
+     */
+    public void setClimbingPosition(String owner, double delay, TrcEvent event, double timeout)
+    {
+        double expiredTime = timeout == 0.0 ? 0.0 : TrcTimer.getCurrentTime() + timeout;
+        // Setting up the arm operation after the elevator is in scoring height.
+        // Wrist position will be set in the arm operation.
+        elevatorActionParams.setPositionParams(
+                ActionType.ArmSetPosition, owner, 0.0, RobotParams.ARM_CLIMB_POS, RobotParams.ARM_POWER_LIMIT,
+                event, expiredTime);
+        // Move the elevator to scoring height before moving the arm to scoring position.
+        elevatorSetPosition(owner, delay, RobotParams.ELEVATOR_MAX_POS, RobotParams.ELEVATOR_POWER_LIMIT, elevatorEvent, 1.0);
+    }   //setClimbingPosition
+
     //
     // Elevator subsystem methods.
     //

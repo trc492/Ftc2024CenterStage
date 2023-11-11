@@ -328,6 +328,7 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_UP:
+                robot.elevatorArm.setClimbingPosition(null, 0.0, null, 5.0);
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_DOWN:

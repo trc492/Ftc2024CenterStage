@@ -415,6 +415,7 @@ public class RobotParams
     public static final double ARM_SAFE_POS                     = 37.0;
     public static final double ARM_FREE_TO_MOVE_POS             = 50.0;
     public static final double ARM_SCORE_BACKDROP_POS           = 260.0;
+    public static final double ARM_CLIMB_POS                    = 165.0; // Random value
     // Preset positions.
     public static final double ARM_PRESET_TOLERANCE             = 5.0;
     public static final double[] ARM_PRESETS                    = new double[] {
