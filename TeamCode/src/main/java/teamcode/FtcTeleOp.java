@@ -397,14 +397,14 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_X:
                 if (robot.intake != null)
                 {
-                    robot.intake.pickUp(pressed);
+                    robot.intake.spitOut(pressed);
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_Y:
                 if (robot.intake != null)
                 {
-                    robot.intake.spitOut(pressed);
+                    robot.intake.pickUp(pressed);
                 }
                 break;
 

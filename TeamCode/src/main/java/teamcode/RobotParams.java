@@ -79,6 +79,7 @@ public class RobotParams
         public static boolean intakeHasSensor = false;
         public static boolean usePixelTray = true;
         public static boolean useLauncher = true;
+        public static boolean useClimber = false;
     }   //class Preferences
 
     public static final String ROBOT_NAME                       = "CenterStage_2024";
@@ -118,6 +119,7 @@ public class RobotParams
     public static final String HWNAME_INTAKE                    = "intake";
     public static final String HWNAME_PIXELTRAY                 = "pixelTray";
     public static final String HWNAME_LAUNCHER                  = "launcher";
+    public static final String HWNAME_CLIMBER                   = "climber";
     //
     // Field dimensions.
     //
@@ -448,6 +450,7 @@ public class RobotParams
     //
     public static final double INTAKE_PICKUP_POWER              = -1.0;
     public static final double INTAKE_SPITOUT_POWER             = 0.7;
+    public static final boolean INTAKE_MOTOR_INVERTED           = true;
     public static final double INTAKE_SENSOR_THRESHOLD          = 5.0;
     //
     // Pixel Tray subsystem.
@@ -461,5 +464,11 @@ public class RobotParams
     // Launcher subsystem.
     //
     public static final double LAUNCHER_POWER                   = 1.0;
+
+    //
+    // Climber subsystem.
+    //
+
+    public static final boolean CLIMBER_MOTOR_INVERTED          = false;
 
 }   //class RobotParams

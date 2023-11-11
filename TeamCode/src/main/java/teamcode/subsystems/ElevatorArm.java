@@ -139,7 +139,7 @@ public class ElevatorArm
                 RobotParams.ELEVATOR_IZONE);
             elevator.setPositionPidTolerance(RobotParams.ELEVATOR_TOLERANCE);
             elevatorEvent = new TrcEvent(RobotParams.HWNAME_ELEVATOR + ".event");
-            elevatorEvent.setCallback(this::performAction, elevatorEvent);
+            elevatorEvent.setCallback(this::performAction, elevatorActionParams);
         }
         else
         {
@@ -167,7 +167,7 @@ public class ElevatorArm
             arm.setPositionPidTolerance(RobotParams.ARM_TOLERANCE);
             arm.setPositionPidPowerComp(this::armGetPowerComp);
             armEvent = new TrcEvent(RobotParams.HWNAME_ARM + ".event");
-            armEvent.setCallback(this::performAction, armEvent);
+            armEvent.setCallback(this::performAction, armActionParams);
         }
         else
         {

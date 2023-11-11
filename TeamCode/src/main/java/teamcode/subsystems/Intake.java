@@ -47,6 +47,9 @@ public class Intake
     {
         this.msgTracer = msgTracer;
         intakeMotor = new FtcDcMotor(instanceName + ".motor");
+        if (RobotParams.INTAKE_MOTOR_INVERTED) {
+            intakeMotor.setMotorInverted(true);
+        }
         if (RobotParams.Preferences.intakeHasSensor)
         {
             intakeSensor = new FtcDistanceSensor(instanceName + ".sensor");
