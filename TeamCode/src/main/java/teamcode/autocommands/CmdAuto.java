@@ -203,7 +203,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Place purple pixel on the spike mark position 1, 2 or 3.
                     if (robot.intake != null)
                     {
-                        robot.intake.spitOut(0.0, 1.0, event);
+                        robot.intake.pickUp(0.0, 1.0, event);
                         sm.waitForSingleEvent(event, State.DO_DELAY);
                     }
                     else
@@ -243,14 +243,13 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     else
                     {
                         // Audience starting position takes a longer path to the backdrop through the stage door.
-                        intermediate1 = robot.adjustPoseByAlliance(-1.5, 2.5, 180.0, autoChoices.alliance);
-                        intermediate2 = robot.adjustPoseByAlliance(-2.5, 2.5, 180.0, autoChoices.alliance);
-                        intermediate3 = robot.adjustPoseByAlliance(-2.5, 0.5, 180.0, autoChoices.alliance);
-                        intermediate4 = robot.adjustPoseByAlliance(1.5, 0.5, -90.0, autoChoices.alliance);
+                        intermediate1 = robot.adjustPoseByAlliance(-1.5, 2.3, 180.0, autoChoices.alliance);
+                        intermediate2 = robot.adjustPoseByAlliance(1.5, 2.3, 180.0, autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
+                        robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
                         robot.robotDrive.purePursuitDrive.start(
                             event, 9.0, robot.robotDrive.driveBase.getFieldPosition(), false,
-                            intermediate1, intermediate2, intermediate3, intermediate4, targetPose);
+                            intermediate1, intermediate2, targetPose);
                     }
                     sm.waitForSingleEvent(event, State.FIND_APRILTAG);
                     break;
@@ -260,6 +259,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // As an optimization for time, we could skip using vision to look for AprilTag. We have absolute
                     // locations of all the AprilTag and we have absolute odometry, so we could navigate the robot
                     // there with just odometry.
+                    robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(1.0);
                     if (autoChoices.useAprilTagVision && robot.vision != null && robot.vision.aprilTagVision != null)
                     {
                         TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
@@ -313,7 +313,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             moduleName, "Drive to AprilTag using absolute odometry (pose=%s).", aprilTagPose);
                     }
                     // Account for end-effector offset from the camera.
-                    aprilTagPose.x -= 1.0;
+                    aprilTagPose.x -= 2.0;
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
                         event, 2.5,  robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
@@ -322,7 +322,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     {
                         // Set ElevatorArm to scoring position level 1.
                         robot.elevatorArm.setScoringPosition(
-                            null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, elevatorArmEvent, 0.0);
+                            null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, elevatorArmEvent, 2.0);
                         sm.addEvent(elevatorArmEvent);
                     }
                     sm.waitForEvents(State.LOWER_ELEVATOR, true);

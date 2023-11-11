@@ -70,7 +70,7 @@ public class RobotParams
         public static boolean useExternalOdometry = true;
         public static boolean doSwervePhysicalAlignment = false;
         // Subsystems
-        public static boolean useSubsystems = false;
+        public static boolean useSubsystems = true;
         public static boolean useElevatorArm = true;
         public static boolean useElevator = true;
         public static boolean useArm = true;
@@ -79,7 +79,6 @@ public class RobotParams
         public static boolean intakeHasSensor = false;
         public static boolean usePixelTray = true;
         public static boolean useLauncher = true;
-        public static boolean useClimber = false;
     }   //class Preferences
 
     public static final String ROBOT_NAME                       = "CenterStage_2024";
@@ -366,7 +365,7 @@ public class RobotParams
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
     public static final double ELEVATOR_MAX_POS                 = 24.0;
     public static final double ELEVATOR_SAFE_POS                = 14.0;
-    public static final double ELEVATOR_LOAD_POS                = 11.8;
+    public static final double ELEVATOR_LOAD_POS                = 12.0;
     public static final double ELEVATOR_LEVEL1_POS              = 14.5;
     public static final double ELEVATOR_LEVEL2_POS              = 21.5;
     public static final double ELEVATOR_LEVEL3_POS              = 21.5;             // Unreachable
@@ -464,11 +463,5 @@ public class RobotParams
     // Launcher subsystem.
     //
     public static final double LAUNCHER_POWER                   = 1.0;
-
-    //
-    // Climber subsystem.
-    //
-
-    public static final boolean CLIMBER_MOTOR_INVERTED          = false;
 
 }   //class RobotParams
