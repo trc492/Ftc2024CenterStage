@@ -314,7 +314,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
 
             case PICK_UP_PIXEL:
                 // Pick up pixel.
-                robot.intake.pickUp(0.0, 6.0 , event);
+                robot.intake.setOn(0.0, 6.0 , event);
                 sm.waitForSingleEvent(event, State.DONE);
                 break;
 

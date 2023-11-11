@@ -111,12 +111,17 @@ public class MecanumDrive extends RobotDrive
             "purePursuitDrive", driveBase,
             RobotParams.PPD_FOLLOWING_DISTANCE, RobotParams.PPD_POS_TOLERANCE, RobotParams.PPD_TURN_TOLERANCE,
             RobotParams.xPosPidCoeff, RobotParams.yPosPidCoeff, RobotParams.turnPidCoeff, RobotParams.velPidCoeff);
-        purePursuitDrive.getXPosPidCtrl().setStallErrRateThreshold(RobotParams.PPD_POS_ERR_RATE_THRESHOLD);
-        purePursuitDrive.getYPosPidCtrl().setStallErrRateThreshold(RobotParams.PPD_POS_ERR_RATE_THRESHOLD);
-        purePursuitDrive.getTurnPidCtrl().setStallErrRateThreshold(RobotParams.PPD_TURN_ERR_RATE_THRESHOLD);
+        purePursuitDrive.setStallDetectionEnabled(true);
+//        purePursuitDrive.getXPosPidCtrl().setStallErrRateThreshold(RobotParams.PPD_POS_ERR_RATE_THRESHOLD);
+//        purePursuitDrive.getYPosPidCtrl().setStallErrRateThreshold(RobotParams.PPD_POS_ERR_RATE_THRESHOLD);
+//        purePursuitDrive.getYPosPidCtrl().setErrorTolerances(RobotParams.PPD_POS_TOLERANCE, 2.0);
+//        purePursuitDrive.getTurnPidCtrl().setStallErrRateThreshold(RobotParams.PPD_TURN_ERR_RATE_THRESHOLD);
         purePursuitDrive.setFastModeEnabled(true);
         purePursuitDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
+
+        purePursuitDrive.getXPosPidCtrl().setOnTargetDebugEnabled(true);
         purePursuitDrive.getYPosPidCtrl().setOnTargetDebugEnabled(true);
+        purePursuitDrive.getTurnPidCtrl().setOnTargetDebugEnabled(true);
     }   //MecanumDrive
 
 }   //class MecanumDrive

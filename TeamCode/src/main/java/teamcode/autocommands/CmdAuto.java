@@ -203,7 +203,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Place purple pixel on the spike mark position 1, 2 or 3.
                     if (robot.intake != null)
                     {
-                        robot.intake.spitOut(0.0, 1.0, event);
+                        robot.intake.setOn(0.0, 1.0, event);
                         sm.waitForSingleEvent(event, State.DO_DELAY);
                     }
                     else

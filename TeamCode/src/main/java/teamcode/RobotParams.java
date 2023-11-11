@@ -436,10 +436,9 @@ public class RobotParams
     //
     // Intake subsystem.
     //
-    public static final boolean INTAKE_MOTOR_INVERTED           = false;
-    public static final double INTAKE_PICKUP_POWER              = -1.0;
-    public static final double INTAKE_SPITOUT_POWER             = 0.7;
-    public static final double INTAKE_SENSOR_THRESHOLD          = 5.0;
+    public static final boolean INTAKE_MOTOR_INVERTED           = true;
+    public static final double INTAKE_FORWARD_POWER             = 1.0;
+    public static final double INTAKE_REVERSE_POWER             = -0.7;
     //
     // Pixel Tray subsystem.
     //

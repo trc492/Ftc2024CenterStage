@@ -49,6 +49,7 @@ public class FtcTeleOp extends FtcOpMode
     private boolean manualOverride = false;
     private boolean relocalizing = false;
     private TrcPose2D robotFieldPose = null;
+    private boolean elevatorArmAtScorePos = false;
     private boolean pixelTrayLowerGateOpened = false;
     private boolean pixelTrayUpperGateOpened = false;
     private boolean wristUp = false;
@@ -293,20 +294,7 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_Y:
-                  // Toggle between field or robot oriented driving, only applicable for holonomic drive base.
-//                if (pressed && robot.robotDrive != null)
-//                {
-//                    if (robot.robotDrive.driveBase.isGyroAssistEnabled())
-//                    {
-//                        // Disable GyroAssist drive.
-//                        robot.robotDrive.driveBase.setGyroAssistEnabled(null);
-//                    }
-//                    else
-//                    {
-//                        // Enable GyroAssist drive.
-//                        robot.robotDrive.driveBase.setGyroAssistEnabled(robot.robotDrive.pidDrive.getTurnPidCtrl());
-//                    }
-//                }
+                // Toggle between field or robot oriented driving, only applicable for holonomic drive base.
                 if (pressed && robot.robotDrive != null && robot.robotDrive.driveBase.supportsHolonomicDrive())
                 {
                     if (robot.robotDrive.driveBase.getDriveOrientation() != TrcDriveBase.DriveOrientation.FIELD)
@@ -401,14 +389,23 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_X:
                 if (robot.intake != null)
                 {
-                    robot.intake.pickUp(pressed);
+                    robot.intake.setOn(pressed);
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_Y:
-                if (robot.intake != null)
+                if (pressed && robot.elevatorArm != null)
                 {
-                    robot.intake.spitOut(pressed);
+                    elevatorArmAtScorePos = !elevatorArmAtScorePos;
+                    if (elevatorArmAtScorePos)
+                    {
+                        robot.elevatorArm.setScoringPosition(
+                            moduleName, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, null, 0.0);
+                    }
+                    else
+                    {
+                        robot.elevatorArm.setLoadingPosition(moduleName, 0.0, null, 0.0);
+                    }
                 }
                 break;
 
