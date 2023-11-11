@@ -186,17 +186,8 @@ public class Robot
 
     private void checkRobotSupport()
     {
-        if (RobotParams.Preferences.robotCenterStage)
-        {
-            RobotParams.Preferences.useBlinkin = true;
-            RobotParams.Preferences.hasWebCam2 = true;
-            RobotParams.Preferences.useExternalOdometry = true;
-            RobotParams.Preferences.useSubsystems = true;
-            RobotParams.Preferences.useAprilTagVision = true;
-            RobotParams.Preferences.useColorBlobVision = true;
-            RobotParams.Preferences.useTensorFlowVision = false;
-        }
-        else if (RobotParams.Preferences.robotPowerPlay)
+        // Overriding some preferences for non-CenterStage robots.
+        if (RobotParams.Preferences.robotPowerPlay)
         {
             RobotParams.Preferences.useBlinkin = true;
             RobotParams.Preferences.hasWebCam2 = false;

@@ -63,15 +63,14 @@ public class RobotParams
         public static boolean showVisionView = true;
         // Robot
         public static boolean noRobot = false;
-        public static boolean swerveRobot = false;
         public static boolean robotPowerPlay = false;
-        public static boolean robotCenterStage = true;
+        public static boolean swerveRobot = false;
         public static boolean swerveDualServoSteering = true;
         // Drive Base
         public static boolean useExternalOdometry = true;
         public static boolean doSwervePhysicalAlignment = false;
         // Subsystems
-        public static boolean useSubsystems = true;
+        public static boolean useSubsystems = false;
         public static boolean useElevatorArm = true;
         public static boolean useElevator = true;
         public static boolean useArm = true;
@@ -343,7 +342,9 @@ public class RobotParams
         new TrcPidController.PidCoefficients(0.0, 0.0, 0.0, 1.0/ROBOT_MAX_VELOCITY);
     public static final double PPD_FOLLOWING_DISTANCE           = 6.0;
     public static final double PPD_POS_TOLERANCE                = 1.0;
+    public static final double PPD_POS_ERR_RATE_THRESHOLD       = 1.0;
     public static final double PPD_TURN_TOLERANCE               = 2.0;
+    public static final double PPD_TURN_ERR_RATE_THRESHOLD      = 1.0;
     //
     // Elevator Subsystem.
     //
