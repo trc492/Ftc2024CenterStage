@@ -377,7 +377,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Retract everything.
                     if (robot.elevatorArm != null)
                     {
-                        robot.elevatorArm.setLoadingPosition(null, 0.0, elevatorArmEvent, 0.0);
+                        robot.elevatorArm.setLoadingPosition(null, 0.0, elevatorArmEvent, 2.0);
                         sm.waitForSingleEvent(event, State.PARK_AT_BACKSTAGE);
                     }
                     else

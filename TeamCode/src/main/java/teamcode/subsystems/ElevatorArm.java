@@ -36,6 +36,8 @@ import teamcode.RobotParams;
 
 public class ElevatorArm implements TrcExclusiveSubsystem
 {
+    private static final String moduleName = "ElevatorArm";
+
     private enum ActionType
     {
         ElevatorSetPosition,
@@ -204,6 +206,17 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     }   //ElevatorArm
 
     /**
+     * This method returns the module name.
+     *
+     * @return module name.
+     */
+    @Override
+    public String toString()
+    {
+        return moduleName;
+    }   //toString
+
+    /**
      * This method cancels the elevator and arm operation if there is any.
      *
      * @param owner specifies the owner ID to check if the caller has ownership of the subsystems.
@@ -247,6 +260,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             msgTracer.traceInfo(funcName, "owner=%s", owner);
         }
 
+        TrcEvent releaseOwnershipEvent = acquireOwnership(owner, null, msgTracer);
         if (validateOwnership(owner))
         {
             if (elevator != null && arm != null && arm.getPosition() <= RobotParams.ARM_SAFE_POS)
@@ -258,7 +272,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 }
                 // Holding arm in loading position while zero calibrating.
                 arm.setPosition(null, 0.0, RobotParams.ARM_LOAD_POS, true, RobotParams.ARM_POWER_LIMIT, null, 0.0);
-                elevator.zeroCalibrate(RobotParams.ELEVATOR_CAL_POWER);
+                elevator.zeroCalibrate(RobotParams.ELEVATOR_CAL_POWER, releaseOwnershipEvent);
             }
         }
     }   //zeroCalibrate
@@ -297,6 +311,12 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 break;
 
             case ElevatorSetPower:
+//                if (msgTracer != null && actionParams.power != 0.0)
+//                {
+//                    msgTracer.traceInfo(
+//                        funcName, "elevatorEvent=%s, armEvent=%s, actionParams=%s",
+//                        elevatorActionEvent, armActionEvent, actionParams);
+//                }
                 // Perform action only if already in safe position or arm has moved to safe position.
                 if (actionParams.safeToMove || elevatorActionEvent.isSignaled())
                 {
@@ -309,6 +329,12 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 break;
 
             case ElevatorSetPidPower:
+//                if (msgTracer != null && actionParams.power != 0.0)
+//                {
+//                    msgTracer.traceInfo(
+//                        funcName, "elevatorEvent=%s, armEvent=%s, actionParams=%s",
+//                        elevatorActionEvent, armActionEvent, actionParams);
+//                }
                 // Perform action only if already in safe position or arm has moved to safe position.
                 if (actionParams.safeToMove || elevatorActionEvent.isSignaled())
                 {
@@ -348,6 +374,12 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 break;
 
             case ArmSetPower:
+//                if (msgTracer != null && actionParams.power != 0.0)
+//                {
+//                    msgTracer.traceInfo(
+//                        funcName, "elevatorEvent=%s, armEvent=%s, actionParams=%s",
+//                        elevatorActionEvent, armActionEvent, actionParams);
+//                }
                 // Perform action only if already in safe position or elevator has moved to safe height.
                 if (actionParams.safeToMove || armActionEvent.isSignaled())
                 {
@@ -359,6 +391,12 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 break;
 
             case ArmSetPidPower:
+//                if (msgTracer != null && actionParams.power != 0.0)
+//                {
+//                    msgTracer.traceInfo(
+//                        funcName, "elevatorEvent=%s, armEvent=%s, actionParams=%s",
+//                        elevatorActionEvent, armActionEvent, actionParams);
+//                }
                 // Perform action only if already in safe position or elevator has moved to safe height.
                 if (actionParams.safeToMove || armActionEvent.isSignaled())
                 {
@@ -395,7 +433,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         if (validateOwnership(owner))
         {
             // Move the wrist in loading position before lowering the elevator.
-            wrist.setPosition(owner, 0.0, RobotParams.WRIST_DOWN_POS, null, 0.0);
+            wrist.setPosition(RobotParams.WRIST_DOWN_POS);
             // Setting up the elevator operation after the arm is in loading position.
             elevatorActionParams.setPositionParams(
                 ActionType.ElevatorSetPosition, 0.0, RobotParams.ELEVATOR_LOAD_POS, RobotParams.ELEVATOR_POWER_LIMIT,
@@ -570,6 +608,14 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     {
         if (validateOwnership(owner))
         {
+//            if (msgTracer != null && power != 0.0)
+//            {
+//                msgTracer.traceInfo(
+//                    "elevatorSetPower",
+//                    "owner=%s, delay=%.1f, power=%.1f, duration=%.1f, event=%s, safe=%s",
+//                    owner, delay, power, duration, event,
+//                    elevatorIsSafeToMove(power > 0.0? RobotParams.ELEVATOR_MAX_POS: RobotParams.ELEVATOR_MIN_POS));
+//            }
             elevatorActionParams.setPowerParams(ActionType.ElevatorSetPower, delay, power, duration, event);
             if (power == 0.0 ||
                 elevatorIsSafeToMove(power > 0.0 ? RobotParams.ELEVATOR_MAX_POS : RobotParams.ELEVATOR_MIN_POS))
@@ -581,7 +627,8 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             {
                 elevatorActionEvent.clear();
                 elevatorActionEvent.setCallback(this::performAction, elevatorActionParams);
-                arm.setPosition(null, delay, RobotParams.ARM_LOAD_POS, true, 1.0, elevatorActionEvent, 0.0);
+                arm.setPosition(
+                    null, delay, RobotParams.ARM_LOAD_POS, true, RobotParams.ARM_POWER_LIMIT, elevatorActionEvent, 0.0);
             }
         }
     }   //elevatorSetPower
@@ -598,6 +645,11 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     {
         if (validateOwnership(owner))
         {
+//            if (msgTracer != null && power != 0.0)
+//            {
+//                msgTracer.traceInfo("elevatorSetPidPower", "owner=%s, power=%.1f, minPos=%.1f, maxPos=%.1f, safe=%s",
+//                                    owner, power, minPos, maxPos, elevatorIsSafeToMove(power > 0.0? maxPos: minPos));
+//            }
             elevatorActionParams.setPidPowerParams(ActionType.ElevatorSetPidPower, power, minPos, maxPos);
             if (power == 0.0 || elevatorIsSafeToMove(power > 0.0 ? maxPos : minPos))
             {
@@ -608,7 +660,8 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             {
                 elevatorActionEvent.clear();
                 elevatorActionEvent.setCallback(this::performAction, elevatorActionParams);
-                arm.setPosition(null, 0.0, RobotParams.ARM_MIN_POS, true, 1.0, elevatorActionEvent, 0.0);
+                arm.setPosition(
+                    null, 0.0, RobotParams.ARM_LOAD_POS, true, RobotParams.ARM_POWER_LIMIT, elevatorActionEvent, 0.0);
             }
         }
     }   //elevatorSetPidPower
@@ -759,6 +812,14 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     {
         if (validateOwnership(owner))
         {
+//            if (msgTracer != null && power != 0.0)
+//            {
+//                msgTracer.traceInfo(
+//                    "armSetPower",
+//                    "owner=%s, delay=%.1f, power=%.1f, duration=%.1f, event=%s, safe=%s",
+//                    owner, delay, power, duration, event,
+//                    armIsSafeToMove(power > 0.0? RobotParams.ARM_MAX_POS: RobotParams.ARM_MIN_POS));
+//            }
             armActionParams.setPowerParams(ActionType.ArmSetPower, delay, power, duration, event);
             if (power == 0.0 ||
                 armIsSafeToMove(power > 0.0 ? RobotParams.ARM_MAX_POS : RobotParams.ARM_MIN_POS))
@@ -770,7 +831,9 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             {
                 armActionEvent.clear();
                 armActionEvent.setCallback(this::performAction, armActionParams);
-                elevator.setPosition(null, delay, RobotParams.ELEVATOR_SAFE_POS, true, 1.0, armActionEvent, 0.0);
+                elevator.setPosition(
+                    null, delay, RobotParams.ELEVATOR_SAFE_POS, true, RobotParams.ELEVATOR_POWER_LIMIT, armActionEvent,
+                    0.0);
             }
         }
     }   //armSetPower
@@ -787,6 +850,12 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     {
         if (validateOwnership(owner))
         {
+//            if (msgTracer != null && power != 0.0)
+//            {
+//                msgTracer.traceInfo(
+//                    "armSetPidPower", "owner=%s, power=%.1f, minPos=%.1f, maxPos=%.1f, safe=%s",
+//                    owner, power, minPos, maxPos, armIsSafeToMove(power > 0.0? maxPos: minPos));
+//            }
             armActionParams.setPidPowerParams(ActionType.ArmSetPidPower, power, minPos, maxPos);
             if (power == 0.0 || armIsSafeToMove(power > 0.0 ? maxPos : minPos))
             {
@@ -797,7 +866,9 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             {
                 armActionEvent.clear();
                 armActionEvent.setCallback(this::performAction, armActionParams);
-                elevator.setPosition(null, 0.0, RobotParams.ELEVATOR_SAFE_POS, true, 1.0, armActionEvent, 0.0);
+                elevator.setPosition(
+                    null, 0.0, RobotParams.ELEVATOR_SAFE_POS, true, RobotParams.ELEVATOR_POWER_LIMIT, armActionEvent,
+                    0.0);
             }
         }
     }   //armSetPidPower
