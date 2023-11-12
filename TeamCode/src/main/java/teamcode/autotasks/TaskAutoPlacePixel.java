@@ -145,8 +145,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         final String funcName = "acquireSubsystemsOwnership";
         boolean success = ownerName == null ||
                           (robot.robotDrive.driveBase.acquireExclusiveAccess(ownerName) &&
-                           robot.elevatorArm.elevator.acquireExclusiveAccess(ownerName) &&
-                           robot.elevatorArm.arm.acquireExclusiveAccess(ownerName));
+                           robot.elevatorArm.acquireExclusiveAccess(ownerName));
 
         if (success)
         {
@@ -191,8 +190,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
             }
 
             robot.robotDrive.driveBase.releaseExclusiveAccess(currOwner);
-            robot.elevatorArm.elevator.releaseExclusiveAccess(currOwner);
-            robot.elevatorArm.arm.releaseExclusiveAccess(currOwner);
+            robot.elevatorArm.releaseExclusiveAccess(currOwner);
             currOwner = null;
         }
     }   //releaseSubsystemsOwnership
@@ -295,7 +293,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 // Set up elevator and arm for placing pixel on the Backdrop.
                 if (robot.elevatorArm != null)
                 {
-                    robot.elevatorArm.setScoringPosition(null, 0.0, taskParams.scoreLevel, elevatorArmEvent, 0.0);
+                    robot.elevatorArm.setScoringPosition(currOwner, 0.0, taskParams.scoreLevel, elevatorArmEvent, 0.0);
                     sm.addEvent(elevatorArmEvent);
                 }
                 // Navigate robot to Apriltag.
@@ -333,7 +331,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 // Retract everything.
                 if (robot.elevatorArm != null)
                 {
-                    robot.elevatorArm.setLoadingPosition(null, 0.0, elevatorArmEvent, 0.0);
+                    robot.elevatorArm.setLoadingPosition(currOwner, 0.0, elevatorArmEvent, 0.0);
                     sm.waitForSingleEvent(elevatorArmEvent, State.DONE);
                 }
                 else

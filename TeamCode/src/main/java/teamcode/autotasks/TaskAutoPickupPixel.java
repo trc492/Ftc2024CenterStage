@@ -240,7 +240,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
                     if (robot.elevatorArm != null)
                     {
                         // Make sure the ElevatorArm is at loading position.
-                        robot.elevatorArm.setLoadingPosition(null, 0.0, event, 0.0);
+                        robot.elevatorArm.setLoadingPosition(currOwner, 0.0, event, 0.0);
                         sm.waitForSingleEvent(event, State.FIND_PIXEL);
                     }
                     else

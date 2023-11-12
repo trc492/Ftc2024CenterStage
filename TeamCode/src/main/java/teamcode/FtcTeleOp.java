@@ -271,11 +271,22 @@ public class FtcTeleOp extends FtcOpMode
         switch (button)
         {
             case FtcGamepad.GAMEPAD_A:
-                if (pressed && robot.robotDrive != null)
+                if (pressed)
                 {
-                    // Cancel all auto-assist driving.
-                    robot.robotDrive.cancel();
-                    robot.placePixelTask.autoAssistCancel();
+                    if (robot.placePixelTask != null)
+                    {
+                        robot.placePixelTask.autoAssistCancel();
+                    }
+
+                    if (robot.elevatorArm != null)
+                    {
+                        robot.elevatorArm.cancel(moduleName);
+                    }
+
+                    if (robot.robotDrive != null)
+                    {
+                        robot.robotDrive.cancel();
+                    }
                 }
                 break;
 
@@ -318,11 +329,16 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_DPAD_UP:
                 if (pressed && robot.elevatorArm != null)
                 {
-                    robot.elevatorArm.setClimbingPosition(null, 0.0, null, 5.0);
+                    robot.elevatorArm.setHangingPosition(moduleName, 0.0, null, 5.0);
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_DOWN:
+                if (pressed && robot.elevatorArm != null)
+                {
+                    robot.elevatorArm.elevatorSetPosition(
+                        moduleName, 0.0, RobotParams.ELEVATOR_MIN_POS, 1.0, null, 0.0);
+                }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_LEFT:
@@ -440,7 +456,7 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     wristUp = false;
                     robot.elevatorArm.armPresetPositionDown(moduleName, RobotParams.ARM_POWER_LIMIT);
-                    robot.elevatorArm.wristSetPosition(wristUp? RobotParams.WRIST_UP_POS: RobotParams.WRIST_DOWN_POS);
+                    robot.elevatorArm.wristSetPosition(RobotParams.WRIST_DOWN_POS);
                 }
                 break;
 
@@ -449,7 +465,7 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     wristUp = true;
                     robot.elevatorArm.armPresetPositionUp(moduleName, RobotParams.ARM_POWER_LIMIT);
-                    robot.elevatorArm.wristSetPosition(wristUp? RobotParams.WRIST_UP_POS: RobotParams.WRIST_DOWN_POS);
+                    robot.elevatorArm.wristSetPosition(RobotParams.WRIST_UP_POS);
                 }
                 break;
 

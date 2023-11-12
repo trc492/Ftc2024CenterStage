@@ -363,8 +363,8 @@ public class RobotParams
     public static final double ELEVATOR_OFFSET                  = 11.6;             // in inches
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
     public static final double ELEVATOR_MAX_POS                 = 24.0;
-    public static final double ELEVATOR_SAFE_POS                = 14.0;
     public static final double ELEVATOR_LOAD_POS                = 12.0;
+    public static final double ELEVATOR_SAFE_POS                = 14.0;
     public static final double ELEVATOR_LEVEL1_POS              = 14.5;
     public static final double ELEVATOR_LEVEL2_POS              = 21.5;
     public static final double ELEVATOR_LEVEL3_POS              = 21.5;             // Unreachable
@@ -408,7 +408,7 @@ public class RobotParams
     public static final double ARM_SAFE_POS                     = 37.0;
     public static final double ARM_FREE_TO_MOVE_POS             = 50.0;
     public static final double ARM_SCORE_BACKDROP_POS           = 260.0;
-    public static final double ARM_CLIMB_POS                    = 165.0; // Random value
+    public static final double ARM_HANG_POS                     = 165.0; // Random value
     // Preset positions.
     public static final double ARM_PRESET_TOLERANCE             = 5.0;
     public static final double[] ARM_PRESETS                    = new double[] {
@@ -436,7 +436,7 @@ public class RobotParams
     //
     // Intake subsystem.
     //
-    public static final boolean INTAKE_MOTOR_INVERTED           = true;
+    public static final boolean INTAKE_MOTOR_INVERTED           = false;
     public static final double INTAKE_FORWARD_POWER             = 1.0;
     public static final double INTAKE_REVERSE_POWER             = -0.7;
     //
