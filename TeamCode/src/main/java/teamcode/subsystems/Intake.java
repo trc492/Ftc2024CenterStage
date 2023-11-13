@@ -48,7 +48,7 @@ public class Intake
         this.msgTracer = msgTracer;
         intakeMotor = new FtcDcMotor(instanceName + ".motor");
         intakeMotor.setMotorInverted(RobotParams.INTAKE_MOTOR_INVERTED);
-//        if (RobotParams.Preferences.intakeHasSensor)
+//        if (RobotParams.Preferences.hasIntakeSensor)
 //        {
 //            intakeSensor = new FtcDistanceSensor(instanceName + ".sensor");
 //            TrcTriggerThresholdZones analogTrigger = new TrcTriggerThresholdZones(

@@ -135,7 +135,9 @@ public class Robot
                 if (RobotParams.Preferences.useElevatorArm)
                 {
                     elevatorArm = new ElevatorArm(globalTracer, false);
-                    if (runMode == TrcRobot.RunMode.TELEOP_MODE) {
+                    // Code review: Should this init be in Robot.startMode?
+                    if (runMode == TrcRobot.RunMode.TELEOP_MODE)
+                    {
                         elevatorArm.wristSetPosition(RobotParams.WRIST_DOWN_POS);
                     }
                 }
@@ -148,11 +150,14 @@ public class Robot
                 if (RobotParams.Preferences.usePixelTray)
                 {
                     pixelTray = new PixelTray(RobotParams.HWNAME_PIXELTRAY, globalTracer);
-                    if (runMode == TrcRobot.RunMode.TELEOP_MODE) {
+                    // Code review: Should this init be in Robot.startMode?
+                    if (runMode == TrcRobot.RunMode.TELEOP_MODE)
+                    {
                         pixelTray.setUpperGateOpened(true, null);
                         pixelTray.setLowerGateOpened(true, null);
                     }
-                    else {
+                    else
+                    {
                         pixelTray.setUpperGateOpened(false, null);
                         pixelTray.setLowerGateOpened(false, null);
                     }
@@ -161,7 +166,7 @@ public class Robot
                 if (RobotParams.Preferences.useLauncher)
                 {
                     launcher = new FtcDcMotor(RobotParams.HWNAME_LAUNCHER);
-                    launcher.setMotorInverted(true);
+                    launcher.setMotorInverted(RobotParams.LAUNCHER_MOTOR_INVERTED);
                 }
                 //
                 // Create auto tasks here.
@@ -384,10 +389,14 @@ public class Robot
 
             if (elevatorArm.wrist != null)
             {
-                if (elevatorArm.distanceSensor != null) {
-                    dashboard.displayPrintf(lineNum++, "Wrist: pos=%.1f, distance=%.01f", elevatorArm.wrist.getPosition(), elevatorArm.getDistance());
+                if (elevatorArm.wristSensor != null)
+                {
+                    dashboard.displayPrintf(
+                        lineNum++, "Wrist: pos=%.1f, distance=%.1f",
+                        elevatorArm.wrist.getPosition(), elevatorArm.wristGetDistance());
                 }
-                else {
+                else
+                {
                     dashboard.displayPrintf(lineNum++, "Wrist: pos=%.1f", elevatorArm.wrist.getPosition());
                 }
             }

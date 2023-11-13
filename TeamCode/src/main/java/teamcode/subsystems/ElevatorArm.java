@@ -30,6 +30,7 @@ import TrcCommonLib.trclib.TrcExclusiveSubsystem;
 import TrcCommonLib.trclib.TrcMotor;
 import TrcCommonLib.trclib.TrcSensor;
 import TrcCommonLib.trclib.TrcTimer;
+import TrcCommonLib.trclib.TrcTriggerThresholdZones;
 import TrcFtcLib.ftclib.FtcDistanceSensor;
 import TrcFtcLib.ftclib.FtcMotorActuator;
 import TrcFtcLib.ftclib.FtcServo;
@@ -127,7 +128,8 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     private final TrcEvent armActionEvent;
     // Wrist subsystem.
     public final FtcServo wrist;
-    public final FtcDistanceSensor distanceSensor;
+    public final FtcDistanceSensor wristSensor;
+    public final TrcTriggerThresholdZones wristTrigger;
 
     /**
      * Constructor: Creates an instance of the object.
@@ -195,22 +197,31 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             armActionEvent = null;
         }
         // Wrist subsystem.
-        if (RobotParams.Preferences.useWrist) {
+        if (RobotParams.Preferences.useWrist)
+        {
             FtcServoActuator.Params wristParams = new FtcServoActuator.Params()
-                    .setServoInverted(RobotParams.WRIST_SERVO_INVERTED)
-                    .setHasFollowerServo(RobotParams.WRIST_HAS_FOLLOWER_SERVO, RobotParams.WRIST_FOLLOWER_SERVO_INVERTED);
+                .setServoInverted(RobotParams.WRIST_SERVO_INVERTED)
+                .setHasFollowerServo(RobotParams.WRIST_HAS_FOLLOWER_SERVO, RobotParams.WRIST_FOLLOWER_SERVO_INVERTED);
+
             wrist = new FtcServoActuator(RobotParams.HWNAME_WRIST, wristParams, msgTracer).getActuator();
-            if (RobotParams.Preferences.hasWristSensor) {
-                distanceSensor = new FtcDistanceSensor("wrist.sensor");
+            if (RobotParams.Preferences.hasWristSensor)
+            {
+                wristSensor = new FtcDistanceSensor(RobotParams.HWNAME_WRIST + ".sensor");
+                wristTrigger = new TrcTriggerThresholdZones(
+                    RobotParams.HWNAME_WRIST + ".analogTrigger", this::wristGetDistance,
+                    RobotParams.WRIST_SENSOR_THRESHOLDS, false);
             }
-            else {
-                distanceSensor = null;
+            else
+            {
+                wristSensor = null;
+                wristTrigger = null;
             }
         }
         else
         {
             wrist = null;
-            distanceSensor = null;
+            wristSensor = null;
+            wristTrigger = null;
         }
     }   //ElevatorArm
 
@@ -994,10 +1005,17 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     {
         wristSetPosition(null, 0.0, position, null, 0.0);
     }   //wristSetPosition
-    public double getDistance()
+
+    /**
+     * This method is called the TrcTriggerThresholdZones to get the sensor data.
+     *
+     * @return distance to detected object in inches.
+     */
+    public double wristGetDistance()
     {
-        TrcSensor.SensorData<Double> data = distanceSensor.getProcessedData(0, FtcDistanceSensor.DataType.DISTANCE_INCH);
+        TrcSensor.SensorData<Double> data =
+            wristSensor.getProcessedData(0, FtcDistanceSensor.DataType.DISTANCE_INCH);
         return data != null && data.value != null? data.value: 0.0;
-    }   //getDistance
+    }   //wristGetDistance
 
 }   //class ElevatorArm

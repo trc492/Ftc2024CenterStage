@@ -75,11 +75,11 @@ public class RobotParams
         public static boolean useElevator = true;
         public static boolean useArm = true;
         public static boolean useWrist = true;
+        public static boolean hasWristSensor = false;
         public static boolean useIntake = true;
-        public static boolean intakeHasSensor = false;
+//        public static boolean hasIntakeSensor = false;
         public static boolean usePixelTray = true;
         public static boolean useLauncher = true;
-        public static boolean hasWristSensor = false;
     }   //class Preferences
 
     public static final String ROBOT_NAME                       = "CenterStage_2024";
@@ -434,6 +434,7 @@ public class RobotParams
     public static final double WRIST_MAX_POS                    = 0.38;
     public static final double WRIST_DOWN_POS                   = 0.222;
     public static final double WRIST_UP_POS                     = WRIST_MAX_POS;
+    public static final double[] WRIST_SENSOR_THRESHOLDS        = new double[] {1.0};
     //
     // Intake subsystem.
     //
@@ -451,6 +452,7 @@ public class RobotParams
     //
     // Launcher subsystem.
     //
+    public static final boolean LAUNCHER_MOTOR_INVERTED         = true;
     public static final double LAUNCHER_POWER                   = 1.0;
 
 }   //class RobotParams
