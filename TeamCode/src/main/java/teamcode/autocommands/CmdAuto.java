@@ -382,7 +382,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     if (robot.elevatorArm != null)
                     {
                         robot.elevatorArm.setLoadingPosition(null, 0.0, elevatorArmEvent, 2.0);
-                        sm.waitForSingleEvent(event, State.PARK_AT_BACKSTAGE);
+                        sm.waitForSingleEvent(elevatorArmEvent, State.PARK_AT_BACKSTAGE);
                     }
                     else
                     {
