@@ -243,13 +243,17 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     else
                     {
                         // Audience starting position takes a longer path to the backdrop through the stage door.
-                        intermediate1 = robot.adjustPoseByAlliance(-1.5, 2.3, 180.0, autoChoices.alliance);
-                        intermediate2 = robot.adjustPoseByAlliance(1.5, 2.3, 180.0, autoChoices.alliance);
+                        intermediate1 = robot.adjustPoseByAlliance(-1.5, 2.5, 180.0, autoChoices.alliance);
+                        intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
+                        intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
+                        intermediate4 = robot.adjustPoseByAlliance(1.5, 0.3, -90.0, autoChoices.alliance);
+//                        intermediate1 = robot.adjustPoseByAlliance(-2, 2.3, 180.0, autoChoices.alliance);
+//                        intermediate2 = robot.adjustPoseByAlliance(1.5, 2.3, 180.0, autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
                         robot.robotDrive.purePursuitDrive.start(
                             event, 9.0, robot.robotDrive.driveBase.getFieldPosition(), false,
-                            intermediate1, intermediate2, targetPose);
+                            intermediate1, intermediate2, intermediate3, intermediate4, targetPose);
                     }
                     sm.waitForSingleEvent(event, State.FIND_APRILTAG);
                     break;
@@ -313,7 +317,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             moduleName, "Drive to AprilTag using absolute odometry (pose=%s).", aprilTagPose);
                     }
                     // Account for end-effector offset from the camera.
-                    aprilTagPose.x -= 2.0;
+                    aprilTagPose.x -= 1.75;
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
                         event, 2.5,  robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);

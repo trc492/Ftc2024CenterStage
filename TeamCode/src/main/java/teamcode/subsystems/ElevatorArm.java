@@ -28,7 +28,9 @@ import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcExclusiveSubsystem;
 import TrcCommonLib.trclib.TrcMotor;
+import TrcCommonLib.trclib.TrcSensor;
 import TrcCommonLib.trclib.TrcTimer;
+import TrcFtcLib.ftclib.FtcDistanceSensor;
 import TrcFtcLib.ftclib.FtcMotorActuator;
 import TrcFtcLib.ftclib.FtcServo;
 import TrcFtcLib.ftclib.FtcServoActuator;
@@ -125,6 +127,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     private final TrcEvent armActionEvent;
     // Wrist subsystem.
     public final FtcServo wrist;
+    public final FtcDistanceSensor distanceSensor;
 
     /**
      * Constructor: Creates an instance of the object.
@@ -192,16 +195,22 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             armActionEvent = null;
         }
         // Wrist subsystem.
-        if (RobotParams.Preferences.useWrist)
-        {
+        if (RobotParams.Preferences.useWrist) {
             FtcServoActuator.Params wristParams = new FtcServoActuator.Params()
-                .setServoInverted(RobotParams.WRIST_SERVO_INVERTED)
-                .setHasFollowerServo(RobotParams.WRIST_HAS_FOLLOWER_SERVO, RobotParams.WRIST_FOLLOWER_SERVO_INVERTED);
+                    .setServoInverted(RobotParams.WRIST_SERVO_INVERTED)
+                    .setHasFollowerServo(RobotParams.WRIST_HAS_FOLLOWER_SERVO, RobotParams.WRIST_FOLLOWER_SERVO_INVERTED);
             wrist = new FtcServoActuator(RobotParams.HWNAME_WRIST, wristParams, msgTracer).getActuator();
+            if (RobotParams.Preferences.hasWristSensor) {
+                distanceSensor = new FtcDistanceSensor("wrist.sensor");
+            }
+            else {
+                distanceSensor = null;
+            }
         }
         else
         {
             wrist = null;
+            distanceSensor = null;
         }
     }   //ElevatorArm
 
@@ -985,5 +994,10 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     {
         wristSetPosition(null, 0.0, position, null, 0.0);
     }   //wristSetPosition
+    public double getDistance()
+    {
+        TrcSensor.SensorData<Double> data = distanceSensor.getProcessedData(0, FtcDistanceSensor.DataType.DISTANCE_INCH);
+        return data != null && data.value != null? data.value: 0.0;
+    }   //getDistance
 
 }   //class ElevatorArm

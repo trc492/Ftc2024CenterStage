@@ -384,7 +384,12 @@ public class Robot
 
             if (elevatorArm.wrist != null)
             {
-                dashboard.displayPrintf(lineNum++, "Wrist: pos=%.1f", elevatorArm.wrist.getPosition());
+                if (elevatorArm.distanceSensor != null) {
+                    dashboard.displayPrintf(lineNum++, "Wrist: pos=%.1f, distance=%.01f", elevatorArm.wrist.getPosition(), elevatorArm.getDistance());
+                }
+                else {
+                    dashboard.displayPrintf(lineNum++, "Wrist: pos=%.1f", elevatorArm.wrist.getPosition());
+                }
             }
         }
 

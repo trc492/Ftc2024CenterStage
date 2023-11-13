@@ -32,6 +32,7 @@ SOFTWARE.
             <Servo name="wrist.followerServo" port="1" />
             <RevBlinkinLedDriver name="blinkin" port="5" />
             <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
+            <REV_VL53L0X_RANGE_SENSOR name="wrist.sensor" port="0" bus="1"/>
         </LynxModule>
         <LynxModule name="Expansion Hub 3" port="3">
             <goBILDA5202SeriesMotor name="lfDriveMotor" port="0"/>

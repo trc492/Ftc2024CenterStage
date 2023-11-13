@@ -105,7 +105,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         if (msgTracer != null)
         {
             msgTracer.traceInfo(
-                funcName, "%s: alliance=%s, scoreLevel=%d, event=%s",
+                funcName, "%s: alliance=%s, scoreLevel=%f, event=%s",
                 moduleName, alliance, scoreLevel, completionEvent);
         }
         aprilTagId = alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
@@ -300,10 +300,12 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 if (aprilTagPose != null)
                 {
                     // Account for end-effector offset from the camera.
-                    aprilTagPose.x -= 1.0;
+                    aprilTagPose.x -= 1.75;
                     aprilTagPose.angle = -90.0;
+                    robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
                     robot.robotDrive.purePursuitDrive.start(
                         event, 3.0,  robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
+                    robot.globalTracer.traceInfo(moduleName, "AprilTag %d found, Driving to %f, %f", aprilTagId, aprilTagPose.x, aprilTagPose.y);
                     sm.addEvent(event);
                     sm.waitForEvents(State.PLACE_PIXEL, true);
                 }
@@ -315,6 +317,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
             case PLACE_PIXEL:
                 // Place pixel at the appropriate location on the backdrop.
+                robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(1.0);
                 if (robot.pixelTray != null)
                 {
 //                    robot.pixelTray.setLowerGateOpened(true, event);
@@ -331,7 +334,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 // Retract everything.
                 if (robot.elevatorArm != null)
                 {
-                    robot.elevatorArm.setLoadingPosition(currOwner, 0.0, elevatorArmEvent, 0.0);
+                    robot.elevatorArm.setLoadingPosition(currOwner, 0.0, elevatorArmEvent, 2.0);
                     sm.waitForSingleEvent(elevatorArmEvent, State.DONE);
                 }
                 else
