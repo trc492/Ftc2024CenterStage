@@ -365,7 +365,7 @@ public class RobotParams
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
     public static final double ELEVATOR_MAX_POS                 = 24.0;
     public static final double ELEVATOR_LOAD_POS                = 12.05;
-    public static final double ELEVATOR_SAFE_POS                = 14.0;
+    public static final double ELEVATOR_SAFE_POS                = 15.0; //14.0
     public static final double ELEVATOR_LEVEL1_POS              = 14.5;
     public static final double ELEVATOR_LEVEL2_POS              = 21.5;
     public static final double ELEVATOR_LEVEL3_POS              = 21.5;             // Unreachable
@@ -382,7 +382,7 @@ public class RobotParams
     public static final double ELEVATOR_KI                      = 0.0;
     public static final double ELEVATOR_KD                      = 0.025;
     public static final double ELEVATOR_KF                      = 0.0;
-    public static final double ELEVATOR_TOLERANCE               = 2.0;
+    public static final double ELEVATOR_TOLERANCE               = 1.0;
     public static final double ELEVATOR_IZONE                   = 10.0;
     //
     // Arm subsystem.
@@ -422,7 +422,7 @@ public class RobotParams
     public static final double ARM_KD                           = 0.0;
     public static final double ARM_KF                           = 0.0;
     public static final double ARM_IZONE                        = 0.0;
-    public static final double ARM_TOLERANCE                    = 2.0;
+    public static final double ARM_TOLERANCE                    = 1.0;
     public static final double ARM_MAX_GRAVITY_COMP_POWER       = 0.12;
     //
     // Wrist subsystem.
