@@ -553,7 +553,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             // Move the elevator to max height before moving the arm to hanging position.
             armActionEvent.setCallback(this::performAction, armActionParams);
             elevatorSetPosition(
-                owner, delay, RobotParams.ELEVATOR_MAX_POS, RobotParams.ELEVATOR_POWER_LIMIT, armActionEvent, 1.0);
+                owner, delay, RobotParams.ELEVATOR_MAX_POS - 0.5, RobotParams.ELEVATOR_POWER_LIMIT, armActionEvent, 1.0);
         }
     }   //setHangingPosition
 

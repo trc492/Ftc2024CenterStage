@@ -145,7 +145,7 @@ public class RobotParams
         STARTPOS_BACKSTAGE_X, STARTPOS_BLUE_Y, 180.0);
     // Robot park locations in tile units.
     public static final double PARKPOS_X                        = 2.7;
-    public static final double PARKPOS_BLUE_CORNER_Y            = 2.5;
+    public static final double PARKPOS_BLUE_CORNER_Y            = 2.4;
     public static final double PARKPOS_BLUE_CENTER_Y            = 0.5;
     public static final TrcPose2D PARKPOS_BLUE_CORNER           = new TrcPose2D(
         PARKPOS_X, PARKPOS_BLUE_CORNER_Y, -90.0);
@@ -363,10 +363,10 @@ public class RobotParams
     public static final double ELEVATOR_POWER_LIMIT             = 1.0;
     public static final double ELEVATOR_OFFSET                  = 11.6;             // in inches
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
-    public static final double ELEVATOR_MAX_POS                 = 24.0;
+    public static final double ELEVATOR_MAX_POS                 = 22.0;
     public static final double ELEVATOR_LOAD_POS                = 12.05;
-    public static final double ELEVATOR_SAFE_POS                = 15.0; //14.0
-    public static final double ELEVATOR_LEVEL1_POS              = 14.5;
+    public static final double ELEVATOR_SAFE_POS                = 14.5; //14.0
+    public static final double ELEVATOR_LEVEL1_POS              = 15.0;
     public static final double ELEVATOR_LEVEL2_POS              = 21.5;
     public static final double ELEVATOR_LEVEL3_POS              = 21.5;             // Unreachable
     // Power settings.

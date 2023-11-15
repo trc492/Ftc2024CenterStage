@@ -30,6 +30,7 @@ import TrcCommonLib.trclib.TrcMotor;
 import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcServo;
+import TrcCommonLib.trclib.TrcUtil;
 import TrcFtcLib.ftclib.FtcDashboard;
 import TrcFtcLib.ftclib.FtcDcMotor;
 import TrcFtcLib.ftclib.FtcMatchInfo;
@@ -166,6 +167,7 @@ public class Robot
                 if (RobotParams.Preferences.useLauncher)
                 {
                     launcher = new FtcDcMotor(RobotParams.HWNAME_LAUNCHER);
+                    launcher.setVoltageCompensationEnabled(TrcUtil.BATTERY_NOMINAL_VOLTAGE);
                     launcher.setMotorInverted(RobotParams.LAUNCHER_MOTOR_INVERTED);
                 }
                 //

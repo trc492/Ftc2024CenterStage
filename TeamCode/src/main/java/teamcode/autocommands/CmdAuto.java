@@ -185,7 +185,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         // Intermediate point of pos 1 or 3 does go as far.
                         intermediate1 =
                             robot.adjustPoseByAlliance(
-                                targetPoseTile.x, targetPoseTile.y + 0.1, 180.0, autoChoices.alliance);
+                                targetPoseTile.x, targetPoseTile.y, 180.0, autoChoices.alliance);
                     }
                     else
                     {
@@ -245,7 +245,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         // Audience starting position takes a longer path to the backdrop through the stage door.
                         intermediate1 = robot.adjustPoseByAlliance(-1.5, 2.5, 180.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
-                        intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
+                        intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.5, 180.0, autoChoices.alliance);
                         intermediate4 = robot.adjustPoseByAlliance(1.5, 0.3, -90.0, autoChoices.alliance);
 //                        intermediate1 = robot.adjustPoseByAlliance(-2, 2.3, 180.0, autoChoices.alliance);
 //                        intermediate2 = robot.adjustPoseByAlliance(1.5, 2.3, 180.0, autoChoices.alliance);
@@ -326,7 +326,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     {
                         // Set ElevatorArm to scoring position level 1.
                         robot.elevatorArm.setScoringPosition(
-                            null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, elevatorArmEvent, 2.0);
+                            null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, elevatorArmEvent, 5.0);
                         sm.addEvent(elevatorArmEvent);
                     }
                     sm.waitForEvents(State.LOWER_ELEVATOR, true);

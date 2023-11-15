@@ -119,9 +119,9 @@ public class MecanumDrive extends RobotDrive
         purePursuitDrive.setFastModeEnabled(true);
         purePursuitDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
 
-        purePursuitDrive.getXPosPidCtrl().setOnTargetDebugEnabled(true);
-        purePursuitDrive.getYPosPidCtrl().setOnTargetDebugEnabled(true);
-        purePursuitDrive.getTurnPidCtrl().setOnTargetDebugEnabled(true);
+        purePursuitDrive.getXPosPidCtrl().setOnTargetDebugEnabled(false);
+        purePursuitDrive.getYPosPidCtrl().setOnTargetDebugEnabled(false);
+        purePursuitDrive.getTurnPidCtrl().setOnTargetDebugEnabled(false);
     }   //MecanumDrive
 
 }   //class MecanumDrive
