@@ -130,8 +130,7 @@ public class SwerveDrive extends RobotDrive
         TrcPidController.PidParameters yPosPidParams = new TrcPidController.PidParameters(
             RobotParams.yPosPidCoeff, RobotParams.YPOS_TOLERANCE, driveBase::getYPosition);
         TrcPidController.PidParameters turnPidParams = new TrcPidController.PidParameters(
-            RobotParams.turnPidCoeff, RobotParams.TURN_TOLERANCE, RobotParams.TURN_SETTLING,
-            RobotParams.TURN_STEADY_STATE_ERR, RobotParams.TURN_STALL_ERRRATE_THRESHOLD, driveBase::getHeading);
+            RobotParams.turnPidCoeff, RobotParams.TURN_TOLERANCE, driveBase::getHeading);
 
         pidDrive = new TrcPidDrive("pidDrive", driveBase, xPosPidParams, yPosPidParams, turnPidParams);
 

@@ -185,7 +185,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         // Intermediate point of pos 1 or 3 does go as far.
                         intermediate1 =
                             robot.adjustPoseByAlliance(
-                                targetPoseTile.x, targetPoseTile.y, 180.0, autoChoices.alliance);
+                                targetPoseTile.x, targetPoseTile.y + 0.1, 180.0, autoChoices.alliance);
                     }
                     else
                     {
@@ -195,7 +195,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                                 targetPoseTile.x, targetPoseTile.y - 0.1, 180.0, autoChoices.alliance);
                     }
                     robot.robotDrive.purePursuitDrive.start(
-                        event, 4.0, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
+                        event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.PLACE_PURPLE_PIXEL);
                     break;
 
@@ -233,17 +233,18 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     if (autoChoices.startPos == FtcAuto.StartPos.BACKSTAGE)
                     {
                         // Backstage starting position takes a shorter path to the backdrop.
-                        intermediate1 = robot.adjustPoseByAlliance(0.5, 2.0, 180.0, autoChoices.alliance);
+                        intermediate1 = robot.adjustPoseByAlliance(0.6, 2.0, 180.0, autoChoices.alliance);
+                        intermediate1.angle = robot.robotDrive.driveBase.getHeading();
                         intermediate2 = robot.adjustPoseByAlliance(1.5, 2.0, -90.0, autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
-                            event, 4.5, robot.robotDrive.driveBase.getFieldPosition(), false,
+                            event, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, targetPose);
                     }
                     else
                     {
                         // Audience starting position takes a longer path to the backdrop through the stage door.
-                        intermediate1 = robot.adjustPoseByAlliance(-1.5, 2.5, 180.0, autoChoices.alliance);
+                        intermediate1 = robot.adjustPoseByAlliance(-1.6, 2.5, 180.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
                         intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.5, 180.0, autoChoices.alliance);
                         intermediate4 = robot.adjustPoseByAlliance(1.5, 0.3, -90.0, autoChoices.alliance);
@@ -252,7 +253,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
                         robot.robotDrive.purePursuitDrive.start(
-                            event, 9.0, robot.robotDrive.driveBase.getFieldPosition(), false,
+                            event, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, intermediate3, intermediate4, targetPose);
                     }
                     sm.waitForSingleEvent(event, State.FIND_APRILTAG);
@@ -320,13 +321,13 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     aprilTagPose.x -= 1.75;
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
-                        event, 2.5,  robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
+                        event, robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
                     sm.addEvent(event);
                     if (robot.elevatorArm != null)
                     {
                         // Set ElevatorArm to scoring position level 1.
                         robot.elevatorArm.setScoringPosition(
-                            null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, elevatorArmEvent, 5.0);
+                            null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, elevatorArmEvent, 0.0);
                         sm.addEvent(elevatorArmEvent);
                     }
                     sm.waitForEvents(State.LOWER_ELEVATOR, true);
@@ -338,7 +339,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         // Lower elevator to the lowest height to minimize pixel bouncing off.
                         robot.elevatorArm.elevatorSetPosition(
                             null, 0.0, RobotParams.ELEVATOR_LOAD_POS, RobotParams.ELEVATOR_POWER_LIMIT,
-                            elevatorArmEvent, 2.0);
+                            elevatorArmEvent, 0.0);
                         sm.waitForSingleEvent(elevatorArmEvent, State.PLACE_YELLOW_PIXEL);
                     }
                     else
@@ -367,8 +368,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     {
                         // Raise elevator back to the height that we can safely retract everything.
                         robot.elevatorArm.elevatorSetPosition(
-                            null, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, RobotParams.ELEVATOR_POWER_LIMIT,
-                            elevatorArmEvent, 5.0);
+                            null, 0.0, RobotParams.ELEVATOR_LEVEL2_POS, RobotParams.ELEVATOR_POWER_LIMIT,
+                            elevatorArmEvent, 0.0);
                         sm.waitForSingleEvent(elevatorArmEvent, State.RETRACT_ALL);
                     }
                     else
@@ -381,7 +382,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Retract everything.
                     if (robot.elevatorArm != null)
                     {
-                        robot.elevatorArm.setLoadingPosition(null, 0.0, elevatorArmEvent, 2.0);
+                        robot.elevatorArm.setLoadingPosition(null, 0.0, elevatorArmEvent, 0.0);
                         sm.waitForSingleEvent(elevatorArmEvent, State.PARK_AT_BACKSTAGE);
                     }
                     else

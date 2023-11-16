@@ -89,8 +89,9 @@ public class MecanumDrive extends RobotDrive
         TrcPidController.PidParameters yPosPidParams = new TrcPidController.PidParameters(
             RobotParams.yPosPidCoeff, RobotParams.YPOS_TOLERANCE, driveBase::getYPosition);
         TrcPidController.PidParameters turnPidParams = new TrcPidController.PidParameters(
-            RobotParams.turnPidCoeff, RobotParams.TURN_TOLERANCE, RobotParams.TURN_SETTLING,
-            RobotParams.TURN_STEADY_STATE_ERR, RobotParams.TURN_STALL_ERRRATE_THRESHOLD, driveBase::getHeading);
+            RobotParams.turnPidCoeff, RobotParams.TURN_TOLERANCE, driveBase::getHeading);
+//            RobotParams.turnPidCoeff, RobotParams.TURN_TOLERANCE, RobotParams.TURN_SETTLING,
+//            RobotParams.TURN_STEADY_STATE_ERR, RobotParams.TURN_STALL_ERRRATE_THRESHOLD, driveBase::getHeading);
 
         pidDrive = new TrcPidDrive("pidDrive", driveBase, xPosPidParams, yPosPidParams, turnPidParams);
 
@@ -119,9 +120,9 @@ public class MecanumDrive extends RobotDrive
         purePursuitDrive.setFastModeEnabled(true);
         purePursuitDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
 
-        purePursuitDrive.getXPosPidCtrl().setOnTargetDebugEnabled(false);
-        purePursuitDrive.getYPosPidCtrl().setOnTargetDebugEnabled(false);
-        purePursuitDrive.getTurnPidCtrl().setOnTargetDebugEnabled(false);
+//        purePursuitDrive.getXPosPidCtrl().setOnTargetDebugEnabled(false);
+//        purePursuitDrive.getYPosPidCtrl().setOnTargetDebugEnabled(false);
+//        purePursuitDrive.getTurnPidCtrl().setOnTargetDebugEnabled(false);
     }   //MecanumDrive
 
 }   //class MecanumDrive

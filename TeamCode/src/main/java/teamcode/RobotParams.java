@@ -84,7 +84,9 @@ public class RobotParams
 
     public static final String ROBOT_NAME                       = "CenterStage_2024";
     public static RevHubOrientationOnRobot.LogoFacingDirection hubLogoDirection =
-        RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
+        RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+//    public static RevHubOrientationOnRobot.LogoFacingDirection hubLogoDirection =
+//        RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
     public static RevHubOrientationOnRobot.UsbFacingDirection hubUsbDirection =
         RevHubOrientationOnRobot.UsbFacingDirection.UP;
     public static final String TEAM_FOLDER_PATH                 =
@@ -144,7 +146,7 @@ public class RobotParams
     public static final TrcPose2D STARTPOS_BLUE_BACKSTAGE       = new TrcPose2D(
         STARTPOS_BACKSTAGE_X, STARTPOS_BLUE_Y, 180.0);
     // Robot park locations in tile units.
-    public static final double PARKPOS_X                        = 2.7;
+    public static final double PARKPOS_X                        = 2.6;
     public static final double PARKPOS_BLUE_CORNER_Y            = 2.4;
     public static final double PARKPOS_BLUE_CENTER_Y            = 0.5;
     public static final TrcPose2D PARKPOS_BLUE_CORNER           = new TrcPose2D(
@@ -153,14 +155,13 @@ public class RobotParams
         PARKPOS_X, PARKPOS_BLUE_CENTER_Y, -90.0);
     // Spike Mark locations to place the pixel in tile units.
     public static final double SPIKE_MARK_ANGLE_OFFSET          = 90.0;
-    public static final double SPIKE_MARK_Y_OFFSET              = 0.3;
     public static final double AUDIENCE_SPIKES_X                = -1.5;
     public static final double BACKSTAGE_SPIKES_X               = 0.5;
     public static final double BLUE_SPIKES_Y                    = 1.5;
     public static final TrcPose2D[] BLUE_AUDIENCE_SPIKE_MARKS   = new TrcPose2D[] {
-        new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y - SPIKE_MARK_Y_OFFSET, 180.0 - SPIKE_MARK_ANGLE_OFFSET),
+        new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y, 180.0 - SPIKE_MARK_ANGLE_OFFSET),
         new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y, 180.0),
-        new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y - SPIKE_MARK_Y_OFFSET, 180.0 + SPIKE_MARK_ANGLE_OFFSET)
+        new TrcPose2D(AUDIENCE_SPIKES_X, BLUE_SPIKES_Y, 180.0 + SPIKE_MARK_ANGLE_OFFSET)
     };
     public static final TrcPose2D[] BLUE_BACKSTAGE_SPIKE_MARKS  = new TrcPose2D[] {
         new TrcPose2D(BACKSTAGE_SPIKES_X, BLUE_SPIKES_Y, 180.0 - SPIKE_MARK_ANGLE_OFFSET),
@@ -170,6 +171,7 @@ public class RobotParams
     public static final int[] BLUE_BACKDROP_APRILTAGS           = new int[]{1, 2, 3};
     public static final int[] RED_BACKDROP_APRILTAGS            = new int[]{4, 5, 6};
     // AprilTag locations to place the pixel in inches.
+    // DO NOT CHANGE the AprilTag location numbers. They are from the AprilTag metadata.
     public static final double APRILTAG_BACKDROP_X              = 60.25;
     public static final double APRILTAG_AUDIENCE_WALL_X         = -70.25;
     // All AprilTags are at the height of 4.0-inch except for AprilTag 7 and 10 which are at the height of 5.5-inch.
@@ -219,6 +221,7 @@ public class RobotParams
 //    public static final double WEBCAM_CY                        = 241.251;  // in pixels
 
     // Measurement unit: pixels
+    // TODO: Tune these!
     public static final double HOMOGRAPHY_CAMERA_TOPLEFT_X      = 0.0;
     public static final double HOMOGRAPHY_CAMERA_TOPLEFT_Y      = 120.0;
     public static final double HOMOGRAPHY_CAMERA_TOPRIGHT_X     = CAM_IMAGE_WIDTH - 1;
@@ -323,9 +326,6 @@ public class RobotParams
     public static final TrcPidController.PidCoefficients turnPidCoeff =
         new TrcPidController.PidCoefficients(0.012, 0.0, 0.0012, 0.0, 0.0);
     public static final double TURN_TOLERANCE                   = 2.0;
-    public static final double TURN_SETTLING                    = TrcPidController.DEF_SETTLING_TIME;
-    public static final double TURN_STEADY_STATE_ERR            = 2.0;
-    public static final double TURN_STALL_ERRRATE_THRESHOLD     = 1.0;
     public static final Double TURN_RAMP_RATE                   = null;//10.0;
     //
     // Pure Pursuit parameters.
@@ -382,7 +382,7 @@ public class RobotParams
     public static final double ELEVATOR_KI                      = 0.0;
     public static final double ELEVATOR_KD                      = 0.025;
     public static final double ELEVATOR_KF                      = 0.0;
-    public static final double ELEVATOR_TOLERANCE               = 1.0;
+    public static final double ELEVATOR_TOLERANCE               = 0.5;
     public static final double ELEVATOR_IZONE                   = 10.0;
     //
     // Arm subsystem.
@@ -422,8 +422,11 @@ public class RobotParams
     public static final double ARM_KD                           = 0.0;
     public static final double ARM_KF                           = 0.0;
     public static final double ARM_IZONE                        = 0.0;
-    public static final double ARM_TOLERANCE                    = 1.0;
+    public static final double ARM_TOLERANCE                    = 2.0;
     public static final double ARM_MAX_GRAVITY_COMP_POWER       = 0.12;
+    public static final double ARM_STALL_DETECTION_DELAY        = 0.5;
+    public static final double ARM_STALL_DETECTION_TIMEOUT      = 0.2;
+    public static final double ARM_STALL_ERR_RATE_THRESHOLD     = 5.0;
     //
     // Wrist subsystem.
     //

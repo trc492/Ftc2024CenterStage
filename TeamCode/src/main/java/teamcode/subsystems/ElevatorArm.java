@@ -28,7 +28,7 @@ import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcExclusiveSubsystem;
 import TrcCommonLib.trclib.TrcMotor;
-import TrcCommonLib.trclib.TrcOwnershipMgr;
+import TrcCommonLib.trclib.TrcPidController;
 import TrcCommonLib.trclib.TrcSensor;
 import TrcCommonLib.trclib.TrcTimer;
 import TrcCommonLib.trclib.TrcTriggerThresholdZones;
@@ -163,6 +163,11 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 RobotParams.ELEVATOR_KP, RobotParams.ELEVATOR_KI, RobotParams.ELEVATOR_KD, RobotParams.ELEVATOR_KF,
                 RobotParams.ELEVATOR_IZONE);
             elevator.setPositionPidTolerance(RobotParams.ELEVATOR_TOLERANCE);
+            TrcPidController positionPidCtrl = elevator.getPositionPidController();
+            positionPidCtrl.setStallDetectionEnabled(
+                RobotParams.ARM_STALL_DETECTION_DELAY, RobotParams.ARM_STALL_DETECTION_TIMEOUT,
+                RobotParams.ARM_STALL_ERR_RATE_THRESHOLD);
+            positionPidCtrl.setTraceEnabled(true, false, false);
             elevatorActionEvent = new TrcEvent(RobotParams.HWNAME_ELEVATOR + ".actionEvent");
         }
         else
@@ -190,6 +195,9 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 RobotParams.ARM_KP, RobotParams.ARM_KI, RobotParams.ARM_KD, RobotParams.ARM_KF, RobotParams.ARM_IZONE);
             arm.setPositionPidTolerance(RobotParams.ARM_TOLERANCE);
             arm.setPositionPidPowerComp(this::armGetPowerComp);
+            TrcPidController positionPidCtrl = arm.getPositionPidController();
+            positionPidCtrl.setStallDetectionEnabled(true);
+            positionPidCtrl.setTraceEnabled(true, false, false);
             armActionEvent = new TrcEvent(RobotParams.HWNAME_ARM + ".actionEvent");
         }
         else
@@ -286,7 +294,8 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         TrcEvent releaseOwnershipEvent = acquireOwnership(owner, null, msgTracer);
         if (validateOwnership(owner))
         {
-            if (elevator != null && arm != null && arm.getPosition() <= RobotParams.ARM_SAFE_POS)
+            if (elevator != null && arm != null &&
+                arm.getPosition() - RobotParams.ARM_TOLERANCE <= RobotParams.ARM_LOAD_POS)
             {
                 if (wrist != null)
                 {
@@ -571,9 +580,12 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     {
         double currArmPos = arm.getPosition();
 
-        return currArmPos - RobotParams.ARM_TOLERANCE <= RobotParams.ARM_SAFE_POS ||
+        return currArmPos - RobotParams.ARM_TOLERANCE <= RobotParams.ARM_LOAD_POS ||
+               // ^^^ Arm is already in load position.
                currArmPos + RobotParams.ARM_TOLERANCE >= RobotParams.ARM_FREE_TO_MOVE_POS ||
+               // ^^^ Arm is already beyond FREE_TO_MOVE position.
                elevatorTargetPos >= RobotParams.ELEVATOR_SAFE_POS;
+               // ^^^ We are moving up beyond ELEVATOR_SAFE_POS.
     }   //elevatorIsSafeToMove
 
     /**
@@ -779,9 +791,15 @@ public class ElevatorArm implements TrcExclusiveSubsystem
      */
     private boolean armIsSafeToMove(double armTargetPos)
     {
+        double armPos = arm.getPosition();
+
         return elevator.getPosition() + RobotParams.ELEVATOR_TOLERANCE >= RobotParams.ELEVATOR_SAFE_POS ||
-               arm.getPosition() + RobotParams.ARM_TOLERANCE >= RobotParams.ARM_FREE_TO_MOVE_POS &&
+               // ^^^ Elevator above safe height.
+               armPos <= RobotParams.ARM_LOAD_POS && armTargetPos <= RobotParams.ARM_LOAD_POS ||
+               // ^^^ Arm already in LOAD_POS.
+               armPos + RobotParams.ARM_TOLERANCE >= RobotParams.ARM_FREE_TO_MOVE_POS &&
                armTargetPos >= RobotParams.ARM_FREE_TO_MOVE_POS;
+               // ^^^ Elevator is down but arm is already out and we are lifting arm.
     }   //armIsSafeToMove
 
     /**
