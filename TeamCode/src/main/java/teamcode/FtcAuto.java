@@ -253,14 +253,16 @@ public class FtcAuto extends FtcOpMode
 
         if (robot.vision != null)
         {
-            // We are done with detecting signal with TensorFlow, shut it down.
+            // We are done with detecting TeamProp with TensorFlow, shut it down.
             if (robot.vision.tensorFlowVision != null)
             {
                 robot.globalTracer.traceInfo(funcName, "Disabling TensorFlowVision.");
                 robot.vision.setTensorFlowVisionEnabled(false);
             }
+            // We are done with detecting TeamProp with ColorBlob detection, shut it down.
             robot.vision.setRedBlobVisionEnabled(false);
             robot.vision.setBlueBlobVisionEnabled(false);
+            // Turn on AprilTag detection with rear camera.
             robot.vision.setActiveWebcam(robot.vision.getRearWebcam());
             robot.vision.setAprilTagVisionEnabled(true);
         }

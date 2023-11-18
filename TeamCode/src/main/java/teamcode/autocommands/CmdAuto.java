@@ -248,8 +248,6 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
                         intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
                         intermediate4 = robot.adjustPoseByAlliance(1.5, 0.3, -90.0, autoChoices.alliance);
-//                        intermediate1 = robot.adjustPoseByAlliance(-2, 2.3, 180.0, autoChoices.alliance);
-//                        intermediate2 = robot.adjustPoseByAlliance(1.5, 2.3, 180.0, autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
                         robot.robotDrive.purePursuitDrive.start(
@@ -264,7 +262,6 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // As an optimization for time, we could skip using vision to look for AprilTag. We have absolute
                     // locations of all the AprilTag and we have absolute odometry, so we could navigate the robot
                     // there with just odometry.
-                    robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(1.0);
                     if (autoChoices.useAprilTagVision && robot.vision != null && robot.vision.aprilTagVision != null)
                     {
                         TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
@@ -317,6 +314,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         robot.globalTracer.traceInfo(
                             moduleName, "Drive to AprilTag using absolute odometry (pose=%s).", aprilTagPose);
                     }
+                    // We are right in front of the backdrop, so we don't need full power to approach it.
+                    robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
                     // Account for end-effector offset from the camera.
                     aprilTagPose.x -= 1.75;
                     aprilTagPose.angle = -90.0;
@@ -334,6 +333,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case LOWER_ELEVATOR:
+                    robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(1.0);
                     if (robot.elevatorArm != null)
                     {
                         // Lower elevator to the lowest height to minimize pixel bouncing off.
