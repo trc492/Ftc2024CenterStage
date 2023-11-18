@@ -472,13 +472,13 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 completionEvent, expiredTime);
             // Before moving the arm, make sure the arm is safe to move, or we have to bring the elevator up to safe
             // height first before moving the arm back in then we will lower the elevator.
-            if (!armIsSafeToMove(RobotParams.ARM_LOAD_POS))
-            {
+//            if (!armIsSafeToMove(RobotParams.ARM_LOAD_POS))
+//            {
                 // Move elevator to safe position first. Elevator is fast and arm is slow, so we don't have to wait for
                 // the elevator to complete its movement.
-                elevator.setPosition(
-                    null, 0.0, RobotParams.ELEVATOR_SAFE_POS, true, RobotParams.ELEVATOR_POWER_LIMIT, null, 0.0);
-            }
+            elevator.setPosition(
+                null, 0.0, RobotParams.ELEVATOR_SAFE_POS, true, RobotParams.ELEVATOR_POWER_LIMIT, null, 0.0);
+//            }
             // Move the arm to loading position before lowering the elevator.
             elevatorActionEvent.setCallback(this::performAction, elevatorActionParams);
             armSetPosition(

@@ -246,7 +246,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         // Audience starting position takes a longer path to the backdrop through the stage door.
                         intermediate1 = robot.adjustPoseByAlliance(-1.6, 2.5, 180.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
-                        intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.5, 180.0, autoChoices.alliance);
+                        intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
                         intermediate4 = robot.adjustPoseByAlliance(1.5, 0.3, -90.0, autoChoices.alliance);
 //                        intermediate1 = robot.adjustPoseByAlliance(-2, 2.3, 180.0, autoChoices.alliance);
 //                        intermediate2 = robot.adjustPoseByAlliance(1.5, 2.3, 180.0, autoChoices.alliance);

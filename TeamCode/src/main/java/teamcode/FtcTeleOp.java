@@ -300,7 +300,7 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_X:
                 if (pressed && robot.robotDrive != null && robot.elevatorArm != null && robot.vision != null)
                 {
-                    robot.placePixelTask.autoAssistPlace(FtcAuto.autoChoices.alliance, RobotParams.ELEVATOR_LEVEL2_POS, null);
+                    robot.placePixelTask.autoAssistPlace(FtcAuto.autoChoices.alliance, RobotParams.ELEVATOR_LEVEL2_POS, false,null);
                 }
                 break;
 
