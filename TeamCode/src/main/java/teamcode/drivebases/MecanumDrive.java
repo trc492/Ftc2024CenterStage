@@ -94,7 +94,7 @@ public class MecanumDrive extends RobotDrive
 //            RobotParams.TURN_STEADY_STATE_ERR, RobotParams.TURN_STALL_ERRRATE_THRESHOLD, driveBase::getHeading);
 
         pidDrive = new TrcPidDrive("pidDrive", driveBase, xPosPidParams, yPosPidParams, turnPidParams);
-
+        pidDrive.setStallDetectionEnabled(true);
         pidDrive.getXPidCtrl().setRampRate(RobotParams.X_RAMP_RATE);
         pidDrive.getYPidCtrl().setRampRate(RobotParams.Y_RAMP_RATE);
         pidDrive.getTurnPidCtrl().setRampRate(RobotParams.TURN_RAMP_RATE);
@@ -113,10 +113,6 @@ public class MecanumDrive extends RobotDrive
             RobotParams.PPD_FOLLOWING_DISTANCE, RobotParams.PPD_POS_TOLERANCE, RobotParams.PPD_TURN_TOLERANCE,
             RobotParams.xPosPidCoeff, RobotParams.yPosPidCoeff, RobotParams.turnPidCoeff, RobotParams.velPidCoeff);
         purePursuitDrive.setStallDetectionEnabled(true);
-//        purePursuitDrive.getXPosPidCtrl().setStallErrRateThreshold(RobotParams.PPD_POS_ERR_RATE_THRESHOLD);
-//        purePursuitDrive.getYPosPidCtrl().setStallErrRateThreshold(RobotParams.PPD_POS_ERR_RATE_THRESHOLD);
-//        purePursuitDrive.getYPosPidCtrl().setErrorTolerances(RobotParams.PPD_POS_TOLERANCE, 2.0);
-//        purePursuitDrive.getTurnPidCtrl().setStallErrRateThreshold(RobotParams.PPD_TURN_ERR_RATE_THRESHOLD);
         purePursuitDrive.setFastModeEnabled(true);
         purePursuitDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
 

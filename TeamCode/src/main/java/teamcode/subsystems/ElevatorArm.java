@@ -163,11 +163,10 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 RobotParams.ELEVATOR_KP, RobotParams.ELEVATOR_KI, RobotParams.ELEVATOR_KD, RobotParams.ELEVATOR_KF,
                 RobotParams.ELEVATOR_IZONE);
             elevator.setPositionPidTolerance(RobotParams.ELEVATOR_TOLERANCE);
-            TrcPidController positionPidCtrl = elevator.getPositionPidController();
-            positionPidCtrl.setStallDetectionEnabled(
+            elevator.setStallDetectionEnabled(
                 RobotParams.ARM_STALL_DETECTION_DELAY, RobotParams.ARM_STALL_DETECTION_TIMEOUT,
                 RobotParams.ARM_STALL_ERR_RATE_THRESHOLD);
-            positionPidCtrl.setTraceEnabled(true, false, false);
+            elevator.getPositionPidController().setTraceEnabled(true, false, false);
             elevatorActionEvent = new TrcEvent(RobotParams.HWNAME_ELEVATOR + ".actionEvent");
         }
         else
@@ -195,9 +194,8 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 RobotParams.ARM_KP, RobotParams.ARM_KI, RobotParams.ARM_KD, RobotParams.ARM_KF, RobotParams.ARM_IZONE);
             arm.setPositionPidTolerance(RobotParams.ARM_TOLERANCE);
             arm.setPositionPidPowerComp(this::armGetPowerComp);
-            TrcPidController positionPidCtrl = arm.getPositionPidController();
-            positionPidCtrl.setStallDetectionEnabled(true);
-            positionPidCtrl.setTraceEnabled(true, false, false);
+            arm.setStallDetectionEnabled(true);
+            arm.getPositionPidController().setTraceEnabled(true, false, false);
             armActionEvent = new TrcEvent(RobotParams.HWNAME_ARM + ".actionEvent");
         }
         else
