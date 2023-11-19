@@ -300,12 +300,14 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_X:
                 if (pressed && robot.robotDrive != null && robot.elevatorArm != null && robot.vision != null)
                 {
-                    // Note: If we are not running a match and just run TeleOp, the autoChoices.alliance is set to
-                    // RED_ALLIANCE by default.
-                    robot.placePixelTask.autoAssistPlace(
+                    // If we are not running a match and just ran TeleOp, autoChoices.autoMenuRan will be false.
+                    // In this case, we don't really know what alliance we are in. We will look for any AprilTag
+                    // in front of us.
+                    Integer aprilTagId = !FtcAuto.autoChoices.autoMenuRan? null:
                         FtcAuto.autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
-                            RobotParams.BLUE_BACKDROP_APRILTAGS[1] : RobotParams.RED_BACKDROP_APRILTAGS[1],
-                        RobotParams.ELEVATOR_LEVEL2_POS, false, null);
+                            RobotParams.BLUE_BACKDROP_APRILTAGS[1] : RobotParams.RED_BACKDROP_APRILTAGS[1];
+                    robot.placePixelTask.autoAssistPlace(
+                        true, aprilTagId, RobotParams.ELEVATOR_LEVEL2_POS, false, null);
                 }
                 break;
 

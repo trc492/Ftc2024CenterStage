@@ -57,12 +57,14 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
     private static class TaskParams
     {
-        int aprilTagId;
+        boolean useVision;
+        Integer aprilTagId;
         double scoreLevel;
         boolean inAuto;
 
-        TaskParams(int aprilTagId, double scoreLevel, boolean inAuto)
+        TaskParams(boolean useVision, Integer aprilTagId, double scoreLevel, boolean inAuto)
         {
+            this.useVision = useVision;
             this.aprilTagId = aprilTagId;
             this.scoreLevel = scoreLevel;
             this.inAuto = inAuto;
@@ -101,25 +103,27 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
     /**
      * This method starts the auto-assist place operation.
      *
+     * @param useVision specifies true to use vision, false otherwise.
      * @param aprilTagId specifies the AprilTag ID to approach for placing pixel for Autonomous, null if called by
      *        TeleOp.
      * @param scoreLevel specifies the score level.
      * @param inAuto specifies true if called by Autonomous, false otherwise.
      * @param completionEvent specifies the event to signal when done, can be null if none provided.
      */
-    public void autoAssistPlace(int aprilTagId, double scoreLevel, boolean inAuto, TrcEvent completionEvent)
+    public void autoAssistPlace(
+        boolean useVision, Integer aprilTagId, double scoreLevel, boolean inAuto, TrcEvent completionEvent)
     {
         final String funcName = "autoAssistPlace";
 
         if (msgTracer != null)
         {
             msgTracer.traceInfo(
-                funcName, "%s: aprilTagId=%d, scoreLevel=%f, inAuto=%s, event=%s",
-                moduleName, aprilTagId, scoreLevel, inAuto, completionEvent);
+                funcName, "%s: useVision=%s, aprilTagId=%s, scoreLevel=%f, inAuto=%s, event=%s",
+                moduleName, useVision, aprilTagId, scoreLevel, inAuto, completionEvent);
         }
 
         relocalizeDeltaHeading = null;
-        startAutoTask(State.START, new TaskParams(aprilTagId, scoreLevel, inAuto), completionEvent);
+        startAutoTask(State.START, new TaskParams(useVision, aprilTagId, scoreLevel, inAuto), completionEvent);
     }   //autoAssistPlace
 
     /**
@@ -254,7 +258,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         switch (state)
         {
             case START:
-                if (robot.vision != null && robot.vision.aprilTagVision != null)
+                if (taskParams.useVision && robot.vision != null && robot.vision.aprilTagVision != null)
                 {
                     // Set up vision: switch to rear camera and enable AprilTagVision.
                     robot.vision.setActiveWebcam(robot.vision.getRearWebcam());
@@ -269,7 +273,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 // As an optimization for time, we could skip using vision to look for AprilTag. We have absolute
                 // locations of all the AprilTag and we have absolute odometry, so we could navigate the robot
                 // there with just odometry.
-                if (robot.vision != null && robot.vision.aprilTagVision != null)
+                if (taskParams.useVision && robot.vision != null && robot.vision.aprilTagVision != null)
                 {
                     TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
                         robot.vision.getDetectedAprilTag(taskParams.aprilTagId, -1);
@@ -291,7 +295,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                                     -90.0 - robot.robotDrive.driveBase.getHeading()));
                         robot.globalTracer.traceInfo(
                             funcName, "AprilTag %d found at %s (absPose=%s)",
-                            taskParams.aprilTagId, aprilTagInfo.objPose, aprilTagPose);
+                            aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagInfo.objPose, aprilTagPose);
                         sm.setState(State.DRIVE_TO_APRILTAG);
                     }
                     else if (visionExpiredTime == null)
@@ -302,7 +306,9 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
                     {
                         // Timed out, moving on.
-                        robot.globalTracer.traceInfo(funcName, "AprilTag %d not found.", taskParams.aprilTagId);
+                        robot.globalTracer.traceInfo(
+                            funcName, "AprilTag %d not found.",
+                            taskParams.aprilTagId != null? taskParams.aprilTagId: -1);
                         sm.setState(State.DRIVE_TO_APRILTAG);
                     }
                 }
@@ -321,7 +327,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // Not using vision or vision did not see AprilTag, just go to it blindly using odometry and
                     // its known location. If we are not in Autonomous, the robot may not know its location. In
                     // this case, we just warn the driver and quit.
-                    if (taskParams.inAuto)
+                    if (taskParams.inAuto && taskParams.aprilTagId != null)
                     {
                         aprilTagPose = RobotParams.APRILTAG_POSES[taskParams.aprilTagId - 1];
                         robot.globalTracer.traceInfo(
