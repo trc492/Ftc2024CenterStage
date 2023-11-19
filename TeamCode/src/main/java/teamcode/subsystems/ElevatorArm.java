@@ -259,8 +259,8 @@ public class ElevatorArm implements TrcExclusiveSubsystem
 
         if (hasOwnership(owner))
         {
-            elevator.stop();
-            arm.stop();
+            elevator.cancel();
+            arm.cancel();
             releaseExclusiveAccess(owner);
         }
     }   //cancel
@@ -454,8 +454,9 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         if (msgTracer != null)
         {
             msgTracer.traceInfo(
-                funcName, "[%.3f] owner=%s, delay=%.3f, event=%s, timeout=%.3f",
-                TrcTimer.getModeElapsedTime(), owner, delay, completionEvent, timeout);
+                funcName, "[%.3f] owner=%s, delay=%.3f, event=%s, timeout=%.3f (elevatorPos=%.2f, armPos=%.2f)",
+                TrcTimer.getModeElapsedTime(), owner, delay, completionEvent, timeout, elevator.getPosition(),
+                arm.getPosition());
         }
 
         cancel(owner);
@@ -474,8 +475,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             // height first before moving the arm back in then we will lower the elevator.
             // Even if the elevator is already at safe height, we may want to set it to safe height just to hold its
             // position so it doesn't drop.
-            if (!armIsSafeToMove(RobotParams.ARM_LOAD_POS) ||
-                elevator.getPosition() + RobotParams.ELEVATOR_TOLERANCE >= RobotParams.ELEVATOR_SAFE_POS)
+            if (!armIsSafeToMove(RobotParams.ARM_LOAD_POS))
             {
                 // Move elevator to safe position first. Elevator is fast and arm is slow, so we don't have to wait for
                 // the elevator to complete its movement.
@@ -508,8 +508,10 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         if (msgTracer != null)
         {
             msgTracer.traceInfo(
-                funcName, "[%.3f] owner=%s, delay=%.3f, elevatorPos=%.1f, event=%s, timeout=%.3f",
-                TrcTimer.getModeElapsedTime(), owner, delay, elevatorPos, completionEvent, timeout);
+                funcName,
+                "[%.3f] owner=%s, delay=%.3f, elevatorPos=%.1f, event=%s, timeout=%.3f (elevatorPos=%.2f, armPos=%.2f)",
+                TrcTimer.getModeElapsedTime(), owner, delay, elevatorPos, completionEvent, timeout,
+                elevator.getPosition(), arm.getPosition());
         }
 
         cancel(owner);
@@ -609,8 +611,11 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         if (msgTracer != null)
         {
             msgTracer.traceInfo(
-                funcName, "[%.3f] owner=%s, delay=%.3f, pos=%.1f, powerLimit=%.1f, event=%s, timeout=%.3f",
-                TrcTimer.getModeElapsedTime(), owner, delay, pos, powerLimit, completionEvent, timeout);
+                funcName,
+                "[%.3f] owner=%s, delay=%.3f, pos=%.1f, powerLimit=%.1f, event=%s, timeout=%.3f " +
+                "(elevatorPos=%.2f, armPos=%.2f)",
+                TrcTimer.getModeElapsedTime(), owner, delay, pos, powerLimit, completionEvent, timeout,
+                elevator.getPosition(), arm.getPosition());
         }
 
         cancel(owner);
@@ -823,8 +828,11 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         if (msgTracer != null)
         {
             msgTracer.traceInfo(
-                funcName, "[%.3f] owner=%s, delay=%.3f, pos=%.1f, powerLimit=%.1f, event=%s, timeout=%.3f",
-                TrcTimer.getModeElapsedTime(), owner, delay, pos, powerLimit, completionEvent, timeout);
+                funcName,
+                "[%.3f] owner=%s, delay=%.3f, pos=%.1f, powerLimit=%.1f, event=%s, timeout=%.3f " +
+                "(elevatorPos=%.2f, armPos=%.2f)",
+                TrcTimer.getModeElapsedTime(), owner, delay, pos, powerLimit, completionEvent, timeout,
+                elevator.getPosition(), arm.getPosition());
         }
 
         cancel(owner);
