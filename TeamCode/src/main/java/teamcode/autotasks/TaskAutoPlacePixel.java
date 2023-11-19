@@ -357,6 +357,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 {
                     sm.setState(State.DONE);
                 }
+                break;
 
             case LOWER_ELEVATOR:
                 robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(1.0);
