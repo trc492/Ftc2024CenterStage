@@ -98,14 +98,13 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         this.msgTracer = msgTracer;
         event = new TrcEvent(moduleName + ".event");
         elevatorArmEvent = new TrcEvent(moduleName + ".elevatorArmEvent");
-    }   //TaskAuto
+    }   //TaskAutoPlacePixel
 
     /**
      * This method starts the auto-assist place operation.
      *
      * @param useVision specifies true to use vision, false otherwise.
-     * @param aprilTagId specifies the AprilTag ID to approach for placing pixel for Autonomous, null if called by
-     *        TeleOp.
+     * @param aprilTagId specifies the AprilTag ID to approach for placing pixel for Autonomous, null for any AprilTag.
      * @param scoreLevel specifies the score level.
      * @param inAuto specifies true if called by Autonomous, false otherwise.
      * @param completionEvent specifies the event to signal when done, can be null if none provided.
@@ -235,6 +234,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
             robotPose.angle -= relocalizeDeltaHeading;
             robot.robotDrive.driveBase.setFieldPosition(robotPose);
             robot.globalTracer.traceInfo(funcName, "Restoring robot heading to %s.", robotPose);
+            relocalizeDeltaHeading = null;
         }
     }   //stopSubsystems
 
@@ -346,6 +346,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
                     // Account for end-effector offset from the camera.
                     aprilTagPose.x -= 2.0;
+                    // Maintain heading to be squared to the backdrop.
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
                         currOwner, event, 0.0, robot.robotDrive.driveBase.getFieldPosition(), false, aprilTagPose);
@@ -431,5 +432,5 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 break;
         }
     }   //runTaskState
- 
+
 }   //class TaskAutoPlacePixel
