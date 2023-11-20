@@ -312,6 +312,22 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_Y:
+                if (pressed && robot.robotDrive != null)
+                {
+                    if (robot.robotDrive.driveBase.isGyroAssistEnabled())
+                    {
+                        // Disable GyroAssist drive.
+                        robot.robotDrive.driveBase.setGyroAssistEnabled(null);
+                    }
+                    else
+                    {
+                        // Enable GyroAssist drive.
+                        robot.robotDrive.driveBase.setGyroAssistEnabled(robot.robotDrive.pidDrive.getTurnPidCtrl());
+                    }
+                }
+                break;
+
+            case FtcGamepad.GAMEPAD_LBUMPER:
                 // Toggle between field or robot oriented driving, only applicable for holonomic drive base.
                 if (pressed && robot.robotDrive != null && robot.robotDrive.driveBase.supportsHolonomicDrive())
                 {
@@ -326,7 +342,6 @@ public class FtcTeleOp extends FtcOpMode
                 }
                 break;
 
-            case FtcGamepad.GAMEPAD_LBUMPER:
             case FtcGamepad.GAMEPAD_RBUMPER:
                 // Press and hold for slow drive.
                 drivePowerScale = pressed? RobotParams.DRIVE_POWER_SCALE_SLOW: RobotParams.DRIVE_POWER_SCALE_NORMAL;
@@ -364,7 +379,7 @@ public class FtcTeleOp extends FtcOpMode
                     {
                         // Vision found an AprilTag, set the new robot field location but don't disturb the robot's
                         // heading because it may be set for field oriented driving.
-                        robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, true);
+                        robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, false);
                         robotFieldPose = null;
                     }
                 }

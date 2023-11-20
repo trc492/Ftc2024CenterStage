@@ -42,7 +42,7 @@ SOFTWARE.
             <RevRoboticsCoreHexMotor name="intake.motor" port="2" />
             <goBILDA5202SeriesMotor name="lbDriveMotor" port="3"/>
             <ContinuousRotationServo name="arm.servo" port="2" />
-            <Servo name="pixelTray.upperGate" port="3" />
+            <Servo name="pixelTray.upperGate" port="0" />
             <Servo name="wrist.servo" port="4" />
             <ContinuousRotationServo name="arm.followerServo" port="5" />
             <AnalogInput name="arm.encoder" port="0" />

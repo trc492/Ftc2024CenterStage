@@ -403,9 +403,9 @@ public class RobotParams
     public static final double ARM_POWER_LIMIT                  = 0.11;
     public static final double ARM_OFFSET                       = 27.0;
     public static final double ARM_ZERO_OFFSET                  = 0.949697;
-    public static final double ARM_MIN_POS                      = 25.6;
+    public static final double ARM_MIN_POS                      = 27.3;
     public static final double ARM_MAX_POS                      = 300.0;
-    public static final double ARM_LOAD_POS                     = 25.6;
+    public static final double ARM_LOAD_POS                     = 27.3;
     public static final double ARM_SAFE_POS                     = 37.0;
     public static final double ARM_FREE_TO_MOVE_POS             = 50.0;
     public static final double ARM_SCORE_BACKDROP_POS           = 270.0;
