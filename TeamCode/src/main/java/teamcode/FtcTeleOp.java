@@ -40,7 +40,7 @@ import teamcode.drivebases.SwerveDrive;
 @TeleOp(name="FtcTeleOp", group="Ftc3543")
 public class FtcTeleOp extends FtcOpMode
 {
-    private static final String moduleName = "FtcTeleOp";
+    private static final String moduleName = FtcTeleOp.class.getSimpleName();
     protected Robot robot;
     protected FtcGamepad driverGamepad;
     protected FtcGamepad operatorGamepad;
@@ -351,7 +351,7 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_DPAD_UP:
                 if (pressed && robot.elevatorArm != null)
                 {
-                    robot.elevatorArm.setHangingPosition(moduleName, 0.0, null, 5.0);
+                    robot.elevatorArm.setHangingPosition(moduleName, 0.0, null, 0.0);
                 }
                 break;
 
@@ -483,18 +483,14 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_DPAD_LEFT:
                 if (robot.elevatorArm != null && pressed)
                 {
-//                    wristUp = false;
                     robot.elevatorArm.armPresetPositionDown(moduleName, RobotParams.ARM_POWER_LIMIT);
-//                    robot.elevatorArm.wristSetPosition(RobotParams.WRIST_DOWN_POS);
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_RIGHT:
                 if (robot.elevatorArm != null && pressed)
                 {
-//                    wristUp = true;
                     robot.elevatorArm.armPresetPositionUp(moduleName, RobotParams.ARM_POWER_LIMIT);
-//                    robot.elevatorArm.wristSetPosition(RobotParams.WRIST_UP_POS);
                 }
                 break;
 

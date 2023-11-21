@@ -43,7 +43,7 @@ import teamcode.vision.Vision;
  */
 public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
 {
-    private static final String moduleName = "TaskAutoPickupPixel";
+    private static final String moduleName = TaskAutoPickupPixel.class.getSimpleName();
 
     public enum State
     {

@@ -30,6 +30,7 @@ import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcTaskMgr;
 import TrcCommonLib.trclib.TrcTimer;
+import TrcCommonLib.trclib.TrcTriggerThresholdZones;
 import TrcCommonLib.trclib.TrcVisionTargetInfo;
 import TrcFtcLib.ftclib.FtcVisionAprilTag;
 import teamcode.Robot;
@@ -41,7 +42,7 @@ import teamcode.subsystems.BlinkinLEDs;
  */
 public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 {
-    private static final String moduleName = "TaskAutoPlacePixel";
+    private static final String moduleName = TaskAutoPlacePixel.class.getSimpleName();
 
     public enum State
     {
@@ -220,6 +221,11 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
             msgTracer.traceInfo(funcName, "%s: Stopping subsystems.", moduleName);
         }
 
+        if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null)
+        {
+            robot.elevatorArm.wristTrigger.disableTrigger();
+        }
+
         robot.robotDrive.cancel(currOwner);
         robot.elevatorArm.cancel(currOwner);
 
@@ -342,6 +348,10 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
                 if (aprilTagPose != null)
                 {
+                    if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null)
+                    {
+                        robot.elevatorArm.wristTrigger.enableTrigger(this::wristSensorTriggered);
+                    }
                     // We are right in front of the backdrop, so we don't need full power to approach it.
                     robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
                     // Account for end-effector offset from the camera.
@@ -367,6 +377,10 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 break;
 
             case LOWER_ELEVATOR:
+                if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null)
+                {
+                    robot.elevatorArm.wristTrigger.disableTrigger();
+                }
                 robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(1.0);
                 if (robot.elevatorArm != null)
                 {
@@ -432,5 +446,20 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 break;
         }
     }   //runTaskState
+
+    /**
+     * This method is called when the wrist sensor trigger event occurred.
+     *
+     * @param context specifies the
+     */
+    private void wristSensorTriggered(Object context)
+    {
+        TrcTriggerThresholdZones.CallbackContext callbackContext = (TrcTriggerThresholdZones.CallbackContext) context;
+
+        if (callbackContext.prevZone == 1 && callbackContext.currZone == 0)
+        {
+            robot.robotDrive.purePursuitDrive.cancel(currOwner);
+        }
+    }   //wristSensorTriggered
 
 }   //class TaskAutoPlacePixel

@@ -58,7 +58,7 @@ import teamcode.vision.Vision;
 @TeleOp(name="FtcTest", group="Ftc3543")
 public class FtcTest extends FtcTeleOp
 {
-    private static final String moduleName = "FtcTest";
+    private static final String moduleName = FtcTest.class.getSimpleName();
     private static final boolean logEvents = true;
     private static final boolean debugPid = true;
 

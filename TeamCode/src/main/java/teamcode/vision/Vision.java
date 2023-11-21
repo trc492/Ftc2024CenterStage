@@ -61,7 +61,7 @@ import teamcode.subsystems.BlinkinLEDs;
  */
 public class Vision
 {
-    private static final String moduleName = "Vision";
+    private static final String moduleName = Vision.class.getSimpleName();
 
     public enum PixelType
     {

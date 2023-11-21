@@ -109,7 +109,7 @@ public class FtcAuto extends FtcOpMode
 
     }   //class AutoChoices
 
-    private static final String moduleName = "FtcAuto";
+    private static final String moduleName = FtcAuto.class.getSimpleName();
     public static final AutoChoices autoChoices = new AutoChoices();
     private Robot robot;
     private TrcRobot.RobotCommand autoCommand;
