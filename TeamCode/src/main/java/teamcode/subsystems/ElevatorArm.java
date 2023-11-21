@@ -247,11 +247,9 @@ public class ElevatorArm implements TrcExclusiveSubsystem
      */
     public void cancel(String owner)
     {
-        final String funcName = "cancel";
-
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(funcName, "owner=%s", owner);
+            msgTracer.traceInfo(moduleName, "owner=%s", owner);
         }
 
         if (hasOwnership(owner))
@@ -323,11 +321,9 @@ public class ElevatorArm implements TrcExclusiveSubsystem
      */
     public void zeroCalibrate(String owner)
     {
-        final String funcName = "zeroCalibrate";
-
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(funcName, "owner=%s", owner);
+            msgTracer.traceInfo(moduleName, "owner=%s", owner);
         }
 
         cancel(owner);
@@ -357,7 +353,6 @@ public class ElevatorArm implements TrcExclusiveSubsystem
      */
     private void performAction(Object context)
     {
-        final String funcName = "performAction";
         ActionParams actionParams = (ActionParams) context;
         double delay, timeout;
 
@@ -366,7 +361,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             case ElevatorSetPosition:
                 if (msgTracer != null)
                 {
-                    msgTracer.traceInfo(funcName, "actionParams=%s", actionParams);
+                    msgTracer.traceInfo(moduleName, "actionParams=%s", actionParams);
                 }
                 // Move the elevator only if the arm is already at or has reached safe position.
                 // actionParams.actionEvent is null if arm is already at safe position.
@@ -386,7 +381,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             case ElevatorSetPower:
 //                if (msgTracer != null && actionParams.power != 0.0)
 //                {
-//                    msgTracer.traceInfo(funcName, "actionParams=%s", actionParams);
+//                    msgTracer.traceInfo(moduleName, "actionParams=%s", actionParams);
 //                }
                 // Move the elevator only if the arm is already at or has reached safe position.
                 // actionParams.actionEvent is null if arm is already at safe position.
@@ -403,7 +398,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             case ElevatorSetPidPower:
 //                if (msgTracer != null && actionParams.power != 0.0)
 //                {
-//                    msgTracer.traceInfo(funcName, "actionParams=%s", actionParams);
+//                    msgTracer.traceInfo(moduleName, "actionParams=%s", actionParams);
 //                }
                 // Move the elevator only if the arm is already at or has reached safe position.
                 // actionParams.actionEvent is null if arm is already at safe position.
@@ -417,7 +412,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             case ArmSetPosition:
                 if (msgTracer != null)
                 {
-                    msgTracer.traceInfo(funcName, "actionParams=%s", actionParams);
+                    msgTracer.traceInfo(moduleName, "actionParams=%s", actionParams);
                 }
                 // Move the arm only if the elevator is already at or has reached safe height.
                 // actionParams.actionEvent is null if elevator is already at safe height.
@@ -446,7 +441,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             case ArmSetPower:
 //                if (msgTracer != null && actionParams.power != 0.0)
 //                {
-//                    msgTracer.traceInfo(funcName, "actionParams=%s", actionParams);
+//                    msgTracer.traceInfo(moduleName, "actionParams=%s", actionParams);
 //                }
                 // Move the arm only if the elevator is already at or has reached safe height.
                 // actionParams.actionEvent is null if elevator is already at safe height.
@@ -462,7 +457,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             case ArmSetPidPower:
 //                if (msgTracer != null && actionParams.power != 0.0)
 //                {
-//                    msgTracer.traceInfo(funcName, "actionParams=%s", actionParams);
+//                    msgTracer.traceInfo(moduleName, "actionParams=%s", actionParams);
 //                }
                 // Move the arm only if the elevator is already at or has reached safe height.
                 // actionParams.actionEvent is null if elevator is already at safe height.
@@ -487,13 +482,12 @@ public class ElevatorArm implements TrcExclusiveSubsystem
      */
     public void setLoadingPosition(String owner, double delay, TrcEvent completionEvent, double timeout)
     {
-        final String funcName = "setLoadingPosition";
         double expiredTime = timeout == 0.0 ? 0.0 : TrcTimer.getCurrentTime() + timeout;
 
         if (msgTracer != null)
         {
             msgTracer.traceInfo(
-                funcName, "owner=%s, delay=%.3f, event=%s, timeout=%.3f (elevatorPos=%.2f, armPos=%.2f)",
+                moduleName, "owner=%s, delay=%.3f, event=%s, timeout=%.3f (elevatorPos=%.2f, armPos=%.2f)",
                 owner, delay, completionEvent, timeout, elevator.getPosition(), arm.getPosition());
         }
 
@@ -516,7 +510,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             }
             // Move the arm to loading position before lowering the elevator.
             ActionParams actionParams = new ActionParams();
-            TrcEvent actionEvent = new TrcEvent(funcName + ".actionEvent");
+            TrcEvent actionEvent = new TrcEvent("setLoadingPosition.actionEvent");
             // Setting up the elevator operation after the arm is in loading position.
             actionParams.setPositionParams(
                 ActionType.ElevatorSetPosition, actionEvent, 0.0, RobotParams.ELEVATOR_LOAD_POS,
@@ -540,13 +534,12 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     public void setScoringPosition(
         String owner, double delay, double elevatorPos, TrcEvent completionEvent, double timeout)
     {
-        final String funcName = "setScoringPosition";
         double expiredTime = timeout == 0.0 ? 0.0 : TrcTimer.getCurrentTime() + timeout;
 
         if (msgTracer != null)
         {
             msgTracer.traceInfo(
-                funcName,
+                moduleName,
                 "owner=%s, delay=%.3f, elevatorPos=%.1f, event=%s, timeout=%.3f (elevatorPos=%.2f, armPos=%.2f)",
                 owner, delay, elevatorPos, completionEvent, timeout, elevator.getPosition(), arm.getPosition());
         }
@@ -558,7 +551,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         if (validateOwnership(owner))
         {
             ActionParams actionParams = new ActionParams();
-            TrcEvent actionEvent = new TrcEvent(funcName + ".actionEvent");
+            TrcEvent actionEvent = new TrcEvent("setScoringPosition.actionEvent");
             // Setting up the arm operation after the elevator is in scoring height.
             actionParams.setPositionParams(
                 ActionType.ArmSetPosition, actionEvent, 0.0, RobotParams.ARM_SCORE_BACKDROP_POS,
@@ -581,13 +574,12 @@ public class ElevatorArm implements TrcExclusiveSubsystem
      */
     public void setHangingPosition(String owner, double delay, TrcEvent completionEvent, double timeout)
     {
-        final String funcName = "setHangingPosition";
         double expiredTime = timeout == 0.0 ? 0.0 : TrcTimer.getCurrentTime() + timeout;
 
         if (msgTracer != null)
         {
             msgTracer.traceInfo(
-                funcName, "owner=%s, delay=%.3f, event=%s, timeout=%.3f", owner, delay, completionEvent, timeout);
+                moduleName, "owner=%s, delay=%.3f, event=%s, timeout=%.3f", owner, delay, completionEvent, timeout);
         }
 
         cancel(owner);
@@ -597,7 +589,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         if (validateOwnership(owner))
         {
             ActionParams actionParams = new ActionParams();
-            TrcEvent actionEvent = new TrcEvent(funcName + ".actionEvent");
+            TrcEvent actionEvent = new TrcEvent("setHangingPosition.actionEvent");
             // Setting up the arm operation after the elevator is in max height.
             actionParams.setPositionParams(
                 ActionType.ArmSetPosition, actionEvent, 0.0, RobotParams.ARM_HANG_POS, RobotParams.ARM_POWER_LIMIT,
@@ -648,13 +640,12 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         String owner, boolean cancelPrev, double delay, double pos, double powerLimit, TrcEvent completionEvent,
         double timeout)
     {
-        final String funcName = "elevatorSetPosition";
         double expiredTime = timeout == 0.0 ? 0.0 : TrcTimer.getCurrentTime() + timeout;
 
         if (msgTracer != null)
         {
             msgTracer.traceInfo(
-                funcName,
+                moduleName,
                 "owner=%s, delay=%.3f, pos=%.1f, powerLimit=%.1f, event=%s, timeout=%.3f " +
                 "(elevatorPos=%.2f, armPos=%.2f)",
                 owner, delay, pos, powerLimit, completionEvent, timeout, elevator.getPosition(), arm.getPosition());
@@ -671,7 +662,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         {
             boolean safeToMove = elevatorIsSafeToMove(pos);
             ActionParams actionParams = new ActionParams();
-            TrcEvent actionEvent = safeToMove ? null : new TrcEvent(funcName + ".actionEvent");
+            TrcEvent actionEvent = safeToMove ? null : new TrcEvent("elevatorSetPosition.actionEvent");
             // Setting up the elevator operation after the arm is at safe position.
             actionParams.setPositionParams(
                 ActionType.ElevatorSetPosition, actionEvent, delay, pos, powerLimit, completionEvent, expiredTime);
@@ -720,12 +711,10 @@ public class ElevatorArm implements TrcExclusiveSubsystem
      */
     public void elevatorSetPower(String owner, double delay, double power, double duration, TrcEvent event)
     {
-        final String funcName = "elevatorSetPower";
-
 //        if (msgTracer != null && power != 0.0)
 //        {
 //            msgTracer.traceInfo(
-//                funcName, "owner=%s, delay=%.1f, power=%.1f, duration=%.1f, event=%s, safe=%s",
+//                moduleName, "owner=%s, delay=%.1f, power=%.1f, duration=%.1f, event=%s, safe=%s",
 //                owner, delay, power, duration, event,
 //                elevatorIsSafeToMove(power > 0.0 ? RobotParams.ELEVATOR_MAX_POS : RobotParams.ELEVATOR_MIN_POS));
 //        }
@@ -736,7 +725,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 power == 0.0 ||
                 elevatorIsSafeToMove(power > 0.0 ? RobotParams.ELEVATOR_MAX_POS : RobotParams.ELEVATOR_MIN_POS);
             ActionParams actionParams = new ActionParams();
-            TrcEvent actionEvent = safeToMove ? null : new TrcEvent(funcName + ".actionEvent");
+            TrcEvent actionEvent = safeToMove ? null : new TrcEvent("elevatorSetPower.actionEvent");
             // Setting up the elevator operation after the arm is at safe position.
             actionParams.setPowerParams(ActionType.ElevatorSetPower, actionEvent, delay, power, duration, event);
             if (safeToMove)
@@ -764,12 +753,10 @@ public class ElevatorArm implements TrcExclusiveSubsystem
      */
     public void elevatorSetPidPower(String owner, double power, double minPos, double maxPos)
     {
-        final String funcName = "elevatorSetPidPower";
-
 //        if (msgTracer != null && power != 0.0)
 //        {
 //            msgTracer.traceInfo(
-//                funcName, "owner=%s, power=%.1f, minPos=%.1f, maxPos=%.1f, safe=%s",
+//                moduleName, "owner=%s, power=%.1f, minPos=%.1f, maxPos=%.1f, safe=%s",
 //                owner, power, minPos, maxPos, elevatorIsSafeToMove(power > 0.0 ? maxPos : minPos));
 //        }
 
@@ -777,7 +764,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         {
             boolean safeToMove = power == 0.0 || elevatorIsSafeToMove(power > 0.0 ? maxPos : minPos);
             ActionParams actionParams = new ActionParams();
-            TrcEvent actionEvent = safeToMove ? null : new TrcEvent(funcName + ".actionEvent");
+            TrcEvent actionEvent = safeToMove ? null : new TrcEvent("elevatorSetPidPower.actionEvent");
             // Setting up the elevator operation after the arm is at safe position.
             actionParams.setPidPowerParams(ActionType.ElevatorSetPidPower, actionEvent, power, minPos, maxPos);
             if (safeToMove)
@@ -902,13 +889,12 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         String owner, boolean cancelPrev, double delay, double pos, double powerLimit, TrcEvent completionEvent,
         double timeout)
     {
-        final String funcName = "armSetPosition";
         double expiredTime = timeout == 0.0 ? 0.0 : TrcTimer.getCurrentTime() + timeout;
 
         if (msgTracer != null)
         {
             msgTracer.traceInfo(
-                funcName,
+                moduleName,
                 "owner=%s, delay=%.3f, pos=%.1f, powerLimit=%.1f, event=%s, timeout=%.3f " +
                 "(elevatorPos=%.2f, armPos=%.2f)",
                 owner, delay, pos, powerLimit, completionEvent, timeout, elevator.getPosition(), arm.getPosition());
@@ -925,7 +911,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         {
             boolean safeToMove = armIsSafeToMove(pos);
             ActionParams actionParams = new ActionParams();
-            TrcEvent actionEvent = safeToMove ? null : new TrcEvent(funcName + ".actionEvent");
+            TrcEvent actionEvent = safeToMove ? null : new TrcEvent("armSetPosition.actionEvent");
             // Setting up the arm operation after the elevator is at safe height.
             actionParams.setPositionParams(
                 ActionType.ArmSetPosition, actionEvent, delay, pos, powerLimit, completionEvent, expiredTime);
@@ -975,12 +961,10 @@ public class ElevatorArm implements TrcExclusiveSubsystem
      */
     public void armSetPower(String owner, double delay, double power, double duration, TrcEvent event)
     {
-        final String funcName = "armSetPower";
-
 //        if (msgTracer != null && power != 0.0)
 //        {
 //            msgTracer.traceInfo(
-//                funcName, "owner=%s, delay=%.1f, power=%.1f, duration=%.1f, event=%s, safe=%s",
+//                moduleName, "owner=%s, delay=%.1f, power=%.1f, duration=%.1f, event=%s, safe=%s",
 //                owner, delay, power, duration, event,
 //                armIsSafeToMove(power > 0.0 ? RobotParams.ARM_MAX_POS : RobotParams.ARM_MIN_POS));
 //        }
@@ -990,7 +974,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             boolean safeToMove =
                 power == 0.0 || armIsSafeToMove(power > 0.0 ? RobotParams.ARM_MAX_POS : RobotParams.ARM_MIN_POS);
             ActionParams actionParams = new ActionParams();
-            TrcEvent actionEvent = safeToMove ? null : new TrcEvent(funcName + ".actionEvent");
+            TrcEvent actionEvent = safeToMove ? null : new TrcEvent("armSetPower.actionEvent");
             // Setting up the arm operation after the elevator is at safe height.
             actionParams.setPowerParams(ActionType.ArmSetPower, actionEvent, delay, power, duration, event);
             if (safeToMove)
@@ -1019,12 +1003,10 @@ public class ElevatorArm implements TrcExclusiveSubsystem
      */
     public void armSetPidPower(String owner, double power, double minPos, double maxPos)
     {
-        final String funcName = "armSetPidPower";
-
 //        if (msgTracer != null && power != 0.0)
 //        {
 //            msgTracer.traceInfo(
-//                funcName, "owner=%s, power=%.1f, minPos=%.1f, maxPos=%.1f, safe=%s",
+//                moduleName, "owner=%s, power=%.1f, minPos=%.1f, maxPos=%.1f, safe=%s",
 //                owner, power, minPos, maxPos, armIsSafeToMove(power > 0.0 ? maxPos : minPos));
 //        }
 
@@ -1033,7 +1015,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             boolean safeToMove =
                 power == 0.0 || armIsSafeToMove(power > 0.0 ? maxPos : minPos);
             ActionParams actionParams = new ActionParams();
-            TrcEvent actionEvent = new TrcEvent(funcName + ".actionEvent");
+            TrcEvent actionEvent = new TrcEvent("armSetPidPower.actionEvent");
             // Setting up the arm operation after the elevator is at safe height.
             actionParams.setPidPowerParams(ActionType.ArmSetPidPower, actionEvent, power, minPos, maxPos);
             if (safeToMove)
