@@ -366,11 +366,12 @@ public class RobotParams
     public static final double ELEVATOR_MAX_POS                 = 22.0;
     public static final double ELEVATOR_LOAD_POS                = 12.05;
     public static final double ELEVATOR_SAFE_POS                = 14.5; //14.0
+    public static final double ELEVATOR_HANG_POS                = ELEVATOR_MIN_POS;
     public static final double ELEVATOR_LEVEL1_POS              = 15.0;
     public static final double ELEVATOR_LEVEL2_POS              = 21.5;
     public static final double ELEVATOR_LEVEL3_POS              = 21.5;             // Unreachable
     // Power settings.
-    public static final double ELEVATOR_CAL_POWER               = -0.15;
+    public static final double ELEVATOR_CAL_POWER               = -0.25;
     // Preset positions.
     public static final double ELEVATOR_PRESET_TOLERANCE        = 0.4;
     public static final double[] ELEVATOR_PRESETS               = new double[] {
@@ -401,6 +402,7 @@ public class RobotParams
     public static final boolean ARM_VOLTAGE_COMP_ENABLED        = true;
     public static final double ARM_DEG_SCALE                    = 360.0;
     public static final double ARM_POWER_LIMIT                  = 0.11;
+    public static final double ARM_MANUAL_POWER_LIMIT           = 0.25;
     public static final double ARM_OFFSET                       = 27.0;
     public static final double ARM_ZERO_OFFSET                  = 0.949697;
     public static final double ARM_MIN_POS                      = 27.3;

@@ -47,6 +47,8 @@ public class FtcTeleOp extends FtcOpMode
     private double drivePowerScale = RobotParams.DRIVE_POWER_SCALE_NORMAL;
     private double turnPowerScale = RobotParams.TURN_POWER_SCALE_NORMAL;
     private boolean manualOverride = false;
+    private double elevatorPrevPower = 0.0;
+    private double armPrevPower = 0.0;
     private boolean relocalizing = false;
     private TrcPose2D robotFieldPose = null;
     private boolean elevatorArmAtScorePos = false;
@@ -201,26 +203,44 @@ public class FtcTeleOp extends FtcOpMode
                 if (robot.elevatorArm != null)
                 {
                     // Elevator subsystem.
-                    double elevatorPower = operatorGamepad.getLeftStickY(true);
-                    if (manualOverride)
+                    double elevatorPower = operatorGamepad.getLeftStickY(true) * RobotParams.ELEVATOR_POWER_LIMIT;
+                    if (elevatorPower != elevatorPrevPower)
                     {
-                        robot.elevatorArm.elevatorSetPower(null, 0.0, elevatorPower, 0.0, null);
-                    }
-                    else
-                    {
-                        robot.elevatorArm.elevatorSetPidPower(
-                            null, elevatorPower, RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS);
+                        if (manualOverride)
+                        {
+                            // By definition, manualOverride should not observe any safety.
+                            // Therefore, we call elevator directly bypassing all safety checks.
+                            robot.elevatorArm.elevator.setPower(elevatorPower);
+                        }
+                        else
+                        {
+                            robot.elevatorArm.elevatorSetPidPower(
+                                null, elevatorPower, RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS);
+                        }
+                        elevatorPrevPower = elevatorPower;
                     }
                     // Arm subsystem.
-                    double armPower = operatorGamepad.getRightStickY(true) * RobotParams.ARM_POWER_LIMIT;
+                    double armPower = operatorGamepad.getRightStickY(true);
                     if (manualOverride)
                     {
-                        robot.elevatorArm.armSetPower(null, 0.0, armPower, 0.0, null);
+                        // By definition, manualOverride should not observe any safety.
+                        // Therefore, we call arm directly bypassing all safety checks.
+                        armPower *= RobotParams.ARM_MANUAL_POWER_LIMIT;
+                        if (armPower != armPrevPower)
+                        {
+                            robot.elevatorArm.arm.setPower(armPower);
+                            armPrevPower = armPower;
+                        }
                     }
                     else
                     {
-                        robot.elevatorArm.armSetPidPower(
-                            null, armPower, RobotParams.ARM_MIN_POS, RobotParams.ARM_MAX_POS);
+                        armPower *= RobotParams.ARM_POWER_LIMIT;
+                        if (armPower != armPrevPower)
+                        {
+                            robot.elevatorArm.armSetPidPower(
+                                null, armPower, RobotParams.ARM_MIN_POS, RobotParams.ARM_MAX_POS);
+                            armPrevPower = armPower;
+                        }
                     }
                 }
             }
@@ -359,7 +379,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (pressed && robot.elevatorArm != null)
                 {
                     robot.elevatorArm.elevatorSetPosition(
-                        moduleName, 0.0, RobotParams.ELEVATOR_MIN_POS, 1.0, null, 0.0);
+                        moduleName, 0.0, RobotParams.ELEVATOR_HANG_POS, 1.0, null, 0.0);
                 }
                 break;
 
