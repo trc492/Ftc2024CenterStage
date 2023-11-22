@@ -33,6 +33,12 @@ import TrcFtcLib.ftclib.FtcRevBlinkin;
 public class BlinkinLEDs extends FtcRevBlinkin
 {
     // LED pattern names.
+    public static final String APRILTAG_LEFT = "ApriltagLeft";
+    public static final String APRILTAG_CENTER = "ApriltagCenter";
+    public static final String APRILTAG_RIGHT = "ApriltagRight";
+    public static final String SCORE_LEVEL_0 = "ScoreLevel0";
+    public static final String SCORE_LEVEL_1 = "ScoreLevel1";
+    public static final String SCORE_LEVEL_2 = "ScoreLevel2";
     public static final String DETECTED_NOTHING = "NoDetection";
     public static final String APRIL_TAG = "AprilTag";
     public static final String PURPLE_PIXEL = "PurplePixel";
@@ -62,6 +68,12 @@ public class BlinkinLEDs extends FtcRevBlinkin
         // LED Patterns are sorted in decreasing priority order.
         final TrcRevBlinkin.Pattern[] ledPatternPriorities = {
             // Highest priority.
+            new TrcRevBlinkin.Pattern(APRILTAG_LEFT, RevLedPattern.SolidRed),
+            new TrcRevBlinkin.Pattern(APRILTAG_CENTER, RevLedPattern.SolidGreen),
+            new TrcRevBlinkin.Pattern(APRILTAG_RIGHT, RevLedPattern.SolidBlue),
+            new TrcRevBlinkin.Pattern(SCORE_LEVEL_0, RevLedPattern.SolidRed),
+            new TrcRevBlinkin.Pattern(SCORE_LEVEL_1, RevLedPattern.SolidGreen),
+            new TrcRevBlinkin.Pattern(SCORE_LEVEL_2, RevLedPattern.SolidBlue),
             new TrcRevBlinkin.Pattern(RED_BLOB_POS_1, RevLedPattern.SolidRed),
             new TrcRevBlinkin.Pattern(RED_BLOB_POS_2, RevLedPattern.SolidGreen),
             new TrcRevBlinkin.Pattern(RED_BLOB_POS_3, RevLedPattern.SolidBlue),
@@ -122,5 +134,33 @@ public class BlinkinLEDs extends FtcRevBlinkin
                 break;
         }
     }   //setDriveOrientation
+    public void setAprilTagIndex(int index) {
+        switch (index)
+        {
+            case 0:
+                setDetectedPattern(APRILTAG_LEFT);
+                break;
+            case 1:
+                setDetectedPattern(APRILTAG_CENTER);
+                break;
+            case 2:
+                setDetectedPattern(APRILTAG_RIGHT);
+                break;
+        }
+    }   //setAprilTagIndex
+    public void setScoreLevelIndex(int index) {
+        switch (index)
+        {
+            case 0:
+                setDetectedPattern(SCORE_LEVEL_0);
+                break;
+            case 1:
+                setDetectedPattern(SCORE_LEVEL_1);
+                break;
+            case 2:
+                setDetectedPattern(SCORE_LEVEL_2);
+                break;
+        }
+    }   //setScoreLevelIndex
 
 }   //class BlinkinLEDs

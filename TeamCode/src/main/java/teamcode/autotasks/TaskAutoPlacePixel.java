@@ -290,8 +290,12 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                             // Do re-localization only if we are not in Autonomous.
                             double prevRobotHeading = robot.robotDrive.driveBase.getHeading();
                             TrcPose2D robotFieldPose = robot.vision.getRobotFieldPose(aprilTagInfo);
+                            robotFieldPose.angle -= 180;
                             robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, false);
                             relocalizeDeltaHeading = robot.robotDrive.driveBase.getHeading() - prevRobotHeading;
+
+                            robot.dashboard.displayPrintf(10, "robotFieldPoseToAprilTag=%s,robotDrive.getPose=%s",
+                                    robotFieldPose, robot.robotDrive.driveBase.getFieldPosition());
                         }
                         // Determine the absolute field location of the AprilTag.
                         aprilTagPose =
@@ -302,6 +306,10 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                         robot.globalTracer.traceInfo(
                             funcName, "AprilTag %d found at %s (absPose=%s)",
                             aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagInfo.objPose, aprilTagPose);
+                        robot.dashboard.displayPrintf(8, "AprilTag %d found at %s (absPose=%s)",
+                                aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagInfo.objPose, aprilTagPose);
+                        robot.dashboard.displayPrintf(9, "Robot pose=%s",
+                                robot.robotDrive.driveBase.getFieldPosition());
                         sm.setState(State.DRIVE_TO_APRILTAG);
                     }
                     else if (visionExpiredTime == null)
@@ -355,7 +363,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // We are right in front of the backdrop, so we don't need full power to approach it.
                     robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
                     // Account for end-effector offset from the camera.
-                    aprilTagPose.x -= 2.0;
+                    aprilTagPose.x -= 2.25;
                     // Maintain heading to be squared to the backdrop.
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
@@ -365,7 +373,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     {
                         // Set ElevatorArm to scoring position level 1.
                         robot.elevatorArm.setScoringPosition(
-                            currOwner, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, elevatorArmEvent, 0.0);
+                            currOwner, 0.0, RobotParams.ELEVATOR_LEVEL2_POS, elevatorArmEvent, 4.0);
                         sm.addEvent(elevatorArmEvent);
                     }
                     sm.waitForEvents(State.LOWER_ELEVATOR, true);
@@ -386,7 +394,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 {
                     // Lower elevator to the lowest height to minimize pixel bouncing off.
                     robot.elevatorArm.elevatorSetPosition(
-                        currOwner, 0.0, RobotParams.ELEVATOR_LOAD_POS, RobotParams.ELEVATOR_POWER_LIMIT,
+                        currOwner, 0.0, taskParams.scoreLevel, RobotParams.ELEVATOR_POWER_LIMIT,
                         elevatorArmEvent, 0.0);
                     sm.waitForSingleEvent(elevatorArmEvent, State.PLACE_PIXEL);
                 }

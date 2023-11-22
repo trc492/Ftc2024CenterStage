@@ -47,6 +47,9 @@ public class FtcTeleOp extends FtcOpMode
     private double drivePowerScale = RobotParams.DRIVE_POWER_SCALE_NORMAL;
     private double turnPowerScale = RobotParams.TURN_POWER_SCALE_NORMAL;
     private boolean manualOverride = false;
+    private boolean autoAssistPlaceActive = false;
+    private int aprilTagIndex = 0;
+    private int scoreLevelIndex = 0;
     private double elevatorPrevPower = 0.0;
     private double armPrevPower = 0.0;
     private boolean relocalizing = false;
@@ -193,6 +196,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (relocalizing && robotFieldPose == null)
                 {
                     robotFieldPose = robot.vision.getRobotFieldPose();
+                    robotFieldPose.angle -= 180;
                 }
             }
             //
@@ -202,6 +206,7 @@ public class FtcTeleOp extends FtcOpMode
             {
                 if (robot.elevatorArm != null)
                 {
+                    manualOverride = operatorGamepad.getRightTrigger() > 0.5;
                     // Elevator subsystem.
                     double elevatorPower = operatorGamepad.getLeftStickY(true) * RobotParams.ELEVATOR_POWER_LIMIT;
                     if (elevatorPower != elevatorPrevPower)
@@ -318,17 +323,6 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_X:
-                if (pressed && robot.robotDrive != null && robot.elevatorArm != null && robot.vision != null)
-                {
-                    // If we are not running a match and just ran TeleOp, autoChoices.autoMenuRan will be false.
-                    // In this case, we don't really know what alliance we are in. We will look for any AprilTag
-                    // in front of us.
-                    Integer aprilTagId = !FtcAuto.autoChoices.autoMenuRan? null:
-                        FtcAuto.autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
-                            RobotParams.BLUE_BACKDROP_APRILTAGS[1] : RobotParams.RED_BACKDROP_APRILTAGS[1];
-                    robot.placePixelTask.autoAssistPlace(
-                        true, aprilTagId, RobotParams.ELEVATOR_LEVEL2_POS, false, null);
-                }
                 break;
 
             case FtcGamepad.GAMEPAD_Y:
@@ -483,42 +477,106 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_RBUMPER:
-                manualOverride = pressed;
+                autoAssistPlaceActive = pressed;
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_UP:
-                if (robot.elevatorArm != null && pressed)
+                if (autoAssistPlaceActive && pressed)
                 {
-                    robot.elevatorArm.elevatorPresetPositionUp(moduleName, RobotParams.ELEVATOR_POWER_LIMIT);
+                    if (scoreLevelIndex < RobotParams.ELEVATOR_PRESETS.length - 1)
+                    {
+                        scoreLevelIndex++;
+                        if (robot.blinkin != null)
+                        {
+                            robot.blinkin.setScoreLevelIndex(scoreLevelIndex);
+                        }
+                    }
+                }
+                else
+                {
+                    if (robot.elevatorArm != null && pressed)
+                    {
+                        robot.elevatorArm.elevatorPresetPositionUp(moduleName, RobotParams.ELEVATOR_POWER_LIMIT);
+                    }
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_DOWN:
-                if (robot.elevatorArm != null && pressed)
+                if (autoAssistPlaceActive && pressed)
                 {
-                    robot.elevatorArm.elevatorPresetPositionDown(moduleName, RobotParams.ELEVATOR_POWER_LIMIT);
+                    if (scoreLevelIndex > 0)
+                    {
+                        scoreLevelIndex--;
+                        if (robot.blinkin != null)
+                        {
+                            robot.blinkin.setScoreLevelIndex(scoreLevelIndex);
+                        }
+                    }
+                }
+                else {
+                    if (robot.elevatorArm != null && pressed) {
+                        robot.elevatorArm.elevatorPresetPositionDown(moduleName, RobotParams.ELEVATOR_POWER_LIMIT);
+                    }
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_LEFT:
-                if (robot.elevatorArm != null && pressed)
+                if (autoAssistPlaceActive && pressed)
                 {
-                    robot.elevatorArm.armPresetPositionDown(moduleName, RobotParams.ARM_POWER_LIMIT);
+                    if (aprilTagIndex > 0)
+                    {
+                        aprilTagIndex--;
+                        if (robot.blinkin != null)
+                        {
+                            robot.blinkin.setAprilTagIndex(aprilTagIndex);
+                        }
+                    }
+                }
+                else
+                {
+                    if (robot.elevatorArm != null && pressed) {
+                        robot.elevatorArm.armPresetPositionDown(moduleName, RobotParams.ARM_POWER_LIMIT);
+                    }
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_RIGHT:
-                if (robot.elevatorArm != null && pressed)
+                if (autoAssistPlaceActive && pressed)
                 {
-                    robot.elevatorArm.armPresetPositionUp(moduleName, RobotParams.ARM_POWER_LIMIT);
+                    if (aprilTagIndex < RobotParams.BLUE_BACKDROP_APRILTAGS.length - 1) {
+                        aprilTagIndex++;
+                        if (robot.blinkin != null)
+                        {
+                            robot.blinkin.setAprilTagIndex(aprilTagIndex);
+                        }
+                    }
+                }
+                else
+                {
+                    if (robot.elevatorArm != null && pressed) {
+                        robot.elevatorArm.armPresetPositionUp(moduleName, RobotParams.ARM_POWER_LIMIT);
+                    }
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_BACK:
-                if (pressed)
+                if (autoAssistPlaceActive && pressed && robot.robotDrive != null && robot.elevatorArm != null && robot.vision != null)
                 {
-                    // Zero calibrate all subsystems (arm, elevator and turret).
-                    robot.zeroCalibrate(moduleName);
+                    // If we are not running a match and just ran TeleOp, autoChoices.autoMenuRan will be false.
+                    // In this case, we don't really know what alliance we are in. We will look for any AprilTag
+                    // in front of us.
+                    Integer aprilTagId = !FtcAuto.autoChoices.autoMenuRan? null:
+                            FtcAuto.autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
+                                    RobotParams.BLUE_BACKDROP_APRILTAGS[1] : RobotParams.RED_BACKDROP_APRILTAGS[1];
+                    robot.placePixelTask.autoAssistPlace(
+                            true, aprilTagId, RobotParams.ELEVATOR_PRESETS[scoreLevelIndex], false, null);
+                }
+                else
+                {
+                    if (pressed) {
+                        // Zero calibrate all subsystems (arm, elevator and turret).
+                        robot.zeroCalibrate(moduleName);
+                    }
                 }
                 break;
         }
