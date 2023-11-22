@@ -469,12 +469,12 @@ public class Vision
         if (aprilTagInfo != null)
         {
             TrcPose2D aprilTagPose = RobotParams.APRILTAG_POSES[aprilTagInfo.detectedObj.aprilTagDetection.id - 1];
-            robotPose = aprilTagPose.subtractRelativePose(aprilTagInfo.objPose.toPose2D());
-            // TODO: adjust robot pose with respect to the camera location on the robot.
+            TrcPose2D cameraPose = aprilTagPose.subtractRelativePose(aprilTagInfo.objPose.toPose2D());
+            robotPose = cameraPose.subtractRelativePose(RobotParams.BACKCAM_POSE);
             robot.globalTracer.traceInfo(
-                funcName, "AprilTagId=%d, aprilTagFieldPose=%s, aprilTagPoseFromCamera=%s, robotPose=%s",
+                funcName, "AprilTagId=%d, aprilTagFieldPose=%s, aprilTagPoseFromCamera=%s, cameraPose=%s, robotPose=%s",
                 aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagPose, aprilTagInfo.objPose.toPose2D(),
-                robotPose);
+                cameraPose, robotPose);
         }
 
         return robotPose;

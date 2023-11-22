@@ -22,15 +22,11 @@
 
 package teamcode.autocommands;
 
-import java.util.Locale;
-
 import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcStateMachine;
 import TrcCommonLib.trclib.TrcTimer;
-import TrcCommonLib.trclib.TrcVisionTargetInfo;
-import TrcFtcLib.ftclib.FtcVisionAprilTag;
 import teamcode.FtcAuto;
 import teamcode.Robot;
 import teamcode.RobotParams;
@@ -57,11 +53,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
     private final FtcAuto.AutoChoices autoChoices;
     private final TrcTimer timer;
     private final TrcEvent event;
-    private final TrcEvent elevatorArmEvent;
     private final TrcStateMachine<State> sm;
-    private int aprilTagId = 0;
-    private TrcPose2D aprilTagPose = null;
-    private Double visionExpiredTime = null;
+    private int teamPropIndex;
 
     /**
      * Constructor: Create an instance of the object.
@@ -76,7 +69,6 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
         timer = new TrcTimer(moduleName);
         event = new TrcEvent(moduleName);
-        elevatorArmEvent = new TrcEvent(moduleName + ".elevatorArm");
         sm = new TrcStateMachine<>(moduleName);
         sm.start(State.START);
     }   //CmdAuto
@@ -160,15 +152,10 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         robot.speak(msg);
                     }
 
-                    int teamPropIndex = teamPropPos - 1;
+                    teamPropIndex = teamPropPos - 1;
                     // Red alliance's Spike Marks are in opposite order from the Blue alliance.
                     int spikeMarkIndex =
                         autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE? teamPropIndex: 2 - teamPropIndex;
-                    // Determine AprilTag ID to look for.
-                    aprilTagId =
-                        autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
-                            RobotParams.BLUE_BACKDROP_APRILTAGS[teamPropIndex]:
-                            RobotParams.RED_BACKDROP_APRILTAGS[teamPropIndex];
                     // Navigate robot to spike mark 1, 2 or 3.
                     targetPoseTile =
                         autoChoices.startPos == FtcAuto.StartPos.AUDIENCE?
@@ -253,9 +240,16 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case SCORE_YELLOW_PIXEL:
-                    robot.placePixelTask.autoAssistPlace(
-                            true, aprilTagId, RobotParams.ELEVATOR_LOAD_POS, true, event);
-                    sm.waitForSingleEvent(event, State.PARK_AT_BACKSTAGE);
+                    if (robot.placePixelTask != null)
+                    {
+                        robot.placePixelTask.autoAssistPlace(
+                            true, teamPropIndex, RobotParams.ELEVATOR_LOAD_POS, true, event);
+                        sm.waitForSingleEvent(event, State.PARK_AT_BACKSTAGE);
+                    }
+                    else
+                    {
+                        sm.setState(State.PARK_AT_BACKSTAGE);
+                    }
                     break;
 
                 case PARK_AT_BACKSTAGE:

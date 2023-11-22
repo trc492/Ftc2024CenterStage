@@ -109,8 +109,6 @@ public class FtcTeleOp extends FtcOpMode
     @Override
     public void startMode(TrcRobot.RunMode prevMode, TrcRobot.RunMode nextMode)
     {
-        final String funcName = "startMode";
-
         if (robot.globalTracer.isTraceLogOpened())
         {
             robot.globalTracer.setTraceLogEnabled(true);
@@ -121,16 +119,6 @@ public class FtcTeleOp extends FtcOpMode
         // Tell robot object opmode is about to start so it can do the necessary start initialization for the mode.
         //
         robot.startMode(nextMode);
-
-        if (robot.vision != null)
-        {
-            // Enabling AprilTag vision to support robot re-localization.
-            if (robot.vision.aprilTagVision != null)
-            {
-                robot.globalTracer.traceInfo(funcName, "Enabling AprilTagVision.");
-                robot.vision.setAprilTagVisionEnabled(true);
-            }
-        }
     }   //startMode
 
     /**
@@ -196,7 +184,6 @@ public class FtcTeleOp extends FtcOpMode
                 if (relocalizing && robotFieldPose == null)
                 {
                     robotFieldPose = robot.vision.getRobotFieldPose();
-                    robotFieldPose.angle -= 180;
                 }
             }
             //
@@ -204,9 +191,10 @@ public class FtcTeleOp extends FtcOpMode
             //
             if (RobotParams.Preferences.useSubsystems)
             {
+                // Note: manualOverride is used by multiple subsystems.
+                manualOverride = operatorGamepad.getRightTrigger() >= 0.5;
                 if (robot.elevatorArm != null)
                 {
-                    manualOverride = operatorGamepad.getRightTrigger() > 0.5;
                     // Elevator subsystem.
                     double elevatorPower = operatorGamepad.getLeftStickY(true) * RobotParams.ELEVATOR_POWER_LIMIT;
                     if (elevatorPower != elevatorPrevPower)
@@ -264,11 +252,9 @@ public class FtcTeleOp extends FtcOpMode
      */
     public void setDriveOrientation(TrcDriveBase.DriveOrientation orientation)
     {
-        final String funcName = "setDriveOrientation";
-
         if (robot.robotDrive != null)
         {
-            robot.globalTracer.traceInfo(funcName, "driveOrientation=%s", orientation);
+            robot.globalTracer.traceInfo(moduleName, "driveOrientation=%s", orientation);
             robot.robotDrive.driveBase.setDriveOrientation(
                 orientation, orientation == TrcDriveBase.DriveOrientation.FIELD);
             if (robot.blinkin != null)
@@ -318,7 +304,7 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_B:
                 if (robot.launcher != null)
                 {
-                    robot.launcher.setPower(pressed? RobotParams.LAUNCHER_POWER: 0.0);
+                    robot.launcher.setPower(pressed ? RobotParams.LAUNCHER_POWER : 0.0);
                 }
                 break;
 
@@ -389,11 +375,18 @@ public class FtcTeleOp extends FtcOpMode
                     // On press of the button, we will start looking for AprilTag for re-localization.
                     // On release of the button, we will set the robot's field location if we found the AprilTag.
                     relocalizing = pressed;
-                    if (!pressed && robotFieldPose != null)
+                    if (pressed)
+                    {
+                        // Set up vision: switch to rear camera and enable AprilTagVision.
+                        robot.vision.setActiveWebcam(robot.vision.getRearWebcam());
+                        robot.vision.setAprilTagVisionEnabled(true);
+                        robot.globalTracer.traceInfo(moduleName, "Enabling AprilTagVision.");
+                    }
+                    else if (robotFieldPose != null)
                     {
                         // Vision found an AprilTag, set the new robot field location but don't disturb the robot's
                         // heading because it may be set for field oriented driving.
-                        robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, false);
+                        robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, true);
                         robotFieldPose = null;
                     }
                 }
@@ -423,7 +416,7 @@ public class FtcTeleOp extends FtcOpMode
         switch (button)
         {
             case FtcGamepad.GAMEPAD_A:
-                if (robot.pixelTray != null && pressed)
+                if (pressed && robot.pixelTray != null)
                 {
                     pixelTrayLowerGateOpened = !pixelTrayLowerGateOpened;
                     robot.pixelTray.setLowerGateOpened(pixelTrayLowerGateOpened, null);
@@ -431,7 +424,7 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_B:
-                if (robot.pixelTray != null && pressed)
+                if (pressed && robot.pixelTray != null)
                 {
                     pixelTrayUpperGateOpened = !pixelTrayUpperGateOpened;
                     robot.pixelTray.setUpperGateOpened(pixelTrayUpperGateOpened, null);
@@ -469,7 +462,7 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_LBUMPER:
-                if (robot.elevatorArm != null && pressed)
+                if (pressed && robot.elevatorArm != null)
                 {
                     wristUp = !wristUp;
                     robot.elevatorArm.wristSetPosition(wristUp? RobotParams.WRIST_UP_POS: RobotParams.WRIST_DOWN_POS);
@@ -481,9 +474,9 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_UP:
-                if (autoAssistPlaceActive && pressed)
+                if (autoAssistPlaceActive)
                 {
-                    if (scoreLevelIndex < RobotParams.ELEVATOR_PRESETS.length - 1)
+                    if (pressed && scoreLevelIndex < RobotParams.ELEVATOR_PRESETS.length - 1)
                     {
                         scoreLevelIndex++;
                         if (robot.blinkin != null)
@@ -494,7 +487,7 @@ public class FtcTeleOp extends FtcOpMode
                 }
                 else
                 {
-                    if (robot.elevatorArm != null && pressed)
+                    if (pressed && robot.elevatorArm != null)
                     {
                         robot.elevatorArm.elevatorPresetPositionUp(moduleName, RobotParams.ELEVATOR_POWER_LIMIT);
                     }
@@ -502,9 +495,9 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_DOWN:
-                if (autoAssistPlaceActive && pressed)
+                if (autoAssistPlaceActive)
                 {
-                    if (scoreLevelIndex > 0)
+                    if (pressed && scoreLevelIndex > 0)
                     {
                         scoreLevelIndex--;
                         if (robot.blinkin != null)
@@ -513,17 +506,19 @@ public class FtcTeleOp extends FtcOpMode
                         }
                     }
                 }
-                else {
-                    if (robot.elevatorArm != null && pressed) {
+                else
+                {
+                    if (pressed && robot.elevatorArm != null)
+                    {
                         robot.elevatorArm.elevatorPresetPositionDown(moduleName, RobotParams.ELEVATOR_POWER_LIMIT);
                     }
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_LEFT:
-                if (autoAssistPlaceActive && pressed)
+                if (autoAssistPlaceActive)
                 {
-                    if (aprilTagIndex > 0)
+                    if (pressed && aprilTagIndex > 0)
                     {
                         aprilTagIndex--;
                         if (robot.blinkin != null)
@@ -534,16 +529,18 @@ public class FtcTeleOp extends FtcOpMode
                 }
                 else
                 {
-                    if (robot.elevatorArm != null && pressed) {
+                    if (pressed && robot.elevatorArm != null)
+                    {
                         robot.elevatorArm.armPresetPositionDown(moduleName, RobotParams.ARM_POWER_LIMIT);
                     }
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_RIGHT:
-                if (autoAssistPlaceActive && pressed)
+                if (autoAssistPlaceActive)
                 {
-                    if (aprilTagIndex < RobotParams.BLUE_BACKDROP_APRILTAGS.length - 1) {
+                    if (pressed && aprilTagIndex < RobotParams.BLUE_BACKDROP_APRILTAGS.length - 1)
+                    {
                         aprilTagIndex++;
                         if (robot.blinkin != null)
                         {
@@ -553,27 +550,29 @@ public class FtcTeleOp extends FtcOpMode
                 }
                 else
                 {
-                    if (robot.elevatorArm != null && pressed) {
+                    if (pressed && robot.elevatorArm != null)
+                    {
                         robot.elevatorArm.armPresetPositionUp(moduleName, RobotParams.ARM_POWER_LIMIT);
                     }
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_BACK:
-                if (autoAssistPlaceActive && pressed && robot.robotDrive != null && robot.elevatorArm != null && robot.vision != null)
+                if (autoAssistPlaceActive)
                 {
-                    // If we are not running a match and just ran TeleOp, autoChoices.autoMenuRan will be false.
-                    // In this case, we don't really know what alliance we are in. We will look for any AprilTag
-                    // in front of us.
-                    Integer aprilTagId = !FtcAuto.autoChoices.autoMenuRan? null:
-                            FtcAuto.autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE?
-                                    RobotParams.BLUE_BACKDROP_APRILTAGS[1] : RobotParams.RED_BACKDROP_APRILTAGS[1];
-                    robot.placePixelTask.autoAssistPlace(
-                            true, aprilTagId, RobotParams.ELEVATOR_PRESETS[scoreLevelIndex], false, null);
+                    if (pressed && robot.placePixelTask != null)
+                    {
+                        // If we are not running a match and just ran TeleOp, autoChoices.autoMenuRan will be false.
+                        // In this case, we don't really know what alliance we are in. We will look for any AprilTag
+                        // in front of us.
+                        robot.placePixelTask.autoAssistPlace(
+                            true, aprilTagIndex, RobotParams.ELEVATOR_PRESETS[scoreLevelIndex], false, null);
+                    }
                 }
                 else
                 {
-                    if (pressed) {
+                    if (pressed)
+                    {
                         // Zero calibrate all subsystems (arm, elevator and turret).
                         robot.zeroCalibrate(moduleName);
                     }

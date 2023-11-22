@@ -33,9 +33,9 @@ import TrcFtcLib.ftclib.FtcRevBlinkin;
 public class BlinkinLEDs extends FtcRevBlinkin
 {
     // LED pattern names.
-    public static final String APRILTAG_LEFT = "ApriltagLeft";
-    public static final String APRILTAG_CENTER = "ApriltagCenter";
-    public static final String APRILTAG_RIGHT = "ApriltagRight";
+    public static final String APRILTAG_LEFT = "AprilTagLeft";
+    public static final String APRILTAG_CENTER = "AprilTagCenter";
+    public static final String APRILTAG_RIGHT = "AprilTagRight";
     public static final String SCORE_LEVEL_0 = "ScoreLevel0";
     public static final String SCORE_LEVEL_1 = "ScoreLevel1";
     public static final String SCORE_LEVEL_2 = "ScoreLevel2";
@@ -80,7 +80,7 @@ public class BlinkinLEDs extends FtcRevBlinkin
             new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_1, RevLedPattern.SolidRed),
             new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_2, RevLedPattern.SolidGreen),
             new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_3, RevLedPattern.SolidBlue),
-            new TrcRevBlinkin.Pattern(DETECTED_NOTHING, RevLedPattern.SolidRed),
+            new TrcRevBlinkin.Pattern(DETECTED_NOTHING, RevLedPattern.SolidYellow),
             new TrcRevBlinkin.Pattern(APRIL_TAG, RevLedPattern.SolidAqua),
             new TrcRevBlinkin.Pattern(PURPLE_PIXEL, RevLedPattern.SolidViolet),
             new TrcRevBlinkin.Pattern(GREEN_PIXEL, RevLedPattern.SolidGreen),
@@ -134,29 +134,47 @@ public class BlinkinLEDs extends FtcRevBlinkin
                 break;
         }
     }   //setDriveOrientation
-    public void setAprilTagIndex(int index) {
+
+    /**
+     * This method sets the LED to indicate the selected AprilTag index.
+     *
+     * @param index specifies 0 for left, 1 for center and 2 for right.
+     */
+    public void setAprilTagIndex(int index)
+    {
         switch (index)
         {
             case 0:
                 setDetectedPattern(APRILTAG_LEFT);
                 break;
+
             case 1:
                 setDetectedPattern(APRILTAG_CENTER);
                 break;
+
             case 2:
                 setDetectedPattern(APRILTAG_RIGHT);
                 break;
         }
     }   //setAprilTagIndex
-    public void setScoreLevelIndex(int index) {
+
+    /**
+     * This method sets the LED to indicate the selected score level on the backdrop.
+     *
+     * @param index specifies the score level index.
+     */
+    public void setScoreLevelIndex(int index)
+    {
         switch (index)
         {
             case 0:
                 setDetectedPattern(SCORE_LEVEL_0);
                 break;
+
             case 1:
                 setDetectedPattern(SCORE_LEVEL_1);
                 break;
+
             case 2:
                 setDetectedPattern(SCORE_LEVEL_2);
                 break;
