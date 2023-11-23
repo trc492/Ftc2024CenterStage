@@ -407,7 +407,7 @@ public class RobotParams
     public static final boolean ARM_ENCODER_ABSOLUTE            = true;
     public static final boolean ARM_VOLTAGE_COMP_ENABLED        = true;
     public static final double ARM_DEG_SCALE                    = 360.0;
-    public static final double ARM_POWER_LIMIT                  = 0.11;
+    public static final double ARM_POWER_LIMIT                  = 0.15;
     public static final double ARM_MANUAL_POWER_LIMIT           = 0.25;
     public static final double ARM_OFFSET                       = 27.0;
     public static final double ARM_ZERO_OFFSET                  = 0.949697;

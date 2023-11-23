@@ -256,6 +256,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         switch (state)
         {
             case START:
+                aprilTagPose = null;
                 if (taskParams.useVision && robot.vision != null && robot.vision.aprilTagVision != null)
                 {
                     // Set up vision: switch to rear camera and enable AprilTagVision.
@@ -270,6 +271,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     robot.globalTracer.traceInfo(moduleName, "AprilTag Vision not enabled.");
                     sm.setState(State.DRIVE_TO_APRILTAG);
                 }
+                robot.pixelTray.setUpperGateOpened(false, null);
+                robot.pixelTray.setLowerGateOpened(false, null);
                 break;
 
             case FIND_APRILTAG:
@@ -300,7 +303,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                         alliance == FtcAuto.Alliance.BLUE_ALLIANCE ?
                             RobotParams.BLUE_BACKDROP_APRILTAGS[taskParams.aprilTagIndex] :
                             RobotParams.RED_BACKDROP_APRILTAGS[taskParams.aprilTagIndex];
-                    aprilTagPose = RobotParams.APRILTAG_POSES[targetAprilTagId - 1];
+                    aprilTagPose = RobotParams.APRILTAG_POSES[targetAprilTagId - 1].clone();
                     robot.globalTracer.traceInfo(
                         moduleName,
                         "Vision found AprilTag %d at %s from camera.\n" +
@@ -335,7 +338,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                             FtcAuto.autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE ?
                                 RobotParams.BLUE_BACKDROP_APRILTAGS[taskParams.aprilTagIndex] :
                                 RobotParams.RED_BACKDROP_APRILTAGS[taskParams.aprilTagIndex];
-                        aprilTagPose = RobotParams.APRILTAG_POSES[targetAprilTagId - 1];
+                        aprilTagPose = RobotParams.APRILTAG_POSES[targetAprilTagId - 1].clone();
                         robot.globalTracer.traceInfo(
                             moduleName, "Drive to AprilTag %d using absolute odometry (pose=%s).",
                             targetAprilTagId, aprilTagPose);
@@ -354,7 +357,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                         robot.elevatorArm.wristTrigger.enableTrigger(this::wristSensorTriggered);
                     }
                     // We are right in front of the backdrop, so we don't need full power to approach it.
-                    robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
+                    robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.25);
                     // Account for end-effector offset from the camera.
                     aprilTagPose.x -= 10.0;
                     // Maintain heading to be squared to the backdrop.
