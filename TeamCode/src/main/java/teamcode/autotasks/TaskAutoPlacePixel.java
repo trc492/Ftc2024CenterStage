@@ -287,7 +287,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 // Look for any AprilTag in front of us.
                 TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
                     robot.vision.getDetectedAprilTag(null, -1);
-                if (aprilTagInfo != null)
+                if (aprilTagInfo != null && aprilTagInfo.detectedObj.aprilTagDetection.id < 7)
                 {
                     // If this is called from TeleOp and we see the AprilTag, we can use its location to
                     // re-localize the robot. But we want to save the robot heading and restore it afterwards
@@ -316,16 +316,25 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                         targetAprilTagId, aprilTagPose, robot.robotDrive.driveBase.getFieldPosition());
                     sm.setState(State.DRIVE_TO_APRILTAG);
                 }
-                else if (visionExpiredTime == null)
+                else
                 {
-                    // Can't find AprilTag, set a timeout and try again.
-                    visionExpiredTime = TrcTimer.getCurrentTime() + 1.0;
-                }
-                else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
-                {
-                    // Timed out, moving on.
-                    robot.globalTracer.traceInfo(moduleName, "No AprilTag found.");
-                    sm.setState(State.DRIVE_TO_APRILTAG);
+                    if (aprilTagInfo != null)
+                    {
+                        robot.globalTracer.traceWarn(
+                            moduleName, "Not seeing backdrop!!! (obj=%s)", aprilTagInfo.detectedObj);
+                    }
+
+                    if (visionExpiredTime == null)
+                    {
+                        // Can't find AprilTag, set a timeout and try again.
+                        visionExpiredTime = TrcTimer.getCurrentTime() + 1.0;
+                    }
+                    else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
+                    {
+                        // Timed out, moving on.
+                        robot.globalTracer.traceInfo(moduleName, "No AprilTag found.");
+                        sm.setState(State.DRIVE_TO_APRILTAG);
+                    }
                 }
                 break;
 
