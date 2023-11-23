@@ -80,16 +80,16 @@ public class BlinkinLEDs extends FtcRevBlinkin
             new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_1, RevLedPattern.SolidRed),
             new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_2, RevLedPattern.SolidGreen),
             new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_3, RevLedPattern.SolidBlue),
-            new TrcRevBlinkin.Pattern(DETECTED_NOTHING, RevLedPattern.SolidYellow),
+            new TrcRevBlinkin.Pattern(DETECTED_NOTHING, RevLedPattern.SolidViolet),
             new TrcRevBlinkin.Pattern(APRIL_TAG, RevLedPattern.SolidAqua),
             new TrcRevBlinkin.Pattern(PURPLE_PIXEL, RevLedPattern.SolidViolet),
             new TrcRevBlinkin.Pattern(GREEN_PIXEL, RevLedPattern.SolidGreen),
             new TrcRevBlinkin.Pattern(YELLOW_PIXEL, RevLedPattern.SolidYellow),
             new TrcRevBlinkin.Pattern(WHITE_PIXEL, RevLedPattern.SolidWhite),
             new TrcRevBlinkin.Pattern(TENSOR_FLOW, RevLedPattern.SolidGray),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_FIELD, RevLedPattern.SolidDarkGreen),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_ROBOT, RevLedPattern.SolidDarkBlue),
-            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_INVERTED, RevLedPattern.SolidDarkRed),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_FIELD, RevLedPattern.FixedStrobeGold),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_ROBOT, RevLedPattern.FixedStrobeWhite),
+            new TrcRevBlinkin.Pattern(DRIVE_ORIENTATION_INVERTED, RevLedPattern.FixedLightChaseRed),
             new TrcRevBlinkin.Pattern(OFF_PATTERN, RevLedPattern.SolidBlack)
             // Lowest priority.
         };
