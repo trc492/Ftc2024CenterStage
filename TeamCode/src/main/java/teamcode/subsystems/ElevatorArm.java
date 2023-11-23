@@ -348,7 +348,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 arm.setPosition(null, 0.0, RobotParams.ARM_LOAD_POS, true, RobotParams.ARM_POWER_LIMIT, null, 0.0);
                 // Enable stall protection in case the limit switch is malfunctioning so we can still zero calibrate
                 // on stall.
-                elevator.setStallProtection(RobotParams.ELEVATOR_CAL_POWER, 0.1, 0.2, 1.0);
+                elevator.setStallProtection(RobotParams.ELEVATOR_CAL_POWER, 0.1, 0.2, 0.5);
                 completionEvent.setCallback(this::zeroCalCompleted, null);
                 elevator.zeroCalibrate(
                     RobotParams.ELEVATOR_CAL_POWER,
