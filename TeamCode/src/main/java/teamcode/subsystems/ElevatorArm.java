@@ -365,6 +365,11 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     private void zeroCalCompleted(Object context)
     {
         elevator.setStallProtection(0.0, 0.0, 0.0, 0.0);
+        if (msgTracer != null)
+        {
+            msgTracer.traceInfo(
+                moduleName, "Zero Calibrate completed (lowerLimitSw=%s).", elevator.isLowerLimitSwitchActive());
+        }
     }   //zeroCalCompleted
 
     /**
