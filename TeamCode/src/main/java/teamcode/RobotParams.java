@@ -201,8 +201,8 @@ public class RobotParams
         FRONTCAM_X_OFFSET, FRONTCAM_Y_OFFSET, 0.0);
     // TODO: Need to measure the back camera position offsets.
     public static final double BACKCAM_X_OFFSET                 = 0.0;
-    public static final double BACKCAM_Y_OFFSET                 = -(ROBOT_LENGTH/2.0 - 2.5);
-    public static final double BACKCAM_Z_OFFSET                 = 9.75;
+    public static final double BACKCAM_Y_OFFSET                 = (ROBOT_LENGTH/2.0 - 2.125);
+    public static final double BACKCAM_Z_OFFSET                 = 6.25;
     public static final TrcPose2D BACKCAM_POSE                 = new TrcPose2D(
         FRONTCAM_X_OFFSET, FRONTCAM_Y_OFFSET, 180.0);
 //    // Camera: Micorosoft Lifecam HD 3000 v1/v2

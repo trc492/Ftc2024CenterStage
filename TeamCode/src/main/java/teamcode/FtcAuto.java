@@ -74,7 +74,6 @@ public class FtcAuto extends FtcOpMode
      */
     public static class AutoChoices
     {
-        public boolean autoMenuRan = false;
         public double delay = 0.0;
         public Alliance alliance = Alliance.RED_ALLIANCE;
         public StartPos startPos = StartPos.BACKSTAGE;
@@ -388,7 +387,6 @@ public class FtcAuto extends FtcOpMode
         //
         // Fetch choices.
         //
-        autoChoices.autoMenuRan = true;
         autoChoices.delay = delayMenu.getCurrentValue();
         autoChoices.alliance = allianceMenu.getCurrentChoiceObject();
         autoChoices.startPos = startPosMenu.getCurrentChoiceObject();
