@@ -330,7 +330,9 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         }
 
         cancel(owner);
-        TrcEvent releaseOwnershipEvent = acquireOwnership(owner, null, msgTracer);
+        TrcEvent completionEvent = new TrcEvent(moduleName + ".zeroCalComplete");
+        TrcEvent releaseOwnershipEvent = acquireOwnership(owner, completionEvent, msgTracer);
+
         if (validateOwnership(owner))
         {
             // Do zero calibration only if arm is tucked in.
@@ -344,10 +346,26 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 }
                 // Holding arm in loading position while zero calibrating.
                 arm.setPosition(null, 0.0, RobotParams.ARM_LOAD_POS, true, RobotParams.ARM_POWER_LIMIT, null, 0.0);
-                elevator.zeroCalibrate(RobotParams.ELEVATOR_CAL_POWER, releaseOwnershipEvent);
+                // Enable stall protection in case the limit switch is malfunctioning so we can still zero calibrate
+                // on stall.
+                elevator.setStallProtection(RobotParams.ELEVATOR_CAL_POWER, 0.1, 0.2, 1.0);
+                completionEvent.setCallback(this::zeroCalCompleted, null);
+                elevator.zeroCalibrate(
+                    RobotParams.ELEVATOR_CAL_POWER,
+                    releaseOwnershipEvent != null? releaseOwnershipEvent: completionEvent);
             }
         }
     }   //zeroCalibrate
+
+    /**
+     * This method is called after zero calibration is done so we can turn off stall protection.
+     *
+     * @param context not used.
+     */
+    private void zeroCalCompleted(Object context)
+    {
+        elevator.setStallProtection(0.0, 0.0, 0.0, 0.0);
+    }   //zeroCalCompleted
 
     /**
      * This method is a callback to perform the specified action when it is safe to do so.
