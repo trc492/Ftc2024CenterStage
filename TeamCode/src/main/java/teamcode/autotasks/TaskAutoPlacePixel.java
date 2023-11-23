@@ -50,9 +50,9 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         START,
         FIND_APRILTAG,
         DRIVE_TO_APRILTAG,
-//        LOWER_ELEVATOR,
+        LOWER_ELEVATOR,
         PLACE_PIXEL,
-//        RAISE_ELEVATOR,
+        RAISE_ELEVATOR,
         RETRACT_ALL,
         DONE
     }   //enum State
@@ -356,7 +356,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // We are right in front of the backdrop, so we don't need full power to approach it.
                     robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
                     // Account for end-effector offset from the camera.
-                    aprilTagPose.x -= 3.0;
+                    aprilTagPose.x -= 10.0;
                     // Maintain heading to be squared to the backdrop.
                     aprilTagPose.angle = -90.0;
                     robot.robotDrive.purePursuitDrive.start(
@@ -369,8 +369,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                             currOwner, 0.0, taskParams.scoreLevel, elevatorArmEvent, 4.0);
                         sm.addEvent(elevatorArmEvent);
                     }
-//                    sm.waitForEvents(State.LOWER_ELEVATOR, true);
-                    sm.waitForEvents(State.PLACE_PIXEL);
+                    sm.waitForEvents(State.LOWER_ELEVATOR, true);
                 }
                 else
                 {
@@ -378,25 +377,25 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 }
                 break;
 
-//            case LOWER_ELEVATOR:
-//                if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null)
-//                {
-//                    robot.elevatorArm.wristTrigger.disableTrigger();
-//                }
-//                robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(1.0);
-//                if (robot.elevatorArm != null)
-//                {
-//                    // Lower elevator to the lowest height to minimize pixel bouncing off.
-//                    robot.elevatorArm.elevatorSetPosition(
-//                        currOwner, 0.0, taskParams.scoreLevel, RobotParams.ELEVATOR_POWER_LIMIT,
-//                        elevatorArmEvent, 0.0);
-//                    sm.waitForSingleEvent(elevatorArmEvent, State.PLACE_PIXEL);
-//                }
-//                else
-//                {
-//                    sm.setState(State.PLACE_PIXEL);
-//                }
-//                break;
+            case LOWER_ELEVATOR:
+                if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null)
+                {
+                    robot.elevatorArm.wristTrigger.disableTrigger();
+                }
+                robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(1.0);
+                if (robot.elevatorArm != null)
+                {
+                    // Lower elevator to the lowest height to minimize pixel bouncing off.
+                    robot.elevatorArm.elevatorSetPosition(
+                        currOwner, 0.0, taskParams.scoreLevel, RobotParams.ELEVATOR_POWER_LIMIT,
+                        elevatorArmEvent, 0.0);
+                    sm.waitForSingleEvent(elevatorArmEvent, State.PLACE_PIXEL);
+                }
+                else
+                {
+                    sm.setState(State.PLACE_PIXEL);
+                }
+                break;
 
             case PLACE_PIXEL:
                 // Place pixel at the appropriate location on the backdrop.
@@ -409,29 +408,29 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 {
                     robot.pixelTray.setLowerGateOpened(true, event);
                     robot.pixelTray.setUpperGateOpened(true, null);
-                    sm.waitForSingleEvent(event, State.RETRACT_ALL);
+                    sm.waitForSingleEvent(event, State.RAISE_ELEVATOR);
                 }
                 else
                 {
                     // PixelTray does not exist, moving on.
-                    sm.setState(State.RETRACT_ALL);
+                    sm.setState(State.RAISE_ELEVATOR);
                 }
                 break;
 
-//            case RAISE_ELEVATOR:
-//                if (robot.elevatorArm != null)
-//                {
-//                    // Raise elevator back to the height that we can safely retract everything.
-//                    robot.elevatorArm.elevatorSetPosition(
-//                        currOwner, 0.0, RobotParams.ELEVATOR_LEVEL2_POS, RobotParams.ELEVATOR_POWER_LIMIT,
-//                        elevatorArmEvent, 0.0);
-//                    sm.waitForSingleEvent(elevatorArmEvent, State.RETRACT_ALL);
-//                }
-//                else
-//                {
-//                    sm.setState(State.RETRACT_ALL);
-//                }
-//                break;
+            case RAISE_ELEVATOR:
+                if (robot.elevatorArm != null)
+                {
+                    // Raise elevator back to the height that we can safely retract everything.
+                    robot.elevatorArm.elevatorSetPosition(
+                        currOwner, 0.0, RobotParams.ELEVATOR_LEVEL2_POS, RobotParams.ELEVATOR_POWER_LIMIT,
+                        elevatorArmEvent, 0.0);
+                    sm.waitForSingleEvent(elevatorArmEvent, State.RETRACT_ALL);
+                }
+                else
+                {
+                    sm.setState(State.RETRACT_ALL);
+                }
+                break;
 
             case RETRACT_ALL:
                 // Retract everything.

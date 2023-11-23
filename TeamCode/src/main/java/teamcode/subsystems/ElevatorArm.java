@@ -169,7 +169,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             elevator.setStallDetectionEnabled(
                 RobotParams.ARM_STALL_DETECTION_DELAY, RobotParams.ARM_STALL_DETECTION_TIMEOUT,
                 RobotParams.ARM_STALL_ERR_RATE_THRESHOLD);
-            elevator.resetPositionOnLowerLimitSwitch();
+//            elevator.resetPositionOnLowerLimitSwitch();
             elevator.getPositionPidController().setTraceEnabled(true, false, false);
         }
         else
