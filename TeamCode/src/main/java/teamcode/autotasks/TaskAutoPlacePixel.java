@@ -367,6 +367,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // Maintain heading to be squared to the backdrop.
                     targetPose.angle = -90.0;
                     // We are right in front of the backdrop, so we don't need full power to approach it.
+                    robot.robotDrive.purePursuitDrive.getXPosPidCtrl().setOutputLimit(0.25);
                     robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.25);
                     robot.robotDrive.purePursuitDrive.start(
                         currOwner, event, 0.0, robot.robotDrive.driveBase.getFieldPosition(), false, targetPose);
@@ -391,6 +392,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 {
                     robot.elevatorArm.wristTrigger.disableTrigger();
                 }
+                robot.robotDrive.purePursuitDrive.getXPosPidCtrl().setOutputLimit(1.0);
                 robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(1.0);
 
                 if (robot.elevatorArm != null)
