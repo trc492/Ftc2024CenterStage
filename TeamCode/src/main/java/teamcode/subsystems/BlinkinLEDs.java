@@ -107,35 +107,6 @@ public class BlinkinLEDs extends FtcRevBlinkin
     }   //setDetectedPattern
 
     /**
-     * This method sets the LED to indicate the drive orientation mode of the robot.
-     *
-     * @param orientation specifies the drive orientation mode.
-     */
-    public void setDriveOrientation(TrcDriveBase.DriveOrientation orientation)
-    {
-        switch (orientation)
-        {
-            case INVERTED:
-                setPatternState(DRIVE_ORIENTATION_INVERTED, true);
-                setPatternState(DRIVE_ORIENTATION_ROBOT, false);
-                setPatternState(DRIVE_ORIENTATION_FIELD, false);
-                break;
-
-            case ROBOT:
-                setPatternState(DRIVE_ORIENTATION_INVERTED, false);
-                setPatternState(DRIVE_ORIENTATION_ROBOT, true);
-                setPatternState(DRIVE_ORIENTATION_FIELD, false);
-                break;
-
-            case FIELD:
-                setPatternState(DRIVE_ORIENTATION_INVERTED, false);
-                setPatternState(DRIVE_ORIENTATION_ROBOT, false);
-                setPatternState(DRIVE_ORIENTATION_FIELD, true);
-                break;
-        }
-    }   //setDriveOrientation
-
-    /**
      * This method sets the LED to indicate the selected AprilTag index.
      *
      * @param index specifies 0 for left, 1 for center and 2 for right.
@@ -180,5 +151,34 @@ public class BlinkinLEDs extends FtcRevBlinkin
                 break;
         }
     }   //setScoreLevelIndex
+
+    /**
+     * This method sets the LED to indicate the drive orientation mode of the robot.
+     *
+     * @param orientation specifies the drive orientation mode.
+     */
+    public void setDriveOrientation(TrcDriveBase.DriveOrientation orientation)
+    {
+        switch (orientation)
+        {
+            case INVERTED:
+                setPatternState(DRIVE_ORIENTATION_INVERTED, true);
+                setPatternState(DRIVE_ORIENTATION_ROBOT, false);
+                setPatternState(DRIVE_ORIENTATION_FIELD, false);
+                break;
+
+            case ROBOT:
+                setPatternState(DRIVE_ORIENTATION_INVERTED, false);
+                setPatternState(DRIVE_ORIENTATION_ROBOT, true);
+                setPatternState(DRIVE_ORIENTATION_FIELD, false);
+                break;
+
+            case FIELD:
+                setPatternState(DRIVE_ORIENTATION_INVERTED, false);
+                setPatternState(DRIVE_ORIENTATION_ROBOT, false);
+                setPatternState(DRIVE_ORIENTATION_FIELD, true);
+                break;
+        }
+    }   //setDriveOrientation
 
 }   //class BlinkinLEDs
