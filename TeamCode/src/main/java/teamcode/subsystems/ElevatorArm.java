@@ -196,7 +196,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 RobotParams.ARM_KP, RobotParams.ARM_KI, RobotParams.ARM_KD, RobotParams.ARM_KF, RobotParams.ARM_IZONE);
             arm.setPositionPidTolerance(RobotParams.ARM_TOLERANCE);
             arm.setPositionPidPowerComp(this::armGetPowerComp);
-            arm.setStallDetectionEnabled(true);
+            arm.setStallDetectionEnabled(0.5, 0.2, 2.0);
             arm.getPositionPidController().setTraceEnabled(true, false, false);
         }
         else

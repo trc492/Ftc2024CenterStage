@@ -49,6 +49,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
     {
         START,
         FIND_APRILTAG,
+        GOTO_SCORING_POS,
         DRIVE_TO_APRILTAG,
         LOWER_ELEVATOR,
         PLACE_PIXEL,
@@ -275,7 +276,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 {
                     // Not using vision or AprilTag Vision is not enabled, skip vision.
                     robot.globalTracer.traceInfo(moduleName, "AprilTag Vision not enabled.");
-                    sm.setState(State.DRIVE_TO_APRILTAG);
+                    sm.setState(State.GOTO_SCORING_POS);
                 }
                 break;
 
@@ -314,7 +315,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                         "Targeting AprilTag %d at %s from robotPose %s.",
                         aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagInfo.objPose,
                         targetAprilTagId, aprilTagPose, robot.robotDrive.driveBase.getFieldPosition());
-                    sm.setState(State.DRIVE_TO_APRILTAG);
+                    sm.setState(State.GOTO_SCORING_POS);
                 }
                 else
                 {
@@ -333,11 +334,19 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     {
                         // Timed out, moving on.
                         robot.globalTracer.traceInfo(moduleName, "No AprilTag found.");
-                        sm.setState(State.DRIVE_TO_APRILTAG);
+                        sm.setState(State.GOTO_SCORING_POS);
                     }
                 }
                 break;
-
+            case GOTO_SCORING_POS:
+                if (robot.elevatorArm != null)
+                {
+                    // Set ElevatorArm to scoring position.
+                    double elevatorHeight = Math.max(taskParams.scoreLevel, RobotParams.ELEVATOR_LEVEL1_POS);
+                    robot.elevatorArm.setScoringPosition(currOwner, 0.0, elevatorHeight, elevatorArmEvent, 4.0);
+                }
+                sm.waitForSingleEvent(elevatorArmEvent, State.DRIVE_TO_APRILTAG);
+                break;
             case DRIVE_TO_APRILTAG:
                 // Navigate robot to Apriltag.
                 if (aprilTagPose == null)
@@ -372,7 +381,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // Account for end-effector offset from the camera.
                     // Clone aprilTagPose before changing it, or we will corrupt the AprilTag location array.
                     TrcPose2D targetPose = aprilTagPose.clone();
-                    targetPose.x -= 8.0;
+                    targetPose.x -= 7.25;
                     // Maintain heading to be squared to the backdrop.
                     targetPose.angle = -90.0;
                     // We are right in front of the backdrop, so we don't need full power to approach it.
@@ -380,15 +389,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.25);
                     robot.robotDrive.purePursuitDrive.start(
                         currOwner, event, 0.0, robot.robotDrive.driveBase.getFieldPosition(), false, targetPose);
-                    sm.addEvent(event);
-                    if (robot.elevatorArm != null)
-                    {
-                        // Set ElevatorArm to scoring position.
-                        double elevatorHeight = Math.max(taskParams.scoreLevel, RobotParams.ELEVATOR_LEVEL1_POS);
-                        robot.elevatorArm.setScoringPosition(currOwner, 0.0, elevatorHeight, elevatorArmEvent, 4.0);
-                        sm.addEvent(elevatorArmEvent);
-                    }
-                    sm.waitForEvents(State.LOWER_ELEVATOR, true);
+
+                    sm.waitForSingleEvent(event, State.LOWER_ELEVATOR);
                 }
                 else
                 {

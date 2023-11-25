@@ -385,7 +385,7 @@ public class RobotParams
 //        14.0, 16.0, 20.0, 22.0
     };
     // PID Actuator parameters.
-    public static final double ELEVATOR_KP                      = 0.5;
+    public static final double ELEVATOR_KP                      = 0.6;
     public static final double ELEVATOR_KI                      = 0.0;
     public static final double ELEVATOR_KD                      = 0.025;
     public static final double ELEVATOR_KF                      = 0.0;
@@ -407,7 +407,7 @@ public class RobotParams
     public static final boolean ARM_ENCODER_ABSOLUTE            = true;
     public static final boolean ARM_VOLTAGE_COMP_ENABLED        = true;
     public static final double ARM_DEG_SCALE                    = 360.0;
-    public static final double ARM_POWER_LIMIT                  = 0.15;
+    public static final double ARM_POWER_LIMIT                  = 0.14;
     public static final double ARM_MANUAL_POWER_LIMIT           = 0.25;
     public static final double ARM_OFFSET                       = 27.0;
     public static final double ARM_ZERO_OFFSET                  = 0.949697;
@@ -425,13 +425,13 @@ public class RobotParams
 //        30.0, 60.0, 90.0, 120, 150.0, 180.0, 210.0, 240.0, 270.0
     };
     // PID Actuator parameters.
-    public static final double ARM_KP                           = 0.011;
+    public static final double ARM_KP                           = 0.0162;
     public static final double ARM_KI                           = 0.0;
     public static final double ARM_KD                           = 0.0;
     public static final double ARM_KF                           = 0.0;
     public static final double ARM_IZONE                        = 0.0;
     public static final double ARM_TOLERANCE                    = 2.0;
-    public static final double ARM_MAX_GRAVITY_COMP_POWER       = 0.12;
+    public static final double ARM_MAX_GRAVITY_COMP_POWER       = 0.1675;
     public static final double ARM_STALL_DETECTION_DELAY        = 0.5;
     public static final double ARM_STALL_DETECTION_TIMEOUT      = 0.2;
     public static final double ARM_STALL_ERR_RATE_THRESHOLD     = 5.0;
