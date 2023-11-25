@@ -382,12 +382,16 @@ public class FtcTeleOp extends FtcOpMode
                         robot.vision.setAprilTagVisionEnabled(true);
                         robot.globalTracer.traceInfo(moduleName, "Enabling AprilTagVision.");
                     }
-                    else if (robotFieldPose != null)
+                    else
                     {
-                        // Vision found an AprilTag, set the new robot field location but don't disturb the robot's
-                        // heading because it may be set for field oriented driving.
-                        robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, true);
-                        robotFieldPose = null;
+                        if (robotFieldPose != null)
+                        {
+                            // Vision found an AprilTag, set the new robot field location but don't disturb the robot's
+                            // heading because it may be set for field oriented driving.
+                            robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, true);
+                            robotFieldPose = null;
+                        }
+                        robot.vision.setAprilTagVisionEnabled(false);
                     }
                 }
                 break;

@@ -372,7 +372,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // Account for end-effector offset from the camera.
                     // Clone aprilTagPose before changing it, or we will corrupt the AprilTag location array.
                     TrcPose2D targetPose = aprilTagPose.clone();
-                    targetPose.x -= 10.0;
+                    targetPose.x -= 8.0;
                     // Maintain heading to be squared to the backdrop.
                     targetPose.angle = -90.0;
                     // We are right in front of the backdrop, so we don't need full power to approach it.
@@ -383,9 +383,9 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     sm.addEvent(event);
                     if (robot.elevatorArm != null)
                     {
-                        // Set ElevatorArm to scoring position level 1.
-                        robot.elevatorArm.setScoringPosition(
-                            currOwner, 0.0, taskParams.scoreLevel, elevatorArmEvent, 4.0);
+                        // Set ElevatorArm to scoring position.
+                        double elevatorHeight = Math.max(taskParams.scoreLevel, RobotParams.ELEVATOR_LEVEL1_POS);
+                        robot.elevatorArm.setScoringPosition(currOwner, 0.0, elevatorHeight, elevatorArmEvent, 4.0);
                         sm.addEvent(elevatorArmEvent);
                     }
                     sm.waitForEvents(State.LOWER_ELEVATOR, true);
