@@ -386,9 +386,8 @@ public class FtcTeleOp extends FtcOpMode
                     {
                         if (robotFieldPose != null)
                         {
-                            // Vision found an AprilTag, set the new robot field location but don't disturb the robot's
-                            // heading because it may be set for field oriented driving.
-                            robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, true);
+                            // Vision found an AprilTag, set the new robot field location.
+                            robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, false);
                             robotFieldPose = null;
                         }
                         robot.vision.setAprilTagVisionEnabled(false);

@@ -84,7 +84,6 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
     private String currOwner = null;
     private TrcPose2D aprilTagPose = null;
     private Double visionExpiredTime = null;
-    private Double relocalizeDeltaHeading = null;
 
     /**
      * Constructor: Create an instance of the object.
@@ -123,7 +122,6 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 useVision, aprilTagIndex, scoreLevel, inAuto, completionEvent);
         }
 
-        relocalizeDeltaHeading = null;
         startAutoTask(State.START, new TaskParams(useVision, aprilTagIndex, scoreLevel, inAuto), completionEvent);
     }   //autoAssistPlace
 
@@ -227,15 +225,6 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         {
             robot.vision.setAprilTagVisionEnabled(false);
         }
-
-        if (relocalizeDeltaHeading != null)
-        {
-            TrcPose2D robotPose = robot.robotDrive.driveBase.getFieldPosition();
-            robotPose.angle -= relocalizeDeltaHeading;
-            robot.robotDrive.driveBase.setFieldPosition(robotPose);
-            robot.globalTracer.traceInfo(moduleName, "Restoring robot heading to %s.", robotPose);
-            relocalizeDeltaHeading = null;
-        }
     }   //stopSubsystems
 
     /**
@@ -295,10 +284,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // because we don't want to mess up the robot heading set for field oriented driving.
                     if (!taskParams.inAuto)
                     {
-                        double prevRobotHeading = robot.robotDrive.driveBase.getHeading();
                         TrcPose2D robotFieldPose = robot.vision.getRobotFieldPose(aprilTagInfo);
                         robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, false);
-                        relocalizeDeltaHeading = robot.robotDrive.driveBase.getHeading() - prevRobotHeading;
                     }
                     // Determine the absolute field location of the AprilTag.
                     FtcAuto.Alliance alliance =
