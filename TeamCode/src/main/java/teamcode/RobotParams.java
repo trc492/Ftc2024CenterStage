@@ -391,6 +391,9 @@ public class RobotParams
     public static final double ELEVATOR_KF                      = 0.0;
     public static final double ELEVATOR_TOLERANCE               = 0.5;
     public static final double ELEVATOR_IZONE                   = 10.0;
+    public static final double ELEVATOR_STALL_DETECTION_DELAY   = 0.5;
+    public static final double ELEVATOR_STALL_DETECTION_TIMEOUT = 0.2;
+    public static final double ELEVATOR_STALL_ERR_RATE_THRESHOLD= 5.0;
     //
     // Arm subsystem.
     //

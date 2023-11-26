@@ -167,8 +167,8 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 RobotParams.ELEVATOR_IZONE);
             elevator.setPositionPidTolerance(RobotParams.ELEVATOR_TOLERANCE);
             elevator.setStallDetectionEnabled(
-                RobotParams.ARM_STALL_DETECTION_DELAY, RobotParams.ARM_STALL_DETECTION_TIMEOUT,
-                RobotParams.ARM_STALL_ERR_RATE_THRESHOLD);
+                RobotParams.ELEVATOR_STALL_DETECTION_DELAY, RobotParams.ELEVATOR_STALL_DETECTION_TIMEOUT,
+                RobotParams.ELEVATOR_STALL_ERR_RATE_THRESHOLD);
 //            elevator.resetPositionOnLowerLimitSwitch();
             elevator.getPositionPidController().setTraceEnabled(true, false, false);
         }
@@ -196,7 +196,9 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 RobotParams.ARM_KP, RobotParams.ARM_KI, RobotParams.ARM_KD, RobotParams.ARM_KF, RobotParams.ARM_IZONE);
             arm.setPositionPidTolerance(RobotParams.ARM_TOLERANCE);
             arm.setPositionPidPowerComp(this::armGetPowerComp);
-            arm.setStallDetectionEnabled(0.5, 0.2, 2.0);
+            arm.setStallDetectionEnabled(
+                RobotParams.ARM_STALL_DETECTION_DELAY, RobotParams.ARM_STALL_DETECTION_TIMEOUT,
+                RobotParams.ARM_STALL_ERR_RATE_THRESHOLD);
             arm.getPositionPidController().setTraceEnabled(true, false, false);
         }
         else

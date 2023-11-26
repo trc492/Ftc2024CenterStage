@@ -170,7 +170,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (robot.robotDrive.driveBase.supportsHolonomicDrive())
                 {
                     robot.robotDrive.driveBase.holonomicDrive(
-                        null, inputs[0], inputs[1], inputs[2], robot.robotDrive.driveBase.getDriveGyroAngle(inputs[2]));
+                        null, inputs[0], inputs[1], inputs[2], robot.robotDrive.driveBase.getDriveGyroAngle());
                 }
                 else
                 {
