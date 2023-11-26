@@ -119,6 +119,15 @@ public class FtcTeleOp extends FtcOpMode
         // Tell robot object opmode is about to start so it can do the necessary start initialization for the mode.
         //
         robot.startMode(nextMode);
+        //
+        // Enable AprilTag vision for re-localization and auto-assist placing pixel.
+        //
+        if (robot.vision != null && robot.vision.aprilTagVision != null)
+        {
+            robot.globalTracer.traceInfo(moduleName, "Enabling AprilTagVision.");
+            robot.vision.setActiveWebcam(robot.vision.getRearWebcam());
+            robot.vision.setAprilTagVisionEnabled(true);
+        }
     }   //startMode
 
     /**
@@ -375,14 +384,7 @@ public class FtcTeleOp extends FtcOpMode
                     // On press of the button, we will start looking for AprilTag for re-localization.
                     // On release of the button, we will set the robot's field location if we found the AprilTag.
                     relocalizing = pressed;
-                    if (pressed)
-                    {
-                        // Set up vision: switch to rear camera and enable AprilTagVision.
-                        robot.vision.setActiveWebcam(robot.vision.getRearWebcam());
-                        robot.vision.setAprilTagVisionEnabled(true);
-                        robot.globalTracer.traceInfo(moduleName, "Enabling AprilTagVision.");
-                    }
-                    else
+                    if (!pressed)
                     {
                         if (robotFieldPose != null)
                         {
@@ -390,7 +392,6 @@ public class FtcTeleOp extends FtcOpMode
                             robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, false);
                             robotFieldPose = null;
                         }
-                        robot.vision.setAprilTagVisionEnabled(false);
                     }
                 }
                 break;

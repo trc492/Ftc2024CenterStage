@@ -263,6 +263,7 @@ public class FtcAuto extends FtcOpMode
             robot.vision.setRedBlobVisionEnabled(false);
             robot.vision.setBlueBlobVisionEnabled(false);
             // Turn on AprilTag detection with rear camera.
+            robot.globalTracer.traceInfo(moduleName, "Enabling AprilTagVision.");
             robot.vision.setActiveWebcam(robot.vision.getRearWebcam());
             robot.vision.setAprilTagVisionEnabled(true);
         }
