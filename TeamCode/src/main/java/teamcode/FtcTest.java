@@ -61,6 +61,7 @@ public class FtcTest extends FtcTeleOp
     private static final String moduleName = FtcTest.class.getSimpleName();
     private static final boolean logEvents = true;
     private static final boolean debugPid = true;
+    private static final double LAUNCHER_POWER_STEP = 0.05;
 
     private enum Test
     {
@@ -731,7 +732,7 @@ public class FtcTest extends FtcTeleOp
                     {
                         if (pressed)
                         {
-                            launchPower += 0.05;
+                            launchPower += LAUNCHER_POWER_STEP;
                             if (launchPower > 1.0) launchPower = 1.0;
                         }
                         processed = true;
@@ -766,7 +767,7 @@ public class FtcTest extends FtcTeleOp
                     {
                         if (pressed)
                         {
-                            launchPower -= 0.05;
+                            launchPower -= LAUNCHER_POWER_STEP;
                             if (launchPower < 0.0) launchPower = 0.0;
                         }
                         processed = true;

@@ -242,8 +242,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         Object params, State state, TrcTaskMgr.TaskType taskType, TrcRobot.RunMode runMode, boolean slowPeriodicLoop)
     {
         TaskParams taskParams = (TaskParams) params;
-        robot.globalTracer.traceInfo(
-                moduleName, "Event=%s", event);
+
         switch (state)
         {
             case START:
@@ -281,8 +280,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 if (aprilTagInfo != null && aprilTagInfo.detectedObj.aprilTagDetection.id < 7)
                 {
                     // If this is called from TeleOp and we see the AprilTag, we can use its location to
-                    // re-localize the robot. But we want to save the robot heading and restore it afterwards
-                    // because we don't want to mess up the robot heading set for field oriented driving.
+                    // re-localize the robot.
                     if (!taskParams.inAuto)
                     {
                         TrcPose2D robotFieldPose = robot.vision.getRobotFieldPose(aprilTagInfo);
@@ -309,6 +307,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 {
                     if (aprilTagInfo != null)
                     {
+                        // For some reason, we found an AprilTag but not in the range of 1-6. Ignore it as if we did
+                        // not see it.
                         robot.globalTracer.traceWarn(
                             moduleName, "Not seeing backdrop!!! (obj=%s)", aprilTagInfo.detectedObj);
                     }
@@ -478,8 +478,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
             robot.robotDrive.purePursuitDrive.cancel(currOwner);
             robot.globalTracer.traceInfo(
-                    moduleName, "Drive to AprilTag canceled by wristSensor, event=%s", event);
-//            sm.setState(State.LOWER_ELEVATOR);
+                moduleName, "Drive to AprilTag canceled by wristSensor, event=%s", event);
             event.clear();
             event.signal();
         }
