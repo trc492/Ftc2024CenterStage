@@ -1225,7 +1225,8 @@ public class FtcTest extends FtcTeleOp
         return robot.robotDrive != null &&
                (testChoices.test == Test.SUBSYSTEMS_TEST ||
                 testChoices.test == Test.DRIVE_SPEED_TEST ||
-                testChoices.test == Test.CALIBRATE_SWERVE_STEERING);
+                testChoices.test == Test.CALIBRATE_SWERVE_STEERING ||
+                testChoices.test == Test.TUNE_LAUNCHER_POWER);
     }   //allowButtonControl
 
 }   //class FtcTest
