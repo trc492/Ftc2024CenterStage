@@ -514,7 +514,8 @@ public class FtcTest extends FtcTeleOp
 
         if (slowPeriodicLoop)
         {
-            if (allowTeleOp())
+            if (teleOpControlEnabled &&
+                (testChoices.test == Test.SUBSYSTEMS_TEST || testChoices.test == Test.DRIVE_SPEED_TEST))
             {
                 //
                 // Allow TeleOp to run so we can control the robot in subsystem test or drive speed test modes.
@@ -583,250 +584,245 @@ public class FtcTest extends FtcTeleOp
     @Override
     public void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
-        if (allowButtonControl() || testChoices.test == Test.VISION_TEST ||
-            testChoices.test == Test.TUNE_COLORBLOB_VISION)
+        boolean passToTeleOp = true;
+        //
+        // In addition to or instead of the gamepad controls handled by FtcTeleOp, we can add to or override the
+        // FtcTeleOp gamepad actions.
+        //
+        robot.dashboard.displayPrintf(8, "%s: %04x->%s", gamepad, button, pressed ? "Pressed" : "Released");
+        switch (button)
         {
-            boolean processed = false;
-            //
-            // In addition to or instead of the gamepad controls handled by FtcTeleOp, we can add to or override the
-            // FtcTeleOp gamepad actions.
-            //
-            robot.dashboard.displayPrintf(8, "%s: %04x->%s", gamepad, button, pressed ? "Pressed" : "Released");
-            switch (button)
-            {
-                case FtcGamepad.GAMEPAD_A:
-                    if (testChoices.test == Test.CALIBRATE_SWERVE_STEERING)
+            case FtcGamepad.GAMEPAD_A:
+                if (testChoices.test == Test.CALIBRATE_SWERVE_STEERING)
+                {
+                    if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
                     {
-                        if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
-                        {
-                            SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
+                        SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
 
-                            steerCalibrating = !steerCalibrating;
-                            if (steerCalibrating)
-                            {
-                                // Start steer calibration.
-                                swerveDrive.startSteeringCalibration();
-                            }
-                            else
-                            {
-                                // Stop steer calibration.
-                                swerveDrive.stopSteeringCalibration();
-                            }
-                        }
-                        processed = true;
-                    }
-                    else if ((testChoices.test == Test.TUNE_COLORBLOB_VISION || testChoices.test == Test.VISION_TEST) &&
-                             robot.vision != null)
-                    {
-                        // Can only switch camera if we have two.
-                        if (pressed && frontWebcam != null && rearWebcam != null)
+                        steerCalibrating = !steerCalibrating;
+                        if (steerCalibrating)
                         {
-                            robot.vision.setActiveWebcam(
-                                robot.vision.getActiveWebcam() != frontWebcam? frontWebcam: rearWebcam);
+                            // Start steer calibration.
+                            swerveDrive.startSteeringCalibration();
                         }
-                        processed = true;
+                        else
+                        {
+                            // Stop steer calibration.
+                            swerveDrive.stopSteeringCalibration();
+                        }
                     }
-                    break;
+                    passToTeleOp = false;
+                }
+                else if ((testChoices.test == Test.TUNE_COLORBLOB_VISION || testChoices.test == Test.VISION_TEST) &&
+                         robot.vision != null)
+                {
+                    // Can only switch camera if we have two.
+                    if (pressed && frontWebcam != null && rearWebcam != null)
+                    {
+                        robot.vision.setActiveWebcam(
+                            robot.vision.getActiveWebcam() != frontWebcam? frontWebcam: rearWebcam);
+                    }
+                    passToTeleOp = false;
+                }
+                break;
 
-                case FtcGamepad.GAMEPAD_B:
-                    if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
-                        robot.vision != null && robot.vision.rawColorBlobVision != null)
+            case FtcGamepad.GAMEPAD_B:
+                if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
+                    robot.vision != null && robot.vision.rawColorBlobVision != null)
+                {
+                    if (pressed)
                     {
-                        if (pressed)
+                        // Increment to next color threshold index.
+                        colorThresholdIndex++;
+                        if (colorThresholdIndex >= colorThresholds.length)
                         {
-                            // Increment to next color threshold index.
-                            colorThresholdIndex++;
-                            if (colorThresholdIndex >= colorThresholds.length)
-                            {
-                                colorThresholdIndex = colorThresholds.length - 1;
-                            }
+                            colorThresholdIndex = colorThresholds.length - 1;
                         }
-                        processed = true;
                     }
-                    else if (testChoices.test == Test.TUNE_LAUNCHER_POWER)
-                    {
-                        // Pass it back to FtcTeleOp.
-                        processed = false;
-                    }
-                    break;
+                    passToTeleOp = false;
+                }
+                break;
 
-                case FtcGamepad.GAMEPAD_X:
-                    if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
-                        robot.vision != null && robot.vision.rawColorBlobVision != null)
+            case FtcGamepad.GAMEPAD_X:
+                if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
+                    robot.vision != null && robot.vision.rawColorBlobVision != null)
+                {
+                    if (pressed)
                     {
-                        if (pressed)
+                        // Decrement to previous color threshold index.
+                        colorThresholdIndex--;
+                        if (colorThresholdIndex < 0)
                         {
-                            // Decrement to previous color threshold index.
-                            colorThresholdIndex--;
-                            if (colorThresholdIndex < 0)
-                            {
-                                colorThresholdIndex = 0;
-                            }
+                            colorThresholdIndex = 0;
                         }
-                        processed = true;
                     }
-                    break;
+                    passToTeleOp = false;
+                }
+                break;
 
-                case FtcGamepad.GAMEPAD_Y:
-                    if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
-                        robot.vision != null && robot.vision.rawColorBlobVision != null)
+            case FtcGamepad.GAMEPAD_Y:
+                if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
+                    robot.vision != null && robot.vision.rawColorBlobVision != null)
+                {
+                    if (pressed)
                     {
-                        if (pressed)
-                        {
-                            // Set display to next intermediate Mat in the pipeline.
-                            robot.vision.rawColorBlobVision.getPipeline().setNextVideoOutput();
-                        }
-                        processed = true;
+                        // Set display to next intermediate Mat in the pipeline.
+                        robot.vision.rawColorBlobVision.getPipeline().setNextVideoOutput();
                     }
-                    break;
+                    passToTeleOp = false;
+                }
+                break;
 
-                case FtcGamepad.GAMEPAD_LBUMPER:
-                    if (testChoices.test == Test.VISION_TEST && robot.vision != null)
+            case FtcGamepad.GAMEPAD_LBUMPER:
+                if (testChoices.test == Test.VISION_TEST && robot.vision != null)
+                {
+                    if (pressed)
                     {
-                        if (pressed)
-                        {
-                            exposure -= 100;
-                            robot.vision.vision.setManualExposure(exposure, null);
-                        }
-                        processed = true;
+                        exposure -= 100;
+                        robot.vision.vision.setManualExposure(exposure, null);
                     }
-                    break;
+                    passToTeleOp = false;
+                }
+                break;
 
-                case FtcGamepad.GAMEPAD_RBUMPER:
-                    if (testChoices.test == Test.VISION_TEST && robot.vision != null)
+            case FtcGamepad.GAMEPAD_RBUMPER:
+                if (testChoices.test == Test.VISION_TEST && robot.vision != null)
+                {
+                    if (pressed)
                     {
-                        if (pressed)
-                        {
-                            exposure += 100;
-                            robot.vision.vision.setManualExposure(exposure, null);
-                        }
-                        processed = true;
+                        exposure += 100;
+                        robot.vision.vision.setManualExposure(exposure, null);
                     }
-                    break;
+                    passToTeleOp = false;
+                }
+                break;
 
-                case FtcGamepad.GAMEPAD_DPAD_UP:
-                    if (testChoices.test == Test.SUBSYSTEMS_TEST)
+            case FtcGamepad.GAMEPAD_DPAD_UP:
+                if (testChoices.test == Test.SUBSYSTEMS_TEST)
+                {
+                    // If we are moving swerve steering, make sure TeleOp doesn't interfere.
+                    teleOpControlEnabled = !pressed;
+                    if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
                     {
-                        if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
-                        {
-                            SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
-                            swerveDrive.setSteerAngle(0.0, false, true);
-                        }
-                        teleOpControlEnabled = !pressed;
-                        processed = true;
+                        SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
+                        swerveDrive.setSteerAngle(0.0, false, true);
                     }
-                    else if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
-                             robot.vision != null && robot.vision.rawColorBlobVision != null)
+                    passToTeleOp = false;
+                }
+                else if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
+                         robot.vision != null && robot.vision.rawColorBlobVision != null)
+                {
+                    if (pressed &&
+                        colorThresholds[colorThresholdIndex] + colorThresholdMultiplier <=
+                        COLOR_THRESHOLD_HIGH_RANGES[colorThresholdIndex/2])
                     {
-                        if (pressed &&
-                            colorThresholds[colorThresholdIndex] + colorThresholdMultiplier <=
-                            COLOR_THRESHOLD_HIGH_RANGES[colorThresholdIndex/2])
-                        {
-                            // Increment color threshold value.
-                            colorThresholds[colorThresholdIndex] += colorThresholdMultiplier;
-                            updateColorThresholds();
-                        }
-                        processed = true;
+                        // Increment color threshold value.
+                        colorThresholds[colorThresholdIndex] += colorThresholdMultiplier;
+                        updateColorThresholds();
                     }
-                    else if (testChoices.test == Test.TUNE_LAUNCHER_POWER && robot.launcher != null)
+                    passToTeleOp = false;
+                }
+                else if (testChoices.test == Test.TUNE_LAUNCHER_POWER && robot.launcher != null)
+                {
+                    if (pressed)
                     {
-                        if (pressed)
-                        {
-                            launchPower += LAUNCHER_POWER_STEP;
-                            if (launchPower > 1.0) launchPower = 1.0;
-                        }
-                        processed = true;
+                        launchPower += LAUNCHER_POWER_STEP;
+                        if (launchPower > 1.0) launchPower = 1.0;
                     }
-                    break;
+                    passToTeleOp = false;
+                }
+                break;
 
-                case FtcGamepad.GAMEPAD_DPAD_DOWN:
-                    if (testChoices.test == Test.SUBSYSTEMS_TEST)
+            case FtcGamepad.GAMEPAD_DPAD_DOWN:
+                if (testChoices.test == Test.SUBSYSTEMS_TEST)
+                {
+                    // If we are moving swerve steering, make sure TeleOp doesn't interfere.
+                    teleOpControlEnabled = !pressed;
+                    if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
                     {
-                        if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
-                        {
-                            SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
-                            swerveDrive.setSteerAngle(180.0, false, true);
-                        }
-                        teleOpControlEnabled = !pressed;
-                        processed = true;
+                        SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
+                        swerveDrive.setSteerAngle(180.0, false, true);
                     }
-                    else if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
-                             robot.vision != null && robot.vision.rawColorBlobVision != null)
+                    passToTeleOp = false;
+                }
+                else if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
+                         robot.vision != null && robot.vision.rawColorBlobVision != null)
+                {
+                    if (pressed &&
+                        colorThresholds[colorThresholdIndex] - colorThresholdMultiplier >=
+                        COLOR_THRESHOLD_LOW_RANGES[colorThresholdIndex/2])
                     {
-                        if (pressed &&
-                            colorThresholds[colorThresholdIndex] - colorThresholdMultiplier >=
-                            COLOR_THRESHOLD_LOW_RANGES[colorThresholdIndex/2])
-                        {
-                            // Decrement color threshold value.
-                            colorThresholds[colorThresholdIndex] -= colorThresholdMultiplier;
-                            updateColorThresholds();
-                        }
-                        processed = true;
+                        // Decrement color threshold value.
+                        colorThresholds[colorThresholdIndex] -= colorThresholdMultiplier;
+                        updateColorThresholds();
                     }
-                    else if (testChoices.test == Test.TUNE_LAUNCHER_POWER && robot.launcher != null)
+                    passToTeleOp = false;
+                }
+                else if (testChoices.test == Test.TUNE_LAUNCHER_POWER && robot.launcher != null)
+                {
+                    if (pressed)
                     {
-                        if (pressed)
-                        {
-                            launchPower -= LAUNCHER_POWER_STEP;
-                            if (launchPower < 0.0) launchPower = 0.0;
-                        }
-                        processed = true;
+                        launchPower -= LAUNCHER_POWER_STEP;
+                        if (launchPower < 0.0) launchPower = 0.0;
                     }
-                    break;
+                    passToTeleOp = false;
+                }
+                break;
 
-                case FtcGamepad.GAMEPAD_DPAD_LEFT:
-                    if (testChoices.test == Test.SUBSYSTEMS_TEST)
+            case FtcGamepad.GAMEPAD_DPAD_LEFT:
+                if (testChoices.test == Test.SUBSYSTEMS_TEST)
+                {
+                    // If we are moving swerve steering, make sure TeleOp doesn't interfere.
+                    teleOpControlEnabled = !pressed;
+                    if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
                     {
-                        if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
-                        {
-                            SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
-                            swerveDrive.setSteerAngle(270.0, false, true);
-                        }
-                        teleOpControlEnabled = !pressed;
-                        processed = true;
+                        SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
+                        swerveDrive.setSteerAngle(270.0, false, true);
                     }
-                    else if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
-                             robot.vision != null && robot.vision.rawColorBlobVision != null)
+                    passToTeleOp = false;
+                }
+                else if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
+                         robot.vision != null && robot.vision.rawColorBlobVision != null)
+                {
+                    if (pressed && colorThresholdMultiplier * 10.0 <= 100.0)
                     {
-                        if (pressed && colorThresholdMultiplier * 10.0 <= 100.0)
-                        {
-                            // Increment the significant multiplier.
-                            colorThresholdMultiplier *= 10.0;
-                        }
-                        processed = true;
+                        // Increment the significant multiplier.
+                        colorThresholdMultiplier *= 10.0;
                     }
-                    break;
+                    passToTeleOp = false;
+                }
+                break;
 
-                case FtcGamepad.GAMEPAD_DPAD_RIGHT:
-                    if (testChoices.test == Test.SUBSYSTEMS_TEST)
+            case FtcGamepad.GAMEPAD_DPAD_RIGHT:
+                if (testChoices.test == Test.SUBSYSTEMS_TEST)
+                {
+                    // If we are moving swerve steering, make sure TeleOp doesn't interfere.
+                    teleOpControlEnabled = !pressed;
+                    if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
                     {
-                        if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
-                        {
-                            SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
-                            swerveDrive.setSteerAngle(90.0, false, true);
-                        }
-                        teleOpControlEnabled = !pressed;
-                        processed = true;
+                        SwerveDrive swerveDrive = (SwerveDrive) robot.robotDrive;
+                        swerveDrive.setSteerAngle(90.0, false, true);
                     }
-                    else if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
-                             robot.vision != null && robot.vision.rawColorBlobVision != null)
+                    passToTeleOp = false;
+                }
+                else if (testChoices.test == Test.TUNE_COLORBLOB_VISION &&
+                         robot.vision != null && robot.vision.rawColorBlobVision != null)
+                {
+                    if (pressed && colorThresholdMultiplier / 10.0 >= 1.0)
                     {
-                        if (pressed && colorThresholdMultiplier / 10.0 >= 1.0)
-                        {
-                            // Decrement the significant multiplier.
-                            colorThresholdMultiplier /= 10.0;
-                        }
-                        processed = true;
+                        // Decrement the significant multiplier.
+                        colorThresholdMultiplier /= 10.0;
                     }
-                    break;
-            }
-            //
-            // If the control was not processed by this method, pass it back to TeleOp.
-            //
-            if (!processed)
-            {
-                super.driverButtonEvent(gamepad, button, pressed);
-            }
+                    passToTeleOp = false;
+                }
+                break;
+        }
+        //
+        // If the control was not processed by this method, pass it back to TeleOp.
+        //
+        if (passToTeleOp)
+        {
+            super.driverButtonEvent(gamepad, button, pressed);
         }
     }   //driverButtonEvent
 
@@ -840,47 +836,44 @@ public class FtcTest extends FtcTeleOp
     @Override
     public void operatorButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
-        if (allowButtonControl())
+        boolean passToTeleOp = true;
+        //
+        // In addition to or instead of the gamepad controls handled by FtcTeleOp, we can add to or override the
+        // FtcTeleOp gamepad actions.
+        //
+        robot.dashboard.displayPrintf(8, "%s: %04x->%s", gamepad, button, pressed ? "Pressed" : "Released");
+        switch (button)
         {
-            boolean processed = false;
-            //
-            // In addition to or instead of the gamepad controls handled by FtcTeleOp, we can add to or override the
-            // FtcTeleOp gamepad actions.
-            //
-            robot.dashboard.displayPrintf(8, "%s: %04x->%s", gamepad, button, pressed ? "Pressed" : "Released");
-            switch (button)
-            {
-                case FtcGamepad.GAMEPAD_A:
-                    break;
+            case FtcGamepad.GAMEPAD_A:
+                break;
 
-                case FtcGamepad.GAMEPAD_B:
-                    break;
+            case FtcGamepad.GAMEPAD_B:
+                break;
 
-                case FtcGamepad.GAMEPAD_X:
-                    break;
+            case FtcGamepad.GAMEPAD_X:
+                break;
 
-                case FtcGamepad.GAMEPAD_Y:
-                    break;
+            case FtcGamepad.GAMEPAD_Y:
+                break;
 
-                case FtcGamepad.GAMEPAD_DPAD_UP:
-                    break;
+            case FtcGamepad.GAMEPAD_DPAD_UP:
+                break;
 
-                case FtcGamepad.GAMEPAD_DPAD_DOWN:
-                    break;
+            case FtcGamepad.GAMEPAD_DPAD_DOWN:
+                break;
 
-                case FtcGamepad.GAMEPAD_DPAD_LEFT:
-                    break;
+            case FtcGamepad.GAMEPAD_DPAD_LEFT:
+                break;
 
-                case FtcGamepad.GAMEPAD_DPAD_RIGHT:
-                    break;
-            }
-            //
-            // If the control was not processed by this method, pass it back to TeleOp.
-            //
-            if (!processed)
-            {
-                super.operatorButtonEvent(gamepad, button, pressed);
-            }
+            case FtcGamepad.GAMEPAD_DPAD_RIGHT:
+                break;
+        }
+        //
+        // If the control was not processed by this method, pass it back to TeleOp.
+        //
+        if (passToTeleOp)
+        {
+            super.operatorButtonEvent(gamepad, button, pressed);
         }
     }   //operatorButtonEvent
 
@@ -1203,30 +1196,5 @@ public class FtcTest extends FtcTeleOp
             }
         }
     }   //doVisionTest
-
-    /**
-     * This method is called to determine if Test mode is allowed to do teleop control of the robot.
-     *
-     * @return true to allow and false otherwise.
-     */
-    private boolean allowTeleOp()
-    {
-        return teleOpControlEnabled && robot.robotDrive != null &&
-               (testChoices.test == Test.SUBSYSTEMS_TEST || testChoices.test == Test.DRIVE_SPEED_TEST);
-    }   //allowTeleOp
-
-    /**
-     * This method is called to determine if Test mode is allowed to do button control of the robot.
-     *
-     * @return true to allow and false otherwise.
-     */
-    private boolean allowButtonControl()
-    {
-        return robot.robotDrive != null &&
-               (testChoices.test == Test.SUBSYSTEMS_TEST ||
-                testChoices.test == Test.DRIVE_SPEED_TEST ||
-                testChoices.test == Test.CALIBRATE_SWERVE_STEERING ||
-                testChoices.test == Test.TUNE_LAUNCHER_POWER);
-    }   //allowButtonControl
 
 }   //class FtcTest
