@@ -59,6 +59,7 @@ public class FtcTeleOp extends FtcOpMode
     private boolean pixelTrayUpperGateOpened = false;
     private boolean wristUp = false;
 
+    protected double launchPower = 1.0;
     //
     // Implements FtcOpMode abstract method.
     //
@@ -313,7 +314,7 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_B:
                 if (robot.launcher != null)
                 {
-                    robot.launcher.setPower(pressed ? RobotParams.LAUNCHER_POWER : 0.0);
+                    robot.launcher.setPower(pressed ? launchPower : 0.0);
                 }
                 break;
 

@@ -77,7 +77,8 @@ public class FtcTest extends FtcTeleOp
         TUNE_Y_PID,
         TUNE_TURN_PID,
         PURE_PURSUIT_DRIVE,
-        CALIBRATE_SWERVE_STEERING
+        CALIBRATE_SWERVE_STEERING,
+        TUNE_LAUNCHER_POWER
     }   //enum Test
 
     /**
@@ -637,6 +638,10 @@ public class FtcTest extends FtcTeleOp
                         }
                         processed = true;
                     }
+                    else if (testChoices.test == Test.TUNE_LAUNCHER_POWER)
+                    {
+                        processed = false;
+                    }
                     break;
 
                 case FtcGamepad.GAMEPAD_X:
@@ -717,6 +722,14 @@ public class FtcTest extends FtcTeleOp
                         }
                         processed = true;
                     }
+                    else if (testChoices.test == Test.TUNE_LAUNCHER_POWER && robot.launcher != null)
+                    {
+                        if (pressed)
+                        {
+                            launchPower += 0.05;
+                        }
+                        processed = true;
+                    }
                     break;
 
                 case FtcGamepad.GAMEPAD_DPAD_DOWN:
@@ -740,6 +753,14 @@ public class FtcTest extends FtcTeleOp
                             // Decrement color threshold value.
                             colorThresholds[colorThresholdIndex] -= colorThresholdMultiplier;
                             updateColorThresholds();
+                        }
+                        processed = true;
+                    }
+                    else if (testChoices.test == Test.TUNE_LAUNCHER_POWER && robot.launcher != null)
+                    {
+                        if (pressed)
+                        {
+                            launchPower -= 0.05;
                         }
                         processed = true;
                     }
@@ -919,6 +940,7 @@ public class FtcTest extends FtcTeleOp
         testMenu.addChoice("Tune Turn PID", Test.TUNE_TURN_PID, false, tuneKpMenu);
         testMenu.addChoice("Pure Pursuit Drive", Test.PURE_PURSUIT_DRIVE, false);
         testMenu.addChoice("Calibrate Swerve Steering", Test.CALIBRATE_SWERVE_STEERING, false);
+        testMenu.addChoice("Tune Launcher Power", Test.TUNE_LAUNCHER_POWER, false);
 
         xTargetMenu.setChildMenu(yTargetMenu);
         yTargetMenu.setChildMenu(turnTargetMenu);

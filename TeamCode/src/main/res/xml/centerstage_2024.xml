@@ -31,7 +31,6 @@ SOFTWARE.
             <Servo name="pixelTray.lowerGate" port="0" />
             <Servo name="wrist.followerServo" port="1" />
             <RevBlinkinLedDriver name="blinkin" port="5" />
-            <REV_VL53L0X_RANGE_SENSOR name="wrist.sensor" port="0" bus="1"/>
             <!--
             <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
             -->
@@ -48,6 +47,7 @@ SOFTWARE.
             <AnalogInput name="arm.encoder" port="0" />
             <DigitalDevice name="elevator.lowerLimit" port="0" />
             <LynxEmbeddedIMU name="imu" port="0" bus="0"/>
+            <REV_VL53L0X_RANGE_SENSOR name="wrist.sensor" port="0" bus="1"/>
         </LynxModule>
     </LynxUsbDevice>
 </Robot>

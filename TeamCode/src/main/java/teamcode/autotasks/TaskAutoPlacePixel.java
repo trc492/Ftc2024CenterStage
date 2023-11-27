@@ -242,7 +242,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         Object params, State state, TrcTaskMgr.TaskType taskType, TrcRobot.RunMode runMode, boolean slowPeriodicLoop)
     {
         TaskParams taskParams = (TaskParams) params;
-
+        robot.globalTracer.traceInfo(
+                moduleName, "Event=%s", event);
         switch (state)
         {
             case START:
@@ -374,14 +375,14 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // Account for end-effector offset from the camera.
                     // Clone aprilTagPose before changing it, or we will corrupt the AprilTag location array.
                     TrcPose2D targetPose = aprilTagPose.clone();
-                    targetPose.x -= 7.25;
+                    targetPose.x -= 7.00;
                     // Maintain heading to be squared to the backdrop.
                     targetPose.angle = -90.0;
                     // We are right in front of the backdrop, so we don't need full power to approach it.
                     robot.robotDrive.purePursuitDrive.getXPosPidCtrl().setOutputLimit(0.25);
                     robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.25);
                     robot.robotDrive.purePursuitDrive.start(
-                        currOwner, event, 0.0, robot.robotDrive.driveBase.getFieldPosition(), false, targetPose);
+                        currOwner, event, 10.0, robot.robotDrive.driveBase.getFieldPosition(), false, targetPose);
                     sm.waitForSingleEvent(event, State.LOWER_ELEVATOR);
                 }
                 else
@@ -474,7 +475,13 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
         if (callbackContext.prevZone == 1 && callbackContext.currZone == 0)
         {
+
             robot.robotDrive.purePursuitDrive.cancel(currOwner);
+            robot.globalTracer.traceInfo(
+                    moduleName, "Drive to AprilTag canceled by wristSensor, event=%s", event);
+//            sm.setState(State.LOWER_ELEVATOR);
+            event.clear();
+            event.signal();
         }
     }   //wristSensorTriggered
 
