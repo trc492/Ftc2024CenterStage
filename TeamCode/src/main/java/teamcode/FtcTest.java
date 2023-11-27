@@ -560,6 +560,10 @@ public class FtcTest extends FtcTeleOp
                         }
                     }
                     break;
+
+                case TUNE_LAUNCHER_POWER:
+                    robot.dashboard.displayPrintf(lineNum++, "LauncherPower=%.3f", launchPower);
+                    break;
             }
         }
     }   //periodic
@@ -640,6 +644,7 @@ public class FtcTest extends FtcTeleOp
                     }
                     else if (testChoices.test == Test.TUNE_LAUNCHER_POWER)
                     {
+                        // Pass it back to FtcTeleOp.
                         processed = false;
                     }
                     break;
@@ -727,6 +732,7 @@ public class FtcTest extends FtcTeleOp
                         if (pressed)
                         {
                             launchPower += 0.05;
+                            if (launchPower > 1.0) launchPower = 1.0;
                         }
                         processed = true;
                     }
@@ -761,6 +767,7 @@ public class FtcTest extends FtcTeleOp
                         if (pressed)
                         {
                             launchPower -= 0.05;
+                            if (launchPower < 0.0) launchPower = 0.0;
                         }
                         processed = true;
                     }
