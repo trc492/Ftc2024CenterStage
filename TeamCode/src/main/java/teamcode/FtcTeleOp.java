@@ -481,9 +481,13 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_DPAD_UP:
                 if (autoAssistPlaceActive)
                 {
-                    if (pressed && scoreLevelIndex < RobotParams.ELEVATOR_PRESETS.length - 1)
+                    if (pressed)
                     {
-                        scoreLevelIndex++;
+                        if (scoreLevelIndex < RobotParams.ELEVATOR_PRESETS.length - 1)
+                        {
+                            scoreLevelIndex++;
+                        }
+
                         if (robot.blinkin != null)
                         {
                             robot.blinkin.setScoreLevelIndex(scoreLevelIndex);
@@ -502,9 +506,13 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_DPAD_DOWN:
                 if (autoAssistPlaceActive)
                 {
-                    if (pressed && scoreLevelIndex > 0)
+                    if (pressed)
                     {
-                        scoreLevelIndex--;
+                        if (scoreLevelIndex > 0)
+                        {
+                            scoreLevelIndex--;
+                        }
+
                         if (robot.blinkin != null)
                         {
                             robot.blinkin.setScoreLevelIndex(scoreLevelIndex);
@@ -523,9 +531,13 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_DPAD_LEFT:
                 if (autoAssistPlaceActive)
                 {
-                    if (pressed && aprilTagIndex > 0)
+                    if (pressed)
                     {
-                        aprilTagIndex--;
+                        if (aprilTagIndex > 0)
+                        {
+                            aprilTagIndex--;
+                        }
+
                         if (robot.blinkin != null)
                         {
                             robot.blinkin.setAprilTagIndex(aprilTagIndex);
@@ -544,9 +556,13 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_DPAD_RIGHT:
                 if (autoAssistPlaceActive)
                 {
-                    if (pressed && aprilTagIndex < RobotParams.BLUE_BACKDROP_APRILTAGS.length - 1)
+                    if (pressed)
                     {
-                        aprilTagIndex++;
+                        if (aprilTagIndex < RobotParams.BLUE_BACKDROP_APRILTAGS.length - 1)
+                        {
+                            aprilTagIndex++;
+                        }
+
                         if (robot.blinkin != null)
                         {
                             robot.blinkin.setAprilTagIndex(aprilTagIndex);

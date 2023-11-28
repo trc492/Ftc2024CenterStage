@@ -478,9 +478,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
             robot.robotDrive.purePursuitDrive.cancel(currOwner);
             robot.globalTracer.traceInfo(
-                moduleName, "Drive to AprilTag canceled by wristSensor, event=%s", event);
-            event.clear();
-            event.signal();
+                moduleName, "Drive to AprilTag canceled by wristSensor, triggerState=%s", callbackContext);
         }
     }   //wristSensorTriggered
 
