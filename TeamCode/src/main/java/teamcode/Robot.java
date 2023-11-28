@@ -52,7 +52,7 @@ import teamcode.vision.Vision;
 public class Robot
 {
     private static final String moduleName = Robot.class.getSimpleName();
-    private static final TrcDbgTrace globalTracer = TrcDbgTrace.getGlobalTracer();
+    public static final TrcDbgTrace globalTracer = TrcDbgTrace.getGlobalTracer();
     //
     // Global objects.
     //
