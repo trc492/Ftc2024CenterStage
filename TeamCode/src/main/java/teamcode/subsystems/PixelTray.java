@@ -46,8 +46,6 @@ public class PixelTray
         this.msgTracer = msgTracer;
         lowerGate = new FtcServo(instanceName + ".lowerGate");
         upperGate = new FtcServo(instanceName + ".upperGate");
-//        setLowerGateOpened(false, null);
-//        setUpperGateOpened(false, null);
     }   //PixelTray
 
     /**
@@ -69,15 +67,13 @@ public class PixelTray
      */
     public void setLowerGateOpened(boolean opened, TrcEvent event)
     {
-        final String funcName = "setLowerGateOpened";
-
         lowerGateOpened = opened;
         lowerGate.setPosition(
             opened? RobotParams.PIXELTRAY_LOWER_GATE_OPEN: RobotParams.PIXELTRAY_LOWER_GATE_CLOSE,
             event, RobotParams.PIXELTRAY_OPEN_CLOSE_TIME);
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(funcName, "lowerGateOpened = %s", opened);
+            msgTracer.traceInfo(instanceName, "lowerGateOpened = %s", opened);
         }
     }   //setLowerGateOpened
 
@@ -99,15 +95,13 @@ public class PixelTray
      */
     public void setUpperGateOpened(boolean opened, TrcEvent event)
     {
-        final String funcName = "setUpperGateOpened";
-
         upperGateOpened = opened;
         upperGate.setPosition(
             opened? RobotParams.PIXELTRAY_UPPER_GATE_OPEN: RobotParams.PIXELTRAY_UPPER_GATE_CLOSE,
             event, RobotParams.PIXELTRAY_OPEN_CLOSE_TIME);
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(funcName, "upperGateOpened = %s", opened);
+            msgTracer.traceInfo(instanceName, "upperGateOpened = %s", opened);
         }
     }   //setUpperGateOpened
 

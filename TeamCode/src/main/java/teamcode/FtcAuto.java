@@ -43,6 +43,8 @@ import teamcode.autocommands.CmdAuto;
 @Autonomous(name="FtcAutonomous", group="Ftc3543")
 public class FtcAuto extends FtcOpMode
 {
+    private static final String moduleName = FtcAuto.class.getSimpleName();
+
     public enum Alliance
     {
         RED_ALLIANCE,
@@ -108,7 +110,6 @@ public class FtcAuto extends FtcOpMode
 
     }   //class AutoChoices
 
-    private static final String moduleName = FtcAuto.class.getSimpleName();
     public static final AutoChoices autoChoices = new AutoChoices();
     private Robot robot;
     private TrcRobot.RobotCommand autoCommand;
@@ -124,7 +125,6 @@ public class FtcAuto extends FtcOpMode
     @Override
     public void robotInit()
     {
-        final String funcName = "robotInit";
         //
         // Create and initialize robot object.
         //
@@ -188,7 +188,7 @@ public class FtcAuto extends FtcOpMode
             {
                 if (robot.vision.redBlobVision != null)
                 {
-                    robot.globalTracer.traceInfo(funcName, "Enabling RedBlobVision.");
+                    robot.globalTracer.traceInfo(moduleName, "Enabling RedBlobVision.");
                     robot.vision.setRedBlobVisionEnabled(true);
                 }
             }
@@ -196,7 +196,7 @@ public class FtcAuto extends FtcOpMode
             {
                 if (robot.vision.blueBlobVision != null)
                 {
-                    robot.globalTracer.traceInfo(funcName, "Enabling BlueBlobVision.");
+                    robot.globalTracer.traceInfo(moduleName, "Enabling BlueBlobVision.");
                     robot.vision.setBlueBlobVisionEnabled(true);
                 }
             }
@@ -233,8 +233,6 @@ public class FtcAuto extends FtcOpMode
     @Override
     public void startMode(TrcRobot.RunMode prevMode, TrcRobot.RunMode nextMode)
     {
-        final String funcName = "startMode";
-
         if (robot.globalTracer.isTraceLogOpened())
         {
             robot.globalTracer.setTraceLogEnabled(true);
@@ -256,7 +254,7 @@ public class FtcAuto extends FtcOpMode
             // We are done with detecting TeamProp with TensorFlow, shut it down.
             if (robot.vision.tensorFlowVision != null)
             {
-                robot.globalTracer.traceInfo(funcName, "Disabling TensorFlowVision.");
+                robot.globalTracer.traceInfo(moduleName, "Disabling TensorFlowVision.");
                 robot.vision.setTensorFlowVisionEnabled(false);
             }
             // We are done with detecting TeamProp with ColorBlob detection, shut it down.

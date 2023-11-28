@@ -24,15 +24,11 @@ package teamcode.subsystems;
 
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcEvent;
-import TrcCommonLib.trclib.TrcSensor;
-import TrcCommonLib.trclib.TrcTriggerThresholdZones;
 import TrcFtcLib.ftclib.FtcDcMotor;
-import TrcFtcLib.ftclib.FtcDistanceSensor;
 import teamcode.RobotParams;
 
 public class Intake
 {
-    private final TrcDbgTrace msgTracer;
     private final FtcDcMotor intakeMotor;
 //    private final FtcDistanceSensor intakeSensor;
 //    private int pixelCount = 0;
@@ -45,7 +41,6 @@ public class Intake
      */
     public Intake(String instanceName, TrcDbgTrace msgTracer)
     {
-        this.msgTracer = msgTracer;
         intakeMotor = new FtcDcMotor(instanceName + ".motor");
         intakeMotor.setMotorInverted(RobotParams.INTAKE_MOTOR_INVERTED);
 //        if (RobotParams.Preferences.hasIntakeSensor)
@@ -103,13 +98,12 @@ public class Intake
 //     */
 //    private void analogTriggerCallback(Object context)
 //    {
-//        final String funcName = "analogTriggerEvent";
 //        TrcTriggerThresholdZones.CallbackContext callbackContext = (TrcTriggerThresholdZones.CallbackContext) context;
 //
 //        if (msgTracer != null)
 //        {
 //            msgTracer.traceInfo(
-//                funcName, "Zone=%d->%d, value=%.3f",
+//                instanceName, "Zone=%d->%d, value=%.3f",
 //                callbackContext.prevZone, callbackContext.currZone, callbackContext.sensorValue);
 //        }
 //

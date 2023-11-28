@@ -97,11 +97,9 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
      */
     public void autoAssistPickup(Vision.PixelType pixelType, TrcEvent completionEvent)
     {
-        final String funcName = "autoAssistPickup";
-
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(funcName, "%s: pixelType=%s, event=%s", moduleName, pixelType, completionEvent);
+            msgTracer.traceInfo(moduleName, "pixelType=%s, event=%s", pixelType, completionEvent);
         }
 
         this.pixelType = pixelType;
@@ -113,11 +111,9 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
      */
     public void autoAssistCancel()
     {
-        final String funcName = "autoAssistCancel";
-
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(funcName, "%s: Canceling auto-assist.", moduleName);
+            msgTracer.traceInfo(moduleName, "Canceling auto-assist.");
         }
 
         stopAutoTask(false);
@@ -137,7 +133,6 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
     @Override
     protected boolean acquireSubsystemsOwnership()
     {
-        final String funcName = "acquireSubsystemsOwnership";
         boolean success = ownerName == null ||
                           (robot.robotDrive.driveBase.acquireExclusiveAccess(ownerName));
 
@@ -146,7 +141,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
             currOwner = ownerName;
             if (msgTracer != null)
             {
-                msgTracer.traceInfo(funcName, "%s: Successfully acquired subsystem ownerships.", moduleName);
+                msgTracer.traceInfo(moduleName, "Successfully acquired subsystem ownerships.");
             }
         }
         else
@@ -155,8 +150,8 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
             {
                 TrcOwnershipMgr ownershipMgr = TrcOwnershipMgr.getInstance();
                 msgTracer.traceInfo(
-                    funcName, "%s: Failed to acquire subsystem ownership (currOwner=%s, robotDrive=%s).",
-                    moduleName, currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
+                    moduleName, "Failed to acquire subsystem ownership (currOwner=%s, robotDrive=%s).",
+                    currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
             }
             releaseSubsystemsOwnership();
         }
@@ -171,16 +166,14 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
     @Override
     protected void releaseSubsystemsOwnership()
     {
-        final String funcName = "releaseSubsystemsOwnership";
-
         if (ownerName != null)
         {
             if (msgTracer != null)
             {
                 TrcOwnershipMgr ownershipMgr = TrcOwnershipMgr.getInstance();
                 msgTracer.traceInfo(
-                    funcName, "%s: Releasing subsystem ownership (currOwner=%s, robotDrive=%s).",
-                    moduleName, currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
+                    moduleName, "Releasing subsystem ownership (currOwner=%s, robotDrive=%s).",
+                    currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
             }
 
             robot.robotDrive.driveBase.releaseExclusiveAccess(currOwner);
@@ -194,11 +187,9 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
     @Override
     protected void stopSubsystems()
     {
-        final String funcName = "stopSubsystems";
-
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(funcName, "%s: Stopping subsystems.", moduleName);
+            msgTracer.traceInfo(moduleName, "Stopping subsystems.");
         }
 
         robot.robotDrive.cancel(currOwner);
@@ -268,9 +259,11 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
                         String msg = String.format(
                             Locale.US, "%s is found at x %.1f, y %.1f, angle=%.1f",
                             taskParams.pixelType, pixelInfo.objPose.x, pixelInfo.objPose.y, pixelInfo.objPose.yaw);
-                        robot.globalTracer.traceInfo(moduleName, msg);
-//                        robot.dashboard.displayPrintf(3, "%s", msg);
-//                        robot.speak(msg);
+                        if (msgTracer != null)
+                        {
+                            msgTracer.traceInfo(moduleName, msg);
+                        }
+                        robot.speak(msg);
                         sm.setState(State.ALIGN_TO_PIXEL);
                     }
                     else if (visionExpiredTime == null)
@@ -281,19 +274,27 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
                     else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
                     {
                         // Timing out, moving on.
-                        robot.globalTracer.traceInfo(moduleName, "%s not found.", taskParams.pixelType);
+                        if (msgTracer != null)
+                        {
+                            msgTracer.traceInfo(moduleName, "%s not found.", taskParams.pixelType);
+                        }
+
                         if (robot.blinkin != null)
                         {
                             // Tell the drivers vision doesn't see anything so they can score manually.
                             robot.blinkin.setDetectedPattern(BlinkinLEDs.DETECTED_NOTHING);
                         }
+
                         sm.setState(State.DONE);
                     }
                 }
                 else
                 {
                     // Vision is not enable, moving on.
-                    robot.globalTracer.traceInfo(moduleName, "Vision not enabled.");
+                    if (msgTracer != null)
+                    {
+                        msgTracer.traceInfo(moduleName, "Vision not enabled.");
+                    }
                     sm.setState(State.DONE);
                 }
                 break;

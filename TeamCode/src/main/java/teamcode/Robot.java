@@ -51,12 +51,13 @@ import teamcode.vision.Vision;
  */
 public class Robot
 {
+    private static final String moduleName = Robot.class.getSimpleName();
+    private static final TrcDbgTrace globalTracer = TrcDbgTrace.getGlobalTracer();
     //
     // Global objects.
     //
     public FtcOpMode opMode;
     public FtcDashboard dashboard;
-    public TrcDbgTrace globalTracer;
     public static FtcMatchInfo matchInfo = null;
     private static TrcPose2D endOfAutoRobotPose = null;
     //
@@ -92,7 +93,6 @@ public class Robot
         //
         opMode = FtcOpMode.getInstance();
         dashboard = FtcDashboard.getInstance();
-        globalTracer = TrcDbgTrace.getGlobalTracer();
         checkRobotSupport();
 
         speak("Init starting");
@@ -219,8 +219,6 @@ public class Robot
      */
     public void startMode(TrcRobot.RunMode runMode)
     {
-        final String funcName = "startMode";
-
         if (robotDrive != null)
         {
             //
@@ -243,7 +241,7 @@ public class Robot
                 {
                     // We had a previous autonomous run that saved the robot position at the end, use it.
                     robotDrive.driveBase.setFieldPosition(endOfAutoRobotPose);
-                    globalTracer.traceInfo(funcName, "Restore saved RobotPose=%s", endOfAutoRobotPose);
+                    globalTracer.traceInfo(moduleName, "Restore saved RobotPose=%s", endOfAutoRobotPose);
                 }
             }
             // Consume it so it's no longer valid for next run.
@@ -262,7 +260,6 @@ public class Robot
      */
     public void stopMode(TrcRobot.RunMode runMode)
     {
-        final String funcName = "stopMode";
         //
         // Print all performance counters if there are any.
         //
@@ -284,55 +281,55 @@ public class Robot
         {
             if (vision.rawColorBlobVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling RawColorBlobVision.");
+                globalTracer.traceInfo(moduleName, "Disabling RawColorBlobVision.");
                 vision.setRawColorBlobVisionEnabled(false);
             }
 
             if (vision.aprilTagVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling AprilTagVision.");
+                globalTracer.traceInfo(moduleName, "Disabling AprilTagVision.");
                 vision.setAprilTagVisionEnabled(false);
             }
 
             if (vision.purplePixelVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling PurplePixelVision.");
+                globalTracer.traceInfo(moduleName, "Disabling PurplePixelVision.");
                 vision.setPixelVisionEnabled(Vision.PixelType.PurplePixel, false);
             }
 
             if (vision.greenPixelVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling GreenPixelVision.");
+                globalTracer.traceInfo(moduleName, "Disabling GreenPixelVision.");
                 vision.setPixelVisionEnabled(Vision.PixelType.GreenPixel, false);
             }
 
             if (vision.yellowPixelVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling YellowPixelVision.");
+                globalTracer.traceInfo(moduleName, "Disabling YellowPixelVision.");
                 vision.setPixelVisionEnabled(Vision.PixelType.YellowPixel, false);
             }
 
             if (vision.whitePixelVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling WhitePixelVision.");
+                globalTracer.traceInfo(moduleName, "Disabling WhitePixelVision.");
                 vision.setPixelVisionEnabled(Vision.PixelType.WhitePixel, false);
             }
 
             if (vision.redBlobVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling RedBlobVision.");
+                globalTracer.traceInfo(moduleName, "Disabling RedBlobVision.");
                 vision.setRedBlobVisionEnabled(false);
             }
 
             if (vision.blueBlobVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling BlueBlobVision.");
+                globalTracer.traceInfo(moduleName, "Disabling BlueBlobVision.");
                 vision.setBlueBlobVisionEnabled(false);
             }
 
             if (vision.tensorFlowVision != null)
             {
-                globalTracer.traceInfo(funcName, "Disabling TensorFlowVision.");
+                globalTracer.traceInfo(moduleName, "Disabling TensorFlowVision.");
                 vision.setTensorFlowVisionEnabled(false);
             }
        }
@@ -343,7 +340,7 @@ public class Robot
             {
                 // Save current robot location at the end of autonomous so subsequent teleop run can restore it.
                 endOfAutoRobotPose = robotDrive.driveBase.getFieldPosition();
-                globalTracer.traceInfo(funcName, "Saved robot pose=%s", endOfAutoRobotPose);
+                globalTracer.traceInfo(moduleName, "Saved robot pose=%s", endOfAutoRobotPose);
             }
             //
             // Disable odometry.

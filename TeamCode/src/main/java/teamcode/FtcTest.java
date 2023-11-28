@@ -34,7 +34,6 @@ import TrcCommonLib.command.CmdPidDrive;
 import TrcCommonLib.command.CmdTimedDrive;
 
 import TrcCommonLib.trclib.TrcElapsedTimer;
-import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcGameController;
 import TrcCommonLib.trclib.TrcPidController;
 import TrcCommonLib.trclib.TrcPose2D;
@@ -244,7 +243,7 @@ public class FtcTest extends FtcTeleOp
         //
         if (robot.vision != null && robot.vision.tensorFlowVision != null && testChoices.test != Test.VISION_TEST)
         {
-            robot.globalTracer.traceInfo("TestInit", "Disabling TensorFlowVision.");
+            robot.globalTracer.traceInfo(moduleName, "Disabling TensorFlowVision.");
             robot.vision.setTensorFlowVisionEnabled(false);
         }
     }   //robotInit
@@ -263,8 +262,6 @@ public class FtcTest extends FtcTeleOp
     @Override
     public void startMode(TrcRobot.RunMode prevMode, TrcRobot.RunMode nextMode)
     {
-        final String funcName = "startMode";
-
         super.startMode(prevMode, nextMode);
         switch (testChoices.test)
         {
@@ -275,49 +272,49 @@ public class FtcTest extends FtcTeleOp
                     // Vision generally will impact performance, so we only enable it if it's needed.
                     if (robot.vision.aprilTagVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling AprilTagVision.");
+                        robot.globalTracer.traceInfo(moduleName, "Enabling AprilTagVision.");
                         robot.vision.setAprilTagVisionEnabled(true);
                     }
 
                     if (robot.vision.purplePixelVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling PurplePixelVision.");
+                        robot.globalTracer.traceInfo(moduleName, "Enabling PurplePixelVision.");
                         robot.vision.setPixelVisionEnabled(Vision.PixelType.PurplePixel, true);
                     }
 
                     if (robot.vision.greenPixelVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling GreenPixelVision.");
+                        robot.globalTracer.traceInfo(moduleName, "Enabling GreenPixelVision.");
                         robot.vision.setPixelVisionEnabled(Vision.PixelType.GreenPixel, true);
                     }
 
                     if (robot.vision.yellowPixelVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling YellowPixelVision.");
+                        robot.globalTracer.traceInfo(moduleName, "Enabling YellowPixelVision.");
                         robot.vision.setPixelVisionEnabled(Vision.PixelType.YellowPixel, true);
                     }
 
                     if (robot.vision.whitePixelVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling WhitePixelVision.");
+                        robot.globalTracer.traceInfo(moduleName, "Enabling WhitePixelVision.");
                         robot.vision.setPixelVisionEnabled(Vision.PixelType.WhitePixel, true);
                     }
 
                     if (robot.vision.redBlobVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling RedBlobVision.");
+                        robot.globalTracer.traceInfo(moduleName, "Enabling RedBlobVision.");
                         robot.vision.setRedBlobVisionEnabled(true);
                     }
 
                     if (robot.vision.blueBlobVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling BlueBlobVision.");
+                        robot.globalTracer.traceInfo(moduleName, "Enabling BlueBlobVision.");
                         robot.vision.setBlueBlobVisionEnabled(true);
                     }
 
                     if (robot.vision.tensorFlowVision != null)
                     {
-                        robot.globalTracer.traceInfo(funcName, "Enabling TensorFlowVison.");
+                        robot.globalTracer.traceInfo(moduleName, "Enabling TensorFlowVison.");
                         robot.vision.setTensorFlowVisionEnabled(true);
                     }
                 }
@@ -326,7 +323,7 @@ public class FtcTest extends FtcTeleOp
             case TUNE_COLORBLOB_VISION:
                 if (robot.vision != null && robot.vision.rawColorBlobVision != null)
                 {
-                    robot.globalTracer.traceInfo(funcName, "Enabling FtcRawEocvVision.");
+                    robot.globalTracer.traceInfo(moduleName, "Enabling FtcRawEocvVision.");
                     robot.vision.setRawColorBlobVisionEnabled(true);
                     colorThresholds = robot.vision.getRawColorBlobThresholds();
                     colorThresholdIndex = 0;

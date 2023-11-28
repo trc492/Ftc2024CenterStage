@@ -45,20 +45,15 @@ public class MecanumDrive extends RobotDrive
     public MecanumDrive()
     {
         super();
-
         driveMotors = createDriveMotors(driveMotorNames, driveMotorInverted);
-
         driveBase = new TrcMecanumDriveBase(
             driveMotors[INDEX_LEFT_FRONT], driveMotors[INDEX_LEFT_BACK],
             driveMotors[INDEX_RIGHT_FRONT], driveMotors[INDEX_RIGHT_BACK], gyro);
-
         if (RobotParams.Preferences.useExternalOdometry)
         {
-            //
             // Create the external odometry device that uses the right back encoder port as the X odometry and
             // the left and right front encoder ports as the Y1 and Y2 odometry. Gyro will serve as the angle
             // odometry.
-            //
             TrcOdometryWheel driveBaseOdometry = new TrcOdometryWheel(
                 new TrcOdometryWheel.AxisSensor(
                     driveMotors[INDEX_RIGHT_BACK], RobotParams.X_ODWHEEL_Y_OFFSET, RobotParams.X_ODWHEEL_X_OFFSET),
@@ -70,9 +65,7 @@ public class MecanumDrive extends RobotDrive
                         driveMotors[INDEX_RIGHT_FRONT], RobotParams.YRIGHT_ODWHEEL_X_OFFSET,
                         RobotParams.YRIGHT_ODWHEEL_Y_OFFSET)},
                 gyro);
-            //
             // Set the drive base to use the external odometry device overriding the built-in one.
-            //
             driveBase.setDriveBaseOdometry(driveBaseOdometry);
             driveBase.setOdometryScales(RobotParams.ODWHEEL_INCHES_PER_COUNT, RobotParams.ODWHEEL_INCHES_PER_COUNT);
         }
@@ -90,8 +83,6 @@ public class MecanumDrive extends RobotDrive
             RobotParams.yPosPidCoeff, RobotParams.YPOS_TOLERANCE, driveBase::getYPosition);
         TrcPidController.PidParameters turnPidParams = new TrcPidController.PidParameters(
             RobotParams.turnPidCoeff, RobotParams.TURN_TOLERANCE, driveBase::getHeading);
-//            RobotParams.turnPidCoeff, RobotParams.TURN_TOLERANCE, RobotParams.TURN_SETTLING,
-//            RobotParams.TURN_STEADY_STATE_ERR, RobotParams.TURN_STALL_ERRRATE_THRESHOLD, driveBase::getHeading);
 
         pidDrive = new TrcPidDrive("pidDrive", driveBase, xPosPidParams, yPosPidParams, turnPidParams);
         pidDrive.setStallDetectionEnabled(true);
@@ -115,10 +106,6 @@ public class MecanumDrive extends RobotDrive
         purePursuitDrive.setStallDetectionEnabled(true);
         purePursuitDrive.setFastModeEnabled(true);
         purePursuitDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
-
-//        purePursuitDrive.getXPosPidCtrl().setOnTargetDebugEnabled(false);
-//        purePursuitDrive.getYPosPidCtrl().setOnTargetDebugEnabled(false);
-//        purePursuitDrive.getTurnPidCtrl().setOnTargetDebugEnabled(false);
     }   //MecanumDrive
 
 }   //class MecanumDrive

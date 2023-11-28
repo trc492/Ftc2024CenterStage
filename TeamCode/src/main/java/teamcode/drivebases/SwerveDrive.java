@@ -47,6 +47,8 @@ import teamcode.RobotParams;
  */
 public class SwerveDrive extends RobotDrive
 {
+    private static final String moduleName = SwerveDrive.class.getSimpleName();
+    private static final TrcDbgTrace globalTracer = TrcDbgTrace.getGlobalTracer();
     private static final boolean logPoseEvents = false;
     private static final boolean tracePidInfo = false;
 
@@ -77,8 +79,6 @@ public class SwerveDrive extends RobotDrive
     public SwerveDrive()
     {
         super();
-
-        final TrcDbgTrace globalTracer = TrcDbgTrace.getGlobalTracer();
         readSteeringCalibrationData();
         driveMotors = createDriveMotors(driveMotorNames, driveMotorInverted);
         steerEncoders = createSteerEncoders(
@@ -338,8 +338,6 @@ public class SwerveDrive extends RobotDrive
      */
     public void saveSteeringCalibrationData()
     {
-        final String funcName = "saveSteeringCalibrationData";
-
         try (PrintStream out = new PrintStream(new FileOutputStream(
             RobotParams.TEAM_FOLDER_PATH + "/" + RobotParams.STEERING_CALIBRATION_DATA_FILE)))
         {
@@ -348,8 +346,8 @@ public class SwerveDrive extends RobotDrive
                 out.printf("%s: %f\n", steerServoNames[i], zeroPositions[i]);
             }
             out.close();
-            TrcDbgTrace.getGlobalTracer().traceInfo(
-                funcName, "SteeringCalibrationData%s=%s",
+            globalTracer.traceInfo(
+                moduleName, "SteeringCalibrationData%s=%s",
                 Arrays.toString(steerServoNames), Arrays.toString(zeroPositions));
         }
         catch (FileNotFoundException e)
@@ -365,8 +363,6 @@ public class SwerveDrive extends RobotDrive
      */
     public void readSteeringCalibrationData()
     {
-        final String funcName = "readSteeringCalibrationData";
-        TrcDbgTrace tracer = TrcDbgTrace.getGlobalTracer();
         String line = null;
 
         try (Scanner in = new Scanner(new FileReader(
@@ -388,19 +384,20 @@ public class SwerveDrive extends RobotDrive
         }
         catch (FileNotFoundException e)
         {
-            tracer.traceWarn(funcName, "Steering calibration data file not found, using built-in defaults.");
+            globalTracer.traceWarn(moduleName, "Steering calibration data file not found, using built-in defaults.");
         }
         catch (NumberFormatException e)
         {
-            tracer.traceErr(funcName, "Invalid zero position value in line %s", line);
+            globalTracer.traceErr(moduleName, "Invalid zero position value in line %s", line);
         }
         catch (RuntimeException e)
         {
-            tracer.traceErr(funcName, "Invalid servo name in line %s", line);
+            globalTracer.traceErr(moduleName, "Invalid servo name in line %s", line);
         }
 
-        tracer.traceInfo(
-            funcName, "SteeringCalibrationData%s=%s", Arrays.toString(steerServoNames), Arrays.toString(zeroPositions));
+        globalTracer.traceInfo(
+            moduleName, "SteeringCalibrationData%s=%s", Arrays.toString(steerServoNames),
+            Arrays.toString(zeroPositions));
     }   //readSteeringCalibrationData
 
 }   //class SwerveDrive

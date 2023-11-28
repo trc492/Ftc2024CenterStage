@@ -440,7 +440,7 @@ public class Vision
     public TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> getDetectedAprilTag(Integer id, int lineNum)
     {
         TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo =
-            robot.vision.aprilTagVision.getBestDetectedTargetInfo(id, null);
+            aprilTagVision.getBestDetectedTargetInfo(id, null);
 
         if (aprilTagInfo != null && robot.blinkin != null)
         {
@@ -463,7 +463,6 @@ public class Vision
      */
     public TrcPose2D getRobotFieldPose(TrcVisionTargetInfo<FtcVisionAprilTag.DetectedObject> aprilTagInfo)
     {
-        final String funcName = "getRobotFieldPose";
         TrcPose2D robotPose = null;
 
         if (aprilTagInfo != null)
@@ -472,7 +471,8 @@ public class Vision
             TrcPose2D cameraPose = aprilTagPose.subtractRelativePose(aprilTagInfo.objPose.toPose2D());
             robotPose = cameraPose.subtractRelativePose(RobotParams.BACKCAM_POSE);
             robot.globalTracer.traceInfo(
-                funcName, "AprilTagId=%d, aprilTagFieldPose=%s, aprilTagPoseFromCamera=%s, cameraPose=%s, robotPose=%s",
+                moduleName,
+                "AprilTagId=%d, aprilTagFieldPose=%s, aprilTagPoseFromCamera=%s, cameraPose=%s, robotPose=%s",
                 aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagPose, aprilTagInfo.objPose.toPose2D(),
                 cameraPose, robotPose);
         }
@@ -860,7 +860,7 @@ public class Vision
     public TrcVisionTargetInfo<FtcVisionTensorFlow.DetectedObject> getDetectedTensorFlowPixel(int lineNum)
     {
         TrcVisionTargetInfo<FtcVisionTensorFlow.DetectedObject> tensorFlowInfo =
-            robot.vision.tensorFlowVision.getBestDetectedTargetInfo(
+            tensorFlowVision.getBestDetectedTargetInfo(
                 Vision.TFOD_PIXEL_LABEL, null, this::compareConfidence, 0.0, 0.0);
 
         if (tensorFlowInfo != null && robot.blinkin != null)

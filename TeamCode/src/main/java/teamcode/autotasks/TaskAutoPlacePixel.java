@@ -258,13 +258,19 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // Set up vision: switch to rear camera and enable AprilTagVision.
                     robot.vision.setActiveWebcam(robot.vision.getRearWebcam());
                     robot.vision.setAprilTagVisionEnabled(true);
-                    robot.globalTracer.traceInfo(moduleName, "Enabling AprilTagVision.");
+                    if (msgTracer != null)
+                    {
+                        msgTracer.traceInfo(moduleName, "Enabling AprilTagVision.");
+                    }
                     sm.setState(State.FIND_APRILTAG);
                 }
                 else
                 {
                     // Not using vision or AprilTag Vision is not enabled, skip vision.
-                    robot.globalTracer.traceInfo(moduleName, "AprilTag Vision not enabled.");
+                    if (msgTracer != null)
+                    {
+                        msgTracer.traceInfo(moduleName, "AprilTag Vision not enabled.");
+                    }
                     sm.setState(State.SET_SCORING_POS);
                 }
                 break;
@@ -295,22 +301,24 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                             RobotParams.BLUE_BACKDROP_APRILTAGS[taskParams.aprilTagIndex] :
                             RobotParams.RED_BACKDROP_APRILTAGS[taskParams.aprilTagIndex];
                     aprilTagPose = RobotParams.APRILTAG_POSES[targetAprilTagId - 1];
-                    robot.globalTracer.traceInfo(
-                        moduleName,
-                        "Vision found AprilTag %d at %s from camera.\n" +
-                        "Targeting AprilTag %d at %s from robotPose %s.",
-                        aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagInfo.objPose,
-                        targetAprilTagId, aprilTagPose, robot.robotDrive.driveBase.getFieldPosition());
+                    if (msgTracer != null)
+                    {
+                        msgTracer.traceInfo(
+                            moduleName,
+                            "Vision found AprilTag %d at %s from camera.\n" +
+                            "Targeting AprilTag %d at %s from robotPose %s.",
+                            aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagInfo.objPose,
+                            targetAprilTagId, aprilTagPose, robot.robotDrive.driveBase.getFieldPosition());
+                    }
                     sm.setState(State.SET_SCORING_POS);
                 }
                 else
                 {
-                    if (aprilTagInfo != null)
+                    if (aprilTagInfo != null && msgTracer != null)
                     {
                         // For some reason, we found an AprilTag but not in the range of 1-6. Ignore it as if we did
                         // not see it.
-                        robot.globalTracer.traceWarn(
-                            moduleName, "Not seeing backdrop!!! (obj=%s)", aprilTagInfo.detectedObj);
+                        msgTracer.traceWarn(moduleName, "Not seeing backdrop!!! (obj=%s)", aprilTagInfo.detectedObj);
                     }
 
                     if (visionExpiredTime == null)
@@ -321,7 +329,10 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
                     {
                         // Timed out, moving on.
-                        robot.globalTracer.traceInfo(moduleName, "No AprilTag found.");
+                        if (msgTracer != null)
+                        {
+                            msgTracer.traceInfo(moduleName, "No AprilTag found.");
+                        }
                         sm.setState(State.SET_SCORING_POS);
                     }
                 }
@@ -355,9 +366,12 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                                 RobotParams.BLUE_BACKDROP_APRILTAGS[taskParams.aprilTagIndex] :
                                 RobotParams.RED_BACKDROP_APRILTAGS[taskParams.aprilTagIndex];
                         aprilTagPose = RobotParams.APRILTAG_POSES[targetAprilTagId - 1];
-                        robot.globalTracer.traceInfo(
-                            moduleName, "Drive to AprilTag %d using absolute odometry (pose=%s).",
-                            targetAprilTagId, aprilTagPose);
+                        if (msgTracer != null)
+                        {
+                            msgTracer.traceInfo(
+                                moduleName, "Drive to AprilTag %d using absolute odometry (pose=%s).",
+                                targetAprilTagId, aprilTagPose);
+                        }
                     }
                     else if (robot.blinkin != null)
                     {
@@ -379,8 +393,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // Maintain heading to be squared to the backdrop.
                     targetPose.angle = -90.0;
                     // We are right in front of the backdrop, so we don't need full power to approach it.
-                    robot.robotDrive.purePursuitDrive.getXPosPidCtrl().setOutputLimit(0.25);
-                    robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.25);
+                    robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.25);
                     robot.robotDrive.purePursuitDrive.start(
                         currOwner, event, 10.0, robot.robotDrive.driveBase.getFieldPosition(), false, targetPose);
                     sm.waitForSingleEvent(event, State.LOWER_ELEVATOR);
@@ -396,8 +409,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 {
                     robot.elevatorArm.wristTrigger.disableTrigger();
                 }
-                robot.robotDrive.purePursuitDrive.getXPosPidCtrl().setOutputLimit(1.0);
-                robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(1.0);
+                robot.robotDrive.purePursuitDrive.setMoveOutputLimit(1.0);
 
                 if (robot.elevatorArm != null)
                 {
@@ -477,8 +489,11 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         {
 
             robot.robotDrive.purePursuitDrive.cancel(currOwner);
-            robot.globalTracer.traceInfo(
-                moduleName, "Drive to AprilTag canceled by wristSensor, triggerState=%s", callbackContext);
+            if (msgTracer != null)
+            {
+                msgTracer.traceInfo(
+                    moduleName, "Drive to AprilTag canceled by wristSensor, triggerState=%s", callbackContext);
+            }
         }
     }   //wristSensorTriggered
 
