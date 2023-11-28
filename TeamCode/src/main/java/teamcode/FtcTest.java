@@ -514,8 +514,7 @@ public class FtcTest extends FtcTeleOp
 
         if (slowPeriodicLoop)
         {
-            if (teleOpControlEnabled &&
-                (testChoices.test == Test.SUBSYSTEMS_TEST || testChoices.test == Test.DRIVE_SPEED_TEST))
+            if (allowTeleOp())
             {
                 //
                 // Allow TeleOp to run so we can control the robot in subsystem test or drive speed test modes.
@@ -639,6 +638,11 @@ public class FtcTest extends FtcTeleOp
                             colorThresholdIndex = colorThresholds.length - 1;
                         }
                     }
+                    passToTeleOp = false;
+                }
+                else if (testChoices.test == Test.TUNE_LAUNCHER_POWER && robot.launcher != null)
+                {
+                    robot.launcher.setPower(pressed ? launchPower : 0.0);
                     passToTeleOp = false;
                 }
                 break;
@@ -820,7 +824,7 @@ public class FtcTest extends FtcTeleOp
         //
         // If the control was not processed by this method, pass it back to TeleOp.
         //
-        if (passToTeleOp)
+        if (passToTeleOp && allowTeleOp())
         {
             super.driverButtonEvent(gamepad, button, pressed);
         }
@@ -871,7 +875,7 @@ public class FtcTest extends FtcTeleOp
         //
         // If the control was not processed by this method, pass it back to TeleOp.
         //
-        if (passToTeleOp)
+        if (passToTeleOp && allowTeleOp())
         {
             super.operatorButtonEvent(gamepad, button, pressed);
         }
@@ -1196,5 +1200,16 @@ public class FtcTest extends FtcTeleOp
             }
         }
     }   //doVisionTest
+
+    /**
+     * This method is called to determine if Test mode is allowed to do teleop control of the robot.
+     *
+     * @return true to allow and false otherwise.
+     */
+    private boolean allowTeleOp()
+    {
+        return teleOpControlEnabled &&
+               (testChoices.test == Test.SUBSYSTEMS_TEST || testChoices.test == Test.DRIVE_SPEED_TEST);
+    }   //allowTeleOp
 
 }   //class FtcTest
