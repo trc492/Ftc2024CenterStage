@@ -628,7 +628,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             TrcEvent actionEvent = new TrcEvent("setHangingPosition.actionEvent");
             // Setting up the arm operation after the elevator is in max height.
             actionParams.setPositionParams(
-                ActionType.ArmSetPosition, actionEvent, 0.0, RobotParams.ARM_HANG_POS, RobotParams.ARM_POWER_LIMIT,
+                ActionType.ArmSetPosition, actionEvent, 0.0, RobotParams.ARM_HANG_POS, 0.05,
                 completionEvent, expiredTime);
             // Move the elevator to max height before moving the arm to hanging position.
             setActionCallback(actionParams, actionEvent);

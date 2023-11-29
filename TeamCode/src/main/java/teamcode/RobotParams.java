@@ -436,8 +436,8 @@ public class RobotParams
     public static final double ARM_TOLERANCE                    = 2.0;
     public static final double ARM_MAX_GRAVITY_COMP_POWER       = 0.1675;
     public static final double ARM_STALL_DETECTION_DELAY        = 0.5;
-    public static final double ARM_STALL_DETECTION_TIMEOUT      = 0.2;
-    public static final double ARM_STALL_ERR_RATE_THRESHOLD     = 5.0;
+    public static final double ARM_STALL_DETECTION_TIMEOUT      = 0.1;
+    public static final double ARM_STALL_ERR_RATE_THRESHOLD     = 10.0;
     //
     // Wrist subsystem.
     //
