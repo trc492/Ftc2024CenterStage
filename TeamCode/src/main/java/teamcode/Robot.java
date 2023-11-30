@@ -93,7 +93,6 @@ public class Robot
         //
         opMode = FtcOpMode.getInstance();
         dashboard = FtcDashboard.getInstance();
-        checkRobotSupport();
 
         speak("Init starting");
         //
@@ -190,26 +189,6 @@ public class Robot
     {
         return RobotParams.ROBOT_NAME;
     }   //toString
-
-    private void checkRobotSupport()
-    {
-        // Overriding some preferences for non-CenterStage robots.
-        if (RobotParams.Preferences.robotPowerPlay)
-        {
-            RobotParams.Preferences.useBlinkin = true;
-            RobotParams.Preferences.hasWebCam2 = false;
-            RobotParams.Preferences.useExternalOdometry = true;
-            RobotParams.Preferences.useSubsystems = false;
-            RobotParams.hubUsbDirection = RevHubOrientationOnRobot.UsbFacingDirection.UP;
-            RobotParams.hubLogoDirection = RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD;
-        }
-        else if (RobotParams.Preferences.swerveRobot)
-        {
-            RobotParams.Preferences.useBlinkin = false;
-            RobotParams.Preferences.useExternalOdometry = false;
-            RobotParams.Preferences.useSubsystems = false;
-        }
-    }   //checkRobotSupport
 
     /**
      * This method is call when the robot mode is about to start. It contains code to initialize robot hardware

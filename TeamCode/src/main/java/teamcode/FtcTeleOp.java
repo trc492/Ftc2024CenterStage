@@ -24,12 +24,14 @@ package teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 import TrcCommonLib.trclib.TrcDriveBase;
 import TrcCommonLib.trclib.TrcGameController;
 import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
+import TrcCommonLib.trclib.TrcTimer;
 import TrcFtcLib.ftclib.FtcGamepad;
 import TrcFtcLib.ftclib.FtcOpMode;
 import teamcode.drivebases.SwerveDrive;
@@ -60,6 +62,8 @@ public class FtcTeleOp extends FtcOpMode
     private boolean pixelTrayUpperGateOpened = false;
     private boolean wristUp = false;
     protected double launchPower = RobotParams.DEF_LAUNCHER_POWER;
+    private final long[] totalElapsedTime = new long[3];
+    private long loopCount;
 
     //
     // Implements FtcOpMode abstract method.
@@ -130,6 +134,8 @@ public class FtcTeleOp extends FtcOpMode
             robot.vision.setActiveWebcam(robot.vision.getRearWebcam());
             robot.vision.setAprilTagVisionEnabled(true);
         }
+        Arrays.fill(totalElapsedTime, 0L);
+        loopCount = 0;
     }   //startMode
 
     /**
@@ -147,6 +153,15 @@ public class FtcTeleOp extends FtcOpMode
         //
         robot.stopMode(prevMode);
 
+        robot.globalTracer.traceInfo(
+            moduleName,
+            "TeleOp Periodic average elapsed times:\n" +
+            "DriveBaseControl=%.6fs\n" +
+            "SubsystemControl=%.6fs\n" +
+            "   DisplayStatus=%.6fs",
+            totalElapsedTime[0] / 1000000000.0 / loopCount,         //DriveBaseControl
+            totalElapsedTime[1] / 1000000000.0 / loopCount,         //SubsystemControl
+            totalElapsedTime[2] / 1000000000.0 / loopCount);        //DisplayStatus
         printPerformanceMetrics(robot.globalTracer);
         robot.globalTracer.traceInfo(moduleName, "***** Stopping TeleOp *****");
 
@@ -170,9 +185,11 @@ public class FtcTeleOp extends FtcOpMode
     {
         if (slowPeriodicLoop)
         {
+            long startNanoTime;
             //
             // DriveBase subsystem.
             //
+            startNanoTime = TrcTimer.getNanoTime();
             if (robot.robotDrive != null)
             {
                 double[] inputs = driverGamepad.getDriveInputs(
@@ -197,9 +214,11 @@ public class FtcTeleOp extends FtcOpMode
                     robotFieldPose = robot.vision.getRobotFieldPose();
                 }
             }
+            totalElapsedTime[0] += TrcTimer.getNanoTime() - startNanoTime;
             //
             // Other subsystems.
             //
+            startNanoTime = TrcTimer.getNanoTime();
             if (RobotParams.Preferences.useSubsystems)
             {
                 // Note: manualOverride is used by multiple subsystems.
@@ -248,11 +267,15 @@ public class FtcTeleOp extends FtcOpMode
                     }
                 }
             }
-
+            totalElapsedTime[1] += TrcTimer.getNanoTime() - startNanoTime;
+            // Display subsystem status.
+            startNanoTime = TrcTimer.getNanoTime();
             if (RobotParams.Preferences.doStatusUpdate)
             {
                 robot.updateStatus();
             }
+            totalElapsedTime[2] += TrcTimer.getNanoTime() - startNanoTime;
+            loopCount++;
         }
     }   //periodic
 
