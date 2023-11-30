@@ -393,9 +393,14 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // Maintain heading to be squared to the backdrop.
                     targetPose.angle = -90.0;
                     // We are right in front of the backdrop, so we don't need full power to approach it.
+                    // Go sideway first so we can approach the backdrop straight forward at the end. Or we could
+                    // stop the sideway movement prematurely if the distance sensor said it's close enough.
+                    TrcPose2D intermediate = targetPose.clone();
+                    intermediate.x = robot.robotDrive.driveBase.getXPosition();
                     robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.25);
                     robot.robotDrive.purePursuitDrive.start(
-                        currOwner, event, 10.0, robot.robotDrive.driveBase.getFieldPosition(), false, targetPose);
+                        currOwner, event, 10.0, robot.robotDrive.driveBase.getFieldPosition(), false,
+                        intermediate, targetPose);
                     sm.waitForSingleEvent(event, State.LOWER_ELEVATOR);
                 }
                 else
