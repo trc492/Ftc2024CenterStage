@@ -448,7 +448,7 @@ public class RobotParams
     public static final double WRIST_MAX_POS                    = 0.38;
     public static final double WRIST_DOWN_POS                   = 0.222;
     public static final double WRIST_UP_POS                     = WRIST_MAX_POS;
-    public static final double[] WRIST_SENSOR_THRESHOLDS        = new double[] {0.8};
+    public static final double[] WRIST_SENSOR_THRESHOLDS        = new double[] {0.4};
     //
     // Intake subsystem.
     //
@@ -467,6 +467,6 @@ public class RobotParams
     // Launcher subsystem.
     //
     public static final boolean LAUNCHER_MOTOR_INVERTED         = true;
-    public static final double DEF_LAUNCHER_POWER               = 1.0;
+    public static final double DEF_LAUNCHER_POWER               = 0.9;
 
 }   //class RobotParams
