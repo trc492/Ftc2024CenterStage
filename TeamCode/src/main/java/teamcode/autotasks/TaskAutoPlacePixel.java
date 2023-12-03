@@ -287,11 +287,11 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 {
                     // If this is called from TeleOp and we see the AprilTag, we can use its location to
                     // re-localize the robot.
-                    if (!taskParams.inAuto)
-                    {
-                        TrcPose2D robotFieldPose = robot.vision.getRobotFieldPose(aprilTagInfo);
-                        robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, false);
-                    }
+//                    if (!taskParams.inAuto)
+//                    {
+                    TrcPose2D robotFieldPose = robot.vision.getRobotFieldPose(aprilTagInfo);
+                    robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, false);
+//                    }
                     // Determine the absolute field location of the AprilTag.
                     FtcAuto.Alliance alliance =
                         aprilTagInfo.detectedObj.aprilTagDetection.id < 4 ?
@@ -380,16 +380,26 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     }
                 }
 
-                if (aprilTagPose != null)
-                {
-                    if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null)
-                    {
+                if (aprilTagPose != null) {
+                    if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null) {
                         robot.elevatorArm.wristTrigger.enableTrigger(this::wristSensorTriggered);
                     }
                     // Account for end-effector offset from the camera.
                     // Clone aprilTagPose before changing it, or we will corrupt the AprilTag location array.
                     TrcPose2D targetPose = aprilTagPose.clone();
                     targetPose.x -= 5.85;
+                    if (taskParams.aprilTagIndex == 0)
+                    {
+                        targetPose.y -= 0.65;
+                    }
+                    else if (taskParams.aprilTagIndex == 1)
+                    {
+                        targetPose.y -= 0.75;
+                    }
+                    else
+                    {
+                        targetPose.y += 0.65;
+                    }
                     // Maintain heading to be squared to the backdrop.
                     targetPose.angle = -90.0;
                     // We are right in front of the backdrop, so we don't need full power to approach it.
@@ -434,8 +444,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 // Place pixel at the appropriate location on the backdrop.
                 if (robot.pixelTray != null)
                 {
-                    robot.pixelTray.setLowerGateOpened(true, 0.5, event);
-                    robot.pixelTray.setUpperGateOpened(true, 0.5, null);
+                    robot.pixelTray.setLowerGateOpened(true, 0.2, event);
+                    robot.pixelTray.setUpperGateOpened(true, 0.2, null);
                     sm.waitForSingleEvent(event, State.RAISE_ELEVATOR);
                 }
                 else

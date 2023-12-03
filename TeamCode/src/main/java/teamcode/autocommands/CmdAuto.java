@@ -229,10 +229,10 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         intermediate1 = robot.adjustPoseByAlliance(-1.6, 2.5, 180.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
                         intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
-                        intermediate4 = robot.adjustPoseByAlliance(-1.5, 0.3, -90.0, autoChoices.alliance);
+                        intermediate4 = robot.adjustPoseByAlliance(-2.0, 0.3, -90.0, autoChoices.alliance);
                         intermediate5 = robot.adjustPoseByAlliance(1.5, 0.3, -90.0, autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
-                        robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
+                        robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.5);
                         robot.robotDrive.purePursuitDrive.start(
                             event, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, intermediate3, intermediate4, intermediate5, targetPose);

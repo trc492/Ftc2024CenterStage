@@ -370,10 +370,10 @@ public class RobotParams
     public static final double ELEVATOR_PULLEY_CIRCUMFERENCE    = Math.PI*ELEVATOR_PULLEY_DIAMETER;
     public static final double ELEVATOR_INCHES_PER_COUNT        = ELEVATOR_PULLEY_CIRCUMFERENCE/ELEVATOR_ENCODER_PPR;
     public static final double ELEVATOR_POWER_LIMIT             = 1.0;
-    public static final double ELEVATOR_OFFSET                  = 11.6;             // in inches
+    public static final double ELEVATOR_OFFSET                  = 12.1;             // in inches
     public static final double ELEVATOR_MIN_POS                 = ELEVATOR_OFFSET;
     public static final double ELEVATOR_MAX_POS                 = 22.0;
-    public static final double ELEVATOR_LOAD_POS                = 12.5;
+    public static final double ELEVATOR_LOAD_POS                = 12.4;
     public static final double ELEVATOR_SAFE_POS                = 14.5; //14.0
     public static final double ELEVATOR_HANG_POS                = ELEVATOR_MIN_POS;
     public static final double ELEVATOR_LEVEL1_POS              = 15.0;
@@ -449,7 +449,7 @@ public class RobotParams
     public static final boolean WRIST_FOLLOWER_SERVO_INVERTED   = true;
     public static final double WRIST_MIN_POS                    = 0.0;
     public static final double WRIST_MAX_POS                    = 0.38;
-    public static final double WRIST_DOWN_POS                   = 0.242;
+    public static final double WRIST_DOWN_POS                   = 0.232;
     public static final double WRIST_UP_POS                     = WRIST_MAX_POS;
     public static final double[] WRIST_SENSOR_THRESHOLDS        = new double[] {0.35};
     //
