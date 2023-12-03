@@ -71,6 +71,11 @@ public class Intake
         intakeMotor.stop();
     }   //stop
 
+    public void setOn(double delay, double power, double duration, TrcEvent event)
+    {
+        intakeMotor.setPower(delay, power, duration, event);
+    }   //setOn
+
     public void setOn(double delay, double duration, TrcEvent event)
     {
         intakeMotor.setPower(delay, RobotParams.INTAKE_FORWARD_POWER, duration, event);

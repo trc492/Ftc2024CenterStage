@@ -22,8 +22,6 @@
 
 package teamcode;
 
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcDigitalInput;
 import TrcCommonLib.trclib.TrcMotor;
