@@ -115,7 +115,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
         }
         else
         {
-            TrcPose2D targetPoseTile, targetPose, intermediate1, intermediate2, intermediate3, intermediate4;
+            TrcPose2D targetPoseTile, targetPose, intermediate1, intermediate2, intermediate3, intermediate4, intermediate5;
 
             robot.dashboard.displayPrintf(8, "State: %s", state);
             switch (state)
@@ -146,7 +146,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     if (teamPropPos == 0)
                     {
                         // Either vision is not enabled, or vision did not find the team prop, set to default position.
-                        teamPropPos = 2;
+                        teamPropPos = 3;
                         msg = "No team prop found, default to position " + teamPropPos;
                         robot.globalTracer.traceInfo(moduleName, msg);
                         robot.speak(msg);
@@ -185,7 +185,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     // Place purple pixel on the spike mark position 1, 2 or 3.
                     if (robot.intake != null)
                     {
-                        robot.intake.setOn(0.0, 1.0, event);
+                        robot.intake.getIntakeMotor().setPower(0.0, 0.6, 1.0, event);
                         sm.waitForSingleEvent(event, State.DO_DELAY);
                     }
                     else
@@ -229,12 +229,13 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         intermediate1 = robot.adjustPoseByAlliance(-1.6, 2.5, 180.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
                         intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
-                        intermediate4 = robot.adjustPoseByAlliance(1.5, 0.3, -90.0, autoChoices.alliance);
+                        intermediate4 = robot.adjustPoseByAlliance(-1.5, 0.3, -90.0, autoChoices.alliance);
+                        intermediate5 = robot.adjustPoseByAlliance(1.5, 0.3, -90.0, autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.getYPosPidCtrl().setOutputLimit(0.5);
                         robot.robotDrive.purePursuitDrive.start(
                             event, robot.robotDrive.driveBase.getFieldPosition(), false,
-                            intermediate1, intermediate2, intermediate3, intermediate4, targetPose);
+                            intermediate1, intermediate2, intermediate3, intermediate4, intermediate5, targetPose);
                     }
                     sm.waitForSingleEvent(event, State.SCORE_YELLOW_PIXEL);
                     break;
@@ -259,7 +260,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             RobotParams.PARKPOS_BLUE_CORNER: RobotParams.PARKPOS_BLUE_CENTER;
                     targetPose = robot.adjustPoseByAlliance(targetPoseTile, autoChoices.alliance);
                     intermediate1 = robot.adjustPoseByAlliance(
-                        2.0, targetPoseTile.y, targetPoseTile.angle, autoChoices.alliance);
+                        1.9, targetPoseTile.y, targetPoseTile.angle, autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event,State.DONE);

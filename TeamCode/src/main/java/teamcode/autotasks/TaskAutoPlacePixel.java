@@ -389,7 +389,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // Account for end-effector offset from the camera.
                     // Clone aprilTagPose before changing it, or we will corrupt the AprilTag location array.
                     TrcPose2D targetPose = aprilTagPose.clone();
-                    targetPose.x -= 6.00;
+                    targetPose.x -= 5.85;
                     // Maintain heading to be squared to the backdrop.
                     targetPose.angle = -90.0;
                     // We are right in front of the backdrop, so we don't need full power to approach it.
@@ -397,7 +397,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // stop the sideway movement prematurely if the distance sensor said it's close enough.
                     TrcPose2D intermediate = targetPose.clone();
                     intermediate.x = robot.robotDrive.driveBase.getXPosition();
-                    robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.25);
+                    robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.35);
                     robot.robotDrive.purePursuitDrive.start(
                         currOwner, event, 10.0, robot.robotDrive.driveBase.getFieldPosition(), false,
                         intermediate, targetPose);
@@ -434,8 +434,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 // Place pixel at the appropriate location on the backdrop.
                 if (robot.pixelTray != null)
                 {
-                    robot.pixelTray.setLowerGateOpened(true, event);
-                    robot.pixelTray.setUpperGateOpened(true, null);
+                    robot.pixelTray.setLowerGateOpened(true, 0.5, event);
+                    robot.pixelTray.setUpperGateOpened(true, 0.5, null);
                     sm.waitForSingleEvent(event, State.RAISE_ELEVATOR);
                 }
                 else

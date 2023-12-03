@@ -77,6 +77,18 @@ public class PixelTray
         }
     }   //setLowerGateOpened
 
+    public void setLowerGateOpened(boolean opened, double stepRate, TrcEvent event)
+    {
+        lowerGateOpened = opened;
+        lowerGate.setPosition(
+            opened? RobotParams.PIXELTRAY_LOWER_GATE_OPEN: RobotParams.PIXELTRAY_LOWER_GATE_CLOSE,
+            stepRate, event);
+        if (msgTracer != null)
+        {
+            msgTracer.traceInfo(instanceName, "lowerGateOpened = %s", opened);
+        }
+    }   //setLowerGateOpened
+
     /**
      * This method returns the state of the lower gate.
      *
@@ -99,6 +111,18 @@ public class PixelTray
         upperGate.setPosition(
             opened? RobotParams.PIXELTRAY_UPPER_GATE_OPEN: RobotParams.PIXELTRAY_UPPER_GATE_CLOSE,
             event, RobotParams.PIXELTRAY_OPEN_CLOSE_TIME);
+        if (msgTracer != null)
+        {
+            msgTracer.traceInfo(instanceName, "upperGateOpened = %s", opened);
+        }
+    }   //setUpperGateOpened
+
+    public void setUpperGateOpened(boolean opened, double stepRate, TrcEvent event)
+    {
+        upperGateOpened = opened;
+        upperGate.setPosition(
+            opened? RobotParams.PIXELTRAY_UPPER_GATE_OPEN: RobotParams.PIXELTRAY_UPPER_GATE_CLOSE,
+            stepRate, event);
         if (msgTracer != null)
         {
             msgTracer.traceInfo(instanceName, "upperGateOpened = %s", opened);
