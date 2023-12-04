@@ -115,7 +115,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
         }
         else
         {
-            TrcPose2D targetPoseTile, targetPose, intermediate1, intermediate2, intermediate3, intermediate4, intermediate5;
+            TrcPose2D targetPoseTile, targetPose;
+            TrcPose2D intermediate1, intermediate2, intermediate3, intermediate4, intermediate5;
 
             robot.dashboard.displayPrintf(8, "State: %s", state);
             switch (state)

@@ -285,13 +285,11 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     robot.vision.getDetectedAprilTag(null, -1);
                 if (aprilTagInfo != null && aprilTagInfo.detectedObj.aprilTagDetection.id < 7)
                 {
-                    // If this is called from TeleOp and we see the AprilTag, we can use its location to
-                    // re-localize the robot.
-//                    if (!taskParams.inAuto)
-//                    {
+                    // If we see the AprilTag, we can use its location to re-localize the robot. It's especially
+                    // useful if we started on the audience side where we traveled a great distance to the backdrop
+                    // and odometry may cumulate some amount of error.
                     TrcPose2D robotFieldPose = robot.vision.getRobotFieldPose(aprilTagInfo);
                     robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, false);
-//                    }
                     // Determine the absolute field location of the AprilTag.
                     FtcAuto.Alliance alliance =
                         aprilTagInfo.detectedObj.aprilTagDetection.id < 4 ?
@@ -380,8 +378,10 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     }
                 }
 
-                if (aprilTagPose != null) {
-                    if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null) {
+                if (aprilTagPose != null)
+                {
+                    if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null)
+                    {
                         robot.elevatorArm.wristTrigger.enableTrigger(this::wristSensorTriggered);
                     }
                     // Account for end-effector offset from the camera.
