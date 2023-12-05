@@ -30,6 +30,7 @@ import TrcCommonLib.command.CmdPidDrive;
 import TrcCommonLib.command.CmdTimedDrive;
 import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
+import TrcCommonLib.trclib.TrcTimer;
 import TrcFtcLib.ftclib.FtcChoiceMenu;
 import TrcFtcLib.ftclib.FtcMatchInfo;
 import TrcFtcLib.ftclib.FtcMenu;
@@ -237,7 +238,8 @@ public class FtcAuto extends FtcOpMode
         {
             robot.globalTracer.setTraceLogEnabled(true);
         }
-        robot.globalTracer.traceInfo(moduleName, "***** Starting autonomous *****");
+        robot.globalTracer.traceInfo(
+            moduleName, "***** %s: Starting autonomous *****", TrcTimer.getCurrentTimeString());
         if (Robot.matchInfo != null)
         {
             robot.globalTracer.logInfo(moduleName, "MatchInfo", "%s", Robot.matchInfo);
@@ -300,7 +302,8 @@ public class FtcAuto extends FtcOpMode
         }
 
         printPerformanceMetrics(robot.globalTracer);
-        robot.globalTracer.traceInfo(moduleName, "***** Stopping autonomous *****");
+        robot.globalTracer.traceInfo(
+            moduleName, "***** %s: Stopping autonomous *****", TrcTimer.getCurrentTimeString());
 
         if (robot.globalTracer.isTraceLogOpened())
         {

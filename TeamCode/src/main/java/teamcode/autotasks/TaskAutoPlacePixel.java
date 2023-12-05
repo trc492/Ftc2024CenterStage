@@ -507,7 +507,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
             if (msgTracer != null)
             {
                 msgTracer.traceInfo(
-                    moduleName, "Drive to AprilTag canceled by wristSensor, triggerState=%s", callbackContext);
+                    moduleName, "Drive to AprilTag canceled by wristSensor, triggerState=%s, robotPose=%s",
+                    callbackContext, robot.robotDrive.driveBase.getFieldPosition());
             }
         }
     }   //wristSensorTriggered

@@ -119,7 +119,7 @@ public class FtcTeleOp extends FtcOpMode
         {
             robot.globalTracer.setTraceLogEnabled(true);
         }
-        robot.globalTracer.traceInfo(moduleName, "***** Starting TeleOp *****");
+        robot.globalTracer.traceInfo(moduleName, "***** %s: Starting TeleOp *****", TrcTimer.getCurrentTimeString());
         robot.dashboard.clearDisplay();
         //
         // Tell robot object opmode is about to start so it can do the necessary start initialization for the mode.
@@ -163,7 +163,7 @@ public class FtcTeleOp extends FtcOpMode
             totalElapsedTime[1] / 1000000000.0 / loopCount,         //SubsystemControl
             totalElapsedTime[2] / 1000000000.0 / loopCount);        //DisplayStatus
         printPerformanceMetrics(robot.globalTracer);
-        robot.globalTracer.traceInfo(moduleName, "***** Stopping TeleOp *****");
+        robot.globalTracer.traceInfo(moduleName, "***** %s: Stopping TeleOp *****", TrcTimer.getCurrentTimeString());
 
         if (robot.globalTracer.isTraceLogOpened())
         {
