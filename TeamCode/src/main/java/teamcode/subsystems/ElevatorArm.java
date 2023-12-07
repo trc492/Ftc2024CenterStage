@@ -254,7 +254,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     {
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(moduleName, "owner=%s", owner);
+            msgTracer.traceInfo(moduleName, "owner=" + owner);
         }
 
         if (hasOwnership(owner))
@@ -328,7 +328,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     {
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(moduleName, "owner=%s", owner);
+            msgTracer.traceInfo(moduleName, "owner=" + owner);
         }
 
         cancel(owner);
@@ -370,7 +370,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         if (msgTracer != null)
         {
             msgTracer.traceInfo(
-                moduleName, "Zero Calibrate completed (lowerLimitSw=%s).", elevator.isLowerLimitSwitchActive());
+                moduleName, "Zero Calibrate completed (lowerLimitSw=" + elevator.isLowerLimitSwitchActive() + ").");
         }
     }   //zeroCalCompleted
 
@@ -389,7 +389,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             case ElevatorSetPosition:
                 if (msgTracer != null)
                 {
-                    msgTracer.traceInfo(moduleName, "actionParams=%s", actionParams);
+                    msgTracer.traceInfo(moduleName, "actionParams=" + actionParams);
                 }
                 // Move the elevator only if the arm is already at or has reached safe position.
                 // actionParams.actionEvent is null if arm is already at safe position.
@@ -410,7 +410,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 // Trace only if power has changed.
                 if (msgTracer != null && actionParams.power != elevatorPrevPrintedPower)
                 {
-                    msgTracer.traceInfo(moduleName, "actionParams=%s", actionParams);
+                    msgTracer.traceInfo(moduleName, "actionParams=" + actionParams);
                     elevatorPrevPrintedPower = actionParams.power;
                 }
                 // Move the elevator only if the arm is already at or has reached safe position.
@@ -429,7 +429,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 // Trace only if power has changed.
                 if (msgTracer != null && actionParams.power != elevatorPrevPrintedPower)
                 {
-                    msgTracer.traceInfo(moduleName, "actionParams=%s", actionParams);
+                    msgTracer.traceInfo(moduleName, "actionParams=" + actionParams);
                     elevatorPrevPrintedPower = actionParams.power;
                 }
                 // Move the elevator only if the arm is already at or has reached safe position.
@@ -444,7 +444,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             case ArmSetPosition:
                 if (msgTracer != null)
                 {
-                    msgTracer.traceInfo(moduleName, "actionParams=%s", actionParams);
+                    msgTracer.traceInfo(moduleName, "actionParams=" + actionParams);
                 }
                 // Move the arm only if the elevator is already at or has reached safe height.
                 // actionParams.actionEvent is null if elevator is already at safe height.
@@ -474,7 +474,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 // Trace only if power has changed.
                 if (msgTracer != null && actionParams.power != armPrevPrintedPower)
                 {
-                    msgTracer.traceInfo(moduleName, "actionParams=%s", actionParams);
+                    msgTracer.traceInfo(moduleName, "actionParams=" + actionParams);
                     armPrevPrintedPower = actionParams.power;
                 }
                 // Move the arm only if the elevator is already at or has reached safe height.
@@ -492,7 +492,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 // Trace only if power has changed.
                 if (msgTracer != null && actionParams.power != armPrevPrintedPower)
                 {
-                    msgTracer.traceInfo(moduleName, "actionParams=%s", actionParams);
+                    msgTracer.traceInfo(moduleName, "actionParams=" + actionParams);
                     armPrevPrintedPower = actionParams.power;
                 }
                 // Move the arm only if the elevator is already at or has reached safe height.

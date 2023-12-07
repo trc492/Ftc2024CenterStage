@@ -27,6 +27,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import java.util.Arrays;
 import java.util.Locale;
 
+import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcDriveBase;
 import TrcCommonLib.trclib.TrcGameController;
 import TrcCommonLib.trclib.TrcPose2D;
@@ -88,7 +89,7 @@ public class FtcTeleOp extends FtcOpMode
             String filePrefix = Robot.matchInfo != null?
                 String.format(Locale.US, "%s%02d_TeleOp", Robot.matchInfo.matchType, Robot.matchInfo.matchNumber):
                 "Unknown_TeleOp";
-            robot.globalTracer.openTraceLog(RobotParams.LOG_FOLDER_PATH, filePrefix);
+            TrcDbgTrace.openTraceLog(RobotParams.LOG_FOLDER_PATH, filePrefix);
         }
         //
         // Create and initialize Gamepads.
@@ -115,11 +116,12 @@ public class FtcTeleOp extends FtcOpMode
     @Override
     public void startMode(TrcRobot.RunMode prevMode, TrcRobot.RunMode nextMode)
     {
-        if (robot.globalTracer.isTraceLogOpened())
+        if (TrcDbgTrace.isTraceLogOpened())
         {
-            robot.globalTracer.setTraceLogEnabled(true);
+            TrcDbgTrace.setTraceLogEnabled(true);
         }
-        robot.globalTracer.traceInfo(moduleName, "***** %s: Starting TeleOp *****", TrcTimer.getCurrentTimeString());
+        robot.globalTracer.traceInfo(
+            moduleName, "***** Starting TeleOp: " + TrcTimer.getCurrentTimeString() + " *****");
         robot.dashboard.clearDisplay();
         //
         // Tell robot object opmode is about to start so it can do the necessary start initialization for the mode.
@@ -162,12 +164,13 @@ public class FtcTeleOp extends FtcOpMode
             totalElapsedTime[0] / 1000000000.0 / loopCount,         //DriveBaseControl
             totalElapsedTime[1] / 1000000000.0 / loopCount,         //SubsystemControl
             totalElapsedTime[2] / 1000000000.0 / loopCount);        //DisplayStatus
-        printPerformanceMetrics(robot.globalTracer);
-        robot.globalTracer.traceInfo(moduleName, "***** %s: Stopping TeleOp *****", TrcTimer.getCurrentTimeString());
+        printPerformanceMetrics();
+        robot.globalTracer.traceInfo(
+            moduleName, "***** Stopping TeleOp: " + TrcTimer.getCurrentTimeString() + " *****");
 
-        if (robot.globalTracer.isTraceLogOpened())
+        if (TrcDbgTrace.isTraceLogOpened())
         {
-            robot.globalTracer.closeTraceLog();
+            TrcDbgTrace.closeTraceLog();
         }
     }   //stopMode
 
@@ -288,7 +291,7 @@ public class FtcTeleOp extends FtcOpMode
     {
         if (robot.robotDrive != null)
         {
-            robot.globalTracer.traceInfo(moduleName, "driveOrientation=%s", orientation);
+            robot.globalTracer.traceInfo(moduleName, "driveOrientation=" + orientation);
             robot.robotDrive.driveBase.setDriveOrientation(
                 orientation, orientation == TrcDriveBase.DriveOrientation.FIELD);
             if (robot.blinkin != null)

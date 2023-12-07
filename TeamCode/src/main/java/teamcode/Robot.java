@@ -50,12 +50,12 @@ import teamcode.vision.Vision;
 public class Robot
 {
     private static final String moduleName = Robot.class.getSimpleName();
-    public static final TrcDbgTrace globalTracer = TrcDbgTrace.getGlobalTracer();
     //
     // Global objects.
     //
-    public FtcOpMode opMode;
-    public FtcDashboard dashboard;
+    public final FtcOpMode opMode;
+    public final TrcDbgTrace globalTracer;
+    public final FtcDashboard dashboard;
     public static FtcMatchInfo matchInfo = null;
     private static TrcPose2D endOfAutoRobotPose = null;
     //
@@ -90,6 +90,7 @@ public class Robot
         // Initialize global objects.
         //
         opMode = FtcOpMode.getInstance();
+        globalTracer = TrcDbgTrace.getGlobalTracer();
         dashboard = FtcDashboard.getInstance();
 
         speak("Init starting");
@@ -218,7 +219,7 @@ public class Robot
                 {
                     // We had a previous autonomous run that saved the robot position at the end, use it.
                     robotDrive.driveBase.setFieldPosition(endOfAutoRobotPose);
-                    globalTracer.traceInfo(moduleName, "Restore saved RobotPose=%s", endOfAutoRobotPose);
+                    globalTracer.traceInfo(moduleName, "Restore saved RobotPose=" + endOfAutoRobotPose);
                 }
             }
             // Consume it so it's no longer valid for next run.
@@ -242,14 +243,14 @@ public class Robot
         //
         if (robotDrive != null && robotDrive.gyro != null)
         {
-            robotDrive.gyro.printElapsedTime(globalTracer);
+            robotDrive.gyro.printElapsedTime();
             robotDrive.gyro.setElapsedTimerEnabled(false);
         }
-        TrcDigitalInput.printElapsedTime(globalTracer);
+        TrcDigitalInput.printElapsedTime();
         TrcDigitalInput.setElapsedTimerEnabled(false);
-        TrcMotor.printElapsedTime(globalTracer);
+        TrcMotor.printElapsedTime();
         TrcMotor.setElapsedTimerEnabled(false);
-        TrcServo.printElapsedTime(globalTracer);
+        TrcServo.printElapsedTime();
         TrcServo.setElapsedTimerEnabled(false);
         //
         // Disable vision.
@@ -317,7 +318,7 @@ public class Robot
             {
                 // Save current robot location at the end of autonomous so subsequent teleop run can restore it.
                 endOfAutoRobotPose = robotDrive.driveBase.getFieldPosition();
-                globalTracer.traceInfo(moduleName, "Saved robot pose=%s", endOfAutoRobotPose);
+                globalTracer.traceInfo(moduleName, "Saved robot pose=" + endOfAutoRobotPose);
             }
             //
             // Disable odometry.

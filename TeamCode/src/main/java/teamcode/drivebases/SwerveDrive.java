@@ -243,14 +243,12 @@ public class SwerveDrive extends RobotDrive
 
     /**
      * This method prints the performance info to the trace log.
-     *
-     * @param tracer specifies the tracer to be used to print the info.
      */
-    public void printSteerPerformanceInfo(TrcDbgTrace tracer)
+    public void printSteerPerformanceInfo()
     {
         for (FtcCRServo servo : steerServos)
         {
-            servo.printPidControlTaskPerformance(tracer);
+            servo.printPidControlTaskPerformance();
         }
     }   //printSteerPerformanceInfo
 

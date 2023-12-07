@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import TrcCommonLib.command.CmdPidDrive;
 import TrcCommonLib.command.CmdTimedDrive;
+import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcTimer;
@@ -138,7 +139,7 @@ public class FtcAuto extends FtcOpMode
             Robot.matchInfo = FtcMatchInfo.getMatchInfo();
             String filePrefix = String.format(
                 Locale.US, "%s%02d_Auto", Robot.matchInfo.matchType, Robot.matchInfo.matchNumber);
-            robot.globalTracer.openTraceLog(RobotParams.LOG_FOLDER_PATH, filePrefix);
+            TrcDbgTrace.openTraceLog(RobotParams.LOG_FOLDER_PATH, filePrefix);
         }
         //
         // Create and run choice menus.
@@ -234,17 +235,17 @@ public class FtcAuto extends FtcOpMode
     @Override
     public void startMode(TrcRobot.RunMode prevMode, TrcRobot.RunMode nextMode)
     {
-        if (robot.globalTracer.isTraceLogOpened())
+        if (TrcDbgTrace.isTraceLogOpened())
         {
-            robot.globalTracer.setTraceLogEnabled(true);
+            TrcDbgTrace.setTraceLogEnabled(true);
         }
         robot.globalTracer.traceInfo(
-            moduleName, "***** %s: Starting autonomous *****", TrcTimer.getCurrentTimeString());
+            moduleName, "***** Starting autonomous: " + TrcTimer.getCurrentTimeString() + " *****");
         if (Robot.matchInfo != null)
         {
-            robot.globalTracer.logInfo(moduleName, "MatchInfo", "%s", Robot.matchInfo);
+            robot.globalTracer.logInfo(moduleName, "MatchInfo", Robot.matchInfo.toString());
         }
-        robot.globalTracer.logInfo(moduleName, "AutoChoices", "%s", autoChoices);
+        robot.globalTracer.logInfo(moduleName, "AutoChoices", autoChoices.toString());
         robot.dashboard.clearDisplay();
         //
         // Tell robot object opmode is about to start so it can do the necessary start initialization for the mode.
@@ -301,13 +302,13 @@ public class FtcAuto extends FtcOpMode
             robot.battery.setEnabled(false);
         }
 
-        printPerformanceMetrics(robot.globalTracer);
+        printPerformanceMetrics();
         robot.globalTracer.traceInfo(
-            moduleName, "***** %s: Stopping autonomous *****", TrcTimer.getCurrentTimeString());
+            moduleName, "***** Stopping autonomous: " + TrcTimer.getCurrentTimeString() + " *****");
 
-        if (robot.globalTracer.isTraceLogOpened())
+        if (TrcDbgTrace.isTraceLogOpened())
         {
-            robot.globalTracer.closeTraceLog();
+            TrcDbgTrace.closeTraceLog();
         }
     }   //stopMode
 

@@ -73,7 +73,7 @@ public class PixelTray
             event, RobotParams.PIXELTRAY_OPEN_CLOSE_TIME);
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(instanceName, "lowerGateOpened = %s", opened);
+            msgTracer.traceInfo(instanceName, "lowerGateOpened=" + opened);
         }
     }   //setLowerGateOpened
 
@@ -85,7 +85,7 @@ public class PixelTray
             stepRate, event);
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(instanceName, "lowerGateOpened = %s", opened);
+            msgTracer.traceInfo(instanceName, "lowerGateOpened=" + opened);
         }
     }   //setLowerGateOpened
 
@@ -113,7 +113,7 @@ public class PixelTray
             event, RobotParams.PIXELTRAY_OPEN_CLOSE_TIME);
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(instanceName, "upperGateOpened = %s", opened);
+            msgTracer.traceInfo(instanceName, "upperGateOpened=" + opened);
         }
     }   //setUpperGateOpened
 
@@ -125,7 +125,7 @@ public class PixelTray
             stepRate, event);
         if (msgTracer != null)
         {
-            msgTracer.traceInfo(instanceName, "upperGateOpened = %s", opened);
+            msgTracer.traceInfo(instanceName, "upperGateOpened=" + opened);
         }
     }   //setUpperGateOpened
 
