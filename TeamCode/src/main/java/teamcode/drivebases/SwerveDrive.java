@@ -49,8 +49,6 @@ public class SwerveDrive extends RobotDrive
 {
     private static final String moduleName = SwerveDrive.class.getSimpleName();
     private static final TrcDbgTrace globalTracer = TrcDbgTrace.getGlobalTracer();
-    private static final boolean logPoseEvents = false;
-    private static final boolean tracePidInfo = false;
 
     private final String[] steerEncoderNames = {
         RobotParams.HWNAME_LFSTEER_ENCODER, RobotParams.HWNAME_RFSTEER_ENCODER,
@@ -145,14 +143,14 @@ public class SwerveDrive extends RobotDrive
         // AbsoluteTargetMode eliminates cumulative errors on multi-segment runs because drive base is keeping track
         // of the absolute target position.
         pidDrive.setAbsoluteTargetModeEnabled(true);
-        pidDrive.setMsgTracer(globalTracer, logPoseEvents, tracePidInfo);
+        pidDrive.setTraceLevel(TrcDbgTrace.MsgLevel.INFO, false, false, false);
 
         purePursuitDrive = new TrcPurePursuitDrive(
             "purePursuitDrive", driveBase,
             RobotParams.PPD_FOLLOWING_DISTANCE, RobotParams.PPD_POS_TOLERANCE, RobotParams.PPD_TURN_TOLERANCE,
             RobotParams.xPosPidCoeff, RobotParams.yPosPidCoeff, RobotParams.turnPidCoeff, RobotParams.velPidCoeff);
         purePursuitDrive.setFastModeEnabled(true);
-        purePursuitDrive.setMsgTracer(globalTracer, logPoseEvents, tracePidInfo);
+        purePursuitDrive.setTraceLevel(TrcDbgTrace.MsgLevel.INFO, false, false, false);
     }   //SwerveDrive
 
     /**

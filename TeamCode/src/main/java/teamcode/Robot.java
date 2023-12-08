@@ -133,7 +133,7 @@ public class Robot
             {
                 if (RobotParams.Preferences.useElevatorArm)
                 {
-                    elevatorArm = new ElevatorArm(globalTracer, false);
+                    elevatorArm = new ElevatorArm();
                     // Code review: Should this init be in Robot.startMode?
                     if (runMode == TrcRobot.RunMode.TELEOP_MODE)
                     {
@@ -143,12 +143,12 @@ public class Robot
 
                 if (RobotParams.Preferences.useIntake)
                 {
-                    intake = new Intake(RobotParams.HWNAME_INTAKE, globalTracer);
+                    intake = new Intake(RobotParams.HWNAME_INTAKE);
                 }
 
                 if (RobotParams.Preferences.usePixelTray)
                 {
-                    pixelTray = new PixelTray(RobotParams.HWNAME_PIXELTRAY, globalTracer);
+                    pixelTray = new PixelTray(RobotParams.HWNAME_PIXELTRAY);
                     // Code review: Should this init be in Robot.startMode?
                     if (runMode == TrcRobot.RunMode.TELEOP_MODE)
                     {

@@ -321,6 +321,7 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_A:
                 if (pressed)
                 {
+                    robot.globalTracer.traceInfo(moduleName, ">>>>> CancelAll is pressed.");
                     if (robot.placePixelTask != null)
                     {
                         robot.placePixelTask.autoAssistCancel();
@@ -341,6 +342,7 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_B:
                 if (robot.launcher != null && pressed)
                 {
+                    robot.globalTracer.traceInfo(moduleName, ">>>>> DroneLaunch is pressed.");
                     robot.launcher.setPower(0.0, launchPower, 1.0);
                 }
                 break;
@@ -354,11 +356,13 @@ public class FtcTeleOp extends FtcOpMode
                     if (robot.robotDrive.driveBase.isGyroAssistEnabled())
                     {
                         // Disable GyroAssist drive.
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> Disabling GyroAssist.");
                         robot.robotDrive.driveBase.setGyroAssistEnabled(null);
                     }
                     else
                     {
                         // Enable GyroAssist drive.
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> Enabling GyroAssist.");
                         robot.robotDrive.driveBase.setGyroAssistEnabled(robot.robotDrive.pidDrive.getTurnPidCtrl());
                     }
                 }
@@ -370,10 +374,12 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     if (robot.robotDrive.driveBase.getDriveOrientation() != TrcDriveBase.DriveOrientation.FIELD)
                     {
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> Enabling FIELD mode.");
                         setDriveOrientation(TrcDriveBase.DriveOrientation.FIELD);
                     }
                     else
                     {
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> Enabling ROBOT mode.");
                         setDriveOrientation(TrcDriveBase.DriveOrientation.ROBOT);
                     }
                 }
@@ -381,13 +387,24 @@ public class FtcTeleOp extends FtcOpMode
 
             case FtcGamepad.GAMEPAD_RBUMPER:
                 // Press and hold for slow drive.
-                drivePowerScale = pressed? RobotParams.DRIVE_POWER_SCALE_SLOW: RobotParams.DRIVE_POWER_SCALE_NORMAL;
-                turnPowerScale = pressed? RobotParams.TURN_POWER_SCALE_SLOW: RobotParams.TURN_POWER_SCALE_NORMAL;
+                if (pressed)
+                {
+                    robot.globalTracer.traceInfo(moduleName, ">>>>> DrivePower slow.");
+                    drivePowerScale = RobotParams.DRIVE_POWER_SCALE_SLOW;
+                    turnPowerScale = RobotParams.TURN_POWER_SCALE_SLOW;
+                }
+                else
+                {
+                    robot.globalTracer.traceInfo(moduleName, ">>>>> DrivePower normal.");
+                    drivePowerScale = RobotParams.DRIVE_POWER_SCALE_NORMAL;
+                    turnPowerScale = RobotParams.TURN_POWER_SCALE_NORMAL;
+                }
                 break;
 
             case FtcGamepad.GAMEPAD_DPAD_UP:
                 if (pressed && robot.elevatorArm != null)
                 {
+                    robot.globalTracer.traceInfo(moduleName, ">>>>> Deploying hanging hooks.");
                     robot.elevatorArm.setHangingPosition(moduleName, 0.0, null, 0.0);
                 }
                 break;
@@ -395,6 +412,7 @@ public class FtcTeleOp extends FtcOpMode
             case FtcGamepad.GAMEPAD_DPAD_DOWN:
                 if (pressed && robot.elevatorArm != null)
                 {
+                    robot.globalTracer.traceInfo(moduleName, ">>>>> Hanging ...");
                     robot.elevatorArm.elevatorSetPosition(
                         moduleName, 0.0, RobotParams.ELEVATOR_HANG_POS, 1.0, null, 0.0);
                 }
@@ -417,9 +435,15 @@ public class FtcTeleOp extends FtcOpMode
                         if (robotFieldPose != null)
                         {
                             // Vision found an AprilTag, set the new robot field location.
+                            robot.globalTracer.traceInfo(
+                                moduleName, ">>>>> Finish re-localizing: pose=" + robotFieldPose);
                             robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, false);
                             robotFieldPose = null;
                         }
+                    }
+                    else
+                    {
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> Start re-localizing ...");
                     }
                 }
                 break;
@@ -451,6 +475,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (pressed && robot.pixelTray != null)
                 {
                     pixelTrayLowerGateOpened = !pixelTrayLowerGateOpened;
+                    robot.globalTracer.traceInfo(moduleName, ">>>>> Toggle lower gate: open=" + pixelTrayLowerGateOpened);
                     robot.pixelTray.setLowerGateOpened(pixelTrayLowerGateOpened, null);
                 }
                 break;
@@ -459,6 +484,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (pressed && robot.pixelTray != null)
                 {
                     pixelTrayUpperGateOpened = !pixelTrayUpperGateOpened;
+                    robot.globalTracer.traceInfo(moduleName, ">>>>> Toggle upper gate: open=" + pixelTrayUpperGateOpened);
                     robot.pixelTray.setUpperGateOpened(pixelTrayUpperGateOpened, null);
                 }
                 break;
@@ -468,10 +494,12 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     if (!manualOverride)
                     {
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> Intake ON=" + pressed);
                         robot.intake.setOn(pressed);
                     }
                     else
                     {
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> Intake REVERSE=" + pressed);
                         robot.intake.setReverse(pressed);
                     }
                 }
@@ -483,11 +511,13 @@ public class FtcTeleOp extends FtcOpMode
                     elevatorArmAtScorePos = !elevatorArmAtScorePos;
                     if (elevatorArmAtScorePos)
                     {
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> Set Scoring Position.");
                         robot.elevatorArm.setScoringPosition(
                             moduleName, 0.0, RobotParams.ELEVATOR_LEVEL1_POS, null, 0.0);
                     }
                     else
                     {
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> Set Loading Position.");
                         robot.elevatorArm.setLoadingPosition(moduleName, 0.0, null, 0.0);
                     }
                 }
@@ -497,11 +527,13 @@ public class FtcTeleOp extends FtcOpMode
                 if (pressed && robot.elevatorArm != null)
                 {
                     wristUp = !wristUp;
+                    robot.globalTracer.traceInfo(moduleName, ">>>>> SetWristPosUp=" + wristUp);
                     robot.elevatorArm.wristSetPosition(wristUp? RobotParams.WRIST_UP_POS: RobotParams.WRIST_DOWN_POS);
                 }
                 break;
 
             case FtcGamepad.GAMEPAD_RBUMPER:
+                robot.globalTracer.traceInfo(moduleName, ">>>>> AutoAssistPlaceOn=" + pressed);
                 autoAssistPlaceActive = pressed;
                 break;
 
@@ -514,6 +546,7 @@ public class FtcTeleOp extends FtcOpMode
                         {
                             scoreLevelIndex++;
                         }
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> AutoAssistPlaceScoreLevel=" + scoreLevelIndex);
 
                         if (robot.blinkin != null)
                         {
@@ -525,6 +558,7 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     if (pressed && robot.elevatorArm != null)
                     {
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> ElevatorPresetPosUp pressed.");
                         robot.elevatorArm.elevatorPresetPositionUp(moduleName, RobotParams.ELEVATOR_POWER_LIMIT);
                     }
                 }
@@ -539,6 +573,7 @@ public class FtcTeleOp extends FtcOpMode
                         {
                             scoreLevelIndex--;
                         }
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> AutoAssistPlaceScoreLevel=" + scoreLevelIndex);
 
                         if (robot.blinkin != null)
                         {
@@ -550,6 +585,7 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     if (pressed && robot.elevatorArm != null)
                     {
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> ElevatorPresetPosDown pressed.");
                         robot.elevatorArm.elevatorPresetPositionDown(moduleName, RobotParams.ELEVATOR_POWER_LIMIT);
                     }
                 }
@@ -564,6 +600,7 @@ public class FtcTeleOp extends FtcOpMode
                         {
                             aprilTagIndex--;
                         }
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> AutoAssistPlaceAprilTagIndex=" + aprilTagIndex);
 
                         if (robot.blinkin != null)
                         {
@@ -575,6 +612,7 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     if (pressed && robot.elevatorArm != null)
                     {
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> ArmPresetPosDown pressed.");
                         robot.elevatorArm.armPresetPositionDown(moduleName, RobotParams.ARM_POWER_LIMIT);
                     }
                 }
@@ -589,6 +627,7 @@ public class FtcTeleOp extends FtcOpMode
                         {
                             aprilTagIndex++;
                         }
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> AutoAssistPlaceAprilTagIndex=" + aprilTagIndex);
 
                         if (robot.blinkin != null)
                         {
@@ -600,6 +639,7 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     if (pressed && robot.elevatorArm != null)
                     {
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> ArmPresetPosUp pressed.");
                         robot.elevatorArm.armPresetPositionUp(moduleName, RobotParams.ARM_POWER_LIMIT);
                     }
                 }
@@ -613,6 +653,10 @@ public class FtcTeleOp extends FtcOpMode
                         // If we are not running a match and just ran TeleOp, autoChoices.autoMenuRan will be false.
                         // In this case, we don't really know what alliance we are in. We will look for any AprilTag
                         // in front of us.
+                        robot.globalTracer.traceInfo(
+                            moduleName,
+                            ">>>>> AutoAssistPlace starting: aprilTagIndex=" + aprilTagIndex +
+                            " scoreLevel=" + scoreLevelIndex);
                         robot.placePixelTask.autoAssistPlace(
                             true, aprilTagIndex, RobotParams.ELEVATOR_PRESETS[scoreLevelIndex], false, null);
                     }
@@ -622,6 +666,7 @@ public class FtcTeleOp extends FtcOpMode
                     if (pressed)
                     {
                         // Zero calibrate all subsystems (arm, elevator and turret).
+                        robot.globalTracer.traceInfo(moduleName, ">>>>> ZeroCalibrate pressed.");
                         robot.zeroCalibrate(moduleName);
                     }
                 }

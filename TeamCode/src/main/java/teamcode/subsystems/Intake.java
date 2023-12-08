@@ -22,7 +22,6 @@
 
 package teamcode.subsystems;
 
-import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcEvent;
 import TrcFtcLib.ftclib.FtcDcMotor;
 import teamcode.RobotParams;
@@ -37,9 +36,8 @@ public class Intake
      * Constructor: Creates an instance of the object.
      *
      * @param instanceName specifies the hardware name.
-     * @param msgTracer specifies the tracer to used for logging events, can be null if not provided.
      */
-    public Intake(String instanceName, TrcDbgTrace msgTracer)
+    public Intake(String instanceName)
     {
         intakeMotor = new FtcDcMotor(instanceName + ".motor");
         intakeMotor.setMotorInverted(RobotParams.INTAKE_MOTOR_INVERTED);

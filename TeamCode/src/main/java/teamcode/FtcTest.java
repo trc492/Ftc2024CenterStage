@@ -33,6 +33,7 @@ import TrcCommonLib.command.CmdDriveMotorsTest;
 import TrcCommonLib.command.CmdPidDrive;
 import TrcCommonLib.command.CmdTimedDrive;
 
+import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcElapsedTimer;
 import TrcCommonLib.trclib.TrcGameController;
 import TrcCommonLib.trclib.TrcPidController;
@@ -338,14 +339,15 @@ public class FtcTest extends FtcTeleOp
             case TUNE_TURN_PID:
                 if (robot.robotDrive != null)
                 {
-                    robot.robotDrive.pidDrive.setMsgTracer(robot.globalTracer, logEvents, debugPid);
+                    robot.robotDrive.pidDrive.setTraceLevel(TrcDbgTrace.MsgLevel.INFO, logEvents, debugPid, false);
                 }
                 break;
 
             case PURE_PURSUIT_DRIVE:
                 if (robot.robotDrive != null)
                 {
-                    robot.robotDrive.purePursuitDrive.setMsgTracer(robot.globalTracer, logEvents, debugPid);
+                    robot.robotDrive.purePursuitDrive.setTraceLevel(
+                        TrcDbgTrace.MsgLevel.INFO, logEvents, debugPid, false);
                     //
                     // Doing a 48x48-inch square box with robot heading always pointing to the center of the box.
                     //

@@ -36,9 +36,6 @@ import teamcode.RobotParams;
  */
 public class MecanumDrive extends RobotDrive
 {
-    private static final boolean logPoseEvents = false;
-    private static final boolean tracePidInfo = false;
-
     /**
      * Constructor: Create an instance of the object.
      */
@@ -97,7 +94,7 @@ public class MecanumDrive extends RobotDrive
         // AbsoluteTargetMode eliminates cumulative errors on multi-segment runs because drive base is keeping track
         // of the absolute target position.
         pidDrive.setAbsoluteTargetModeEnabled(true);
-        pidDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
+        pidDrive.setTraceLevel(TrcDbgTrace.MsgLevel.INFO, false, false, false);
 
         purePursuitDrive = new TrcPurePursuitDrive(
             "purePursuitDrive", driveBase,
@@ -105,7 +102,7 @@ public class MecanumDrive extends RobotDrive
             RobotParams.xPosPidCoeff, RobotParams.yPosPidCoeff, RobotParams.turnPidCoeff, RobotParams.velPidCoeff);
         purePursuitDrive.setStallDetectionEnabled(true);
         purePursuitDrive.setFastModeEnabled(true);
-        purePursuitDrive.setMsgTracer(tracer, logPoseEvents, tracePidInfo);
+        purePursuitDrive.setTraceLevel(TrcDbgTrace.MsgLevel.INFO, false, false, false);
     }   //MecanumDrive
 
 }   //class MecanumDrive

@@ -29,8 +29,8 @@ import teamcode.RobotParams;
 
 public class PixelTray
 {
+    private final TrcDbgTrace tracer;
     private final String instanceName;
-    private final TrcDbgTrace msgTracer;
     private final FtcServo lowerGate, upperGate;
     private boolean lowerGateOpened, upperGateOpened;
 
@@ -38,12 +38,11 @@ public class PixelTray
      * Constructor: Creates an instance of the object.
      *
      * @param instanceName specifies the hardware name.
-     * @param msgTracer specifies the tracer to used for logging events, can be null if not provided.
      */
-    public PixelTray(String instanceName, TrcDbgTrace msgTracer)
+    public PixelTray(String instanceName)
     {
+        tracer = new TrcDbgTrace(instanceName);
         this.instanceName = instanceName;
-        this.msgTracer = msgTracer;
         lowerGate = new FtcServo(instanceName + ".lowerGate");
         upperGate = new FtcServo(instanceName + ".upperGate");
     }   //PixelTray
@@ -71,10 +70,7 @@ public class PixelTray
         lowerGate.setPosition(
             opened? RobotParams.PIXELTRAY_LOWER_GATE_OPEN: RobotParams.PIXELTRAY_LOWER_GATE_CLOSE,
             event, RobotParams.PIXELTRAY_OPEN_CLOSE_TIME);
-        if (msgTracer != null)
-        {
-            msgTracer.traceInfo(instanceName, "lowerGateOpened=" + opened);
-        }
+        tracer.traceInfo(instanceName, "lowerGateOpened=%, event=%s", opened, event);
     }   //setLowerGateOpened
 
     public void setLowerGateOpened(boolean opened, double stepRate, TrcEvent event)
@@ -83,10 +79,7 @@ public class PixelTray
         lowerGate.setPosition(
             opened? RobotParams.PIXELTRAY_LOWER_GATE_OPEN: RobotParams.PIXELTRAY_LOWER_GATE_CLOSE,
             stepRate, event);
-        if (msgTracer != null)
-        {
-            msgTracer.traceInfo(instanceName, "lowerGateOpened=" + opened);
-        }
+        tracer.traceInfo(instanceName, "lowerGateOpened=%s, stepRate=%f, event=%s", opened, stepRate, event);
     }   //setLowerGateOpened
 
     /**
@@ -111,10 +104,7 @@ public class PixelTray
         upperGate.setPosition(
             opened? RobotParams.PIXELTRAY_UPPER_GATE_OPEN: RobotParams.PIXELTRAY_UPPER_GATE_CLOSE,
             event, RobotParams.PIXELTRAY_OPEN_CLOSE_TIME);
-        if (msgTracer != null)
-        {
-            msgTracer.traceInfo(instanceName, "upperGateOpened=" + opened);
-        }
+        tracer.traceInfo(instanceName, "upperGateOpened=%s, event=%s", opened, event);
     }   //setUpperGateOpened
 
     public void setUpperGateOpened(boolean opened, double stepRate, TrcEvent event)
@@ -123,10 +113,7 @@ public class PixelTray
         upperGate.setPosition(
             opened? RobotParams.PIXELTRAY_UPPER_GATE_OPEN: RobotParams.PIXELTRAY_UPPER_GATE_CLOSE,
             stepRate, event);
-        if (msgTracer != null)
-        {
-            msgTracer.traceInfo(instanceName, "upperGateOpened=" + opened);
-        }
+        tracer.traceInfo(instanceName, "upperGateOpened=%s, stepRate=%f, event=%s", opened, stepRate, event);
     }   //setUpperGateOpened
 
     /**
