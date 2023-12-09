@@ -202,7 +202,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.5);
                     if (autoChoices.strategy == FtcAuto.AutoStrategy.AUTO_SCORE_2PLUS1)
                     {
-                        robot.pixelTray.setUpperGateOpened(false, null);
+                        robot.pixelTray.setUpperGateOpened(true, null);
                         intermediate1 = robot.adjustPoseByAlliance(-1.6, 2.5, 180.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
                         intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
@@ -241,7 +241,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                 case DRIVE_TO_LOOKOUT:
                     // CodeReview: Why are we opening the upper gate???
-                    robot.pixelTray.setUpperGateOpened(true, null);
+                    robot.pixelTray.setUpperGateOpened(false, null);
                     // Drive to the lookout point where we can see the AprilTag clearly.
                     if (autoChoices.startPos == FtcAuto.StartPos.BACKSTAGE)
                     {
