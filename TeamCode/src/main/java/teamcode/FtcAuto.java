@@ -62,6 +62,7 @@ public class FtcAuto extends FtcOpMode
     public enum AutoStrategy
     {
         AUTO,
+        AUTO_SCORE_3,
         PID_DRIVE,
         TIMED_DRIVE,
         DO_NOTHING
@@ -150,13 +151,14 @@ public class FtcAuto extends FtcOpMode
         //
         switch (autoChoices.strategy)
         {
+            case AUTO_SCORE_3:
+                autoChoices.startPos = StartPos.AUDIENCE;
             case AUTO:
                 if (!RobotParams.Preferences.noRobot)
                 {
                     autoCommand = new CmdAuto(robot, autoChoices);
                 }
                 break;
-
             case PID_DRIVE:
                 if (!RobotParams.Preferences.noRobot)
                 {
@@ -367,16 +369,19 @@ public class FtcAuto extends FtcOpMode
         //
         // Populate choice menus.
         //
-        allianceMenu.addChoice("Red", Alliance.RED_ALLIANCE, true, startPosMenu);
-        allianceMenu.addChoice("Blue", Alliance.BLUE_ALLIANCE, false, startPosMenu);
+        allianceMenu.addChoice("Red", Alliance.RED_ALLIANCE, true, strategyMenu);
+        allianceMenu.addChoice("Blue", Alliance.BLUE_ALLIANCE, false, strategyMenu);
 
-        startPosMenu.addChoice("Start Position Audience", StartPos.AUDIENCE, true, strategyMenu);
-        startPosMenu.addChoice("Start Position Backstage", StartPos.BACKSTAGE, false, strategyMenu);
-
-        strategyMenu.addChoice("Autonomous", AutoStrategy.AUTO, true, useAprilTagVisionMenu);
+        strategyMenu.addChoice("Autonomous", AutoStrategy.AUTO, true, startPosMenu);
+        strategyMenu.addChoice("Autonomous 2+1", AutoStrategy.AUTO_SCORE_3, true, useAprilTagVisionMenu);
         strategyMenu.addChoice("PID Drive", AutoStrategy.PID_DRIVE, false, xTargetMenu);
         strategyMenu.addChoice("Timed Drive", AutoStrategy.TIMED_DRIVE, false, driveTimeMenu);
         strategyMenu.addChoice("Do nothing", AutoStrategy.DO_NOTHING, false);
+
+        startPosMenu.addChoice("Start Position Audience", StartPos.AUDIENCE, true, useAprilTagVisionMenu);
+        startPosMenu.addChoice("Start Position Backstage", StartPos.BACKSTAGE, false, useAprilTagVisionMenu);
+
+
 
         useAprilTagVisionMenu.addChoice("Use Vision", true, true, parkPosMenu);
         useAprilTagVisionMenu.addChoice("No Vision", false, false, parkPosMenu);

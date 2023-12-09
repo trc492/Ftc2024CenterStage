@@ -658,7 +658,7 @@ public class FtcTeleOp extends FtcOpMode
                             ">>>>> AutoAssistPlace starting: aprilTagIndex=" + aprilTagIndex +
                             " scoreLevel=" + scoreLevelIndex);
                         robot.placePixelTask.autoAssistPlace(
-                            true, aprilTagIndex, RobotParams.ELEVATOR_PRESETS[scoreLevelIndex], false, null);
+                            true, aprilTagIndex, false, RobotParams.ELEVATOR_PRESETS[scoreLevelIndex], false, null);
                     }
                 }
                 else

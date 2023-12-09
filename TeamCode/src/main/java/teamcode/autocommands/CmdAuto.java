@@ -43,6 +43,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
         START,
         PLACE_PURPLE_PIXEL,
         DO_DELAY,
+        DRIVE_TO_STACK,
+        PICKUP_PIXEL,
         DRIVE_TO_LOOKOUT,
         SCORE_YELLOW_PIXEL,
         PARK_AT_BACKSTAGE,
@@ -211,7 +213,25 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     }
                     break;
 
+                case DRIVE_TO_STACK:
+                    robot.pixelTray.setUpperGateOpened(false, null);
+                    intermediate1 = robot.adjustPoseByAlliance(-1.6, 2.5, 180.0, autoChoices.alliance);
+                    intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
+                    intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
+                    targetPose = robot.adjustPoseByAlliance(-2.1, 0.5, -90.0, autoChoices.alliance);
+                    robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.5);
+                    robot.robotDrive.purePursuitDrive.start(
+                            event, robot.robotDrive.driveBase.getFieldPosition(), false,
+                            intermediate1, intermediate2, intermediate3, targetPose);
+                    sm.waitForSingleEvent(event, State.PICKUP_PIXEL);
+                    break;
+
+                case PICKUP_PIXEL:
+                    robot.intake.setOn(0.0, 2.0, event);
+                    sm.waitForSingleEvent(event, State.DRIVE_TO_LOOKOUT);
+
                 case DRIVE_TO_LOOKOUT:
+                    robot.pixelTray.setUpperGateOpened(true, null);
                     // Drive to the lookout point where we can see the AprilTag clearly.
                     if (autoChoices.startPos == FtcAuto.StartPos.BACKSTAGE)
                     {
@@ -227,25 +247,38 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     else
                     {
                         // Audience starting position takes a longer path to the backdrop through the stage door.
-                        intermediate1 = robot.adjustPoseByAlliance(-1.6, 2.5, 180.0, autoChoices.alliance);
-                        intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
-                        intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
-                        intermediate4 = robot.adjustPoseByAlliance(-2.0, 0.3, -90.0, autoChoices.alliance);
-                        intermediate5 = robot.adjustPoseByAlliance(1.5, 0.3, -90.0, autoChoices.alliance);
-                        targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
-                        robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.5);
-                        robot.robotDrive.purePursuitDrive.start(
-                            event, robot.robotDrive.driveBase.getFieldPosition(), false,
-                            intermediate1, intermediate2, intermediate3, intermediate4, intermediate5, targetPose);
+                        if (autoChoices.strategy == FtcAuto.AutoStrategy.AUTO_SCORE_3)
+                        {
+                            intermediate1 = robot.adjustPoseByAlliance(-2.0, 0.3, -90.0, autoChoices.alliance);
+                            intermediate2 = robot.adjustPoseByAlliance(1.5, 0.3, -90.0, autoChoices.alliance);
+                            targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
+                            robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.5);
+                            robot.robotDrive.purePursuitDrive.start(
+                                    event, robot.robotDrive.driveBase.getFieldPosition(), false,
+                                    intermediate1, intermediate2, targetPose);
+                        }
+                        else {
+                            intermediate1 = robot.adjustPoseByAlliance(-1.6, 2.5, 180.0, autoChoices.alliance);
+                            intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
+                            intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
+                            intermediate4 = robot.adjustPoseByAlliance(-2.0, 0.3, -90.0, autoChoices.alliance);
+                            intermediate5 = robot.adjustPoseByAlliance(1.5, 0.3, -90.0, autoChoices.alliance);
+                            targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
+                            robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.5);
+                            robot.robotDrive.purePursuitDrive.start(
+                                    event, robot.robotDrive.driveBase.getFieldPosition(), false,
+                                    intermediate1, intermediate2, intermediate3, intermediate4, intermediate5, targetPose);
+                        }
                     }
                     sm.waitForSingleEvent(event, State.SCORE_YELLOW_PIXEL);
                     break;
 
                 case SCORE_YELLOW_PIXEL:
+                    robot.robotDrive.purePursuitDrive.setMoveOutputLimit(1.0);
                     if (robot.placePixelTask != null)
                     {
                         robot.placePixelTask.autoAssistPlace(
-                            true, teamPropIndex, RobotParams.ELEVATOR_LOAD_POS, true, event);
+                            true, teamPropIndex, autoChoices.strategy == FtcAuto.AutoStrategy.AUTO_SCORE_3 ? true : false,RobotParams.ELEVATOR_LOAD_POS, true, event);
                         sm.waitForSingleEvent(event, State.PARK_AT_BACKSTAGE);
                     }
                     else

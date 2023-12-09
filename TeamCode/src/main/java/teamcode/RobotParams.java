@@ -470,6 +470,6 @@ public class RobotParams
     // Launcher subsystem.
     //
     public static final boolean LAUNCHER_MOTOR_INVERTED         = true;
-    public static final double DEF_LAUNCHER_POWER               = 0.9;
+    public static final double DEF_LAUNCHER_POWER               = 0.8;
 
 }   //class RobotParams
