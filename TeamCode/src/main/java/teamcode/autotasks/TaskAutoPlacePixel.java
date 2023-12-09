@@ -23,7 +23,6 @@
 package teamcode.autotasks;
 
 import TrcCommonLib.trclib.TrcAutoTask;
-import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcOwnershipMgr;
 import TrcCommonLib.trclib.TrcPose2D;
@@ -81,13 +80,12 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
     private final String ownerName;
     private final Robot robot;
-    private final TrcDbgTrace msgTracer;
     private final TrcEvent event;
     private final TrcEvent elevatorArmEvent;
 
     private String currOwner = null;
     private TrcPose2D aprilTagPose = null;
-    private TrcPose2D secondAprilTagPose = null;
+    private TrcPose2D adjAprilTagPose = null;
     private Double visionExpiredTime = null;
 
     /**
@@ -95,14 +93,12 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
      *
      * @param ownerName specifies the owner name to take subsystem ownership, can be null if no ownership required.
      * @param robot specifies the robot object that contains all the necessary subsystems.
-     * @param msgTracer specifies the tracer to use to log events, can be null if not provided.
      */
-    public TaskAutoPlacePixel(String ownerName, Robot robot, TrcDbgTrace msgTracer)
+    public TaskAutoPlacePixel(String ownerName, Robot robot)
     {
-        super(moduleName, ownerName, TrcTaskMgr.TaskType.POST_PERIODIC_TASK, msgTracer);
+        super(moduleName, ownerName, TrcTaskMgr.TaskType.POST_PERIODIC_TASK);
         this.ownerName = ownerName;
         this.robot = robot;
-        this.msgTracer = msgTracer;
         event = new TrcEvent(moduleName + ".event");
         elevatorArmEvent = new TrcEvent(moduleName + ".elevatorArmEvent");
     }   //TaskAutoPlacePixel
@@ -113,21 +109,20 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
      * @param useVision specifies true to use vision, false otherwise.
      * @param aprilTagIndex specifies the AprilTag index to approach for placing pixel, 0 for left, 1 for center and
      *        2 for right.
+     * @param hasSecondPixel specifies true if scoring 2 pixels, false otherwise.
      * @param scoreLevel specifies the score level.
      * @param inAuto specifies true if called by Autonomous, false otherwise.
      * @param completionEvent specifies the event to signal when done, can be null if none provided.
      */
     public void autoAssistPlace(
-        boolean useVision, int aprilTagIndex, boolean hasSecondPixel, double scoreLevel, boolean inAuto, TrcEvent completionEvent)
+        boolean useVision, int aprilTagIndex, boolean hasSecondPixel, double scoreLevel, boolean inAuto,
+        TrcEvent completionEvent)
     {
-        if (msgTracer != null)
-        {
-            msgTracer.traceInfo(
-                moduleName, "useVision=%s, aprilTagIndex=%d, scoreLevel=%f, inAuto=%s, event=%s",
-                useVision, aprilTagIndex, scoreLevel, inAuto, completionEvent);
-        }
-
-        startAutoTask(State.START, new TaskParams(useVision, aprilTagIndex, hasSecondPixel, scoreLevel, inAuto), completionEvent);
+        tracer.traceInfo(
+            moduleName, "useVision=%s, aprilTagIndex=%d, has2Pixels=%s, scoreLevel=%f, inAuto=%s, event=%s",
+            useVision, aprilTagIndex, hasSecondPixel, scoreLevel, inAuto, completionEvent);
+        startAutoTask(
+            State.START, new TaskParams(useVision, aprilTagIndex, hasSecondPixel, scoreLevel, inAuto), completionEvent);
     }   //autoAssistPlace
 
     /**
@@ -135,11 +130,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
      */
     public void autoAssistCancel()
     {
-        if (msgTracer != null)
-        {
-            msgTracer.traceInfo(moduleName, "Canceling auto-assist.");
-        }
-
+        tracer.traceInfo(moduleName, "Canceling auto-assist.");
         stopAutoTask(false);
     }   //autoAssistCancel
 
@@ -164,20 +155,14 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         if (success)
         {
             currOwner = ownerName;
-            if (msgTracer != null)
-            {
-                msgTracer.traceInfo(moduleName, "Successfully acquired subsystem ownerships.");
-            }
+            tracer.traceInfo(moduleName, "Successfully acquired subsystem ownerships.");
         }
         else
         {
-            if (msgTracer != null)
-            {
-                TrcOwnershipMgr ownershipMgr = TrcOwnershipMgr.getInstance();
-                msgTracer.traceInfo(
-                    moduleName, "Failed to acquire subsystem ownership (currOwner=%s, robotDrive=%s).",
-                    currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
-            }
+            TrcOwnershipMgr ownershipMgr = TrcOwnershipMgr.getInstance();
+            tracer.traceInfo(
+                moduleName, "Failed to acquire subsystem ownership (currOwner=%s, robotDrive=%s).",
+                currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
             releaseSubsystemsOwnership();
         }
 
@@ -193,14 +178,10 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
     {
         if (ownerName != null)
         {
-            if (msgTracer != null)
-            {
-                TrcOwnershipMgr ownershipMgr = TrcOwnershipMgr.getInstance();
-                msgTracer.traceInfo(
-                    moduleName, "Releasing subsystem ownership (currOwner=%s, robotDrive=%s).",
-                    currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
-            }
-
+            TrcOwnershipMgr ownershipMgr = TrcOwnershipMgr.getInstance();
+            tracer.traceInfo(
+                moduleName, "Releasing subsystem ownership (currOwner=%s, robotDrive=%s).",
+                currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
             robot.robotDrive.driveBase.releaseExclusiveAccess(currOwner);
             robot.elevatorArm.releaseExclusiveAccess(currOwner);
             currOwner = null;
@@ -213,11 +194,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
     @Override
     protected void stopSubsystems()
     {
-        if (msgTracer != null)
-        {
-            msgTracer.traceInfo(moduleName, "Stopping subsystems.");
-        }
-
+        tracer.traceInfo(moduleName, "Stopping subsystems.");
+        robot.robotDrive.purePursuitDrive.setMoveOutputLimit(1.0);
         if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null)
         {
             robot.elevatorArm.wristTrigger.disableTrigger();
@@ -263,19 +241,13 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // Set up vision: switch to rear camera and enable AprilTagVision.
                     robot.vision.setActiveWebcam(robot.vision.getRearWebcam());
                     robot.vision.setAprilTagVisionEnabled(true);
-                    if (msgTracer != null)
-                    {
-                        msgTracer.traceInfo(moduleName, "Enabling AprilTagVision.");
-                    }
+                    tracer.traceInfo(moduleName, "Enabling AprilTagVision.");
                     sm.setState(State.FIND_APRILTAG);
                 }
                 else
                 {
                     // Not using vision or AprilTag Vision is not enabled, skip vision.
-                    if (msgTracer != null)
-                    {
-                        msgTracer.traceInfo(moduleName, "AprilTag Vision not enabled.");
-                    }
+                    tracer.traceInfo(moduleName, "AprilTag Vision not enabled.");
                     sm.setState(State.SET_SCORING_POS);
                 }
                 break;
@@ -304,24 +276,21 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                             RobotParams.BLUE_BACKDROP_APRILTAGS[taskParams.aprilTagIndex] :
                             RobotParams.RED_BACKDROP_APRILTAGS[taskParams.aprilTagIndex];
                     aprilTagPose = RobotParams.APRILTAG_POSES[targetAprilTagId - 1];
-                    if (msgTracer != null)
-                    {
-                        msgTracer.traceInfo(
-                            moduleName,
-                            "Vision found AprilTag %d at %s from camera.\n" +
-                            "Targeting AprilTag %d at %s from robotPose %s.",
-                            aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagInfo.objPose,
-                            targetAprilTagId, aprilTagPose, robot.robotDrive.driveBase.getFieldPosition());
-                    }
+                    tracer.traceInfo(
+                        moduleName,
+                        "Vision found AprilTag %d at %s from camera.\n" +
+                        "\tTargeting AprilTag %d at %s from robotPose %s.",
+                        aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagInfo.objPose,
+                        targetAprilTagId, aprilTagPose, robot.robotDrive.driveBase.getFieldPosition());
                     sm.setState(State.SET_SCORING_POS);
                 }
                 else
                 {
-                    if (aprilTagInfo != null && msgTracer != null)
+                    if (aprilTagInfo != null)
                     {
                         // For some reason, we found an AprilTag but not in the range of 1-6. Ignore it as if we did
                         // not see it.
-                        msgTracer.traceWarn(moduleName, "Not seeing backdrop!!! (obj=%s)", aprilTagInfo.detectedObj);
+                        tracer.traceWarn(moduleName, "Not seeing backdrop!!! (obj=%s)", aprilTagInfo.detectedObj);
                     }
 
                     if (visionExpiredTime == null)
@@ -332,10 +301,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
                     {
                         // Timed out, moving on.
-                        if (msgTracer != null)
-                        {
-                            msgTracer.traceInfo(moduleName, "No AprilTag found.");
-                        }
+                        tracer.traceInfo(moduleName, "No AprilTag found.");
                         sm.setState(State.SET_SCORING_POS);
                     }
                 }
@@ -369,23 +335,9 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                                 RobotParams.BLUE_BACKDROP_APRILTAGS[taskParams.aprilTagIndex] :
                                 RobotParams.RED_BACKDROP_APRILTAGS[taskParams.aprilTagIndex];
                         aprilTagPose = RobotParams.APRILTAG_POSES[targetAprilTagId - 1];
-
-                        if (taskParams.hasSecondPixel)
-                        {
-                            int secondAprilTagIndex = taskParams.aprilTagIndex == 0 ? 2 : 0;
-
-                            int secondTargetAprilTagId =
-                                    FtcAuto.autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE ?
-                                            RobotParams.BLUE_BACKDROP_APRILTAGS[secondAprilTagIndex] :
-                                            RobotParams.RED_BACKDROP_APRILTAGS[secondAprilTagIndex];
-                            secondAprilTagPose = RobotParams.APRILTAG_POSES[secondTargetAprilTagId - 1];
-                        }
-                        if (msgTracer != null)
-                        {
-                            msgTracer.traceInfo(
-                                moduleName, "Drive to AprilTag %d using absolute odometry (pose=%s).",
-                                targetAprilTagId, aprilTagPose);
-                        }
+                        tracer.traceInfo(
+                            moduleName, "Drive to AprilTag %d using absolute odometry (pose=%s).",
+                            targetAprilTagId, aprilTagPose);
                     }
                     else if (robot.blinkin != null)
                     {
@@ -402,23 +354,29 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     }
                     // Account for end-effector offset from the camera.
                     // Clone aprilTagPose before changing it, or we will corrupt the AprilTag location array.
-
-                    TrcPose2D targetPose = taskParams.hasSecondPixel ? secondAprilTagPose.clone() : aprilTagPose.clone();
-                    targetPose.x -= 5.85;
+                    adjAprilTagPose = aprilTagPose.clone();
+                    adjAprilTagPose.x -= 5.85;
                     if (taskParams.aprilTagIndex == 0)
                     {
-                        targetPose.y -= 0.65;
+                        adjAprilTagPose.y -= 0.65;
                     }
                     else if (taskParams.aprilTagIndex == 1)
                     {
-                        targetPose.y -= 0.75;
+                        adjAprilTagPose.y -= 0.75;
                     }
                     else
                     {
-                        targetPose.y += 0.65;
+                        adjAprilTagPose.y += 0.65;
                     }
                     // Maintain heading to be squared to the backdrop.
-                    targetPose.angle = -90.0;
+                    adjAprilTagPose.angle = -90.0;
+                    TrcPose2D targetPose = adjAprilTagPose.clone();
+                    if (taskParams.hasSecondPixel)
+                    {
+                        // We have a second pixel, score it first. So, adjust the Y position for the second pixel.
+                        double yDeltaUnit = taskParams.aprilTagIndex == 0 ? -2.0 : taskParams.aprilTagIndex;
+                        targetPose.y += RobotParams.BACKDROP_APRILTAG_DELTA_Y * yDeltaUnit;
+                    }
                     // We are right in front of the backdrop, so we don't need full power to approach it.
                     // Go sideway first so we can approach the backdrop straight forward at the end. Or we could
                     // stop the sideway movement prematurely if the distance sensor said it's close enough.
@@ -441,7 +399,6 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 {
                     robot.elevatorArm.wristTrigger.disableTrigger();
                 }
-                robot.robotDrive.purePursuitDrive.setMoveOutputLimit(1.0);
 
                 if (robot.elevatorArm != null)
                 {
@@ -462,14 +419,13 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 if (robot.pixelTray != null)
                 {
                     robot.pixelTray.setUpperGateOpened(true, 0.2, event);
-                    if (taskParams.hasSecondPixel)
+                    if (!taskParams.hasSecondPixel)
                     {
-                        sm.waitForSingleEvent(event, State.DRIVE_TO_POS_2);
+                        // We are scoring lower pixel, open the lower gate too.
+                        robot.pixelTray.setLowerGateOpened(true, 0.2, null);
                     }
-                    else
-                    {
-                        sm.waitForSingleEvent(event, State.RAISE_ELEVATOR);
-                    }
+                    sm.waitForSingleEvent(
+                        event, taskParams.hasSecondPixel ? State.DRIVE_TO_POS_2 : State.RAISE_ELEVATOR);
                 }
                 else
                 {
@@ -479,31 +435,9 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 break;
 
             case DRIVE_TO_POS_2:
-                TrcPose2D targetPose = aprilTagPose.clone();
-                targetPose.x -= 5.85;
-                if (taskParams.aprilTagIndex == 0)
-                {
-                    targetPose.y -= 0.65;
-                }
-                else if (taskParams.aprilTagIndex == 1)
-                {
-                    targetPose.y -= 0.75;
-                }
-                else
-                {
-                    targetPose.y += 0.65;
-                }
-                // Maintain heading to be squared to the backdrop.
-                targetPose.angle = -90.0;
-                // We are right in front of the backdrop, so we don't need full power to approach it.
-                // Go sideway first so we can approach the backdrop straight forward at the end. Or we could
-                // stop the sideway movement prematurely if the distance sensor said it's close enough.
-                TrcPose2D intermediate = targetPose.clone();
-                intermediate.x = robot.robotDrive.driveBase.getXPosition();
-                robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.35);
+                // We just scored the first pixel, we are moving to the position to score the second pixel.
                 robot.robotDrive.purePursuitDrive.start(
-                        currOwner, event, 10.0, robot.robotDrive.driveBase.getFieldPosition(), false,
-                        intermediate, targetPose);
+                    currOwner, event, 10.0, robot.robotDrive.driveBase.getFieldPosition(), false, adjAprilTagPose);
                 sm.waitForSingleEvent(event, State.PLACE_PIXEL_2);
                 break;
 
@@ -568,14 +502,10 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
         if (callbackContext.prevZone == 1 && callbackContext.currZone == 0)
         {
-
             robot.robotDrive.purePursuitDrive.cancel(currOwner);
-            if (msgTracer != null)
-            {
-                msgTracer.traceInfo(
-                    moduleName, "Drive to AprilTag canceled by wristSensor, triggerState=%s, robotPose=%s",
-                    callbackContext, robot.robotDrive.driveBase.getFieldPosition());
-            }
+            tracer.traceInfo(
+                moduleName, "Drive to AprilTag canceled by wristSensor, triggerState=%s, robotPose=%s",
+                callbackContext, robot.robotDrive.driveBase.getFieldPosition());
         }
     }   //wristSensorTriggered
 

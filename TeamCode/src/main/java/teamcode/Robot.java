@@ -171,7 +171,7 @@ public class Robot
                 //
                 // Create auto tasks here.
                 //
-                placePixelTask = new TaskAutoPlacePixel("PlacePixelTask", this, globalTracer);
+                placePixelTask = new TaskAutoPlacePixel("PlacePixelTask", this);
             }
         }
 

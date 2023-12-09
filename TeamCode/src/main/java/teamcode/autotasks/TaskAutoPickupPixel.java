@@ -25,7 +25,6 @@ package teamcode.autotasks;
 import java.util.Locale;
 
 import TrcCommonLib.trclib.TrcAutoTask;
-import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcOpenCvColorBlobPipeline;
 import TrcCommonLib.trclib.TrcOwnershipMgr;
@@ -65,7 +64,6 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
 
     private final String ownerName;
     private final Robot robot;
-    private final TrcDbgTrace msgTracer;
     private final TrcEvent event;
 
     private String currOwner = null;
@@ -78,14 +76,12 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
      *
      * @param ownerName specifies the owner name to take subsystem ownership, can be null if no ownership required.
      * @param robot specifies the robot object that contains all the necessary subsystems.
-     * @param msgTracer specifies the tracer to use to log events, can be null if not provided.
      */
-    public TaskAutoPickupPixel(String ownerName, Robot robot, TrcDbgTrace msgTracer)
+    public TaskAutoPickupPixel(String ownerName, Robot robot)
     {
-        super(moduleName, ownerName, TrcTaskMgr.TaskType.POST_PERIODIC_TASK, msgTracer);
+        super(moduleName, ownerName, TrcTaskMgr.TaskType.POST_PERIODIC_TASK);
         this.ownerName = ownerName;
         this.robot = robot;
-        this.msgTracer = msgTracer;
         event = new TrcEvent(moduleName);
     }   //TaskAutoPickupPixel
 
@@ -97,11 +93,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
      */
     public void autoAssistPickup(Vision.PixelType pixelType, TrcEvent completionEvent)
     {
-        if (msgTracer != null)
-        {
-            msgTracer.traceInfo(moduleName, "pixelType=%s, event=%s", pixelType, completionEvent);
-        }
-
+        tracer.traceInfo(moduleName, "pixelType=%s, event=%s", pixelType, completionEvent);
         this.pixelType = pixelType;
         startAutoTask(State.START, new TaskParams(pixelType), completionEvent);
     }   //autoAssistPickup
@@ -111,11 +103,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
      */
     public void autoAssistCancel()
     {
-        if (msgTracer != null)
-        {
-            msgTracer.traceInfo(moduleName, "Canceling auto-assist.");
-        }
-
+        tracer.traceInfo(moduleName, "Canceling auto-assist.");
         stopAutoTask(false);
     }   //autoAssistCancel
 
@@ -139,20 +127,14 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
         if (success)
         {
             currOwner = ownerName;
-            if (msgTracer != null)
-            {
-                msgTracer.traceInfo(moduleName, "Successfully acquired subsystem ownerships.");
-            }
+            tracer.traceInfo(moduleName, "Successfully acquired subsystem ownerships.");
         }
         else
         {
-            if (msgTracer != null)
-            {
-                TrcOwnershipMgr ownershipMgr = TrcOwnershipMgr.getInstance();
-                msgTracer.traceInfo(
-                    moduleName, "Failed to acquire subsystem ownership (currOwner=%s, robotDrive=%s).",
-                    currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
-            }
+            TrcOwnershipMgr ownershipMgr = TrcOwnershipMgr.getInstance();
+            tracer.traceInfo(
+                moduleName, "Failed to acquire subsystem ownership (currOwner=%s, robotDrive=%s).",
+                currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
             releaseSubsystemsOwnership();
         }
 
@@ -168,14 +150,10 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
     {
         if (ownerName != null)
         {
-            if (msgTracer != null)
-            {
-                TrcOwnershipMgr ownershipMgr = TrcOwnershipMgr.getInstance();
-                msgTracer.traceInfo(
-                    moduleName, "Releasing subsystem ownership (currOwner=%s, robotDrive=%s).",
-                    currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
-            }
-
+            TrcOwnershipMgr ownershipMgr = TrcOwnershipMgr.getInstance();
+            tracer.traceInfo(
+                moduleName, "Releasing subsystem ownership (currOwner=%s, robotDrive=%s).",
+                currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
             robot.robotDrive.driveBase.releaseExclusiveAccess(currOwner);
             currOwner = null;
         }
@@ -187,11 +165,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
     @Override
     protected void stopSubsystems()
     {
-        if (msgTracer != null)
-        {
-            msgTracer.traceInfo(moduleName, "Stopping subsystems.");
-        }
-
+        tracer.traceInfo(moduleName, "Stopping subsystems.");
         robot.robotDrive.cancel(currOwner);
         robot.intake.stop();
 
@@ -259,10 +233,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
                         String msg = String.format(
                             Locale.US, "%s is found at x %.1f, y %.1f, angle=%.1f",
                             taskParams.pixelType, pixelInfo.objPose.x, pixelInfo.objPose.y, pixelInfo.objPose.yaw);
-                        if (msgTracer != null)
-                        {
-                            msgTracer.traceInfo(moduleName, msg);
-                        }
+                        tracer.traceInfo(moduleName, msg);
                         robot.speak(msg);
                         sm.setState(State.ALIGN_TO_PIXEL);
                     }
@@ -274,11 +245,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
                     else if (TrcTimer.getCurrentTime() >= visionExpiredTime)
                     {
                         // Timing out, moving on.
-                        if (msgTracer != null)
-                        {
-                            msgTracer.traceInfo(moduleName, "%s not found.", taskParams.pixelType);
-                        }
-
+                        tracer.traceInfo(moduleName, "%s not found.", taskParams.pixelType);
                         if (robot.blinkin != null)
                         {
                             // Tell the drivers vision doesn't see anything so they can score manually.
@@ -291,10 +258,7 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
                 else
                 {
                     // Vision is not enable, moving on.
-                    if (msgTracer != null)
-                    {
-                        msgTracer.traceInfo(moduleName, "Vision not enabled.");
-                    }
+                    tracer.traceInfo(moduleName, "Vision not enabled.");
                     sm.setState(State.DONE);
                 }
                 break;

@@ -70,7 +70,7 @@ public class PixelTray
         lowerGate.setPosition(
             opened? RobotParams.PIXELTRAY_LOWER_GATE_OPEN: RobotParams.PIXELTRAY_LOWER_GATE_CLOSE,
             event, RobotParams.PIXELTRAY_OPEN_CLOSE_TIME);
-        tracer.traceInfo(instanceName, "lowerGateOpened=%, event=%s", opened, event);
+        tracer.traceInfo(instanceName, "lowerGateOpened=%s, event=%s", opened, event);
     }   //setLowerGateOpened
 
     public void setLowerGateOpened(boolean opened, double stepRate, TrcEvent event)

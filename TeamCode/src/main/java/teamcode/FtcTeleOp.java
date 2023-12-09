@@ -475,7 +475,8 @@ public class FtcTeleOp extends FtcOpMode
                 if (pressed && robot.pixelTray != null)
                 {
                     pixelTrayLowerGateOpened = !pixelTrayLowerGateOpened;
-                    robot.globalTracer.traceInfo(moduleName, ">>>>> Toggle lower gate: open=" + pixelTrayLowerGateOpened);
+                    robot.globalTracer.traceInfo(
+                        moduleName, ">>>>> Toggle lower gate: open=" + pixelTrayLowerGateOpened);
                     robot.pixelTray.setLowerGateOpened(pixelTrayLowerGateOpened, null);
                 }
                 break;
@@ -484,7 +485,8 @@ public class FtcTeleOp extends FtcOpMode
                 if (pressed && robot.pixelTray != null)
                 {
                     pixelTrayUpperGateOpened = !pixelTrayUpperGateOpened;
-                    robot.globalTracer.traceInfo(moduleName, ">>>>> Toggle upper gate: open=" + pixelTrayUpperGateOpened);
+                    robot.globalTracer.traceInfo(
+                        moduleName, ">>>>> Toggle upper gate: open=" + pixelTrayUpperGateOpened);
                     robot.pixelTray.setUpperGateOpened(pixelTrayUpperGateOpened, null);
                 }
                 break;

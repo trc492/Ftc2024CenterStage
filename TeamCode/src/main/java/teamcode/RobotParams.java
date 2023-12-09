@@ -177,6 +177,7 @@ public class RobotParams
     // DO NOT CHANGE the AprilTag location numbers. They are from the AprilTag metadata.
     public static final double APRILTAG_BACKDROP_X              = 60.25;
     public static final double APRILTAG_AUDIENCE_WALL_X         = -70.25;
+    public static final double BACKDROP_APRILTAG_DELTA_Y        = 6.0;
     // All AprilTags are at the height of 4.0-inch except for AprilTag 7 and 10 which are at the height of 5.5-inch.
     public static final TrcPose2D[] APRILTAG_POSES              = new TrcPose2D[] {
         new TrcPose2D(APRILTAG_BACKDROP_X, 41.41, 90.0),        // TagId 1

@@ -61,8 +61,8 @@ public class FtcAuto extends FtcOpMode
 
     public enum AutoStrategy
     {
-        AUTO,
-        AUTO_SCORE_3,
+        AUTO_SCORE_2,
+        AUTO_SCORE_2PLUS1,
         PID_DRIVE,
         TIMED_DRIVE,
         DO_NOTHING
@@ -151,14 +151,18 @@ public class FtcAuto extends FtcOpMode
         //
         switch (autoChoices.strategy)
         {
-            case AUTO_SCORE_3:
+            case AUTO_SCORE_2PLUS1:
                 autoChoices.startPos = StartPos.AUDIENCE;
-            case AUTO:
+                //
+                // Intentionally fall through to the next state.
+                //
+            case AUTO_SCORE_2:
                 if (!RobotParams.Preferences.noRobot)
                 {
                     autoCommand = new CmdAuto(robot, autoChoices);
                 }
                 break;
+
             case PID_DRIVE:
                 if (!RobotParams.Preferences.noRobot)
                 {
@@ -345,8 +349,8 @@ public class FtcAuto extends FtcOpMode
         //
         FtcValueMenu delayMenu = new FtcValueMenu("Delay time:", null, 0.0, 30.0, 1.0, 0.0, " %.0f sec");
         FtcChoiceMenu<Alliance> allianceMenu = new FtcChoiceMenu<>("Alliance:", delayMenu);
-        FtcChoiceMenu<StartPos> startPosMenu = new FtcChoiceMenu<>("Start Position:", allianceMenu);
-        FtcChoiceMenu<AutoStrategy> strategyMenu = new FtcChoiceMenu<>("Auto Strategies:", startPosMenu);
+        FtcChoiceMenu<AutoStrategy> strategyMenu = new FtcChoiceMenu<>("Auto Strategies:", allianceMenu);
+        FtcChoiceMenu<StartPos> startPosMenu = new FtcChoiceMenu<>("Start Position:", strategyMenu);
         FtcChoiceMenu<Boolean> useAprilTagVisionMenu = new FtcChoiceMenu<>("AprilTag Vision:", strategyMenu);
         FtcChoiceMenu<ParkPos> parkPosMenu = new FtcChoiceMenu<>("Park Position:", useAprilTagVisionMenu);
 
@@ -372,16 +376,14 @@ public class FtcAuto extends FtcOpMode
         allianceMenu.addChoice("Red", Alliance.RED_ALLIANCE, true, strategyMenu);
         allianceMenu.addChoice("Blue", Alliance.BLUE_ALLIANCE, false, strategyMenu);
 
-        strategyMenu.addChoice("Autonomous", AutoStrategy.AUTO, true, startPosMenu);
-        strategyMenu.addChoice("Autonomous 2+1", AutoStrategy.AUTO_SCORE_3, true, useAprilTagVisionMenu);
+        strategyMenu.addChoice("Autonomous Score 2", AutoStrategy.AUTO_SCORE_2, true, startPosMenu);
+        strategyMenu.addChoice("Autonomous Score 2+1", AutoStrategy.AUTO_SCORE_2PLUS1, true, useAprilTagVisionMenu);
         strategyMenu.addChoice("PID Drive", AutoStrategy.PID_DRIVE, false, xTargetMenu);
         strategyMenu.addChoice("Timed Drive", AutoStrategy.TIMED_DRIVE, false, driveTimeMenu);
         strategyMenu.addChoice("Do nothing", AutoStrategy.DO_NOTHING, false);
 
         startPosMenu.addChoice("Start Position Audience", StartPos.AUDIENCE, true, useAprilTagVisionMenu);
         startPosMenu.addChoice("Start Position Backstage", StartPos.BACKSTAGE, false, useAprilTagVisionMenu);
-
-
 
         useAprilTagVisionMenu.addChoice("Use Vision", true, true, parkPosMenu);
         useAprilTagVisionMenu.addChoice("No Vision", false, false, parkPosMenu);
