@@ -203,13 +203,28 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     if (autoChoices.delay == 0.0)
                     {
                         // No delay.
-                        sm.setState(State.DRIVE_TO_LOOKOUT);
+                        if (autoChoices.strategy == FtcAuto.AutoStrategy.AUTO_SCORE_3)
+                        {
+                            sm.setState(State.DRIVE_TO_STACK);
+                        }
+                        else
+                        {
+                            sm.setState(State.DRIVE_TO_LOOKOUT);
+                        }
                     }
                     else
                     {
                         // Do delay.
                         timer.set(autoChoices.delay, event);
-                        sm.waitForSingleEvent(event, State.DRIVE_TO_LOOKOUT);
+                        if (autoChoices.strategy == FtcAuto.AutoStrategy.AUTO_SCORE_3)
+                        {
+                            sm.waitForSingleEvent(event, State.DRIVE_TO_STACK);
+                        }
+                        else
+                        {
+                            sm.waitForSingleEvent(event, State.DRIVE_TO_LOOKOUT);
+                        }
+
                     }
                     break;
 
