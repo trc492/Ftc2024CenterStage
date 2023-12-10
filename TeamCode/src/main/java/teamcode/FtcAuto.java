@@ -377,7 +377,7 @@ public class FtcAuto extends FtcOpMode
         allianceMenu.addChoice("Blue", Alliance.BLUE_ALLIANCE, false, strategyMenu);
 
         strategyMenu.addChoice("Autonomous Score 2", AutoStrategy.AUTO_SCORE_2, true, startPosMenu);
-        strategyMenu.addChoice("Autonomous Score 2+1", AutoStrategy.AUTO_SCORE_2PLUS1, true, useAprilTagVisionMenu);
+        strategyMenu.addChoice("Autonomous Score 2+1", AutoStrategy.AUTO_SCORE_2PLUS1, false, useAprilTagVisionMenu);
         strategyMenu.addChoice("PID Drive", AutoStrategy.PID_DRIVE, false, xTargetMenu);
         strategyMenu.addChoice("Timed Drive", AutoStrategy.TIMED_DRIVE, false, driveTimeMenu);
         strategyMenu.addChoice("Do nothing", AutoStrategy.DO_NOTHING, false);

@@ -418,11 +418,11 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 // Place pixel at the appropriate location on the backdrop.
                 if (robot.pixelTray != null)
                 {
-                    robot.pixelTray.setUpperGateOpened(true, 0.2, event);
+                    robot.pixelTray.setUpperGateOpened(true, event);
                     if (!taskParams.hasSecondPixel)
                     {
                         // We are scoring lower pixel, open the lower gate too.
-                        robot.pixelTray.setLowerGateOpened(true, 0.2, null);
+                        robot.pixelTray.setLowerGateOpened(true, null);
                     }
                     sm.waitForSingleEvent(
                         event, taskParams.hasSecondPixel ? State.DRIVE_TO_POS_2 : State.RAISE_ELEVATOR);
@@ -445,7 +445,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 // Place pixel at the appropriate location on the backdrop.
                 if (robot.pixelTray != null)
                 {
-                    robot.pixelTray.setLowerGateOpened(true, 0.2, event);
+                    robot.pixelTray.setLowerGateOpened(true, event);
                     sm.waitForSingleEvent(event, State.RAISE_ELEVATOR);
                 }
                 else

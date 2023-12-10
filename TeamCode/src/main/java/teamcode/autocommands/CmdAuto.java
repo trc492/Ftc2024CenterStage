@@ -240,7 +240,6 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case DRIVE_TO_LOOKOUT:
-                    // CodeReview: Why are we opening the upper gate???
                     robot.pixelTray.setUpperGateOpened(false, null);
                     // Drive to the lookout point where we can see the AprilTag clearly.
                     if (autoChoices.startPos == FtcAuto.StartPos.BACKSTAGE)
