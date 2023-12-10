@@ -243,14 +243,14 @@ public class Robot
         //
         if (robotDrive != null && robotDrive.gyro != null)
         {
-            robotDrive.gyro.printElapsedTime();
+            robotDrive.gyro.printElapsedTime(globalTracer);
             robotDrive.gyro.setElapsedTimerEnabled(false);
         }
-        TrcDigitalInput.printElapsedTime();
+        TrcDigitalInput.printElapsedTime(globalTracer);
         TrcDigitalInput.setElapsedTimerEnabled(false);
-        TrcMotor.printElapsedTime();
+        TrcMotor.printElapsedTime(globalTracer);
         TrcMotor.setElapsedTimerEnabled(false);
-        TrcServo.printElapsedTime();
+        TrcServo.printElapsedTime(globalTracer);
         TrcServo.setElapsedTimerEnabled(false);
         //
         // Disable vision.
