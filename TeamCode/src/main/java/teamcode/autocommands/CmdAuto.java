@@ -221,7 +221,13 @@ public class CmdAuto implements TrcRobot.RobotCommand
                 case PICKUP_PIXEL:
                     // CodeReview: May need more complex maneuvering such as moving forward slowly for a distance
                     // to pick up the pixel. Also, probably leave the intake on until end of movement to turn it off.
-                    robot.intake.setOn(0.0, 2.0, event);
+                    robot.intake.setOn(0.0, 4.0, event);
+
+                    intermediate1 = robot.adjustPoseByAlliance(-2.1, 0.5, -90.0, autoChoices.alliance);
+                    targetPose = robot.adjustPoseByAlliance(-2.75, 0.5, -90.0, autoChoices.alliance);
+                    robot.robotDrive.purePursuitDrive.start(
+                            null, robot.robotDrive.driveBase.getFieldPosition(), false,
+                            intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.DO_DELAY);
 
                 case DO_DELAY:
@@ -240,6 +246,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case DRIVE_TO_LOOKOUT:
+                    robot.intake.setReverse(0.0, 4.0, null);
                     robot.pixelTray.setUpperGateOpened(false, null);
                     // Drive to the lookout point where we can see the AprilTag clearly.
                     if (autoChoices.startPos == FtcAuto.StartPos.BACKSTAGE)
