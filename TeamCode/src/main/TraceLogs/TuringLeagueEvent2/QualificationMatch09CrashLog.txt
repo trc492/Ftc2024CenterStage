@@ -1,0 +1,19 @@
+--------- beginning of crash
+12-03 14:02:14.028   990  1248 E AndroidRuntime: FATAL EXCEPTION: TrcTaskMgr.ioThread
+12-03 14:02:14.028   990  1248 E AndroidRuntime: Process: com.qualcomm.ftcrobotcontroller, PID: 990
+12-03 14:02:14.028   990  1248 E AndroidRuntime: java.lang.RuntimeException: Motor odometry is not enabled.
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcMotor.getOdometry(TrcMotor.java:3505)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcOdometrySensor.getOdometry(TrcOdometrySensor.java:157)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcOdometryWheel.updateAxisOdometries(TrcOdometryWheel.java:429)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcOdometryWheel.getOdometryDelta(TrcOdometryWheel.java:385)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcDriveBase.odometryTask(TrcDriveBase.java:1876)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcDriveBase.$r8$lambda$yEG0xoVbql2oC6tJr3CqJinNUvQ(TrcDriveBase.java)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcDriveBase$$ExternalSyntheticLambda2.runTask(D8$$SyntheticClass)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcTaskMgr.executeTaskType(TrcTaskMgr.java:579)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcTaskMgr.ioTask(TrcTaskMgr.java:611)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcTaskMgr.access$200(TrcTaskMgr.java:34)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcTaskMgr$TaskObject.lambda$registerTask$0(TrcTaskMgr.java:255)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcTaskMgr$TaskObject$$ExternalSyntheticLambda1.runPeriodic(D8$$SyntheticClass)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcPeriodicThread.run(TrcPeriodicThread.java:347)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at TrcCommonLib.trclib.TrcPeriodicThread$$ExternalSyntheticLambda0.run(D8$$SyntheticClass)
+12-03 14:02:14.028   990  1248 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:761)
