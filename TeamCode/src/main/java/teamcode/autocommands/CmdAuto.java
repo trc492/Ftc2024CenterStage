@@ -219,15 +219,13 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case PICKUP_PIXEL:
-                    // CodeReview: May need more complex maneuvering such as moving forward slowly for a distance
-                    // to pick up the pixel. Also, probably leave the intake on until end of movement to turn it off.
                     robot.intake.setOn(0.0, 4.0, event);
-
+                    // CodeReview: why do you have an intermediate point that's exactly as the end-point of last
+                    // movement. That doesn't do anything. You are already at intermediate1 as your start point?!
                     intermediate1 = robot.adjustPoseByAlliance(-2.1, 0.5, -90.0, autoChoices.alliance);
                     targetPose = robot.adjustPoseByAlliance(-2.75, 0.5, -90.0, autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
-                            null, robot.robotDrive.driveBase.getFieldPosition(), false,
-                            intermediate1, targetPose);
+                        null, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.DO_DELAY);
 
                 case DO_DELAY:
@@ -281,8 +279,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.5);
                         robot.robotDrive.purePursuitDrive.start(
-                                event, robot.robotDrive.driveBase.getFieldPosition(), false,
-                                intermediate1, intermediate2, intermediate3, intermediate4, intermediate5, targetPose);
+                            event, robot.robotDrive.driveBase.getFieldPosition(), false,
+                            intermediate1, intermediate2, intermediate3, intermediate4, intermediate5, targetPose);
                     }
                     sm.waitForSingleEvent(event, State.SCORE_YELLOW_PIXEL);
                     break;
