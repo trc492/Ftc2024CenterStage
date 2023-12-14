@@ -378,8 +378,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                         targetPose.y += RobotParams.BACKDROP_APRILTAG_DELTA_Y * yDeltaUnit;
                     }
                     // We are right in front of the backdrop, so we don't need full power to approach it.
-                    // Go sideway first so we can approach the backdrop straight forward at the end. Or we could
-                    // stop the sideway movement prematurely if the distance sensor said it's close enough.
+                    // Go sideways first so we can approach the backdrop straight forward at the end. Or we could
+                    // stop the sideways movement prematurely if the distance sensor said it's close enough.
                     TrcPose2D intermediate = targetPose.clone();
                     intermediate.x = robot.robotDrive.driveBase.getXPosition();
                     robot.robotDrive.purePursuitDrive.setMoveOutputLimit(0.35);

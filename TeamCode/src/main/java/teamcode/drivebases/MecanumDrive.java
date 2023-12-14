@@ -24,7 +24,7 @@ package teamcode.drivebases;
 
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcMecanumDriveBase;
-import TrcCommonLib.trclib.TrcOdometryWheel;
+import TrcCommonLib.trclib.TrcOdometryWheels;
 import TrcCommonLib.trclib.TrcPidController;
 import TrcCommonLib.trclib.TrcPidDrive;
 import TrcCommonLib.trclib.TrcPurePursuitDrive;
@@ -51,14 +51,14 @@ public class MecanumDrive extends RobotDrive
             // Create the external odometry device that uses the right back encoder port as the X odometry and
             // the left and right front encoder ports as the Y1 and Y2 odometry. Gyro will serve as the angle
             // odometry.
-            TrcOdometryWheel driveBaseOdometry = new TrcOdometryWheel(
-                new TrcOdometryWheel.AxisSensor(
+            TrcOdometryWheels driveBaseOdometry = new TrcOdometryWheels(
+                new TrcOdometryWheels.AxisSensor(
                     driveMotors[INDEX_RIGHT_BACK], RobotParams.X_ODWHEEL_Y_OFFSET, RobotParams.X_ODWHEEL_X_OFFSET),
-                new TrcOdometryWheel.AxisSensor[] {
-                    new TrcOdometryWheel.AxisSensor(
+                new TrcOdometryWheels.AxisSensor[] {
+                    new TrcOdometryWheels.AxisSensor(
                         driveMotors[INDEX_LEFT_FRONT], RobotParams.YLEFT_ODWHEEL_X_OFFSET,
                         RobotParams.YLEFT_ODWHEEL_Y_OFFSET),
-                    new TrcOdometryWheel.AxisSensor(
+                    new TrcOdometryWheels.AxisSensor(
                         driveMotors[INDEX_RIGHT_FRONT], RobotParams.YRIGHT_ODWHEEL_X_OFFSET,
                         RobotParams.YRIGHT_ODWHEEL_Y_OFFSET)},
                 gyro);

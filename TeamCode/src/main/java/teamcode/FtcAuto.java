@@ -157,14 +157,14 @@ public class FtcAuto extends FtcOpMode
                 // Intentionally fall through to the next state.
                 //
             case AUTO_SCORE_2:
-                if (!RobotParams.Preferences.noRobot)
+                if (RobotParams.Preferences.robotType != RobotParams.RobotType.NoRobot)
                 {
                     autoCommand = new CmdAuto(robot, autoChoices);
                 }
                 break;
 
             case PID_DRIVE:
-                if (!RobotParams.Preferences.noRobot)
+                if (RobotParams.Preferences.robotType != RobotParams.RobotType.NoRobot)
                 {
                     autoCommand = new CmdPidDrive(
                         robot.robotDrive.driveBase, robot.robotDrive.pidDrive, autoChoices.delay,
@@ -174,7 +174,7 @@ public class FtcAuto extends FtcOpMode
                 break;
 
             case TIMED_DRIVE:
-                if (!RobotParams.Preferences.noRobot)
+                if (RobotParams.Preferences.robotType != RobotParams.RobotType.NoRobot)
                 {
                     autoCommand = new CmdTimedDrive(
                         robot.robotDrive.driveBase, autoChoices.delay, autoChoices.driveTime,

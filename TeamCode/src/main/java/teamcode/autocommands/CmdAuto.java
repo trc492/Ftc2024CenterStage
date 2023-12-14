@@ -46,7 +46,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
         PICKUP_PIXEL,
         DO_DELAY,
         DRIVE_TO_LOOKOUT,
-        SCORE_YELLOW_PIXEL,
+        AUTO_SCORE_PIXELS,
         PARK_AT_BACKSTAGE,
         DONE
     }   //enum State
@@ -282,10 +282,10 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             event, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, intermediate3, intermediate4, intermediate5, targetPose);
                     }
-                    sm.waitForSingleEvent(event, State.SCORE_YELLOW_PIXEL);
+                    sm.waitForSingleEvent(event, State.AUTO_SCORE_PIXELS);
                     break;
 
-                case SCORE_YELLOW_PIXEL:
+                case AUTO_SCORE_PIXELS:
                     robot.robotDrive.purePursuitDrive.setMoveOutputLimit(1.0);
                     if (robot.placePixelTask != null)
                     {

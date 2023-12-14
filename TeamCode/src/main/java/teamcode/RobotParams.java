@@ -40,26 +40,33 @@ import TrcFtcLib.ftclib.FtcGamepad;
  */
 public class RobotParams
 {
+    public static enum RobotType
+    {
+        CenterStageRobot,
+        PowerPlayRobot,
+        SwerveRobot,
+        NoRobot
+    }   //RobotType
+
     /**
      * This class contains robot preferences. It controls enabling/disabling of various robot features.
      */
     public static class Preferences
     {
         // Global config
-        public static boolean inCompetition = true;
-        public static boolean centerStageRobot = true;
-        public static boolean powerPlayRobot = false;
-        public static boolean swerveRobot = false;
-        public static boolean noRobot = false;
+        public static RobotType robotType = RobotType.CenterStageRobot;
+        public static boolean inCompetition = false;
         // Miscellaneous
         public static boolean useTraceLog = true;
         public static boolean useLoopPerformanceMonitor = true;
-        public static boolean useBlinkin = centerStageRobot || powerPlayRobot;
+        public static boolean useBlinkin = robotType == RobotType.CenterStageRobot ||
+                                           robotType == RobotType.PowerPlayRobot;
         public static boolean useBatteryMonitor = false;
         public static boolean doStatusUpdate = !inCompetition;
         // Vision
-        public static boolean useWebCam = centerStageRobot || powerPlayRobot;
-        public static boolean hasWebCam2 = centerStageRobot;
+        public static boolean useWebCam = robotType == RobotType.CenterStageRobot ||
+                                          robotType == RobotType.PowerPlayRobot;
+        public static boolean hasWebCam2 = robotType == RobotType.CenterStageRobot;
         public static boolean useBuiltinCamBack = false;
         public static boolean tuneColorBlobVision = false;
         public static boolean useAprilTagVision = true;
@@ -68,11 +75,12 @@ public class RobotParams
         public static boolean useTfodModelAsset = false;
         public static boolean showVisionView = !inCompetition;
         // Drive Base
-        public static boolean useExternalOdometry = centerStageRobot || powerPlayRobot;
+        public static boolean useExternalOdometry = robotType == RobotType.CenterStageRobot ||
+                                                    robotType == RobotType.PowerPlayRobot;
         public static boolean doSwervePhysicalAlignment = false;
         public static boolean swerveDualServoSteering = true;
         // Subsystems
-        public static boolean useSubsystems = centerStageRobot;
+        public static boolean useSubsystems = robotType == RobotType.CenterStageRobot;
         public static boolean useElevatorArm = true;
         public static boolean useElevator = true;
         public static boolean useArm = true;
@@ -86,11 +94,11 @@ public class RobotParams
 
     public static final String ROBOT_NAME                       = "CenterStage_2024";
     public static RevHubOrientationOnRobot.LogoFacingDirection hubLogoDirection =
-        Preferences.centerStageRobot ? RevHubOrientationOnRobot.LogoFacingDirection.LEFT :
-        Preferences.powerPlayRobot ? RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD :
-                                     RevHubOrientationOnRobot.LogoFacingDirection.UP;
+        Preferences.robotType == RobotType.CenterStageRobot ? RevHubOrientationOnRobot.LogoFacingDirection.LEFT :
+        Preferences.robotType == RobotType.PowerPlayRobot ? RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD :
+            RevHubOrientationOnRobot.LogoFacingDirection.UP;
     public static RevHubOrientationOnRobot.UsbFacingDirection hubUsbDirection =
-        Preferences.centerStageRobot || Preferences.powerPlayRobot ?
+        Preferences.robotType == RobotType.CenterStageRobot || Preferences.robotType == RobotType.PowerPlayRobot ?
             RevHubOrientationOnRobot.UsbFacingDirection.UP : RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
     public static final String TEAM_FOLDER_PATH                 =
         Environment.getExternalStorageDirectory().getPath() + "/FIRST/ftc3543";

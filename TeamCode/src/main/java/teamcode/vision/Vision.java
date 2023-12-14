@@ -116,6 +116,7 @@ public class Vision
     public static final String[] TFOD_FIRST_LABELS = {TFOD_PIXEL_LABEL};
     public static final String[] TFOD_TRC_LABELS = {"Yellow Pixel", "Purple Pixel", "White Pixel", "Green Pixel"};
 
+    private final TrcDbgTrace tracer;
     private final Robot robot;
     private final WebcamName webcam1, webcam2;
     private FtcRawEocvColorBlobPipeline rawColorBlobPipeline;
@@ -143,12 +144,12 @@ public class Vision
      * Constructor: Create an instance of the object.
      *
      * @param robot specifies the robot object.
-     * @param tracer specifies the tracer for trace info, null if none provided.
      */
-    public Vision(Robot robot, TrcDbgTrace tracer)
+    public Vision(Robot robot)
     {
         FtcOpMode opMode = FtcOpMode.getInstance();
 
+        this.tracer = new TrcDbgTrace(moduleName);
         this.robot = robot;
         this.webcam1 = opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1);
         this.webcam2 = RobotParams.Preferences.hasWebCam2?
@@ -169,16 +170,15 @@ public class Vision
                 openCvCam = OpenCvCameraFactory.getInstance().createWebcam(webcam1);
             }
 
-            robot.globalTracer.traceInfo(moduleName, "Starting RawEocvColorBlobVision...");
+            tracer.traceInfo(moduleName, "Starting RawEocvColorBlobVision...");
             rawColorBlobPipeline = new FtcRawEocvColorBlobPipeline(
-                "rawColorBlobPipeline", colorConversion, whitePixelColorThresholds, pixelFilterContourParams, true,
-                tracer);
+                "rawColorBlobPipeline", colorConversion, whitePixelColorThresholds, pixelFilterContourParams, true);
             // By default, display original Mat.
             rawColorBlobPipeline.setVideoOutput(0);
             rawColorBlobPipeline.setAnnotateEnabled(true);
             rawColorBlobVision = new FtcRawEocvVision(
                 "rawColorBlobVision", RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT, null, null,
-                openCvCam, RobotParams.CAM_ORIENTATION, tracer);
+                openCvCam, RobotParams.CAM_ORIENTATION);
             setRawColorBlobVisionEnabled(false);
         }
         else
@@ -188,7 +188,7 @@ public class Vision
 
             if (RobotParams.Preferences.useAprilTagVision)
             {
-                robot.globalTracer.traceInfo(moduleName, "Starting AprilTagVision...");
+                tracer.traceInfo(moduleName, "Starting AprilTagVision...");
                 FtcVisionAprilTag.Parameters aprilTagParams = new FtcVisionAprilTag.Parameters()
                     .setDrawTagIdEnabled(true)
                     .setDrawTagOutlineEnabled(true)
@@ -197,60 +197,59 @@ public class Vision
 //                    .setLensIntrinsics(
 //                        RobotParams.WEBCAM_FX, RobotParams.WEBCAM_FY, RobotParams.WEBCAM_CX, RobotParams.WEBCAM_CY)
                     .setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES);
-                aprilTagVision = new FtcVisionAprilTag(aprilTagParams, AprilTagProcessor.TagFamily.TAG_36h11, tracer);
+                aprilTagVision = new FtcVisionAprilTag(aprilTagParams, AprilTagProcessor.TagFamily.TAG_36h11);
                 aprilTagProcessor = aprilTagVision.getVisionProcessor();
                 visionProcessorsList.add(aprilTagProcessor);
             }
 
             if (RobotParams.Preferences.useColorBlobVision)
             {
-                robot.globalTracer.traceInfo(moduleName, "Starting ColorBlobVision...");
-
+                tracer.traceInfo(moduleName, "Starting ColorBlobVision...");
                 purplePixelVision = new FtcVisionEocvColorBlob(
                     "PurplePixel", colorConversion, purplePixelColorThresholds, pixelFilterContourParams, true,
-                    RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
+                    RobotParams.cameraRect, RobotParams.worldRect, true);
                 purplePixelProcessor = purplePixelVision.getVisionProcessor();
                 visionProcessorsList.add(purplePixelProcessor);
 
                 greenPixelVision = new FtcVisionEocvColorBlob(
                     "GreenPixel", colorConversion, greenPixelColorThresholds, pixelFilterContourParams, true,
-                    RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
+                    RobotParams.cameraRect, RobotParams.worldRect, true);
                 greenPixelProcessor = greenPixelVision.getVisionProcessor();
                 visionProcessorsList.add(greenPixelProcessor);
 
                 yellowPixelVision = new FtcVisionEocvColorBlob(
                     "YellowPixel", colorConversion, yellowPixelColorThresholds, pixelFilterContourParams, true,
-                    RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
+                    RobotParams.cameraRect, RobotParams.worldRect, true);
                 yellowPixelProcessor = yellowPixelVision.getVisionProcessor();
                 visionProcessorsList.add(yellowPixelProcessor);
 
                 whitePixelVision = new FtcVisionEocvColorBlob(
                     "WhitePixel", colorConversion, whitePixelColorThresholds, pixelFilterContourParams, true,
-                    RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
+                    RobotParams.cameraRect, RobotParams.worldRect, true);
                 whitePixelProcessor = whitePixelVision.getVisionProcessor();
                 visionProcessorsList.add(whitePixelProcessor);
 
                 redBlobVision = new FtcVisionEocvColorBlob(
                     "RedBlob", colorConversion, redBlobColorThresholds, blobFilterContourParams, true,
-                    RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
+                    RobotParams.cameraRect, RobotParams.worldRect, true);
                 redBlobProcessor = redBlobVision.getVisionProcessor();
                 visionProcessorsList.add(redBlobProcessor);
 
                 blueBlobVision = new FtcVisionEocvColorBlob(
                     "BlueBlob", colorConversion, blueBlobColorThresholds, blobFilterContourParams, true,
-                    RobotParams.cameraRect, RobotParams.worldRect, true, tracer);
+                    RobotParams.cameraRect, RobotParams.worldRect, true);
                 blueBlobProcessor = blueBlobVision.getVisionProcessor();
                 visionProcessorsList.add(blueBlobProcessor);
             }
 
             if (RobotParams.Preferences.useTensorFlowVision)
             {
-                robot.globalTracer.traceInfo(moduleName, "Starting TensorFlowVision...");
+                tracer.traceInfo(moduleName, "Starting TensorFlowVision...");
                 String model = RobotParams.Preferences.useTfodModelAsset? TFOD_MODEL_ASSET: TFOD_MODEL_FILENAME;
                 String[] labels = RobotParams.Preferences.useTfodModelAsset? TFOD_FIRST_LABELS: TFOD_TRC_LABELS;
                 tensorFlowVision = new FtcVisionTensorFlow(
                     null, RobotParams.Preferences.useTfodModelAsset, model, labels, RobotParams.cameraRect,
-                    RobotParams.worldRect, tracer);
+                    RobotParams.worldRect);
                 tensorFlowProcessor = tensorFlowVision.getVisionProcessor();
                 tensorFlowProcessor.setMinResultConfidence(TFOD_MIN_CONFIDENCE);
                 visionProcessorsList.add(tensorFlowProcessor);
@@ -470,11 +469,13 @@ public class Vision
             TrcPose2D aprilTagPose = RobotParams.APRILTAG_POSES[aprilTagInfo.detectedObj.aprilTagDetection.id - 1];
             TrcPose2D cameraPose = aprilTagPose.subtractRelativePose(aprilTagInfo.objPose.toPose2D());
             robotPose = cameraPose.subtractRelativePose(RobotParams.BACKCAM_POSE);
-            robot.globalTracer.traceInfo(
+            tracer.traceInfo(
                 moduleName,
-                "AprilTagId=%d, aprilTagFieldPose=%s, aprilTagPoseFromCamera=%s, cameraPose=%s, robotPose=%s",
-                aprilTagInfo.detectedObj.aprilTagDetection.id, aprilTagPose, aprilTagInfo.objPose.toPose2D(),
-                cameraPose, robotPose);
+                "AprilTagId=" + aprilTagInfo.detectedObj.aprilTagDetection.id +
+                ", aprilTagFieldPose=" + aprilTagPose +
+                ", aprilTagPoseFromCamera=" + aprilTagInfo.objPose.toPose2D() +
+                ", cameraPose=" + cameraPose +
+                ", robotPose=%s" + robotPose);
         }
 
         return robotPose;

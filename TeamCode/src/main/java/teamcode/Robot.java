@@ -102,13 +102,13 @@ public class Robot
             RobotParams.Preferences.useColorBlobVision ||
             RobotParams.Preferences.useTensorFlowVision)
         {
-            vision = new Vision(this, null);
+            vision = new Vision(this);
         }
         //
-        // If noRobot is true, the robot controller is disconnected from the robot for testing vision.
+        // If robotType is NoRobot, the robot controller is disconnected from the robot for testing vision.
         // In this case, we should not instantiate any robot hardware.
         //
-        if (!RobotParams.Preferences.noRobot)
+        if (RobotParams.Preferences.robotType != RobotParams.RobotType.NoRobot)
         {
             //
             // Create and initialize sensors and indicators.
@@ -125,7 +125,9 @@ public class Robot
             //
             // Create and initialize RobotDrive.
             //
-            robotDrive = RobotParams.Preferences.swerveRobot? new SwerveDrive(): new MecanumDrive();
+            robotDrive =
+                RobotParams.Preferences.robotType == RobotParams.RobotType.SwerveRobot?
+                    new SwerveDrive(): new MecanumDrive();
             //
             // Create and initialize other subsystems.
             //
