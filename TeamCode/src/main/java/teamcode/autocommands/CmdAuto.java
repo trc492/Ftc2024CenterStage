@@ -206,7 +206,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         intermediate1 = robot.adjustPoseByAlliance(-1.6, 2.5, 180.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
                         intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
-                        targetPose = robot.adjustPoseByAlliance(-2.1, 0.5, -90.0, autoChoices.alliance);
+                        targetPose = robot.adjustPoseByAlliance(-2.1, 0.6, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
                             event, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, intermediate3, targetPose);
@@ -219,13 +219,10 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case PICKUP_PIXEL:
-                    robot.intake.setOn(0.0, 4.0, event);
-                    // CodeReview: why do you have an intermediate point that's exactly as the end-point of last
-                    // movement. That doesn't do anything. You are already at intermediate1 as your start point?!
-                    intermediate1 = robot.adjustPoseByAlliance(-2.1, 0.5, -90.0, autoChoices.alliance);
-                    targetPose = robot.adjustPoseByAlliance(-2.75, 0.5, -90.0, autoChoices.alliance);
+                    robot.intake.setOn(0.0, 2.5, event);
+                    targetPose = robot.adjustPoseByAlliance(-2.75, 0.6, -90.0, autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
-                        null, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
+                        null, robot.robotDrive.driveBase.getFieldPosition(), false, targetPose);
                     sm.waitForSingleEvent(event, State.DO_DELAY);
 
                 case DO_DELAY:
@@ -244,15 +241,13 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case DRIVE_TO_LOOKOUT:
-                    robot.intake.setReverse(0.0, 4.0, null);
-                    robot.pixelTray.setUpperGateOpened(false, null);
                     // Drive to the lookout point where we can see the AprilTag clearly.
                     if (autoChoices.startPos == FtcAuto.StartPos.BACKSTAGE)
                     {
                         // Backstage starting position takes a shorter path to the backdrop.
-                        intermediate1 = robot.adjustPoseByAlliance(0.6, 2.0, 180.0, autoChoices.alliance);
+                        intermediate1 = robot.adjustPoseByAlliance(0.5, 2.1, 180.0, autoChoices.alliance);
                         intermediate1.angle = robot.robotDrive.driveBase.getHeading();
-                        intermediate2 = robot.adjustPoseByAlliance(1.5, 2.0, -90.0, autoChoices.alliance);
+                        intermediate2 = robot.adjustPoseByAlliance(1.5, 2.1, 180.0, autoChoices.alliance);
                         targetPose = robot.adjustPoseByAlliance(1.5, 1.5, -90.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
                             event, robot.robotDrive.driveBase.getFieldPosition(), false,
@@ -260,6 +255,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     }
                     else if (autoChoices.strategy == FtcAuto.AutoStrategy.AUTO_SCORE_2PLUS1)
                     {
+                        robot.intake.setReverse(0.0, 4.0, null);
                         // We are at the pixel stack going to the backdrop.
                         intermediate1 = robot.adjustPoseByAlliance(0.0, 0.3, -90.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(1.5, 0.3, -90.0, autoChoices.alliance);
@@ -286,6 +282,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case AUTO_SCORE_PIXELS:
+                    robot.pixelTray.setUpperGateOpened(false, null);
                     robot.robotDrive.purePursuitDrive.setMoveOutputLimit(1.0);
                     if (robot.placePixelTask != null)
                     {
@@ -307,7 +304,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                             RobotParams.PARKPOS_BLUE_CORNER: RobotParams.PARKPOS_BLUE_CENTER;
                     targetPose = robot.adjustPoseByAlliance(targetPoseTile, autoChoices.alliance);
                     intermediate1 = robot.adjustPoseByAlliance(
-                        1.9, targetPoseTile.y, targetPoseTile.angle, autoChoices.alliance);
+                        1.7, targetPoseTile.y, targetPoseTile.angle, autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event,State.DONE);
