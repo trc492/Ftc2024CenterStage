@@ -28,6 +28,7 @@ import TrcCommonLib.trclib.TrcMotor;
 import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcServo;
+import TrcCommonLib.trclib.TrcTimer;
 import TrcCommonLib.trclib.TrcUtil;
 import TrcFtcLib.ftclib.FtcDashboard;
 import TrcFtcLib.ftclib.FtcDcMotor;
@@ -50,6 +51,7 @@ import teamcode.vision.Vision;
 public class Robot
 {
     private static final String moduleName = Robot.class.getSimpleName();
+    private static final double STATUS_UPDATE_INTERVAL = 0.1;   // 100 msec
     //
     // Global objects.
     //
@@ -58,6 +60,7 @@ public class Robot
     public final FtcDashboard dashboard;
     public static FtcMatchInfo matchInfo = null;
     private static TrcPose2D endOfAutoRobotPose = null;
+    private static double nextStatusUpdateTime = 0.0;
     //
     // Vision subsystems.
     //
@@ -92,6 +95,7 @@ public class Robot
         opMode = FtcOpMode.getInstance();
         globalTracer = TrcDbgTrace.getGlobalTracer();
         dashboard = FtcDashboard.getInstance();
+        nextStatusUpdateTime = TrcTimer.getCurrentTime();
 
         speak("Init starting");
         //
@@ -341,57 +345,61 @@ public class Robot
      */
     public void updateStatus()
     {
-        int lineNum = 2;
-
-        if (robotDrive != null)
+        if (TrcTimer.getCurrentTime() > nextStatusUpdateTime)
         {
-            dashboard.displayPrintf(lineNum++, "DriveBase: Pose=%s", robotDrive.driveBase.getFieldPosition());
-        }
+            int lineNum = 2;
 
-        if (elevatorArm != null)
-        {
-            if (elevatorArm.elevator != null)
+            nextStatusUpdateTime += STATUS_UPDATE_INTERVAL;
+            if (robotDrive != null)
             {
-                dashboard.displayPrintf(
-                    lineNum++, "Elevator: power=%.3f, pos=%.1f, target=%.1f, lowerLimitSw=%s",
-                    elevatorArm.elevator.getPower(), elevatorArm.elevator.getPosition(),
-                    elevatorArm.elevator.getPidTarget(), elevatorArm.elevator.isLowerLimitSwitchActive());
+                dashboard.displayPrintf(lineNum++, "DriveBase: Pose=%s", robotDrive.driveBase.getFieldPosition());
             }
 
-            if (elevatorArm.arm != null)
+            if (elevatorArm != null)
             {
-                dashboard.displayPrintf(
-                    lineNum++, "Arm: power=%.3f, pos=%.1f/%f, target=%.1f",
-                    elevatorArm.arm.getPower(), elevatorArm.arm.getPosition(),
-                    elevatorArm.arm.getEncoderRawPosition(), elevatorArm.arm.getPidTarget());
-            }
-
-            if (elevatorArm.wrist != null)
-            {
-                if (elevatorArm.wristSensor != null)
+                if (elevatorArm.elevator != null)
                 {
                     dashboard.displayPrintf(
-                        lineNum++, "Wrist: pos=%.1f, distance=%.1f",
-                        elevatorArm.wrist.getPosition(), elevatorArm.wristGetDistance());
+                        lineNum++, "Elevator: power=%.3f, pos=%.1f, target=%.1f, lowerLimitSw=%s",
+                        elevatorArm.elevator.getPower(), elevatorArm.elevator.getPosition(),
+                        elevatorArm.elevator.getPidTarget(), elevatorArm.elevator.isLowerLimitSwitchActive());
                 }
-                else
+
+                if (elevatorArm.arm != null)
                 {
-                    dashboard.displayPrintf(lineNum++, "Wrist: pos=%.1f", elevatorArm.wrist.getPosition());
+                    dashboard.displayPrintf(
+                        lineNum++, "Arm: power=%.3f, pos=%.1f/%f, target=%.1f",
+                        elevatorArm.arm.getPower(), elevatorArm.arm.getPosition(),
+                        elevatorArm.arm.getEncoderRawPosition(), elevatorArm.arm.getPidTarget());
+                }
+
+                if (elevatorArm.wrist != null)
+                {
+                    if (elevatorArm.wristSensor != null)
+                    {
+                        dashboard.displayPrintf(
+                            lineNum++, "Wrist: pos=%.1f, distance=%.1f",
+                            elevatorArm.wrist.getPosition(), elevatorArm.wristGetDistance());
+                    }
+                    else
+                    {
+                        dashboard.displayPrintf(lineNum++, "Wrist: pos=%.1f", elevatorArm.wrist.getPosition());
+                    }
                 }
             }
-        }
 
-        if (intake != null)
-        {
-            dashboard.displayPrintf(
-                lineNum++, "Intake: power=%.1f", intake.getIntakeMotor().getPower());
-        }
+            if (intake != null)
+            {
+                dashboard.displayPrintf(
+                    lineNum++, "Intake: power=%.1f", intake.getIntakeMotor().getPower());
+            }
 
-        if (pixelTray != null)
-        {
-            dashboard.displayPrintf(
-                lineNum++, "PixelTray: lowerGateOpened=%s, upperGateOpened=%s",
-                pixelTray.isLowerGateOpened(), pixelTray.isUpperGateOpened());
+            if (pixelTray != null)
+            {
+                dashboard.displayPrintf(
+                    lineNum++, "PixelTray: lowerGateOpened=%s, upperGateOpened=%s",
+                    pixelTray.isLowerGateOpened(), pixelTray.isUpperGateOpened());
+            }
         }
     }   //updateStatus
 
