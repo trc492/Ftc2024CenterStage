@@ -154,8 +154,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                     RobotParams.ELEVATOR_UPPER_LIMIT_INVERTED)
                 .setVoltageCompensationEnabled(RobotParams.ELEVATOR_VOLTAGE_COMP_ENABLED)
                 .setPositionScaleAndOffset(RobotParams.ELEVATOR_INCHES_PER_COUNT, RobotParams.ELEVATOR_OFFSET)
-                .setPositionPresets(RobotParams.ELEVATOR_PRESET_TOLERANCE, RobotParams.ELEVATOR_PRESETS)
-                .setTraceLevel(TrcDbgTrace.MsgLevel.INFO, false, false, null);
+                .setPositionPresets(RobotParams.ELEVATOR_PRESET_TOLERANCE, RobotParams.ELEVATOR_PRESETS);
             elevator =
                 new FtcMotorActuator(RobotParams.HWNAME_ELEVATOR, elevatorParams).getActuator();
             elevator.setSoftwarePidEnabled(true);
@@ -166,6 +165,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             elevator.setStallDetectionEnabled(
                 RobotParams.ELEVATOR_STALL_DETECTION_DELAY, RobotParams.ELEVATOR_STALL_DETECTION_TIMEOUT,
                 RobotParams.ELEVATOR_STALL_ERR_RATE_THRESHOLD);
+            elevator.setTraceLevel(TrcDbgTrace.MsgLevel.INFO, false, false, null);
 //            elevator.resetPositionOnLowerLimitSwitch();
         }
         else
@@ -186,8 +186,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 .setVoltageCompensationEnabled(RobotParams.ARM_VOLTAGE_COMP_ENABLED)
                 .setPositionScaleAndOffset(RobotParams.ARM_DEG_SCALE, RobotParams.ARM_OFFSET,
                                            RobotParams.ARM_ZERO_OFFSET)
-                .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS)
-                .setTraceLevel(TrcDbgTrace.MsgLevel.INFO, false, false, null);
+                .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS);
             arm = new FtcMotorActuator(RobotParams.HWNAME_ARM, true, armParams).getActuator();
             arm.setPositionPidCoefficients(
                 RobotParams.ARM_KP, RobotParams.ARM_KI, RobotParams.ARM_KD, RobotParams.ARM_KF, RobotParams.ARM_IZONE);
@@ -196,6 +195,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             arm.setStallDetectionEnabled(
                 RobotParams.ARM_STALL_DETECTION_DELAY, RobotParams.ARM_STALL_DETECTION_TIMEOUT,
                 RobotParams.ARM_STALL_ERR_RATE_THRESHOLD);
+            arm.setTraceLevel(TrcDbgTrace.MsgLevel.INFO, false, false, null);
         }
         else
         {
@@ -206,8 +206,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
         {
             FtcServoActuator.Params wristParams = new FtcServoActuator.Params()
                 .setServoInverted(RobotParams.WRIST_SERVO_INVERTED)
-                .setHasFollowerServo(RobotParams.WRIST_HAS_FOLLOWER_SERVO, RobotParams.WRIST_FOLLOWER_SERVO_INVERTED)
-                .setTraceLevel(TrcDbgTrace.MsgLevel.INFO);
+                .setHasFollowerServo(RobotParams.WRIST_HAS_FOLLOWER_SERVO, RobotParams.WRIST_FOLLOWER_SERVO_INVERTED);
 
             wrist = new FtcServoActuator(RobotParams.HWNAME_WRIST, wristParams).getActuator();
             if (RobotParams.Preferences.hasWristSensor)
@@ -222,6 +221,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 wristSensor = null;
                 wristTrigger = null;
             }
+            wrist.setTraceLevel(TrcDbgTrace.MsgLevel.INFO);
         }
         else
         {
