@@ -220,9 +220,11 @@ public class CmdAuto implements TrcRobot.RobotCommand
 
                 case PICKUP_PIXEL:
                     robot.intake.setOn(0.0, 2.5, event);
-                    targetPose = robot.adjustPoseByAlliance(-2.75, 0.6, -90.0, autoChoices.alliance);
+                    robot.robotDrive.purePursuitDrive.setMoveOutputLimit(1.0);
+                    intermediate1 = robot.adjustPoseByAlliance(-2.75, 0.6, -90.0, autoChoices.alliance);
+                    targetPose = robot.adjustPoseByAlliance(-2.65, 0.6, -90.0, autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
-                        null, robot.robotDrive.driveBase.getFieldPosition(), false, targetPose);
+                        null, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
                     sm.waitForSingleEvent(event, State.DO_DELAY);
 
                 case DO_DELAY:
@@ -241,6 +243,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case DRIVE_TO_LOOKOUT:
+                    robot.pixelTray.setUpperGateOpened(false, null);
                     // Drive to the lookout point where we can see the AprilTag clearly.
                     if (autoChoices.startPos == FtcAuto.StartPos.BACKSTAGE)
                     {
@@ -282,7 +285,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case AUTO_SCORE_PIXELS:
-                    robot.pixelTray.setUpperGateOpened(false, null);
+
                     robot.robotDrive.purePursuitDrive.setMoveOutputLimit(1.0);
                     if (robot.placePixelTask != null)
                     {
