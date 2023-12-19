@@ -24,7 +24,6 @@ package teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 import TrcCommonLib.trclib.TrcDbgTrace;
