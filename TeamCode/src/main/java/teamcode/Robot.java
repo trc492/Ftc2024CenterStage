@@ -336,6 +336,8 @@ public class Robot
                 globalTracer.traceInfo(moduleName, "Disabling TensorFlowVision.");
                 vision.setTensorFlowVisionEnabled(false);
             }
+
+            vision.close();
        }
 
         if (robotDrive != null)

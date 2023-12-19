@@ -283,6 +283,17 @@ public class Vision
     }   //Vision
 
     /**
+     * This method closes the vision portal and is normally called at the end of an opmode.
+     */
+    public void close()
+    {
+        if (vision != null)
+        {
+            vision.getVisionPortal().close();
+        }
+    }   //close
+
+    /**
      * This method returns the front webcam.
      *
      * @return front webcam.
