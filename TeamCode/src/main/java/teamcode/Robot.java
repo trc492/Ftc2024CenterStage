@@ -22,6 +22,8 @@
 
 package teamcode;
 
+import java.util.Arrays;
+
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcDigitalInput;
 import TrcCommonLib.trclib.TrcMotor;
@@ -234,6 +236,9 @@ public class Robot
         TrcDigitalInput.setElapsedTimerEnabled(true);
         TrcMotor.setElapsedTimerEnabled(true);
         TrcServo.setElapsedTimerEnabled(true);
+
+        Arrays.fill(totalElapsedTime, 0L);
+        loopCount = 0;
     }   //startMode
 
     /**
@@ -244,6 +249,21 @@ public class Robot
      */
     public void stopMode(TrcRobot.RunMode runMode)
     {
+        globalTracer.traceInfo(
+            moduleName,
+            "Update Status average elapsed times:\n" +
+            "DriveBase=%.6fs\n" +
+            " Elevator=%.6fs\n" +
+            "      Arm=%.6fs\n" +
+            "    Wrist=%.6fs\n" +
+            "   Intake=%.6fs\n" +
+            "PixelTray=%.6fs\n",
+            totalElapsedTime[0] / 1000000000.0 / loopCount,         //DriveBase
+            totalElapsedTime[1] / 1000000000.0 / loopCount,         //Elevator
+            totalElapsedTime[2] / 1000000000.0 / loopCount,         //Arm
+            totalElapsedTime[3] / 1000000000.0 / loopCount,         //Wrist
+            totalElapsedTime[4] / 1000000000.0 / loopCount,         //Intake
+            totalElapsedTime[4] / 1000000000.0 / loopCount);        //PixelTray
         //
         // Print all performance counters if there are any.
         //
@@ -340,6 +360,9 @@ public class Robot
         }
     }   //stopMode
 
+    private final long[] totalElapsedTime = new long[6];
+    private long loopCount;
+
     /**
      * This method update all subsystem status on the dashboard.
      */
@@ -348,15 +371,19 @@ public class Robot
         if (TrcTimer.getCurrentTime() > nextStatusUpdateTime)
         {
             int lineNum = 2;
+            long startNanoTime;
 
             nextStatusUpdateTime += STATUS_UPDATE_INTERVAL;
+            startNanoTime = TrcTimer.getNanoTime();
             if (robotDrive != null)
             {
                 dashboard.displayPrintf(lineNum++, "DriveBase: Pose=%s", robotDrive.driveBase.getFieldPosition());
             }
+            totalElapsedTime[0] += TrcTimer.getNanoTime() - startNanoTime;
 
             if (elevatorArm != null)
             {
+                startNanoTime = TrcTimer.getNanoTime();
                 if (elevatorArm.elevator != null)
                 {
                     dashboard.displayPrintf(
@@ -364,7 +391,9 @@ public class Robot
                         elevatorArm.elevator.getPower(), elevatorArm.elevator.getPosition(),
                         elevatorArm.elevator.getPidTarget(), elevatorArm.elevator.isLowerLimitSwitchActive());
                 }
+                totalElapsedTime[1] += TrcTimer.getNanoTime() - startNanoTime;
 
+                startNanoTime = TrcTimer.getNanoTime();
                 if (elevatorArm.arm != null)
                 {
                     dashboard.displayPrintf(
@@ -372,7 +401,9 @@ public class Robot
                         elevatorArm.arm.getPower(), elevatorArm.arm.getPosition(),
                         elevatorArm.arm.getEncoderRawPosition(), elevatorArm.arm.getPidTarget());
                 }
+                totalElapsedTime[2] += TrcTimer.getNanoTime() - startNanoTime;
 
+                startNanoTime = TrcTimer.getNanoTime();
                 if (elevatorArm.wrist != null)
                 {
                     if (elevatorArm.wristSensor != null)
@@ -386,20 +417,26 @@ public class Robot
                         dashboard.displayPrintf(lineNum++, "Wrist: pos=%.1f", elevatorArm.wrist.getPosition());
                     }
                 }
+                totalElapsedTime[3] += TrcTimer.getNanoTime() - startNanoTime;
             }
 
+            startNanoTime = TrcTimer.getNanoTime();
             if (intake != null)
             {
                 dashboard.displayPrintf(
                     lineNum++, "Intake: power=%.1f", intake.getIntakeMotor().getPower());
             }
+            totalElapsedTime[4] += TrcTimer.getNanoTime() - startNanoTime;
 
+            startNanoTime = TrcTimer.getNanoTime();
             if (pixelTray != null)
             {
                 dashboard.displayPrintf(
                     lineNum++, "PixelTray: lowerGateOpened=%s, upperGateOpened=%s",
                     pixelTray.isLowerGateOpened(), pixelTray.isUpperGateOpened());
             }
+            totalElapsedTime[5] += TrcTimer.getNanoTime() - startNanoTime;
+            loopCount++;
         }
     }   //updateStatus
 
