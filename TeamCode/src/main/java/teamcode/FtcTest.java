@@ -394,6 +394,7 @@ public class FtcTest extends FtcTeleOp
     @Override
     public void periodic(double elapsedTime, boolean slowPeriodicLoop)
     {
+        int lineNum = 9;
         //
         // Run the testCommand if any.
         //
@@ -404,7 +405,6 @@ public class FtcTest extends FtcTeleOp
         //
         // Display test status.
         //
-        int lineNum = 9;
         switch (testChoices.test)
         {
             case DRIVE_SPEED_TEST:

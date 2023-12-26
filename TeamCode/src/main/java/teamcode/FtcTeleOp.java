@@ -50,13 +50,13 @@ public class FtcTeleOp extends FtcOpMode
     private double drivePowerScale = RobotParams.DRIVE_POWER_SCALE_NORMAL;
     private double turnPowerScale = RobotParams.TURN_POWER_SCALE_NORMAL;
     private boolean manualOverride = false;
+    private boolean relocalizing = false;
+    private TrcPose2D robotFieldPose = null;
     private boolean autoAssistPlaceActive = false;
     private int aprilTagIndex = 0;
     private int scoreLevelIndex = 0;
     private double elevatorPrevPower = 0.0;
     private double armPrevPower = 0.0;
-    private boolean relocalizing = false;
-    private TrcPose2D robotFieldPose = null;
     private boolean elevatorArmAtScorePos = false;
     private boolean pixelTrayLowerGateOpened = false;
     private boolean pixelTrayUpperGateOpened = false;
@@ -430,6 +430,7 @@ public class FtcTeleOp extends FtcOpMode
                 if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
                 {
                     // Drive base is a Swerve Drive, align all steering wheels forward.
+                    robot.globalTracer.traceInfo(moduleName, ">>>>> Set SteerAngle to zero.");
                     ((SwerveDrive) robot.robotDrive).setSteerAngle(0.0, false, false);
                 }
                 break;

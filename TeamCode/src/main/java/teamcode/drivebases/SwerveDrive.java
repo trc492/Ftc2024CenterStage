@@ -119,7 +119,6 @@ public class SwerveDrive extends RobotDrive
          {
              driveBase.setOdometryScales(RobotParams.YPOS_INCHES_PER_COUNT, RobotParams.YPOS_INCHES_PER_COUNT);
          }
-
         //
         // Create and initialize PID controllers.
         //

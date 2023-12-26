@@ -73,7 +73,6 @@ public class MecanumDrive extends RobotDrive
         //
         // Create and initialize PID controllers.
         //
-        TrcDbgTrace tracer = TrcDbgTrace.getGlobalTracer();
         TrcPidController.PidParameters xPosPidParams = new TrcPidController.PidParameters(
             RobotParams.xPosPidCoeff, RobotParams.XPOS_TOLERANCE, driveBase::getXPosition);
         TrcPidController.PidParameters yPosPidParams = new TrcPidController.PidParameters(
