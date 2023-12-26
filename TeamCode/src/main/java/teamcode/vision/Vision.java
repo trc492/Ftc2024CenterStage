@@ -411,7 +411,8 @@ public class Vision
 
         if (lineNum != -1)
         {
-            robot.dashboard.displayPrintf(lineNum, "ColorBlob: %s", colorBlobInfo != null? colorBlobInfo: "Not found.");
+            robot.dashboard.displayPrintf(
+                lineNum, "RawColorBlob: %s", colorBlobInfo != null? colorBlobInfo: "Not found.");
         }
 
         return colorBlobInfo;
@@ -459,7 +460,8 @@ public class Vision
 
         if (lineNum != -1)
         {
-            robot.dashboard.displayPrintf(lineNum, "AprilTag: %s", aprilTagInfo != null? aprilTagInfo: "Not found.");
+            robot.dashboard.displayPrintf(
+                lineNum, "%s: %s", BlinkinLEDs.APRIL_TAG, aprilTagInfo != null? aprilTagInfo: "Not found.");
         }
 
         return aprilTagInfo;

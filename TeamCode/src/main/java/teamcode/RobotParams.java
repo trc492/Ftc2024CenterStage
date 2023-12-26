@@ -93,11 +93,11 @@ public class RobotParams
     }   //class Preferences
 
     public static final String ROBOT_NAME                       = "CenterStage_2024";
-    public static RevHubOrientationOnRobot.LogoFacingDirection hubLogoDirection =
+    public static final RevHubOrientationOnRobot.LogoFacingDirection hubLogoDirection =
         Preferences.robotType == RobotType.CenterStageRobot ? RevHubOrientationOnRobot.LogoFacingDirection.LEFT :
         Preferences.robotType == RobotType.PowerPlayRobot ? RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD :
             RevHubOrientationOnRobot.LogoFacingDirection.UP;
-    public static RevHubOrientationOnRobot.UsbFacingDirection hubUsbDirection =
+    public static final RevHubOrientationOnRobot.UsbFacingDirection hubUsbDirection =
         Preferences.robotType == RobotType.CenterStageRobot || Preferences.robotType == RobotType.PowerPlayRobot ?
             RevHubOrientationOnRobot.UsbFacingDirection.UP : RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
     public static final String TEAM_FOLDER_PATH                 =
