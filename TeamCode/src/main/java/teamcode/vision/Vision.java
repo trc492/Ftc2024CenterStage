@@ -149,7 +149,7 @@ public class Vision
     {
         FtcOpMode opMode = FtcOpMode.getInstance();
 
-        this.tracer = new TrcDbgTrace(moduleName);
+        this.tracer = new TrcDbgTrace();
         this.robot = robot;
         this.webcam1 = opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM1);
         this.webcam2 = RobotParams.Preferences.hasWebCam2?

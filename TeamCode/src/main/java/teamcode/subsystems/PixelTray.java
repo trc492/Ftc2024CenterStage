@@ -41,7 +41,7 @@ public class PixelTray
      */
     public PixelTray(String instanceName)
     {
-        tracer = new TrcDbgTrace(instanceName);
+        tracer = new TrcDbgTrace();
         this.instanceName = instanceName;
         lowerGate = new FtcServo(instanceName + ".lowerGate");
         upperGate = new FtcServo(instanceName + ".upperGate");

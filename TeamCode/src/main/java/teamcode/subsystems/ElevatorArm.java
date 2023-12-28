@@ -140,7 +140,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
      */
     public ElevatorArm()
     {
-        tracer = new TrcDbgTrace(moduleName);
+        tracer = new TrcDbgTrace();
         // Elevator subsystem.
         if (RobotParams.Preferences.useElevator)
         {
