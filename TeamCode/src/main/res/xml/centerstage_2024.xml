@@ -31,6 +31,7 @@ SOFTWARE.
             <Servo name="pixelTray.lowerGate" port="0" />
             <Servo name="wrist.followerServo" port="1" />
             <RevBlinkinLedDriver name="blinkin" port="5" />
+            <REV_VL53L0X_RANGE_SENSOR name="intake.sensor" port="0" bus="1"/>
             <!--
             <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
             -->

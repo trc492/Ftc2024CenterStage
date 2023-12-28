@@ -22,15 +22,21 @@
 
 package teamcode.subsystems;
 
+import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcEvent;
+import TrcCommonLib.trclib.TrcSensor;
+import TrcCommonLib.trclib.TrcTriggerThresholdZones;
 import TrcFtcLib.ftclib.FtcDcMotor;
+import TrcFtcLib.ftclib.FtcDistanceSensor;
 import teamcode.RobotParams;
 
 public class Intake
 {
+    private final TrcDbgTrace tracer;
+    private final String instanceName;
     private final FtcDcMotor intakeMotor;
-//    private final FtcDistanceSensor intakeSensor;
-//    private int pixelCount = 0;
+    private final FtcDistanceSensor intakeSensor;
+    private final TrcTriggerThresholdZones analogTrigger;
 
     /**
      * Constructor: Creates an instance of the object.
@@ -39,19 +45,21 @@ public class Intake
      */
     public Intake(String instanceName)
     {
+        this.tracer = new TrcDbgTrace();
+        this.instanceName = instanceName;
         intakeMotor = new FtcDcMotor(instanceName + ".motor");
         intakeMotor.setMotorInverted(RobotParams.INTAKE_MOTOR_INVERTED);
-//        if (RobotParams.Preferences.hasIntakeSensor)
-//        {
-//            intakeSensor = new FtcDistanceSensor(instanceName + ".sensor");
-//            TrcTriggerThresholdZones analogTrigger = new TrcTriggerThresholdZones(
-//                instanceName + ".analogTrigger", this::getDistance, new double[]{RobotParams.INTAKE_SENSOR_THRESHOLD},
-//                false);
-//        }
-//        else
-//        {
-//            intakeSensor = null;
-//        }
+        if (RobotParams.Preferences.hasIntakeSensor)
+        {
+            intakeSensor = new FtcDistanceSensor(instanceName + ".sensor");
+            analogTrigger = new TrcTriggerThresholdZones(
+                instanceName + ".analogTrigger", this::getDistance, RobotParams.INTAKE_SENSOR_THRESHOLDS, false);
+        }
+        else
+        {
+            intakeSensor = null;
+            analogTrigger = null;
+        }
     }   //Intake
 
     /**
@@ -92,44 +100,59 @@ public class Intake
     public void setReverse(boolean on)
     {
         intakeMotor.setPower(on? RobotParams.INTAKE_REVERSE_POWER: 0.0);
+        analogTrigger.disableTrigger();
     }   //setReverse
 
-//    /**
-//     * This method is called when an analog sensor threshold has been crossed.
-//     *
-//     * @param context specifies the callback context.
-//     */
-//    private void analogTriggerCallback(Object context)
-//    {
-//        TrcTriggerThresholdZones.CallbackContext callbackContext = (TrcTriggerThresholdZones.CallbackContext) context;
-//
-//        if (msgTracer != null)
-//        {
-//            msgTracer.traceInfo(
-//                instanceName, "Zone=%d->%d, value=%.3f",
-//                callbackContext.prevZone, callbackContext.currZone, callbackContext.sensorValue);
-//        }
-//
-//        if (callbackContext.prevZone == 1 && callbackContext.currZone == 0)
-//        {
-//            pixelCount++;
-//            if (pixelCount >= 2)
-//            {
-//                intakeMotor.setPower(0.0, RobotParams.INTAKE_REVERSE_POWER, 0.5);
-//            }
-//        }
-//    }   //analogTriggerCallback
-//
-//    /**
-//     * This method is called the TrcTriggerThresholdZones to get the sensor data.
-//     *
-//     * @return distance to detected object in inches.
-//     */
-//    private double getDistance()
-//    {
-//        TrcSensor.SensorData<Double> data =
-//            intakeSensor != null? intakeSensor.getProcessedData(0, FtcDistanceSensor.DataType.DISTANCE_INCH): null;
-//        return data != null && data.value != null? data.value: 0.0;
-//    }   //getDistance
+    public void pickupPixel(boolean on)
+    {
+        setOn(on);
+        if (analogTrigger != null)
+        {
+            if (on)
+            {
+                analogTrigger.enableTrigger(this::analogTriggerCallback);
+            }
+            else
+            {
+                analogTrigger.disableTrigger();
+            }
+        }
+    }   //pickupPixel
+
+    public boolean hasTwoPixels()
+    {
+        return getDistance() < RobotParams.INTAKE_SENSOR_THRESHOLDS[0];
+    }   //hasTwoPixels
+
+    /**
+     * This method is called when an analog sensor threshold has been crossed.
+     *
+     * @param context specifies the callback context.
+     */
+    private void analogTriggerCallback(Object context)
+    {
+        TrcTriggerThresholdZones.CallbackContext callbackContext = (TrcTriggerThresholdZones.CallbackContext) context;
+
+        tracer.traceDebug(
+            instanceName, "Zone=%d->%d, value=%.3f",
+            callbackContext.prevZone, callbackContext.currZone, callbackContext.sensorValue);
+        if (hasTwoPixels())
+        {
+            analogTrigger.disableTrigger();
+            intakeMotor.setPower(0.0, RobotParams.INTAKE_REVERSE_POWER, 0.5);
+        }
+    }   //analogTriggerCallback
+
+    /**
+     * This method is called the TrcTriggerThresholdZones to get the sensor data.
+     *
+     * @return distance to detected object in inches.
+     */
+    public double getDistance()
+    {
+        TrcSensor.SensorData<Double> data =
+            intakeSensor != null? intakeSensor.getProcessedData(0, FtcDistanceSensor.DataType.DISTANCE_INCH): null;
+        return data != null && data.value != null? data.value: 500.0;
+    }   //getDistance
 
 }   //class Intake

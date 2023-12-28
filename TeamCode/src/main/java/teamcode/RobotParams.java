@@ -87,7 +87,7 @@ public class RobotParams
         public static boolean useWrist = true;
         public static boolean hasWristSensor = true;
         public static boolean useIntake = true;
-//        public static boolean hasIntakeSensor = false;
+        public static boolean hasIntakeSensor = true;
         public static boolean usePixelTray = true;
         public static boolean useLauncher = true;
     }   //class Preferences
@@ -467,6 +467,7 @@ public class RobotParams
     public static final boolean INTAKE_MOTOR_INVERTED           = false;
     public static final double INTAKE_FORWARD_POWER             = 1.0;
     public static final double INTAKE_REVERSE_POWER             = -0.7;
+    public static final double[] INTAKE_SENSOR_THRESHOLDS       = new double[] {1.5};
     //
     // Pixel Tray subsystem.
     //

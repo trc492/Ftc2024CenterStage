@@ -476,7 +476,7 @@ public class FtcTeleOp extends FtcOpMode
                     if (!manualOverride)
                     {
                         robot.globalTracer.traceInfo(moduleName, ">>>>> Intake ON=" + pressed);
-                        robot.intake.setOn(pressed);
+                        robot.intake.pickupPixel(pressed);
                     }
                     else
                     {

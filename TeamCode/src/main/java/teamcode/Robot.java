@@ -426,7 +426,8 @@ public class Robot
             if (intake != null)
             {
                 dashboard.displayPrintf(
-                    lineNum++, "Intake: power=%.1f", intake.getIntakeMotor().getPower());
+                    lineNum++, "Intake: power=%.1f, sensor=%f, has2Pixels=%s",
+                    intake.getIntakeMotor().getPower(), intake.getDistance(), intake.hasTwoPixels());
             }
             totalElapsedTime[4] += TrcTimer.getNanoTime() - startNanoTime;
 
