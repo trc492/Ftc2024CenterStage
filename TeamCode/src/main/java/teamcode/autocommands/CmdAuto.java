@@ -219,12 +219,14 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case PICKUP_PIXEL:
-                    robot.intake.setOn(0.0, 2.5, event);
+//                    robot.intake.setOn(0.0, 2.5, event);
+                    robot.intake.pickupPixel(true);
                     robot.robotDrive.purePursuitDrive.setMoveOutputLimit(1.0);
                     intermediate1 = robot.adjustPoseByAlliance(-2.75, 0.6, -90.0, autoChoices.alliance);
                     targetPose = robot.adjustPoseByAlliance(-2.65, 0.6, -90.0, autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
                         null, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
+                    timer.set(4.0, event); // Not Tuned
                     sm.waitForSingleEvent(event, State.DO_DELAY);
 
                 case DO_DELAY:
