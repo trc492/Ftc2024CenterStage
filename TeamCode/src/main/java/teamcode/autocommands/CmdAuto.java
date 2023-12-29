@@ -230,6 +230,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     sm.waitForSingleEvent(event, State.DO_DELAY);
 
                 case DO_DELAY:
+                    robot.intake.pickupPixel(false);
                     // Do delay waiting for alliance partner to get out of the way if necessary.
                     if (autoChoices.delay == 0.0)
                     {
