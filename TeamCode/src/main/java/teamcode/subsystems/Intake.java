@@ -37,6 +37,7 @@ public class Intake
     private final FtcDcMotor intakeMotor;
     private final FtcDistanceSensor intakeSensor;
     private final TrcTriggerThresholdZones analogTrigger;
+    private TrcEvent completionEvent = null;
 
     /**
      * Constructor: Creates an instance of the object.
@@ -103,17 +104,19 @@ public class Intake
         analogTrigger.disableTrigger();
     }   //setReverse
 
-    public void pickupPixel(boolean on)
+    public void pickupPixel(boolean on, TrcEvent event)
     {
         setOn(on);
         if (analogTrigger != null)
         {
             if (on)
             {
+                completionEvent = event;
                 analogTrigger.enableTrigger(this::analogTriggerCallback);
             }
             else
             {
+                completionEvent = null;
                 analogTrigger.disableTrigger();
             }
         }
@@ -140,6 +143,11 @@ public class Intake
         {
             analogTrigger.disableTrigger();
             intakeMotor.setPower(0.0, RobotParams.INTAKE_REVERSE_POWER, 0.5);
+            if (completionEvent != null)
+            {
+                completionEvent.signal();
+                completionEvent = null;
+            }
         }
     }   //analogTriggerCallback
 
