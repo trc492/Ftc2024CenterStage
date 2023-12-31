@@ -160,7 +160,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
         else
         {
             TrcOwnershipMgr ownershipMgr = TrcOwnershipMgr.getInstance();
-            tracer.traceInfo(
+            tracer.traceWarn(
                 moduleName, "Failed to acquire subsystem ownership (currOwner=%s, robotDrive=%s).",
                 currOwner, ownershipMgr.getOwner(robot.robotDrive.driveBase));
             releaseSubsystemsOwnership();
