@@ -151,7 +151,7 @@ public class Robot
 
                 if (RobotParams.Preferences.useIntake)
                 {
-                    intake = new Intake(RobotParams.HWNAME_INTAKE);
+                    intake = new Intake(this, RobotParams.HWNAME_INTAKE);
                 }
 
                 if (RobotParams.Preferences.usePixelTray)

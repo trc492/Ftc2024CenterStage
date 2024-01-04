@@ -28,10 +28,12 @@ import TrcCommonLib.trclib.TrcSensor;
 import TrcCommonLib.trclib.TrcTriggerThresholdZones;
 import TrcFtcLib.ftclib.FtcDcMotor;
 import TrcFtcLib.ftclib.FtcDistanceSensor;
+import teamcode.Robot;
 import teamcode.RobotParams;
 
 public class Intake
 {
+    private final Robot robot;
     private final TrcDbgTrace tracer;
     private final String instanceName;
     private final FtcDcMotor intakeMotor;
@@ -44,8 +46,9 @@ public class Intake
      *
      * @param instanceName specifies the hardware name.
      */
-    public Intake(String instanceName)
+    public Intake(Robot robot, String instanceName)
     {
+        this.robot = robot;
         this.tracer = new TrcDbgTrace();
         this.instanceName = instanceName;
         intakeMotor = new FtcDcMotor(instanceName + ".motor");
@@ -143,6 +146,10 @@ public class Intake
         {
             analogTrigger.disableTrigger();
             intakeMotor.setPower(0.0, RobotParams.INTAKE_REVERSE_POWER, 0.5);
+            if (robot.blinkin != null)
+            {
+                robot.blinkin.setDetectedPattern("AutoAssistIntake");
+            }
             if (completionEvent != null)
             {
                 completionEvent.signal();
