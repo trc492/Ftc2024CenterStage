@@ -33,9 +33,9 @@ import teamcode.RobotParams;
 
 public class Intake
 {
-    private final Robot robot;
     private final TrcDbgTrace tracer;
     private final String instanceName;
+    private final Robot robot;
     private final FtcDcMotor intakeMotor;
     private final FtcDistanceSensor intakeSensor;
     private final TrcTriggerThresholdZones analogTrigger;
@@ -45,12 +45,13 @@ public class Intake
      * Constructor: Creates an instance of the object.
      *
      * @param instanceName specifies the hardware name.
+     * @param robot specifies the robot object.
      */
-    public Intake(Robot robot, String instanceName)
+    public Intake(String instanceName, Robot robot)
     {
-        this.robot = robot;
         this.tracer = new TrcDbgTrace();
         this.instanceName = instanceName;
+        this.robot = robot;
         intakeMotor = new FtcDcMotor(instanceName + ".motor");
         intakeMotor.setMotorInverted(RobotParams.INTAKE_MOTOR_INVERTED);
         if (RobotParams.Preferences.hasIntakeSensor)
@@ -146,14 +147,16 @@ public class Intake
         {
             analogTrigger.disableTrigger();
             intakeMotor.setPower(0.0, RobotParams.INTAKE_REVERSE_POWER, 0.5);
-            if (robot.blinkin != null)
-            {
-                robot.blinkin.setDetectedPattern("AutoAssistIntake");
-            }
+
             if (completionEvent != null)
             {
                 completionEvent.signal();
                 completionEvent = null;
+            }
+
+            if (robot.blinkin != null)
+            {
+                robot.blinkin.setDetectedPattern(BlinkinLEDs.INTAKE_PIXEL);
             }
         }
     }   //analogTriggerCallback

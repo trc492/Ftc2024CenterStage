@@ -41,7 +41,7 @@ public class BlinkinLEDs extends FtcRevBlinkin
     public static final String SCORE_LEVEL_2 = "ScoreLevel2";
     public static final String DETECTED_NOTHING = "NoDetection";
     public static final String APRIL_TAG = "AprilTag";
-    public static final String AUTO_INTAKE = "AutoAssistIntake";
+    public static final String INTAKE_PIXEL = "IntakePixel";
     public static final String PURPLE_PIXEL = "PurplePixel";
     public static final String GREEN_PIXEL = "GreenPixel";
     public static final String YELLOW_PIXEL = "YellowPixel";
@@ -83,7 +83,7 @@ public class BlinkinLEDs extends FtcRevBlinkin
             new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_3, RevLedPattern.SolidYellow),
             new TrcRevBlinkin.Pattern(DETECTED_NOTHING, RevLedPattern.SolidViolet),
             new TrcRevBlinkin.Pattern(APRIL_TAG, RevLedPattern.SolidAqua),
-            new TrcRevBlinkin.Pattern(AUTO_INTAKE, RevLedPattern.SolidGreen),
+            new TrcRevBlinkin.Pattern(INTAKE_PIXEL, RevLedPattern.SolidGreen),
             new TrcRevBlinkin.Pattern(PURPLE_PIXEL, RevLedPattern.SolidViolet),
             new TrcRevBlinkin.Pattern(GREEN_PIXEL, RevLedPattern.SolidGreen),
             new TrcRevBlinkin.Pattern(YELLOW_PIXEL, RevLedPattern.SolidYellow),
