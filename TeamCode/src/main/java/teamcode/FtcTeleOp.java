@@ -61,6 +61,7 @@ public class FtcTeleOp extends FtcOpMode
     private boolean pixelTrayLowerGateOpened = false;
     private boolean pixelTrayUpperGateOpened = false;
     private boolean wristUp = false;
+    private boolean autoPickupActive = false;
     protected double launchPower = RobotParams.DEF_LAUNCHER_POWER;
 
     //
@@ -475,8 +476,13 @@ public class FtcTeleOp extends FtcOpMode
                 {
                     if (!manualOverride)
                     {
-                        robot.globalTracer.traceInfo(moduleName, ">>>>> Intake ON=" + pressed);
-                        robot.intake.pickupPixel(pressed, null);
+                        if (pressed)
+                        {
+                            autoPickupActive = !autoPickupActive;
+                            robot.intake.pickupPixel(autoPickupActive, null);
+                            robot.globalTracer.traceInfo(
+                                moduleName, ">>>>> AutoPickup=" + autoPickupActive);
+                        }
                     }
                     else
                     {
