@@ -73,14 +73,11 @@ public class MecanumDrive extends RobotDrive
         //
         // Create and initialize PID controllers.
         //
-        TrcPidController.PidParameters xPosPidParams = new TrcPidController.PidParameters(
-            RobotParams.xPosPidCoeff, RobotParams.XPOS_TOLERANCE, driveBase::getXPosition);
-        TrcPidController.PidParameters yPosPidParams = new TrcPidController.PidParameters(
-            RobotParams.yPosPidCoeff, RobotParams.YPOS_TOLERANCE, driveBase::getYPosition);
-        TrcPidController.PidParameters turnPidParams = new TrcPidController.PidParameters(
+        pidDrive = new TrcPidDrive(
+            "pidDrive", driveBase,
+            RobotParams.xPosPidCoeff, RobotParams.XPOS_TOLERANCE, driveBase::getXPosition,
+            RobotParams.yPosPidCoeff, RobotParams.YPOS_TOLERANCE, driveBase::getYPosition,
             RobotParams.turnPidCoeff, RobotParams.TURN_TOLERANCE, driveBase::getHeading);
-
-        pidDrive = new TrcPidDrive("pidDrive", driveBase, xPosPidParams, yPosPidParams, turnPidParams);
         pidDrive.setStallDetectionEnabled(true);
         pidDrive.getXPidCtrl().setRampRate(RobotParams.X_RAMP_RATE);
         pidDrive.getYPidCtrl().setRampRate(RobotParams.Y_RAMP_RATE);
