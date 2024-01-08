@@ -187,7 +187,7 @@ public class SwerveDrive extends RobotDrive
             if (RobotParams.Preferences.swerveDualServoSteering)
             {
                 FtcCRServo slaveServo = new FtcCRServo(servoNames[i] + ".slave", null);
-                slaveServo.follow(servos[i]);
+                slaveServo.follow(servos[i], false);
             }
             servos[i].setMotorInverted(inverted[i]);
             servos[i].setSoftwarePidEnabled(true);
