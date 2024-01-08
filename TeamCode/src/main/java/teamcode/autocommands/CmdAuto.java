@@ -287,7 +287,6 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     break;
 
                 case AUTO_SCORE_PIXELS:
-
                     robot.robotDrive.purePursuitDrive.setMoveOutputLimit(1.0);
                     if (robot.placePixelTask != null)
                     {
