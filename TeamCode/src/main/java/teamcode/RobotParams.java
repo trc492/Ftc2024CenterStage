@@ -55,7 +55,7 @@ public class RobotParams
     {
         // Global config
         public static RobotType robotType = RobotType.CenterStageRobot;
-        public static boolean inCompetition = false;
+        public static boolean inCompetition = true;
         // Miscellaneous
         public static boolean useTraceLog = true;
         public static boolean useLoopPerformanceMonitor = true;
