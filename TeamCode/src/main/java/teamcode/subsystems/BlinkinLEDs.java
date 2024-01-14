@@ -83,7 +83,7 @@ public class BlinkinLEDs extends FtcRevBlinkin
             new TrcRevBlinkin.Pattern(BLUE_BLOB_POS_3, RevLedPattern.SolidYellow),
             new TrcRevBlinkin.Pattern(DETECTED_NOTHING, RevLedPattern.SolidViolet),
             new TrcRevBlinkin.Pattern(APRIL_TAG, RevLedPattern.SolidAqua),
-            new TrcRevBlinkin.Pattern(INTAKE_PIXEL, RevLedPattern.SolidGreen),
+            new TrcRevBlinkin.Pattern(INTAKE_PIXEL, RevLedPattern.SolidHotPink),
             new TrcRevBlinkin.Pattern(PURPLE_PIXEL, RevLedPattern.SolidViolet),
             new TrcRevBlinkin.Pattern(GREEN_PIXEL, RevLedPattern.SolidGreen),
             new TrcRevBlinkin.Pattern(YELLOW_PIXEL, RevLedPattern.SolidYellow),

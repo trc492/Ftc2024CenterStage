@@ -428,11 +428,15 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_BACK:
-                if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
+//                if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
+//                {
+//                    // Drive base is a Swerve Drive, align all steering wheels forward.
+//                    robot.globalTracer.traceInfo(moduleName, ">>>>> Set SteerAngle to zero.");
+//                    ((SwerveDrive) robot.robotDrive).setSteerAngle(0.0, false, false);
+//                }
+                if (pressed && robot != null)
                 {
-                    // Drive base is a Swerve Drive, align all steering wheels forward.
-                    robot.globalTracer.traceInfo(moduleName, ">>>>> Set SteerAngle to zero.");
-                    ((SwerveDrive) robot.robotDrive).setSteerAngle(0.0, false, false);
+                    robot.updateStatus();
                 }
                 break;
         }

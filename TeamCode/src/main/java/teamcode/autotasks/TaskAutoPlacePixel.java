@@ -323,6 +323,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
             case DRIVE_TO_APRILTAG:
                 // Navigate robot to Apriltag.
+                tracer.traceInfo("TaskAutoPlacePixelStart", "RobotFieldPose ****** =%s", robot.robotDrive.driveBase.getFieldPosition());
                 if (aprilTagPose == null)
                 {
                     // Not using vision or vision did not see AprilTag, just go to it blindly using odometry and
@@ -345,7 +346,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                         robot.blinkin.setDetectedPattern(BlinkinLEDs.DETECTED_NOTHING);
                     }
                 }
-
+                tracer.traceInfo("TaskAutoPlacePixelNull", "RobotFieldPose ****** =%s", robot.robotDrive.driveBase.getFieldPosition());
                 if (aprilTagPose != null)
                 {
                     if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null)
@@ -436,8 +437,12 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
 
             case DRIVE_TO_POS_2:
                 // We just scored the first pixel, we are moving to the position to score the second pixel.
+                TrcPose2D intermediate1 = robot.robotDrive.driveBase.getFieldPosition();
+                TrcPose2D intermediate2 = adjAprilTagPose.clone();
+                intermediate1.x -= 10.0;
+                intermediate2.x -= 10.0;
                 robot.robotDrive.purePursuitDrive.start(
-                    currOwner, event, 10.0, robot.robotDrive.driveBase.getFieldPosition(), false, adjAprilTagPose);
+                    currOwner, event, 10.0, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, intermediate2, adjAprilTagPose);
                 sm.waitForSingleEvent(event, State.PLACE_PIXEL_2);
                 break;
 

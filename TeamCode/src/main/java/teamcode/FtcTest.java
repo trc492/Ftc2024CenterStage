@@ -61,7 +61,7 @@ public class FtcTest extends FtcTeleOp
     private static final String moduleName = FtcTest.class.getSimpleName();
     private static final boolean logEvents = true;
     private static final boolean debugPid = true;
-    private static final double LAUNCHER_POWER_STEP = 0.05;
+    private static final double LAUNCHER_POWER_STEP = 0.01;
 
     private enum Test
     {

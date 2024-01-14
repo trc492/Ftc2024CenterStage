@@ -140,13 +140,13 @@ public class Intake
     {
         TrcTriggerThresholdZones.CallbackContext callbackContext = (TrcTriggerThresholdZones.CallbackContext) context;
 
-        tracer.traceDebug(
+        tracer.traceInfo(
             instanceName, "Zone=%d->%d, value=%.3f",
             callbackContext.prevZone, callbackContext.currZone, callbackContext.sensorValue);
         if (hasTwoPixels())
         {
             analogTrigger.disableTrigger();
-            intakeMotor.setPower(0.0, RobotParams.INTAKE_REVERSE_POWER, 0.5);
+            intakeMotor.setPower(0.75, RobotParams.INTAKE_REVERSE_POWER, 0.5);
 
             if (completionEvent != null)
             {

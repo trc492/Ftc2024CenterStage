@@ -226,7 +226,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
                     robot.robotDrive.purePursuitDrive.start(
                         null, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
 //                    timer.set(4.0, event); // Not Tuned
-                    sm.waitForSingleEvent(event, State.DO_DELAY, 4.0);
+                    sm.waitForSingleEvent(event, State.DO_DELAY, 7.0);
+                    break;
 
                 case DO_DELAY:
                     robot.intake.pickupPixel(false, null);
