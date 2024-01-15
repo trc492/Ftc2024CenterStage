@@ -177,7 +177,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         // Intermediate point of pos 2 goes further to bump out the team prop.
                         intermediate1 =
                             robot.adjustPoseByAlliance(
-                                targetPoseTile.x, targetPoseTile.y - 0.1, 180.0, autoChoices.alliance);
+                                targetPoseTile.x, targetPoseTile.y - 0.2, 180.0, autoChoices.alliance);
                     }
                     robot.robotDrive.purePursuitDrive.start(
                         event, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
@@ -205,11 +205,11 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         robot.pixelTray.setUpperGateOpened(true, null);
                         intermediate1 = robot.adjustPoseByAlliance(-1.6, 2.5, 180.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
-                        intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
-                        targetPose = robot.adjustPoseByAlliance(-2.1, 0.6, -90.0, autoChoices.alliance);
+//                        intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
+                        targetPose = robot.adjustPoseByAlliance(-2.3, 1.0, 180, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
                             event, robot.robotDrive.driveBase.getFieldPosition(), false,
-                            intermediate1, intermediate2, intermediate3, targetPose);
+                            intermediate1, intermediate2, targetPose);
                         sm.waitForSingleEvent(event, State.PICKUP_PIXEL);
                     }
                     else
@@ -221,12 +221,14 @@ public class CmdAuto implements TrcRobot.RobotCommand
                 case PICKUP_PIXEL:
                     robot.intake.pickupPixel(true, event);
                     robot.robotDrive.purePursuitDrive.setMoveOutputLimit(1.0);
-                    intermediate1 = robot.adjustPoseByAlliance(-2.75, 0.6, -90.0, autoChoices.alliance);
-                    targetPose = robot.adjustPoseByAlliance(-2.65, 0.6, -90.0, autoChoices.alliance);
+                    intermediate1 = robot.adjustPoseByAlliance(-2.5, 0.35, -125.0, autoChoices.alliance);
+                    intermediate2 = robot.adjustPoseByAlliance(-2.0, 0.6, -90.0, autoChoices.alliance);
+//                    intermediate3 = robot.adjustPoseByAlliance(-2.5, 0.6, -90.0, autoChoices.alliance);
+                    targetPose = robot.adjustPoseByAlliance(-2.7, 0.4, -90.0, autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
-                        null, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, targetPose);
+                        null, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, intermediate2, targetPose);
 //                    timer.set(4.0, event); // Not Tuned
-                    sm.waitForSingleEvent(event, State.DO_DELAY, 7.0);
+                    sm.waitForSingleEvent(event, State.DO_DELAY, 5.0);
                     break;
 
                 case DO_DELAY:

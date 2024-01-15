@@ -267,6 +267,7 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                     // and odometry may cumulate some amount of error.
                     TrcPose2D robotFieldPose = robot.vision.getRobotFieldPose(aprilTagInfo);
                     robot.robotDrive.driveBase.setFieldPosition(robotFieldPose, false);
+                    tracer.traceInfo("TaskAutoPlacePixel-Relocalize", "RobotFieldPose relocalizing to >>> ***", robotFieldPose);
                     // Determine the absolute field location of the AprilTag.
                     FtcAuto.Alliance alliance =
                         aprilTagInfo.detectedObj.aprilTagDetection.id < 4 ?
@@ -324,29 +325,24 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
             case DRIVE_TO_APRILTAG:
                 // Navigate robot to Apriltag.
                 tracer.traceInfo("TaskAutoPlacePixelStart", "RobotFieldPose ****** =%s", robot.robotDrive.driveBase.getFieldPosition());
-                if (aprilTagPose == null)
-                {
+                if (aprilTagPose == null) {
                     // Not using vision or vision did not see AprilTag, just go to it blindly using odometry and
                     // its known location. If we are not in Autonomous, the robot may not know its location. In
                     // this case, we just warn the driver and quit.
-                    if (taskParams.inAuto)
-                    {
+                    if (taskParams.inAuto) {
                         int targetAprilTagId =
-                            FtcAuto.autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE ?
-                                RobotParams.BLUE_BACKDROP_APRILTAGS[taskParams.aprilTagIndex] :
-                                RobotParams.RED_BACKDROP_APRILTAGS[taskParams.aprilTagIndex];
+                                FtcAuto.autoChoices.alliance == FtcAuto.Alliance.BLUE_ALLIANCE ?
+                                        RobotParams.BLUE_BACKDROP_APRILTAGS[taskParams.aprilTagIndex] :
+                                        RobotParams.RED_BACKDROP_APRILTAGS[taskParams.aprilTagIndex];
                         aprilTagPose = RobotParams.APRILTAG_POSES[targetAprilTagId - 1];
                         tracer.traceInfo(
-                            moduleName, "Drive to AprilTag %d using absolute odometry (pose=%s).",
-                            targetAprilTagId, aprilTagPose);
-                    }
-                    else if (robot.blinkin != null)
-                    {
+                                moduleName, "Drive to AprilTag %d using absolute odometry (pose=%s).",
+                                targetAprilTagId, aprilTagPose);
+                    } else if (robot.blinkin != null) {
                         // Tell the drivers vision doesn't see anything so they can score manually.
                         robot.blinkin.setDetectedPattern(BlinkinLEDs.DETECTED_NOTHING);
                     }
                 }
-                tracer.traceInfo("TaskAutoPlacePixelNull", "RobotFieldPose ****** =%s", robot.robotDrive.driveBase.getFieldPosition());
                 if (aprilTagPose != null)
                 {
                     if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null)
