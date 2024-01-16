@@ -1,0 +1,106 @@
+FtcTeleOp.startMode_INFO [0.005478083] ***** Starting TeleOp: 20240114@174049 *****
+TrcDriveBase.resetOdometry_INFO [0.045797213] resetPosOd=false, resetHeadingOd=true, resetHardware=false
+FtcTeleOp.startMode_INFO [0.046485838] Enabling AprilTagVision.
+FtcTeleOp.driverButtonEvent_INFO [6.333444011] >>>>> DroneLaunch is pressed.
+FtcTeleOp.driverButtonEvent_INFO [12.97465472] >>>>> Deploying hanging hooks.
+ElevatorArm.setHangingPosition_INFO [12.97534772] owner=FtcTeleOp, delay=0.000, event=null, timeout=0.000
+ElevatorArm.cancel_INFO [12.975812928] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [12.976323053] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.elevatorSetPosition_INFO [12.977273887] owner=FtcTeleOp, delay=0.000, pos=21.5, powerLimit=1.0, event=(setHangingPosition.actionEvent=CLEARED), timeout=1.000 (elevatorPos=12.05, armPos=27.55)
+ElevatorArm.performAction_INFO [12.978346345] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=21.5
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setHangingPosition.actionEvent=CLEARED)
+	expiredTime=1705282863.498
+)
+elevator.motor.posPidCtrl.isStalled_INFO [13.76955905] PID stalled.
+elevator.motor.pidCtrlTask_INFO [13.772991967] onTarget=false(21.088940/21.5), stalled=true, expired=false, event=(setHangingPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [13.777565009] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=(setHangingPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=165.0
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+FtcTeleOp.driverButtonEvent_INFO [15.279077993] >>>>> Hanging ...
+ElevatorArm.elevatorSetPosition_INFO [15.281382743] owner=FtcTeleOp, delay=0.000, pos=12.1, powerLimit=1.0, event=null, timeout=0.000 (elevatorPos=21.04, armPos=150.49)
+ElevatorArm.cancel_INFO [15.281883243] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [15.283601744] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.performAction_INFO [15.287758286] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=12.1
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+elevator.motor.posPidCtrl.isStalled_INFO [16.304184638] PID stalled.
+elevator.motor.pidCtrlTask_INFO [16.305435888] onTarget=false(13.150762/12.1), stalled=true, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [16.311437222] Released ownership on behalf of FtcTeleOp
+Robot.stopMode_INFO [18.642993664] Update Status average elapsed times:
+DriveBase=NaNs
+ Elevator=NaNs
+      Arm=NaNs
+    Wrist=NaNs
+   Intake=NaNs
+PixelTray=NaNs
+
+imu.getGyroData.printElapsedTime_INFO [18.645984123] imu.getGyroData: avgElapsed=0.000006, minElapsed=0.000002, maxElapsed=0.000064
+TrcDigitalInput.getInput.printElapsedTime_INFO [18.647214956] TrcDigitalInput.getInput: avgElapsed=0.005562, minElapsed=0.005562, maxElapsed=0.005562
+TrcMotor.getPos.printElapsedTime_INFO [18.648915373] TrcMotor.getPos: avgElapsed=0.000374, minElapsed=0.000013, maxElapsed=0.023342
+TrcMotor.setPower.printElapsedTime_INFO [18.651339707] TrcMotor.setPower: avgElapsed=0.002662, minElapsed=0.000006, maxElapsed=0.028226
+TrcMotor.setVel.printElapsedTime_INFO [18.65215404] TrcMotor.setVel: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+TrcMotor.setPos.printElapsedTime_INFO [18.652903915] TrcMotor.setPos: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+TrcMotor.setCurrent.printElapsedTime_INFO [18.653911041] TrcMotor.setCurrent: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+TrcServo.setPos.printElapsedTime_INFO [18.654926624] TrcServo.setPos: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+Robot.stopMode_INFO [18.656052166] Disabling AprilTagVision.
+Robot.stopMode_INFO [18.656665249] Disabling PurplePixelVision.
+Robot.stopMode_INFO [18.657110041] Disabling GreenPixelVision.
+Robot.stopMode_INFO [18.657651958] Disabling YellowPixelVision.
+Robot.stopMode_INFO [18.658140791] Disabling WhitePixelVision.
+Robot.stopMode_INFO [18.658578291] Disabling RedBlobVision.
+Robot.stopMode_INFO [18.66121175] Disabling BlueBlobVision.
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.692130461] blinkin: OUTPUT_TASK=0.000026/0.023700
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.692963169] imu.converterTask: INPUT_TASK=0.000048/0.023694
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.693633128] imu.gyroTask: INPUT_TASK=0.019741/0.023724
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.694376003] lfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000123/0.023696
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.695151545] TrcMotor.odometryTask: STANDALONE_TASK=0.017293/0.017926
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.696449753] rfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000013/0.023696
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.69721217] lbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000071/0.023696
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.69952917] rbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000032/0.023690
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.700873462] TrcDriveBase.odometryTask: INPUT_TASK=0.001808/0.023698
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.702537129] elevator.motor.pidCtrlTask: OUTPUT_TASK=0.000267/0.023690
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.706262587] arm.encoder.converterTask: INPUT_TASK=0.000121/0.023670
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.707789463] arm.servo.pidCtrlTask: OUTPUT_TASK=0.001092/0.023666
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.709171379] arm.followerServo.pidCtrlTask: OUTPUT_TASK=0.000003/0.023668
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.710919046] intake.motor.pidCtrlTask: OUTPUT_TASK=0.000004/0.023668
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.712613046] launcher.pidCtrlTask: OUTPUT_TASK=0.000005/0.023668
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.714117172] DriverGamepad.buttonEventTask: PRE_PERIODIC_TASK=0.000007/0.000530
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [18.71591413] OperatorGamepad.buttonEventTask: PRE_PERIODIC_TASK=0.000003/0.000530
+FtcOpMode.printPerformanceMetrics_INFO [18.718036589] [FtcTeleOp] Main robot thread average elapsed times:
+       robotInit=4.181525s
+    initPeriodic=NaNs
+       startMode=0.000036s
+    loopInterval=0.000530s (1885.068Hz)
+             sdk=0.000025s
+ prePeriodicTask=0.000061s
+        periodic=0.000303s
+postPeriodicTask=0.000042s
+         loopSum=0.000506s
+        stopMode=0.000000s
+FtcTeleOp.stopMode_INFO [18.720802756] ***** Stopping TeleOp: 20240114@174108 *****

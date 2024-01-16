@@ -1,0 +1,507 @@
+FtcTeleOp.startMode_INFO [0.007120459] ***** Starting TeleOp: 20240114@173903 *****
+TrcDriveBase.resetOdometry_INFO [0.026015794] resetPosOd=false, resetHeadingOd=true, resetHardware=false
+TrcDriveBase.setFieldPosition_INFO [0.026735627] pose=(x=31.4,y=31.3,angle=-89.6),positionOnly=false
+TrcDriveBase.resetOdometry_INFO [0.027272294] resetPosOd=true, resetHeadingOd=true, resetHardware=false
+Robot.startMode_INFO [0.028033836] Restore saved RobotPose=(x=31.4,y=31.3,angle=-89.6)
+FtcTeleOp.startMode_INFO [0.028520044] Enabling AprilTagVision.
+FtcTeleOp.driverButtonEvent_INFO [0.507856759] >>>>> DrivePower slow.
+FtcTeleOp.operatorButtonEvent_INFO [0.707542863] >>>>> Toggle lower gate: open=true
+pixelTray.setLowerGateOpened_INFO [0.710595155] lowerGateOpened=true, event=null
+FtcTeleOp.operatorButtonEvent_INFO [1.180409827] >>>>> Toggle lower gate: open=false
+pixelTray.setLowerGateOpened_INFO [1.192324703] lowerGateOpened=false, event=null
+FtcTeleOp.operatorButtonEvent_INFO [1.806795848] >>>>> Set Scoring Position.
+ElevatorArm.setScoringPosition_INFO [1.815517557] owner=FtcTeleOp, delay=0.000, elevatorPos=15.0, event=null, timeout=0.000 (elevatorPos=12.10, armPos=75.22)
+ElevatorArm.cancel_INFO [1.817250349] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [1.820154183] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.elevatorSetPosition_INFO [1.82292735] owner=FtcTeleOp, delay=0.000, pos=15.0, powerLimit=1.0, event=(setScoringPosition.actionEvent=CLEARED), timeout=1.000 (elevatorPos=12.10, armPos=75.22)
+ElevatorArm.performAction_INFO [1.825426058] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=15.0
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setScoringPosition.actionEvent=CLEARED)
+	expiredTime=1705282746.610
+)
+elevator.motor.pidCtrlTask_INFO [2.244833142] onTarget=true(14.735114/15.0), stalled=false, expired=false, event=(setScoringPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [2.247210809] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=(setScoringPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=270.0
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+FtcTeleOp.operatorButtonEvent_INFO [3.743591334] >>>>> ElevatorPresetPosDown pressed.
+ElevatorArm.elevatorSetPosition_INFO [3.749658877] owner=FtcTeleOp, delay=0.000, pos=12.4, powerLimit=1.0, event=null, timeout=1.000 (elevatorPos=14.78, armPos=266.78)
+ElevatorArm.cancel_INFO [3.750264085] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [3.751096502] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.performAction_INFO [3.752266668] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=1705282748.537
+)
+elevator.motor.pidCtrlTask_INFO [4.21407334] onTarget=true(12.280600/12.4), stalled=false, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [4.261984553] Released ownership on behalf of FtcTeleOp
+arm.servo.posPidCtrl.isStalled_INFO [4.551832124] PID stalled.
+FtcTeleOp.operatorButtonEvent_INFO [7.064818376] >>>>> Toggle lower gate: open=true
+pixelTray.setLowerGateOpened_INFO [7.074416252] lowerGateOpened=true, event=null
+FtcTeleOp.operatorButtonEvent_INFO [7.446258623] >>>>> Set Loading Position.
+ElevatorArm.setLoadingPosition_INFO [7.447193415] owner=FtcTeleOp, delay=0.000, event=null, timeout=0.000 (elevatorPos=12.26, armPos=266.67)
+ElevatorArm.cancel_INFO [7.448391873] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [7.450616998] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.armSetPosition_INFO [7.471110959] owner=FtcTeleOp, delay=0.000, pos=27.3, powerLimit=0.1, event=(setLoadingPosition.actionEvent=CLEARED), timeout=3.000 (elevatorPos=12.26, armPos=266.67)
+elevator.motor.pidCtrlTask_INFO [7.921556337] onTarget=true(14.718696/15.0), stalled=false, expired=false, event=(armSetPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [7.940699298] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=(armSetPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=27.3
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setLoadingPosition.actionEvent=CLEARED)
+	expiredTime=1705282754.256
+)
+FtcTeleOp.driverButtonEvent_INFO [10.002368672] >>>>> Enabling FIELD mode.
+FtcTeleOp.setDriveOrientation_INFO [10.00931413] driveOrientation=FIELD
+arm.servo.posPidCtrl.isStalled_INFO [10.13782656] PID stalled.
+arm.servo.pidCtrlTask_INFO [10.138732769] onTarget=false(27.981829/27.3), stalled=true, expired=false, event=(setLoadingPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [10.13969381] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=(setLoadingPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+FtcTeleOp.driverButtonEvent_INFO [10.208197276] >>>>> DrivePower normal.
+elevator.motor.pidCtrlTask_INFO [10.524082516] onTarget=true(12.239554/12.4), stalled=false, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [10.530604475] Released ownership on behalf of FtcTeleOp
+FtcTeleOp.operatorButtonEvent_INFO [11.526161783] >>>>> ZeroCalibrate pressed.
+ElevatorArm.zeroCalibrate_INFO [11.528895575] owner=FtcTeleOp
+ElevatorArm.cancel_INFO [11.529451783] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [11.530149742] Acquired ownership on behalf of FtcTeleOp
+FtcTeleOp.operatorButtonEvent_INFO [14.452360994] >>>>> Set Scoring Position.
+ElevatorArm.setScoringPosition_INFO [14.453620119] owner=FtcTeleOp, delay=0.000, elevatorPos=15.0, event=null, timeout=0.000 (elevatorPos=10.98, armPos=29.95)
+ElevatorArm.cancel_INFO [14.454134035] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [14.455545411] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.elevatorSetPosition_INFO [14.458188202] owner=FtcTeleOp, delay=0.000, pos=15.0, powerLimit=1.0, event=(setScoringPosition.actionEvent=CLEARED), timeout=1.000 (elevatorPos=10.98, armPos=30.16)
+ElevatorArm.performAction_INFO [14.461847161] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=15.0
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setScoringPosition.actionEvent=CLEARED)
+	expiredTime=1705282759.244
+)
+elevator.motor.pidCtrlTask_INFO [14.965651795] onTarget=true(14.743323/15.0), stalled=false, expired=false, event=(setScoringPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [15.001721924] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=(setScoringPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=270.0
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+FtcTeleOp.operatorButtonEvent_INFO [15.389918921] >>>>> Set Loading Position.
+ElevatorArm.setLoadingPosition_INFO [15.39202738] owner=FtcTeleOp, delay=0.000, event=null, timeout=0.000 (elevatorPos=14.78, armPos=49.58)
+ElevatorArm.cancel_INFO [15.39255763] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [15.394082463] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.armSetPosition_INFO [15.416214424] owner=FtcTeleOp, delay=0.000, pos=27.3, powerLimit=0.1, event=(setLoadingPosition.actionEvent=CLEARED), timeout=3.000 (elevatorPos=14.78, armPos=53.18)
+ElevatorArm.performAction_INFO [15.417850382] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=27.3
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setLoadingPosition.actionEvent=CLEARED)
+	expiredTime=1705282762.203
+)
+arm.servo.posPidCtrl.isStalled_INFO [16.602405376] PID stalled.
+arm.servo.pidCtrlTask_INFO [16.611809294] onTarget=false(27.981829/27.3), stalled=true, expired=false, event=(setLoadingPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [16.612232794] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=(setLoadingPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+FtcTeleOp.operatorButtonEvent_INFO [16.945745494] >>>>> AutoPickupOn=true
+elevator.motor.pidCtrlTask_INFO [16.977057956] onTarget=true(12.313436/12.4), stalled=false, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [16.986570373] Released ownership on behalf of FtcTeleOp
+FtcTeleOp.operatorButtonEvent_INFO [22.547647724] >>>>> AutoPickupOn=false
+FtcTeleOp.operatorButtonEvent_INFO [23.219922833] >>>>> AutoPickupOn=true
+intake.analogTriggerCallback_INFO [24.776930364] Zone=1->0, value=1.102
+FtcTeleOp.operatorButtonEvent_INFO [25.342091754] >>>>> AutoPickupOn=false
+FtcTeleOp.operatorButtonEvent_INFO [25.829084428] >>>>> AutoPickupOn=true
+intake.analogTriggerCallback_INFO [26.153718794] Zone=1->0, value=1.102
+intake.analogTriggerCallback_INFO [26.47498966] Zone=0->1, value=2.362
+intake.analogTriggerCallback_INFO [26.605832215] Zone=1->0, value=1.220
+intake.analogTriggerCallback_INFO [26.726546352] Zone=0->1, value=3.976
+FtcTeleOp.operatorButtonEvent_INFO [27.144070144] >>>>> AutoPickupOn=false
+FtcTeleOp.operatorButtonEvent_INFO [29.379523868] >>>>> Toggle lower gate: open=false
+pixelTray.setLowerGateOpened_INFO [29.395281162] lowerGateOpened=false, event=null
+FtcTeleOp.driverButtonEvent_INFO [29.567784804] >>>>> DrivePower slow.
+FtcTeleOp.operatorButtonEvent_INFO [30.811821137] >>>>> Set Scoring Position.
+ElevatorArm.setScoringPosition_INFO [30.813729804] owner=FtcTeleOp, delay=0.000, elevatorPos=15.0, event=null, timeout=0.000 (elevatorPos=12.30, armPos=27.65)
+ElevatorArm.cancel_INFO [30.814317221] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [30.818285638] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.elevatorSetPosition_INFO [30.820824013] owner=FtcTeleOp, delay=0.000, pos=15.0, powerLimit=1.0, event=(setScoringPosition.actionEvent=CLEARED), timeout=1.000 (elevatorPos=12.30, armPos=27.65)
+ElevatorArm.performAction_INFO [30.822350013] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=15.0
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setScoringPosition.actionEvent=CLEARED)
+	expiredTime=1705282775.607
+)
+elevator.motor.pidCtrlTask_INFO [31.248344098] onTarget=true(14.784368/15.0), stalled=false, expired=false, event=(setScoringPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [31.295987269] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=(setScoringPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=270.0
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+arm.servo.posPidCtrl.isStalled_INFO [33.224082338] PID stalled.
+arm.servo.pidCtrlTask_INFO [33.232448214] onTarget=false(267.981829/270.0), stalled=true, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [33.262241384] Released ownership on behalf of FtcTeleOp
+FtcTeleOp.operatorButtonEvent_INFO [34.096981842] >>>>> ElevatorPresetPosDown pressed.
+ElevatorArm.elevatorSetPosition_INFO [34.100797134] owner=FtcTeleOp, delay=0.000, pos=12.4, powerLimit=1.0, event=null, timeout=1.000 (elevatorPos=14.83, armPos=267.87)
+ElevatorArm.cancel_INFO [34.101897301] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [34.102506885] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.performAction_INFO [34.10544601] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=1705282778.885
+)
+elevator.motor.pidCtrlTask_INFO [34.505287217] onTarget=true(12.165673/12.4), stalled=false, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [34.543957262] Released ownership on behalf of FtcTeleOp
+FtcTeleOp.operatorButtonEvent_INFO [35.335226842] >>>>> Toggle lower gate: open=true
+pixelTray.setLowerGateOpened_INFO [35.34553726] lowerGateOpened=true, event=null
+FtcTeleOp.operatorButtonEvent_INFO [35.637632122] >>>>> Set Loading Position.
+ElevatorArm.setLoadingPosition_INFO [35.641129789] owner=FtcTeleOp, delay=0.000, event=null, timeout=0.000 (elevatorPos=12.30, armPos=267.00)
+ElevatorArm.cancel_INFO [35.642150039] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [35.643728831] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.armSetPosition_INFO [35.66821075] owner=FtcTeleOp, delay=0.000, pos=27.3, powerLimit=0.1, event=(setLoadingPosition.actionEvent=CLEARED), timeout=3.000 (elevatorPos=12.30, armPos=267.00)
+elevator.motor.pidCtrlTask_INFO [36.121731463] onTarget=true(14.718696/15.0), stalled=false, expired=false, event=(armSetPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [36.154532883] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=(armSetPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=27.3
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setLoadingPosition.actionEvent=CLEARED)
+	expiredTime=1705282782.455
+)
+FtcTeleOp.driverButtonEvent_INFO [36.910502042] >>>>> DrivePower normal.
+arm.servo.posPidCtrl.isStalled_INFO [38.458186156] PID stalled.
+arm.servo.pidCtrlTask_INFO [38.459433322] onTarget=false(28.745465/27.3), stalled=true, expired=false, event=(setLoadingPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [38.466974073] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=(setLoadingPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+elevator.motor.pidCtrlTask_INFO [38.83416961] onTarget=true(12.305227/12.4), stalled=false, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [38.875483614] Released ownership on behalf of FtcTeleOp
+FtcTeleOp.operatorButtonEvent_INFO [38.974177208] >>>>> AutoPickupOn=true
+FtcTeleOp.operatorButtonEvent_INFO [40.487850943] >>>>> AutoPickupOn=false
+FtcTeleOp.driverButtonEvent_INFO [40.814912851] >>>>> DrivePower slow.
+FtcTeleOp.operatorButtonEvent_INFO [41.166024136] >>>>> Toggle lower gate: open=false
+pixelTray.setLowerGateOpened_INFO [41.177183012] lowerGateOpened=false, event=null
+FtcTeleOp.operatorButtonEvent_INFO [41.648444935] >>>>> Set Scoring Position.
+ElevatorArm.setScoringPosition_INFO [41.649388768] owner=FtcTeleOp, delay=0.000, elevatorPos=15.0, event=null, timeout=0.000 (elevatorPos=12.32, armPos=27.98)
+ElevatorArm.cancel_INFO [41.651037851] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [41.651706935] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.elevatorSetPosition_INFO [41.652927268] owner=FtcTeleOp, delay=0.000, pos=15.0, powerLimit=1.0, event=(setScoringPosition.actionEvent=CLEARED), timeout=1.000 (elevatorPos=12.32, armPos=27.98)
+ElevatorArm.performAction_INFO [41.654874435] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=15.0
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setScoringPosition.actionEvent=CLEARED)
+	expiredTime=1705282786.440
+)
+elevator.motor.pidCtrlTask_INFO [42.082033728] onTarget=true(14.800787/15.0), stalled=false, expired=false, event=(setScoringPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [42.136190984] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=(setScoringPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=270.0
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+FtcTeleOp.operatorButtonEvent_INFO [43.773459065] >>>>> ElevatorPresetPosDown pressed.
+ElevatorArm.elevatorSetPosition_INFO [43.779198774] owner=FtcTeleOp, delay=0.000, pos=12.4, powerLimit=1.0, event=null, timeout=1.000 (elevatorPos=14.83, armPos=267.76)
+ElevatorArm.cancel_INFO [43.781038024] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [43.782459316] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.performAction_INFO [43.784849816] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=1705282788.566
+)
+elevator.motor.pidCtrlTask_INFO [44.177777939] onTarget=true(12.239554/12.4), stalled=false, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [44.187899065] Released ownership on behalf of FtcTeleOp
+arm.servo.posPidCtrl.isStalled_INFO [44.60877294] PID stalled.
+FtcTeleOp.operatorButtonEvent_INFO [46.151865637] >>>>> Toggle lower gate: open=true
+pixelTray.setLowerGateOpened_INFO [46.157136637] lowerGateOpened=true, event=null
+FtcTeleOp.operatorButtonEvent_INFO [46.449888042] >>>>> Set Loading Position.
+ElevatorArm.setLoadingPosition_INFO [46.453714417] owner=FtcTeleOp, delay=0.000, event=null, timeout=0.000 (elevatorPos=12.29, armPos=265.58)
+ElevatorArm.cancel_INFO [46.455221459] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [46.456661126] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.armSetPosition_INFO [46.475473336] owner=FtcTeleOp, delay=0.000, pos=27.3, powerLimit=0.1, event=(setLoadingPosition.actionEvent=CLEARED), timeout=3.000 (elevatorPos=12.29, armPos=265.47)
+elevator.motor.pidCtrlTask_INFO [46.927191548] onTarget=true(14.743323/15.0), stalled=false, expired=false, event=(armSetPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [46.958129801] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=(armSetPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=27.3
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setLoadingPosition.actionEvent=CLEARED)
+	expiredTime=1705282793.260
+)
+FtcTeleOp.driverButtonEvent_INFO [48.21013476] >>>>> DrivePower normal.
+arm.servo.posPidCtrl.isStalled_INFO [49.077345306] PID stalled.
+arm.servo.pidCtrlTask_INFO [49.083673598] onTarget=false(29.181829/27.3), stalled=true, expired=false, event=(setLoadingPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [49.145132146] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=(setLoadingPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+elevator.motor.pidCtrlTask_INFO [49.619798985] onTarget=true(12.305227/12.4), stalled=false, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [49.633601237] Released ownership on behalf of FtcTeleOp
+FtcTeleOp.operatorButtonEvent_INFO [57.027171438] >>>>> AutoPickupOn=true
+FtcTeleOp.operatorButtonEvent_INFO [60.404898402] >>>>> Toggle lower gate: open=false
+pixelTray.setLowerGateOpened_INFO [60.418869237] lowerGateOpened=false, event=null
+FtcTeleOp.operatorButtonEvent_INFO [61.668162571] >>>>> AutoPickupOn=false
+FtcTeleOp.operatorButtonEvent_INFO [63.41641158] >>>>> Set Scoring Position.
+ElevatorArm.setScoringPosition_INFO [63.41832433] owner=FtcTeleOp, delay=0.000, elevatorPos=15.0, event=null, timeout=0.000 (elevatorPos=12.30, armPos=28.09)
+ElevatorArm.cancel_INFO [63.422555247] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [63.423216747] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.elevatorSetPosition_INFO [63.428714081] owner=FtcTeleOp, delay=0.000, pos=15.0, powerLimit=1.0, event=(setScoringPosition.actionEvent=CLEARED), timeout=1.000 (elevatorPos=12.30, armPos=28.09)
+ElevatorArm.performAction_INFO [63.43398829] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=15.0
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setScoringPosition.actionEvent=CLEARED)
+	expiredTime=1705282808.214
+)
+elevator.motor.pidCtrlTask_INFO [63.873979751] onTarget=true(14.702278/15.0), stalled=false, expired=false, event=(setScoringPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [63.883102502] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=(setScoringPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=270.0
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+arm.servo.posPidCtrl.isStalled_INFO [65.729261104] PID stalled.
+arm.servo.pidCtrlTask_INFO [65.730270854] onTarget=false(267.545465/270.0), stalled=true, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [65.734621938] Released ownership on behalf of FtcTeleOp
+FtcTeleOp.driverButtonEvent_INFO [68.495973174] >>>>> DrivePower slow.
+FtcTeleOp.driverButtonEvent_INFO [69.3400283] >>>>> DrivePower normal.
+FtcTeleOp.driverButtonEvent_INFO [69.492979191] >>>>> DrivePower slow.
+FtcTeleOp.operatorButtonEvent_INFO [71.199123779] >>>>> ElevatorPresetPosDown pressed.
+ElevatorArm.elevatorSetPosition_INFO [71.20091257] owner=FtcTeleOp, delay=0.000, pos=12.4, powerLimit=1.0, event=null, timeout=1.000 (elevatorPos=14.83, armPos=266.89)
+ElevatorArm.cancel_INFO [71.202211071] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [71.205161279] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.performAction_INFO [71.206910696] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=1705282815.988
+)
+elevator.motor.pidCtrlTask_INFO [71.600245402] onTarget=true(12.247763/12.4), stalled=false, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [71.61282907] Released ownership on behalf of FtcTeleOp
+FtcTeleOp.operatorButtonEvent_INFO [73.427667628] >>>>> Toggle lower gate: open=true
+pixelTray.setLowerGateOpened_INFO [73.445041629] lowerGateOpened=true, event=null
+FtcTeleOp.operatorButtonEvent_INFO [73.904852134] >>>>> Set Loading Position.
+ElevatorArm.setLoadingPosition_INFO [73.906371426] owner=FtcTeleOp, delay=0.000, event=null, timeout=0.000 (elevatorPos=12.30, armPos=264.82)
+ElevatorArm.cancel_INFO [73.907566676] owner=FtcTeleOp
+ElevatorArm.acquireOwnership_INFO [73.908532093] Acquired ownership on behalf of FtcTeleOp
+ElevatorArm.armSetPosition_INFO [73.929722261] owner=FtcTeleOp, delay=0.000, pos=27.3, powerLimit=0.1, event=(setLoadingPosition.actionEvent=CLEARED), timeout=3.000 (elevatorPos=12.30, armPos=264.82)
+elevator.motor.pidCtrlTask_INFO [74.371517972] onTarget=true(14.718696/15.0), stalled=false, expired=false, event=(armSetPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [74.395864558] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=(armSetPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=27.3
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setLoadingPosition.actionEvent=CLEARED)
+	expiredTime=1705282820.717
+)
+FtcTeleOp.driverButtonEvent_INFO [75.121679756] >>>>> DrivePower normal.
+arm.servo.posPidCtrl.isStalled_INFO [76.745033294] PID stalled.
+arm.servo.pidCtrlTask_INFO [76.750494461] onTarget=false(29.181829/27.3), stalled=true, expired=false, event=(setLoadingPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [76.762488963] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=(setLoadingPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+elevator.motor.pidCtrlTask_INFO [77.116758123] onTarget=true(12.329854/12.4), stalled=false, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [77.144092251] Released ownership on behalf of FtcTeleOp
+Robot.stopMode_INFO [80.652506604] Update Status average elapsed times:
+DriveBase=NaNs
+ Elevator=NaNs
+      Arm=NaNs
+    Wrist=NaNs
+   Intake=NaNs
+PixelTray=NaNs
+
+imu.getGyroData.printElapsedTime_INFO [80.655554521] imu.getGyroData: avgElapsed=0.000006, minElapsed=0.000002, maxElapsed=0.000276
+TrcDigitalInput.getInput.printElapsedTime_INFO [80.657058937] TrcDigitalInput.getInput: avgElapsed=0.006947, minElapsed=0.003204, maxElapsed=0.015389
+TrcMotor.getPos.printElapsedTime_INFO [80.660470271] TrcMotor.getPos: avgElapsed=0.000821, minElapsed=0.000013, maxElapsed=0.029385
+TrcMotor.setPower.printElapsedTime_INFO [80.661397771] TrcMotor.setPower: avgElapsed=0.003315, minElapsed=0.000004, maxElapsed=0.028438
+TrcMotor.setVel.printElapsedTime_INFO [80.662077646] TrcMotor.setVel: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+TrcMotor.setPos.printElapsedTime_INFO [80.662825188] TrcMotor.setPos: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+TrcMotor.setCurrent.printElapsedTime_INFO [80.663932355] TrcMotor.setCurrent: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+TrcServo.setPos.printElapsedTime_INFO [80.664674355] TrcServo.setPos: avgElapsed=0.009376, minElapsed=0.002603, maxElapsed=0.015417
+Robot.stopMode_INFO [80.665103105] Disabling AprilTagVision.
+Robot.stopMode_INFO [80.665516688] Disabling PurplePixelVision.
+Robot.stopMode_INFO [80.665949813] Disabling GreenPixelVision.
+Robot.stopMode_INFO [80.66638498] Disabling YellowPixelVision.
+Robot.stopMode_INFO [80.666807897] Disabling WhitePixelVision.
+Robot.stopMode_INFO [80.667248897] Disabling RedBlobVision.
+Robot.stopMode_INFO [80.667618438] Disabling BlueBlobVision.
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.698846025] blinkin: OUTPUT_TASK=0.000034/0.031615
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.699683983] imu.converterTask: INPUT_TASK=0.000050/0.031623
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.700419275] imu.gyroTask: INPUT_TASK=0.021669/0.031635
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.701241775] lfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000164/0.031613
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.701986109] TrcMotor.odometryTask: STANDALONE_TASK=0.013573/0.014092
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.702813567] rfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000041/0.031613
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.703611567] lbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000146/0.031610
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.704374859] rbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000031/0.031610
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.705940234] TrcDriveBase.odometryTask: INPUT_TASK=0.002172/0.031622
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.707492484] elevator.motor.pidCtrlTask: OUTPUT_TASK=0.001075/0.031610
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.709931693] arm.encoder.converterTask: INPUT_TASK=0.000137/0.031616
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.711292609] arm.servo.pidCtrlTask: OUTPUT_TASK=0.005744/0.031600
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.712617068] arm.followerServo.pidCtrlTask: OUTPUT_TASK=0.000006/0.031601
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.714361235] intake.motor.pidCtrlTask: OUTPUT_TASK=0.000017/0.031601
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.71565011] intake.analogTrigger.triggerTask: PRE_PERIODIC_TASK=0.025040/0.249505
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.717147818] launcher.pidCtrlTask: OUTPUT_TASK=0.000003/0.031601
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.718427652] DriverGamepad.buttonEventTask: PRE_PERIODIC_TASK=0.000008/0.003589
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [80.722781944] OperatorGamepad.buttonEventTask: PRE_PERIODIC_TASK=0.000049/0.003589
+FtcOpMode.printPerformanceMetrics_INFO [80.724501319] [FtcTeleOp] Main robot thread average elapsed times:
+       robotInit=3.278541s
+    initPeriodic=NaNs
+       startMode=0.000049s
+    loopInterval=0.003589s (278.616Hz)
+             sdk=0.000026s
+ prePeriodicTask=0.000306s
+        periodic=0.002843s
+postPeriodicTask=0.000041s
+         loopSum=0.003566s
+        stopMode=0.000000s
+FtcTeleOp.stopMode_INFO [80.726821236] ***** Stopping TeleOp: 20240114@174024 *****
