@@ -249,21 +249,24 @@ public class Robot
      */
     public void stopMode(TrcRobot.RunMode runMode)
     {
-        globalTracer.traceInfo(
-            moduleName,
-            "Update Status average elapsed times:\n" +
-            "DriveBase=%.6fs\n" +
-            " Elevator=%.6fs\n" +
-            "      Arm=%.6fs\n" +
-            "    Wrist=%.6fs\n" +
-            "   Intake=%.6fs\n" +
-            "PixelTray=%.6fs\n",
-            totalElapsedTime[0] / 1000000000.0 / loopCount,         //DriveBase
-            totalElapsedTime[1] / 1000000000.0 / loopCount,         //Elevator
-            totalElapsedTime[2] / 1000000000.0 / loopCount,         //Arm
-            totalElapsedTime[3] / 1000000000.0 / loopCount,         //Wrist
-            totalElapsedTime[4] / 1000000000.0 / loopCount,         //Intake
-            totalElapsedTime[4] / 1000000000.0 / loopCount);        //PixelTray
+        if (loopCount > 0)
+        {
+            globalTracer.traceInfo(
+                moduleName,
+                "Update Status average elapsed times:\n" +
+                "DriveBase=%.6fs\n" +
+                " Elevator=%.6fs\n" +
+                "      Arm=%.6fs\n" +
+                "    Wrist=%.6fs\n" +
+                "   Intake=%.6fs\n" +
+                "PixelTray=%.6fs\n",
+                totalElapsedTime[0]/1000000000.0/loopCount,     //DriveBase
+                totalElapsedTime[1]/1000000000.0/loopCount,     //Elevator
+                totalElapsedTime[2]/1000000000.0/loopCount,     //Arm
+                totalElapsedTime[3]/1000000000.0/loopCount,     //Wrist
+                totalElapsedTime[4]/1000000000.0/loopCount,     //Intake
+                totalElapsedTime[4]/1000000000.0/loopCount);    //PixelTray
+        }
         //
         // Print all performance counters if there are any.
         //

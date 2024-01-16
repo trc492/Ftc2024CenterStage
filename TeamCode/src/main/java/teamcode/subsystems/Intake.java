@@ -146,6 +146,8 @@ public class Intake
         if (hasTwoPixels())
         {
             analogTrigger.disableTrigger();
+            // CodeReview: it doesn't work this way. By calling setPower twice, the second one will cancel the first
+            // one.
             intakeMotor.setPower(0.0, RobotParams.INTAKE_FORWARD_POWER, 1.0);
             intakeMotor.setPower(1.0, RobotParams.INTAKE_REVERSE_POWER, 0.5);
 

@@ -206,7 +206,7 @@ public class CmdAuto implements TrcRobot.RobotCommand
                         intermediate1 = robot.adjustPoseByAlliance(-1.6, 2.5, 180.0, autoChoices.alliance);
                         intermediate2 = robot.adjustPoseByAlliance(-2.3, 2.5, 180.0, autoChoices.alliance);
 //                        intermediate3 = robot.adjustPoseByAlliance(-2.3, 0.3, 180.0, autoChoices.alliance);
-                        targetPose = robot.adjustPoseByAlliance(-2.3, 1.0, 180, autoChoices.alliance);
+                        targetPose = robot.adjustPoseByAlliance(-2.3, 1.0, 180.0, autoChoices.alliance);
                         robot.robotDrive.purePursuitDrive.start(
                             event, robot.robotDrive.driveBase.getFieldPosition(), false,
                             intermediate1, intermediate2, targetPose);
@@ -226,8 +226,8 @@ public class CmdAuto implements TrcRobot.RobotCommand
 //                    intermediate3 = robot.adjustPoseByAlliance(-2.5, 0.6, -90.0, autoChoices.alliance);
                     targetPose = robot.adjustPoseByAlliance(-2.7, 0.4, -90.0, autoChoices.alliance);
                     robot.robotDrive.purePursuitDrive.start(
-                        null, robot.robotDrive.driveBase.getFieldPosition(), false, intermediate1, intermediate2, targetPose);
-//                    timer.set(4.0, event); // Not Tuned
+                        null, robot.robotDrive.driveBase.getFieldPosition(), false,
+                        intermediate1, intermediate2, targetPose);
                     sm.waitForSingleEvent(event, State.DO_DELAY, 5.0);
                     break;
 

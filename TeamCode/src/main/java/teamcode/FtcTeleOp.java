@@ -63,6 +63,7 @@ public class FtcTeleOp extends FtcOpMode
     private boolean wristUp = false;
     private boolean autoPickupOn = false;
     protected double launchPower = RobotParams.DEF_LAUNCHER_POWER;
+    private boolean displayStatus = false;
 
     //
     // Implements FtcOpMode abstract method.
@@ -254,7 +255,7 @@ public class FtcTeleOp extends FtcOpMode
                 }
             }
             // Display subsystem status.
-            if (RobotParams.Preferences.doStatusUpdate)
+            if (robot != null && (RobotParams.Preferences.doStatusUpdate || displayStatus))
             {
                 robot.updateStatus();
             }
@@ -428,16 +429,16 @@ public class FtcTeleOp extends FtcOpMode
                 break;
 
             case FtcGamepad.GAMEPAD_BACK:
+                if (pressed)
+                {
+                    displayStatus = !displayStatus;
+                }
 //                if (pressed && robot.robotDrive != null && robot.robotDrive instanceof SwerveDrive)
 //                {
 //                    // Drive base is a Swerve Drive, align all steering wheels forward.
 //                    robot.globalTracer.traceInfo(moduleName, ">>>>> Set SteerAngle to zero.");
 //                    ((SwerveDrive) robot.robotDrive).setSteerAngle(0.0, false, false);
 //                }
-                if (pressed && robot != null)
-                {
-                    robot.updateStatus();
-                }
                 break;
         }
     }   //driverButtonEvent
