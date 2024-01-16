@@ -1,0 +1,247 @@
+FtcAuto.startMode_INFO [0.009429292] ***** Starting autonomous: 20240114@135719 *****
+FtcAuto.startMode_INFO [0.010078542] <Info name="MatchInfo" date="Sun Jan 14 13:53:34 PST 2024" type="QUALIFICATION" number=10 />
+RedBlob.printMetrics_INFO [0.011260376] AvgProcessTime=0.008860, FrameRate=0.000004
+FtcAuto.startMode_INFO [0.012954376] <Info name="AutoChoices" delay=0 alliance="RED_ALLIANCE" startPos="BACKSTAGE" strategy="AUTO_SCORE_2" useAprilTagVision="true" parkPos="CORNER" xTarget=4.0 yTarget=4.0 turnTarget=90 driveTime=5 drivePower=0.5 />
+TrcDriveBase.resetOdometry_INFO [0.02371046] resetPosOd=false, resetHeadingOd=true, resetHardware=false
+FtcAuto.startMode_INFO [0.02474296] Enabling AprilTagVision.
+TrcDriveBase.setFieldPosition_INFO [0.484728173] pose=(x=11.8,y=-61.6,angle=0.0),positionOnly=false
+TrcDriveBase.resetOdometry_INFO [0.486369382] resetPosOd=true, resetHeadingOd=true, resetHardware=false
+ElevatorArm.setLoadingPosition_INFO [0.488458882] owner=null, delay=0.000, event=null, timeout=0.000 (elevatorPos=12.23, armPos=26.35)
+ElevatorArm.cancel_INFO [0.489611549] owner=null
+ElevatorArm.armSetPosition_INFO [0.492378591] owner=null, delay=0.000, pos=27.3, powerLimit=0.1, event=(setLoadingPosition.actionEvent=CLEARED), timeout=3.000 (elevatorPos=12.23, armPos=26.35)
+ElevatorArm.performAction_INFO [0.494777258] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=27.3
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setLoadingPosition.actionEvent=CLEARED)
+	expiredTime=1705269442.728
+)
+CmdAuto.cmdPeriodic_INFO [0.500103383] Team Prop found at position 3
+purePursuitDrive.start_INFO [0.5043203] Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=11.8,y=-61.6,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=11.8,y=-37.7,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=11.8,y=-35.3,angle=90.0),vel=0.000000)])
+CmdAuto.cmdPeriodic_INFO [0.508566967] <Event name="StateInfo" time="0.508067342" tag="^^^^^" CmdAuto.state="START" RobotPose=(x=11.8,y=-61.6,angle=0.0) TargetPose=(x=11.8,y=-35.3,angle=90.0) vel=(x=0.0,y=0.0,angle=0.0) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=0.0,y=24.0,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=0.0,y=26.3,angle=90.0),vel=0.000000)]) />
+arm.servo.pidCtrlTask_INFO [0.710743613] onTarget=true(28.090920/27.3), stalled=false, expired=false, event=(setLoadingPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [0.742306324] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=(setLoadingPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=null
+	expiredTime=0.000
+)
+purePursuitDrive.driveTask_INFO [2.19272572] Done: index=2/3, stalled=false, timeout=false, posOnTarget=true,headingOnTarget=true,robotPose=(x=11.5,y=-35.7,angle=88.9)
+purePursuitDrive.driveTask_INFO [2.215712264] Signal completion event (CmdAuto=CLEARED).
+CmdAuto.cmdPeriodic_INFO [2.234434057] <Event name="StateInfo" time="2.234126932" tag="^^^^^" CmdAuto.state="PLACE_PURPLE_PIXEL" />
+CmdAuto.cmdPeriodic_INFO [3.243314117] <Event name="StateInfo" time="3.2428982" tag="^^^^^" CmdAuto.state="DRIVE_TO_STACK" />
+CmdAuto.cmdPeriodic_INFO [3.250340076] <Event name="StateInfo" time="3.249891201" tag="^^^^^" CmdAuto.state="DO_DELAY" />
+pixelTray.setUpperGateOpened_INFO [3.254866743] upperGateOpened=false, event=null
+purePursuitDrive.start_INFO [3.260187327] Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=11.4,y=-35.7,angle=88.9),vel=0.000000), TrcWaypoint(pose=(x=11.8,y=-49.4,angle=88.9),vel=0.000000), TrcWaypoint(pose=(x=35.3,y=-49.4,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=35.3,y=-35.3,angle=270.0),vel=0.000000)])
+CmdAuto.cmdPeriodic_INFO [3.264520036] <Event name="StateInfo" time="3.263874869" tag="^^^^^" CmdAuto.state="DRIVE_TO_LOOKOUT" RobotPose=(x=11.4,y=-35.7,angle=88.9) TargetPose=(x=35.3,y=-35.3,angle=270.0) vel=(x=-0.1,y=-0.0,angle=0.0) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=13.7,y=0.1,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=14.1,y=23.6,angle=-88.9),vel=0.000000), TrcWaypoint(pose=(x=0.0,y=23.9,angle=181.1),vel=0.000000)]) />
+purePursuitDrive.xPosPid.isStalled_INFO [6.463884649] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [6.464498024] PID stalled.
+purePursuitDrive.turnPid.isStalled_INFO [6.464959732] PID stalled.
+purePursuitDrive.driveTask_INFO [6.465816358] Done: index=3/4, stalled=true, timeout=false, posOnTarget=false,headingOnTarget=true,robotPose=(x=36.7,y=-35.2,angle=-91.0)
+purePursuitDrive.driveTask_INFO [6.499669528] Signal completion event (CmdAuto=CLEARED).
+TaskAutoPlacePixel.autoAssistPlace_INFO [6.502517945] useVision=true, aprilTagIndex=2, has2Pixels=false, scoreLevel=12.400000, inAuto=true, event=(CmdAuto=SIGNALED)
+TaskAutoPlacePixel.acquireSubsystemsOwnership_INFO [6.504584403] Successfully acquired subsystem ownerships.
+CmdAuto.cmdPeriodic_INFO [6.506316612] <Event name="StateInfo" time="6.505894278" tag="^^^^^" CmdAuto.state="AUTO_SCORE_PIXELS" />
+pixelTray.setUpperGateOpened_INFO [6.508830779] upperGateOpened=false, event=null
+pixelTray.setLowerGateOpened_INFO [6.51135457] lowerGateOpened=false, event=null
+TaskAutoPlacePixel.runTaskState_INFO [6.512982071] Enabling AprilTagVision.
+TaskAutoPlacePixel.autoTask_INFO [6.514440404] <Event name="StateInfo" time="6.514062112" tag="^^^^^" TaskAutoPlacePixel.state="START" />
+Vision.getRobotFieldPose_INFO [6.523139072] AprilTagId=4, aprilTagFieldPose=(x=60.3,y=-29.4,angle=90.0), aprilTagPoseFromCamera=(x=-5.0,y=17.6,angle=0.6), cameraPose=(x=42.6,y=-34.4,angle=89.4), robotPose=%s(x=35.7,y=-34.5,angle=-90.6)
+TrcDriveBase.setFieldPosition_INFO [6.524683155] pose=(x=35.7,y=-34.5,angle=-90.6),positionOnly=false
+TrcDriveBase.resetOdometry_INFO [6.526035322] resetPosOd=true, resetHeadingOd=true, resetHardware=false
+TaskAutoPlacePixel-Relocalize.runTaskState_INFO [6.527872822] RobotFieldPose relocalizing to >>> ***
+TaskAutoPlacePixel.runTaskState_INFO [6.529900197] Vision found AprilTag 4 at (x=-5.0,y=17.6,z=-3.0,yaw=-0.6,pitch=-27.6,roll=0.7) from camera.
+	Targeting AprilTag 6 at (x=60.3,y=-41.4,angle=90.0) from robotPose (x=35.7,y=-34.5,angle=-90.6).
+TaskAutoPlacePixel.autoTask_INFO [6.531426197] <Event name="StateInfo" time="6.531019614" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+ElevatorArm.setScoringPosition_INFO [6.533720739] owner=PlacePixelTask, delay=0.000, elevatorPos=15.0, event=(TaskAutoPlacePixel.elevatorArmEvent=CLEARED), timeout=4.000 (elevatorPos=12.26, armPos=26.45)
+ElevatorArm.cancel_INFO [6.534960031] owner=PlacePixelTask
+ElevatorArm.acquireOwnership_INFO [6.536560115] Acquired ownership on behalf of PlacePixelTask
+ElevatorArm.elevatorSetPosition_INFO [6.53850699] owner=PlacePixelTask, delay=0.000, pos=15.0, powerLimit=1.0, event=(setScoringPosition.actionEvent=CLEARED), timeout=1.000 (elevatorPos=12.26, armPos=26.45)
+ElevatorArm.performAction_INFO [6.540534073] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=15.0
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setScoringPosition.actionEvent=CLEARED)
+	expiredTime=1705269446.774
+)
+TaskAutoPlacePixel.autoTask_INFO [6.54210674] <Event name="StateInfo" time="6.541787657" tag="^^^^^" TaskAutoPlacePixel.state="SET_SCORING_POS" />
+elevator.motor.pidCtrlTask_INFO [7.015135288] onTarget=true(14.653023/15.0), stalled=false, expired=false, event=(setScoringPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [7.015469538] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=(setScoringPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=270.0
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=1705269449.769
+)
+arm.servo.posPidCtrl.isStalled_INFO [8.737114169] PID stalled.
+arm.servo.pidCtrlTask_INFO [8.743576336] onTarget=false(268.200011/270.0), stalled=true, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [8.74375717] Released ownership on behalf of PlacePixelTask
+ElevatorArm.releaseOwnership_INFO [8.744351295] Signal completion event (TaskAutoPlacePixel.elevatorArmEvent=SIGNALED)
+TaskAutoPlacePixelStart.runTaskState_INFO [8.745706087] RobotFieldPose ****** =(x=35.8,y=-34.5,angle=-90.6)
+purePursuitDrive.start_INFO [8.782587924] Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=35.8,y=-34.5,angle=-90.6),vel=0.000000), TrcWaypoint(pose=(x=35.8,y=-40.8,angle=-90.0),vel=0.000000), TrcWaypoint(pose=(x=54.4,y=-40.8,angle=-90.0),vel=0.000000)])
+TaskAutoPlacePixel.autoTask_INFO [8.784479674] <Event name="StateInfo" time="8.784096715" tag="^^^^^" TaskAutoPlacePixel.state="DRIVE_TO_APRILTAG" />
+purePursuitDrive.xPosPid.isStalled_INFO [10.823241545] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [10.823815254] PID stalled.
+purePursuitDrive.turnPid.isStalled_INFO [10.824903171] PID stalled.
+purePursuitDrive.driveTask_INFO [10.825862754] Done: index=2/3, stalled=true, timeout=false, posOnTarget=false,headingOnTarget=true,robotPose=(x=50.5,y=-41.9,angle=-89.6)
+purePursuitDrive.driveTask_INFO [10.845123839] Signal completion event (TaskAutoPlacePixel.event=CLEARED).
+ElevatorArm.elevatorSetPosition_INFO [10.846470464] owner=PlacePixelTask, delay=0.000, pos=12.4, powerLimit=1.0, event=(TaskAutoPlacePixel.elevatorArmEvent=SIGNALED), timeout=0.000 (elevatorPos=14.75, armPos=266.56)
+ElevatorArm.cancel_INFO [10.846898923] owner=PlacePixelTask
+ElevatorArm.acquireOwnership_INFO [10.847377256] Acquired ownership on behalf of PlacePixelTask
+ElevatorArm.performAction_INFO [10.848489673] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+TaskAutoPlacePixel.autoTask_INFO [10.853729465] <Event name="StateInfo" time="10.85336984" tag="^^^^^" TaskAutoPlacePixel.state="LOWER_ELEVATOR" />
+elevator.motor.pidCtrlTask_INFO [11.231831878] onTarget=true(12.469408/12.4), stalled=false, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [11.23234317] Released ownership on behalf of PlacePixelTask
+ElevatorArm.releaseOwnership_INFO [11.232951878] Signal completion event (TaskAutoPlacePixel.elevatorArmEvent=SIGNALED)
+pixelTray.setUpperGateOpened_INFO [11.251606588] upperGateOpened=true, event=(TaskAutoPlacePixel.event=CLEARED)
+pixelTray.setLowerGateOpened_INFO [11.262969923] lowerGateOpened=true, event=null
+TaskAutoPlacePixel.autoTask_INFO [11.264532673] <Event name="StateInfo" time="11.263331006" tag="^^^^^" TaskAutoPlacePixel.state="PLACE_PIXEL_1" />
+ElevatorArm.elevatorSetPosition_INFO [11.450543983] owner=PlacePixelTask, delay=0.000, pos=21.5, powerLimit=1.0, event=(TaskAutoPlacePixel.elevatorArmEvent=SIGNALED), timeout=0.000 (elevatorPos=12.47, armPos=265.36)
+ElevatorArm.cancel_INFO [11.451343733] owner=PlacePixelTask
+ElevatorArm.acquireOwnership_INFO [11.452158359] Acquired ownership on behalf of PlacePixelTask
+ElevatorArm.performAction_INFO [11.453620775] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=21.5
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+TaskAutoPlacePixel.autoTask_INFO [11.455198109] <Event name="StateInfo" time="11.454852192" tag="^^^^^" TaskAutoPlacePixel.state="RAISE_ELEVATOR" />
+elevator.motor.posPidCtrl.isStalled_INFO [12.227318895] PID stalled.
+elevator.motor.pidCtrlTask_INFO [12.230934103] onTarget=false(21.031477/21.5), stalled=true, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [12.233133854] Released ownership on behalf of PlacePixelTask
+ElevatorArm.releaseOwnership_INFO [12.233702895] Signal completion event (TaskAutoPlacePixel.elevatorArmEvent=SIGNALED)
+ElevatorArm.setLoadingPosition_INFO [12.239400604] owner=null, delay=0.000, event=(TaskAutoPlacePixel.elevatorArmEvent=SIGNALED), timeout=0.000 (elevatorPos=21.03, armPos=265.36)
+ElevatorArm.cancel_INFO [12.240164479] owner=null
+ElevatorArm.armSetPosition_INFO [12.269115316] owner=null, delay=0.000, pos=27.3, powerLimit=0.1, event=(setLoadingPosition.actionEvent=CLEARED), timeout=3.000 (elevatorPos=21.05, armPos=265.47)
+ElevatorArm.performAction_INFO [12.270233857] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=27.3
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setLoadingPosition.actionEvent=CLEARED)
+	expiredTime=1705269454.504
+)
+TaskAutoPlacePixel.autoTask_INFO [12.277704317] <Event name="StateInfo" time="12.277350233" tag="^^^^^" TaskAutoPlacePixel.state="RETRACT_ALL" />
+arm.servo.pidCtrlTask_INFO [14.47097487] onTarget=true(27.327284/27.3), stalled=false, expired=false, event=(setLoadingPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [14.472838329] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=(setLoadingPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(TaskAutoPlacePixel.elevatorArmEvent=CLEARED)
+	expiredTime=0.000
+)
+elevator.motor.pidCtrlTask_INFO [15.106376601] onTarget=true(12.379109/12.4), stalled=false, expired=false, event=(TaskAutoPlacePixel.elevatorArmEvent=SIGNALED)
+TaskAutoPlacePixel.stopSubsystems_INFO [15.108024226] Stopping subsystems.
+ElevatorArm.cancel_INFO [15.109368226] owner=PlacePixelTask
+TaskAutoPlacePixel.releaseSubsystemsOwnership_INFO [15.110588268] Releasing subsystem ownership (currOwner=PlacePixelTask, robotDrive=PlacePixelTask).
+TaskAutoPlacePixel.autoTask_INFO [15.11157031] <Event name="StateInfo" time="15.11122731" tag="^^^^^" TaskAutoPlacePixel.state="DONE" />
+purePursuitDrive.start_INFO [15.114315768] Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=50.3,y=-41.9,angle=-89.5),vel=0.000000), TrcWaypoint(pose=(x=40.0,y=-58.9,angle=270.0),vel=0.000000), TrcWaypoint(pose=(x=61.2,y=-58.9,angle=270.0),vel=0.000000)])
+CmdAuto.cmdPeriodic_INFO [15.116866685] <Event name="StateInfo" time="15.116512602" tag="^^^^^" CmdAuto.state="PARK_AT_BACKSTAGE" RobotPose=(x=50.3,y=-41.9,angle=-89.5) TargetPose=(x=61.2,y=-58.9,angle=270.0) vel=(x=-0.3,y=-0.1,angle=-0.2) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=-17.0,y=10.1,angle=359.5),vel=0.000000), TrcWaypoint(pose=(x=-16.8,y=-11.1,angle=359.5),vel=0.000000)]) />
+purePursuitDrive.xPosPid.isStalled_INFO [17.610093686] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [17.610722811] PID stalled.
+purePursuitDrive.turnPid.isStalled_INFO [17.614335686] PID stalled.
+purePursuitDrive.driveTask_INFO [17.61574852] Done: index=2/3, stalled=true, timeout=false, posOnTarget=false,headingOnTarget=true,robotPose=(x=60.7,y=-60.0,angle=-90.1)
+purePursuitDrive.driveTask_INFO [17.639057939] Signal completion event (CmdAuto=CLEARED).
+CmdAuto.cmdPeriodic_INFO [17.643790814] <Event name="StateInfo" time="17.642430189" tag="^^^^^" CmdAuto.state="DONE" />
+Robot.stopMode_INFO [30.090226648] Update Status average elapsed times:
+DriveBase=NaNs
+ Elevator=NaNs
+      Arm=NaNs
+    Wrist=NaNs
+   Intake=NaNs
+PixelTray=NaNs
+
+imu.getGyroData.printElapsedTime_INFO [30.091569481] imu.getGyroData: avgElapsed=0.000010, minElapsed=0.000002, maxElapsed=0.000161
+TrcDigitalInput.getInput.printElapsedTime_INFO [30.092679857] TrcDigitalInput.getInput: avgElapsed=0.007388, minElapsed=0.004027, maxElapsed=0.010750
+TrcMotor.getPos.printElapsedTime_INFO [30.09384419] TrcMotor.getPos: avgElapsed=0.000402, minElapsed=0.000011, maxElapsed=0.024177
+TrcMotor.setPower.printElapsedTime_INFO [30.095912982] TrcMotor.setPower: avgElapsed=0.000943, minElapsed=0.000005, maxElapsed=0.025424
+TrcMotor.setVel.printElapsedTime_INFO [30.09723219] TrcMotor.setVel: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+TrcMotor.setPos.printElapsedTime_INFO [30.098739524] TrcMotor.setPos: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+TrcMotor.setCurrent.printElapsedTime_INFO [30.100031024] TrcMotor.setCurrent: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+TrcServo.setPos.printElapsedTime_INFO [30.101382316] TrcServo.setPos: avgElapsed=0.012478, minElapsed=0.008869, maxElapsed=0.015539
+Robot.stopMode_INFO [30.102512816] Disabling AprilTagVision.
+Robot.stopMode_INFO [30.103597524] Disabling PurplePixelVision.
+Robot.stopMode_INFO [30.105164941] Disabling GreenPixelVision.
+Robot.stopMode_INFO [30.106411525] Disabling YellowPixelVision.
+Robot.stopMode_INFO [30.107666566] Disabling WhitePixelVision.
+Robot.stopMode_INFO [30.108758566] Disabling RedBlobVision.
+Robot.stopMode_INFO [30.109892567] Disabling BlueBlobVision.
+Robot.stopMode_INFO [30.112004817] Saved robot pose=(x=60.7,y=-60.0,angle=-90.1)
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.122711901] TrcWatchdogMgr: STANDALONE_TASK=0.000158/0.996157
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.12430586] blinkin: OUTPUT_TASK=0.000075/0.011631
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.125779652] imu.converterTask: INPUT_TASK=0.000075/0.025780
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.127174985] imu.gyroTask: INPUT_TASK=0.018882/0.025780
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.12871761] lfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000009/0.011632
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.130163402] TrcMotor.odometryTask: STANDALONE_TASK=0.001516/0.001618
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.131897652] rfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000005/0.011632
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.133201986] lbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000007/0.011632
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.134724777] rbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000005/0.011632
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.136172028] TrcDriveBase.odometryTask: INPUT_TASK=0.001885/0.025774
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.137726903] purePursuitDrive.driveTask: POST_PERIODIC_TASK=0.047906/0.096066
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.139079361] elevator.motor.pidCtrlTask: OUTPUT_TASK=0.000054/0.011632
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.140439403] arm.encoder.converterTask: INPUT_TASK=0.003535/0.011633
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.14175307] arm.servo.pidCtrlTask: OUTPUT_TASK=0.001877/0.011631
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.14297807] arm.followerServo.pidCtrlTask: OUTPUT_TASK=0.000004/0.011631
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.144422987] wrist.analogTrigger.triggerTask: PRE_PERIODIC_TASK=0.033012/0.080535
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.145830279] intake.motor.pidCtrlTask: OUTPUT_TASK=0.000003/0.011631
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.147431529] launcher.pidCtrlTask: OUTPUT_TASK=0.000003/0.011631
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.14881782] TaskAutoPlacePixel: POST_PERIODIC_TASK=0.000019/0.000467
+FtcOpMode.printPerformanceMetrics_INFO [30.150344987] [FtcAutonomous] Main robot thread average elapsed times:
+       robotInit=22.233618s
+    initPeriodic=0.000002s
+       startMode=0.000048s
+    loopInterval=0.000442s (2259.981Hz)
+             sdk=0.000023s
+ prePeriodicTask=0.000064s
+        periodic=0.000105s
+postPeriodicTask=0.000192s
+         loopSum=0.000420s
+        stopMode=0.000000s
+FtcAuto.stopMode_INFO [30.152573321] ***** Stopping autonomous: 20240114@135749 *****

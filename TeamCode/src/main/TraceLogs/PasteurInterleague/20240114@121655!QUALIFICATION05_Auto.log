@@ -1,0 +1,846 @@
+FtcAuto.startMode_INFO [0.014055418] ***** Starting autonomous: 20240114@121953 *****
+RedBlob.printMetrics_INFO [0.016013376] AvgProcessTime=0.009444, FrameRate=0.000003
+FtcAuto.startMode_INFO [0.017303127] <Info name="MatchInfo" date="Sun Jan 14 12:16:51 PST 2024" type="QUALIFICATION" number=5 />
+FtcAuto.startMode_INFO [0.019200418] <Info name="AutoChoices" delay=0 alliance="RED_ALLIANCE" startPos="AUDIENCE" strategy="AUTO_SCORE_2PLUS1" useAprilTagVision="true" parkPos="CENTER" xTarget=4.0 yTarget=4.0 turnTarget=90 driveTime=5 drivePower=0.5 />
+TrcDriveBase.resetOdometry_INFO [0.028722169] resetPosOd=false, resetHeadingOd=true, resetHardware=false
+FtcAuto.startMode_INFO [0.029956211] Enabling AprilTagVision.
+TrcDriveBase.setFieldPosition_INFO [0.494462841] pose=(x=-35.3,y=-61.6,angle=0.0),positionOnly=false
+TrcDriveBase.resetOdometry_INFO [0.495800133] resetPosOd=true, resetHeadingOd=true, resetHardware=false
+ElevatorArm.setLoadingPosition_INFO [0.509594509] owner=null, delay=0.000, event=null, timeout=0.000 (elevatorPos=12.26, armPos=26.24)
+ElevatorArm.cancel_INFO [0.510515884] owner=null
+ElevatorArm.armSetPosition_INFO [0.519395094] owner=null, delay=0.000, pos=27.3, powerLimit=0.1, event=(setLoadingPosition.actionEvent=CLEARED), timeout=3.000 (elevatorPos=12.26, armPos=26.24)
+ElevatorArm.performAction_INFO [0.521971094] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=27.3
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setLoadingPosition.actionEvent=CLEARED)
+	expiredTime=1705263597.184
+)
+CmdAuto.cmdPeriodic_INFO [0.528278386] Team Prop found at position 2
+purePursuitDrive.start_INFO [0.533219512] Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=-35.3,y=-61.6,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=-35.3,y=-33.0,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=-35.3,y=-35.3,angle=0.0),vel=0.000000)])
+CmdAuto.cmdPeriodic_INFO [0.535325929] <Event name="StateInfo" time="0.534992262" tag="^^^^^" CmdAuto.state="START" RobotPose=(x=-35.3,y=-61.6,angle=0.0) TargetPose=(x=-35.3,y=-35.3,angle=0.0) vel=(x=0.0,y=0.0,angle=0.0) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=0.0,y=28.7,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=0.0,y=26.3,angle=0.0),vel=0.000000)]) />
+arm.servo.pidCtrlTask_INFO [0.74450345] onTarget=true(28.309102/27.3), stalled=false, expired=false, event=(setLoadingPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [0.758603201] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=(setLoadingPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=null
+	expiredTime=0.000
+)
+purePursuitDrive.xPosPid.isStalled_INFO [1.951772279] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [1.952275696] PID stalled.
+purePursuitDrive.turnPid.isStalled_INFO [1.952745571] PID stalled.
+purePursuitDrive.getFollowingPoint_INFO [2.005366035] Segment 1 is stalled, moving to the next segment.
+purePursuitDrive.getFollowingPoint_INFO [2.006278368] Segment 2 is stalled, moving to the next segment.
+purePursuitDrive.xPosPid.isStalled_INFO [2.008411327] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [2.066689832] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [2.119112546] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [2.393983032] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [2.394650949] PID stalled.
+purePursuitDrive.turnPid.isStalled_INFO [2.396042782] PID stalled.
+purePursuitDrive.driveTask_INFO [2.397170074] Done: index=2/3, stalled=true, timeout=false, posOnTarget=false,headingOnTarget=true,robotPose=(x=-35.1,y=-33.7,angle=-0.9)
+purePursuitDrive.driveTask_INFO [2.420306535] Signal completion event (CmdAuto=CLEARED).
+CmdAuto.cmdPeriodic_INFO [2.432342744] <Event name="StateInfo" time="2.431960953" tag="^^^^^" CmdAuto.state="PLACE_PURPLE_PIXEL" />
+pixelTray.setUpperGateOpened_INFO [3.447054096] upperGateOpened=true, event=null
+purePursuitDrive.start_INFO [3.456452764] Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=-35.1,y=-33.7,angle=-0.9),vel=0.000000), TrcWaypoint(pose=(x=-37.7,y=-58.9,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=-54.1,y=-58.9,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=-54.1,y=-7.1,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=-49.4,y=-14.1,angle=270.0),vel=0.000000)])
+CmdAuto.cmdPeriodic_INFO [3.465382723] <Event name="StateInfo" time="3.464933265" tag="^^^^^" CmdAuto.state="DRIVE_TO_STACK" RobotPose=(x=-35.1,y=-33.7,angle=-0.9) TargetPose=(x=-49.4,y=-14.1,angle=270.0) vel=(x=0.1,y=-0.1,angle=-0.2) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=-2.9,y=-25.1,angle=0.9),vel=0.000000), TrcWaypoint(pose=(x=-19.4,y=-24.9,angle=0.9),vel=0.000000), TrcWaypoint(pose=(x=-18.6,y=26.9,angle=0.9),vel=0.000000), TrcWaypoint(pose=(x=-14.0,y=19.8,angle=270.9),vel=0.000000)]) />
+purePursuitDrive.xPosPid.isStalled_INFO [8.18208178] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [8.18328228] PID stalled.
+purePursuitDrive.turnPid.isStalled_INFO [8.184309239] PID stalled.
+purePursuitDrive.driveTask_INFO [8.185036947] Done: index=4/5, stalled=true, timeout=false, posOnTarget=true,headingOnTarget=false,robotPose=(x=-49.0,y=-14.1,angle=-85.8)
+purePursuitDrive.driveTask_INFO [8.220391326] Signal completion event (CmdAuto=CLEARED).
+purePursuitDrive.start_INFO [8.260251663] Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=-49.0,y=-14.1,angle=-85.8),vel=0.000000), TrcWaypoint(pose=(x=-64.7,y=-14.1,angle=270.0),vel=0.000000), TrcWaypoint(pose=(x=-62.4,y=-14.1,angle=270.0),vel=0.000000)])
+CmdAuto.cmdPeriodic_INFO [8.263334288] <Event name="StateInfo" time="8.26281833" tag="^^^^^" CmdAuto.state="PICKUP_PIXEL" RobotPose=(x=-49.0,y=-14.1,angle=-85.8) TargetPose=(x=-62.4,y=-14.1,angle=270.0) vel=(x=0.0,y=-0.0,angle=-0.0) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=-1.2,y=15.7,angle=355.8),vel=0.000000), TrcWaypoint(pose=(x=-1.0,y=13.3,angle=355.8),vel=0.000000)]) />
+purePursuitDrive.xPosPid.isStalled_INFO [9.389628568] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [9.390197318] PID stalled.
+purePursuitDrive.turnPid.isStalled_INFO [9.390656693] PID stalled.
+purePursuitDrive.getFollowingPoint_INFO [9.462353617] Segment 1 is stalled, moving to the next segment.
+purePursuitDrive.getFollowingPoint_INFO [9.463441826] Segment 2 is stalled, moving to the next segment.
+intake.analogTriggerCallback_INFO [9.916716663] Zone=1->0, value=0.906
+CmdAuto.cmdPeriodic_INFO [9.963466168] <Event name="StateInfo" time="9.962744876" tag="^^^^^" CmdAuto.state="DO_DELAY" RobotPose=(x=-61.4,y=-13.6,angle=-90.0) TargetPose=(x=-62.4,y=-14.1,angle=270.0) vel=(x=-2.3,y=-0.8,angle=-3.3) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=-1.2,y=15.7,angle=355.8),vel=0.000000), TrcWaypoint(pose=(x=-1.0,y=13.3,angle=355.8),vel=0.000000)]) />
+pixelTray.setUpperGateOpened_INFO [10.025383799] upperGateOpened=false, event=null
+purePursuitDrive.start_INFO [10.060474802] Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=-61.5,y=-13.6,angle=-90.6),vel=0.000000), TrcWaypoint(pose=(x=-0.1,y=-6.9,angle=269.9),vel=0.000000), TrcWaypoint(pose=(x=35.2,y=-6.9,angle=269.9),vel=0.000000), TrcWaypoint(pose=(x=35.3,y=-35.1,angle=269.9),vel=0.000000)])
+CmdAuto.cmdPeriodic_INFO [10.064295344] <Event name="StateInfo" time="10.063454469" tag="^^^^^" CmdAuto.state="DRIVE_TO_LOOKOUT" RobotPose=(x=-61.5,y=-13.6,angle=-90.6) TargetPose=(x=35.3,y=-35.1,angle=269.9) vel=(x=-1.4,y=-0.7,angle=-4.6) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=6.1,y=-61.5,angle=360.5),vel=0.000000), TrcWaypoint(pose=(x=5.8,y=-96.8,angle=360.5),vel=0.000000), TrcWaypoint(pose=(x=-22.5,y=-96.6,angle=360.5),vel=0.000000)]) />
+purePursuitDrive.xPosPid.isStalled_INFO [14.292067978] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.292620978] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [14.329317606] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.329971815] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [14.373279361] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.373788902] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [14.411702948] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.412291823] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [14.452885119] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.453992869] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [14.505463291] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.506281999] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [14.553997795] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.555540421] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [14.602128634] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.602776717] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [14.651317639] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.651878222] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [14.706645936] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.708437644] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [14.750655232] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.752601524] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [14.796995528] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.797576528] PID stalled.
+purePursuitDrive.xPosPid.isStalled_INFO [14.822514322] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [14.823898864] PID stalled.
+purePursuitDrive.turnPid.isStalled_INFO [14.824392948] PID stalled.
+purePursuitDrive.driveTask_INFO [14.825118031] Done: index=3/4, stalled=true, timeout=false, posOnTarget=false,headingOnTarget=false,robotPose=(x=39.7,y=-21.5,angle=-97.8)
+purePursuitDrive.driveTask_INFO [14.848872825] Signal completion event (CmdAuto=CLEARED).
+TaskAutoPlacePixel.autoAssistPlace_INFO [14.850521909] useVision=true, aprilTagIndex=1, has2Pixels=true, scoreLevel=12.400000, inAuto=true, event=(CmdAuto=SIGNALED)
+TaskAutoPlacePixel.acquireSubsystemsOwnership_INFO [14.851923075] Successfully acquired subsystem ownerships.
+CmdAuto.cmdPeriodic_INFO [14.853505076] <Event name="StateInfo" time="14.853116576" tag="^^^^^" CmdAuto.state="AUTO_SCORE_PIXELS" />
+pixelTray.setUpperGateOpened_INFO [14.855455451] upperGateOpened=false, event=null
+pixelTray.setLowerGateOpened_INFO [14.857518118] lowerGateOpened=false, event=null
+TaskAutoPlacePixel.runTaskState_INFO [14.858804368] Enabling AprilTagVision.
+TaskAutoPlacePixel.autoTask_INFO [14.860014201] <Event name="StateInfo" time="14.859462951" tag="^^^^^" TaskAutoPlacePixel.state="START" />
+TaskAutoPlacePixel.autoTask_INFO [14.861908868] <Event name="StateInfo" time="14.861573451" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.863906202] <Event name="StateInfo" time="14.863550368" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.865609243] <Event name="StateInfo" time="14.86510991" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.867354285] <Event name="StateInfo" time="14.867020035" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.872859494] <Event name="StateInfo" time="14.872535452" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.878161995] <Event name="StateInfo" time="14.877820745" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.882435495] <Event name="StateInfo" time="14.880085537" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.883523995] <Event name="StateInfo" time="14.88315037" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.884533745] <Event name="StateInfo" time="14.884211454" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.885855579] <Event name="StateInfo" time="14.885534745" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.886856287] <Event name="StateInfo" time="14.886529912" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.888443829] <Event name="StateInfo" time="14.888132621" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.889332246] <Event name="StateInfo" time="14.889002662" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.890674496] <Event name="StateInfo" time="14.890345788" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.896508413] <Event name="StateInfo" time="14.896158122" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.901818205] <Event name="StateInfo" time="14.90143758" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.904051789] <Event name="StateInfo" time="14.903622456" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.905756581] <Event name="StateInfo" time="14.905423206" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.907909664] <Event name="StateInfo" time="14.907569873" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.909953665] <Event name="StateInfo" time="14.909605706" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.911921831] <Event name="StateInfo" time="14.911601581" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.913952415] <Event name="StateInfo" time="14.912909123" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.915527123] <Event name="StateInfo" time="14.915168957" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.919222249] <Event name="StateInfo" time="14.918874582" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.921118374] <Event name="StateInfo" time="14.920832249" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.923050958] <Event name="StateInfo" time="14.922702708" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.924922291] <Event name="StateInfo" time="14.924549249" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.928091833] <Event name="StateInfo" time="14.927708583" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.930609792] <Event name="StateInfo" time="14.930186292" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.933165084] <Event name="StateInfo" time="14.932755584" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.935274417] <Event name="StateInfo" time="14.934950959" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.937112501] <Event name="StateInfo" time="14.936405792" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.939889751] <Event name="StateInfo" time="14.938456209" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.943926418] <Event name="StateInfo" time="14.941186501" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.946041877] <Event name="StateInfo" time="14.945292293" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.948247752] <Event name="StateInfo" time="14.947385877" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.950022544] <Event name="StateInfo" time="14.949629669" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.952218794] <Event name="StateInfo" time="14.95184721" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.954099169] <Event name="StateInfo" time="14.953800502" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.955652586] <Event name="StateInfo" time="14.955318044" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.957654586] <Event name="StateInfo" time="14.957312461" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.959863086] <Event name="StateInfo" time="14.95886092" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.961278253] <Event name="StateInfo" time="14.960970253" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.96207742] <Event name="StateInfo" time="14.961784003" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.963806712] <Event name="StateInfo" time="14.963473337" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.964649337] <Event name="StateInfo" time="14.964342212" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.968447712] <Event name="StateInfo" time="14.965190087" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.970315546] <Event name="StateInfo" time="14.969788212" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.971926712] <Event name="StateInfo" time="14.971616087" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.973361421] <Event name="StateInfo" time="14.973050796" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.975167129] <Event name="StateInfo" time="14.974817129" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.977260421] <Event name="StateInfo" time="14.976912171" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.979235588] <Event name="StateInfo" time="14.978462671" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.981271713] <Event name="StateInfo" time="14.980521838" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.982772922] <Event name="StateInfo" time="14.982443922" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.984743714] <Event name="StateInfo" time="14.984380005" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.988120047] <Event name="StateInfo" time="14.987742047" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.989571089] <Event name="StateInfo" time="14.989206798" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.991457881] <Event name="StateInfo" time="14.991055673" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.993567798] <Event name="StateInfo" time="14.993185715" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [14.998411507] <Event name="StateInfo" time="14.998040507" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.000972632] <Event name="StateInfo" time="15.000620007" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.002651466] <Event name="StateInfo" time="15.002319841" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.008565883] <Event name="StateInfo" time="15.007642466" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.0114073] <Event name="StateInfo" time="15.009934966" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.013388008] <Event name="StateInfo" time="15.012953133" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.01643505] <Event name="StateInfo" time="15.015998425" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.020433509] <Event name="StateInfo" time="15.019314092" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.022064509] <Event name="StateInfo" time="15.021685634" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.023966468] <Event name="StateInfo" time="15.023672759" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.025248926] <Event name="StateInfo" time="15.024936259" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.026307676] <Event name="StateInfo" time="15.025984218" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.03314726] <Event name="StateInfo" time="15.032797844" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.034453052] <Event name="StateInfo" time="15.033935635" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.035569552] <Event name="StateInfo" time="15.035229177" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.036665927] <Event name="StateInfo" time="15.036280927" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.038868303] <Event name="StateInfo" time="15.037846594" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.041094886] <Event name="StateInfo" time="15.040305053" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.043239803] <Event name="StateInfo" time="15.042440928" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.045471637] <Event name="StateInfo" time="15.044685886" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.048563304] <Event name="StateInfo" time="15.048230512" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.052338929] <Event name="StateInfo" time="15.052009054" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.054506304] <Event name="StateInfo" time="15.054227471" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.055464138] <Event name="StateInfo" time="15.055156429" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.056796763] <Event name="StateInfo" time="15.056529888" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.057970138] <Event name="StateInfo" time="15.057383596" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.059055138] <Event name="StateInfo" time="15.058701638" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.060132846] <Event name="StateInfo" time="15.059795388" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.061302721] <Event name="StateInfo" time="15.060998805" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.062665972] <Event name="StateInfo" time="15.062355347" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.063695263] <Event name="StateInfo" time="15.06336568" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.065330639] <Event name="StateInfo" time="15.065019139" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.066773514] <Event name="StateInfo" time="15.066005264" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.067753222] <Event name="StateInfo" time="15.067451639" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.069755222] <Event name="StateInfo" time="15.069372847" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.070762931] <Event name="StateInfo" time="15.070465139" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.074620514] <Event name="StateInfo" time="15.074321556" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.076156723] <Event name="StateInfo" time="15.075325765" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.077221015] <Event name="StateInfo" time="15.076890556" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.078744098] <Event name="StateInfo" time="15.078414515" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.080308307] <Event name="StateInfo" time="15.079494557" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.081310182] <Event name="StateInfo" time="15.080971557" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.083998182] <Event name="StateInfo" time="15.082887807" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.087691849] <Event name="StateInfo" time="15.085441349" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.090707391] <Event name="StateInfo" time="15.090350099" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.092505808] <Event name="StateInfo" time="15.092200141" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.094386475] <Event name="StateInfo" time="15.093585558" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.095449892] <Event name="StateInfo" time="15.095151517" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.096212017] <Event name="StateInfo" time="15.095910142" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.098536309] <Event name="StateInfo" time="15.098073433" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.103776101] <Event name="StateInfo" time="15.103338309" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.105121268] <Event name="StateInfo" time="15.104707392" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.107514684] <Event name="StateInfo" time="15.106028934" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.108795976] <Event name="StateInfo" time="15.108362268" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.110848435] <Event name="StateInfo" time="15.110431935" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.113404018] <Event name="StateInfo" time="15.112974977" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.115346519] <Event name="StateInfo" time="15.11491806" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.117475977] <Event name="StateInfo" time="15.117130352" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.119700519] <Event name="StateInfo" time="15.119253102" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.121431853] <Event name="StateInfo" time="15.121052686" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.126210811] <Event name="StateInfo" time="15.12582027" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.127975686] <Event name="StateInfo" time="15.127628603" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.129858103] <Event name="StateInfo" time="15.129100645" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.131652729] <Event name="StateInfo" time="15.13122952" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.133448229] <Event name="StateInfo" time="15.132973979" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.135183354] <Event name="StateInfo" time="15.134807396" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.137101646] <Event name="StateInfo" time="15.136695062" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.139017604] <Event name="StateInfo" time="15.138641646" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.140772854] <Event name="StateInfo" time="15.140338271" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.142542105] <Event name="StateInfo" time="15.142137563" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.144807772] <Event name="StateInfo" time="15.144351896" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.146779147] <Event name="StateInfo" time="15.146232855" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.148905397] <Event name="StateInfo" time="15.148518647" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.150656855] <Event name="StateInfo" time="15.15020623" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.152377106] <Event name="StateInfo" time="15.151937272" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.154111356] <Event name="StateInfo" time="15.153795189" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.155699189] <Event name="StateInfo" time="15.155364064" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.157322314] <Event name="StateInfo" time="15.156920398" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.158895273] <Event name="StateInfo" time="15.158537981" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.160488065] <Event name="StateInfo" time="15.160152065" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.161953398] <Event name="StateInfo" time="15.161615648" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.163608607] <Event name="StateInfo" time="15.16329944" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.165189732] <Event name="StateInfo" time="15.16488669" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.166390815] <Event name="StateInfo" time="15.165890315" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.167478149] <Event name="StateInfo" time="15.167142732" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.168626732] <Event name="StateInfo" time="15.168290149" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.172285399] <Event name="StateInfo" time="15.171949691" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.173414733] <Event name="StateInfo" time="15.173114316" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.174365274] <Event name="StateInfo" time="15.174038608" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.175847816] <Event name="StateInfo" time="15.175507441" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.176896941] <Event name="StateInfo" time="15.176591566" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.17807965] <Event name="StateInfo" time="15.177721191" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.1793764] <Event name="StateInfo" time="15.178972442" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.180766192] <Event name="StateInfo" time="15.1800624" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.181884734] <Event name="StateInfo" time="15.18157265" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.182978775] <Event name="StateInfo" time="15.182616234" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.189497526] <Event name="StateInfo" time="15.189049818" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.191109568] <Event name="StateInfo" time="15.190625401" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.192662693] <Event name="StateInfo" time="15.192221693" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.194671402] <Event name="StateInfo" time="15.194361068" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.196247568] <Event name="StateInfo" time="15.195898735" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.197899569] <Event name="StateInfo" time="15.197568818" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.199422944] <Event name="StateInfo" time="15.199100944" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.201103236] <Event name="StateInfo" time="15.200788235" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.205458111] <Event name="StateInfo" time="15.202306944" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.206987903] <Event name="StateInfo" time="15.206663278" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.208781361] <Event name="StateInfo" time="15.208429611" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.21042082] <Event name="StateInfo" time="15.210095903" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.211956737] <Event name="StateInfo" time="15.211634153" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.213725987] <Event name="StateInfo" time="15.213357612" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.21567957] <Event name="StateInfo" time="15.215306237" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.217256029] <Event name="StateInfo" time="15.216935195" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.218993487] <Event name="StateInfo" time="15.218344529" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.220847904] <Event name="StateInfo" time="15.220490029" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.222393738] <Event name="StateInfo" time="15.222067071" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.224074321] <Event name="StateInfo" time="15.223745613" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.22572778] <Event name="StateInfo" time="15.225372238" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.227666488] <Event name="StateInfo" time="15.227227821" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.22930653] <Event name="StateInfo" time="15.228993572" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.230971072] <Event name="StateInfo" time="15.230629822" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.232434072] <Event name="StateInfo" time="15.232128405" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.233681822] <Event name="StateInfo" time="15.233354864" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.234952322] <Event name="StateInfo" time="15.234592114" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.236353197] <Event name="StateInfo" time="15.236001447" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.237646739] <Event name="StateInfo" time="15.237353614" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.239603239] <Event name="StateInfo" time="15.239259656" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.241152573] <Event name="StateInfo" time="15.240832031" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.24263599] <Event name="StateInfo" time="15.242337906" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.244453657] <Event name="StateInfo" time="15.244113573" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.24606599] <Event name="StateInfo" time="15.245727365" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.247821824] <Event name="StateInfo" time="15.247449657" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.250214365] <Event name="StateInfo" time="15.24940499" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.251793741] <Event name="StateInfo" time="15.251460366" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.253309241] <Event name="StateInfo" time="15.252938824" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.254731699] <Event name="StateInfo" time="15.254424574" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.256311658] <Event name="StateInfo" time="15.255994616" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.2577627] <Event name="StateInfo" time="15.257449741" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.2590052] <Event name="StateInfo" time="15.258689616" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.260032158] <Event name="StateInfo" time="15.259644241" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.260960533] <Event name="StateInfo" time="15.260631241" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.261832033] <Event name="StateInfo" time="15.261514992" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.2627152] <Event name="StateInfo" time="15.262385908" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.263797867] <Event name="StateInfo" time="15.263468575" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.265529784] <Event name="StateInfo" time="15.265187367" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.266955159] <Event name="StateInfo" time="15.266637825" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.268479409] <Event name="StateInfo" time="15.268065242" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.270010076] <Event name="StateInfo" time="15.269624784" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.271600243] <Event name="StateInfo" time="15.271268326" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.273333618] <Event name="StateInfo" time="15.272976034" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.275030535] <Event name="StateInfo" time="15.274695118" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.276543701] <Event name="StateInfo" time="15.276184076" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.27802916] <Event name="StateInfo" time="15.277671577" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.27960766] <Event name="StateInfo" time="15.279296452" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.281150869] <Event name="StateInfo" time="15.28082391" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.282623202] <Event name="StateInfo" time="15.282296535" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.284176327] <Event name="StateInfo" time="15.283868035" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.286071286] <Event name="StateInfo" time="15.285718077" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.287872036] <Event name="StateInfo" time="15.287536036" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.289358661] <Event name="StateInfo" time="15.289026453" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.291075703] <Event name="StateInfo" time="15.290712286" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.292484453] <Event name="StateInfo" time="15.292169453" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.29416737] <Event name="StateInfo" time="15.293865786" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.295609953] <Event name="StateInfo" time="15.29529612" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.297077912] <Event name="StateInfo" time="15.296773995" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.29795962] <Event name="StateInfo" time="15.297653079" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.29880312] <Event name="StateInfo" time="15.298510287" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.29968687] <Event name="StateInfo" time="15.29934912" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.300929371] <Event name="StateInfo" time="15.300272829" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.303567787] <Event name="StateInfo" time="15.302536162" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.307008288] <Event name="StateInfo" time="15.306249663" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.308615663] <Event name="StateInfo" time="15.308023871" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.309935455] <Event name="StateInfo" time="15.30954608" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.311286747] <Event name="StateInfo" time="15.310965622" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.312931163] <Event name="StateInfo" time="15.312575622" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.314535914] <Event name="StateInfo" time="15.314180664" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.316453622] <Event name="StateInfo" time="15.316030997" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.317992747] <Event name="StateInfo" time="15.317579164" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.319867289] <Event name="StateInfo" time="15.319466247" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.321944539] <Event name="StateInfo" time="15.321164623" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.323537914] <Event name="StateInfo" time="15.322879914" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.324773706] <Event name="StateInfo" time="15.32440504" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.32595554] <Event name="StateInfo" time="15.325650748" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.327347665] <Event name="StateInfo" time="15.327003498" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.328670373] <Event name="StateInfo" time="15.32835479" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.330226415] <Event name="StateInfo" time="15.32986154" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.331723249] <Event name="StateInfo" time="15.331412624" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.333470332] <Event name="StateInfo" time="15.333078332" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.334966291] <Event name="StateInfo" time="15.334620957" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.336523499] <Event name="StateInfo" time="15.336151916" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.338424874] <Event name="StateInfo" time="15.338082749" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.340171374] <Event name="StateInfo" time="15.339839458" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.341907375] <Event name="StateInfo" time="15.341591791" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.343810792] <Event name="StateInfo" time="15.34345875" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.345479125] <Event name="StateInfo" time="15.345114833" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.347839] <Event name="StateInfo" time="15.34744875" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.349476125] <Event name="StateInfo" time="15.349124084" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.351052292] <Event name="StateInfo" time="15.350711334" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.352615626] <Event name="StateInfo" time="15.352321917" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.354417251] <Event name="StateInfo" time="15.354050043" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.355982334] <Event name="StateInfo" time="15.355660918" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.357534585] <Event name="StateInfo" time="15.357193626" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.358881501] <Event name="StateInfo" time="15.358602085" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.36035471] <Event name="StateInfo" time="15.360051668" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.361799043] <Event name="StateInfo" time="15.36149221" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.36345571] <Event name="StateInfo" time="15.363022002" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.36499046] <Event name="StateInfo" time="15.364599627" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.366845169] <Event name="StateInfo" time="15.366517919" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.399306214] <Event name="StateInfo" time="15.398965839" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.404966006] <Event name="StateInfo" time="15.404651589" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.40800459] <Event name="StateInfo" time="15.407679381" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.409267215] <Event name="StateInfo" time="15.408742798" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.410759382] <Event name="StateInfo" time="15.410401798" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.412009173] <Event name="StateInfo" time="15.411623298" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.413102048] <Event name="StateInfo" time="15.412695465" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.41432209] <Event name="StateInfo" time="15.413947882" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.41609134] <Event name="StateInfo" time="15.415588507" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.419145382] <Event name="StateInfo" time="15.418728299" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.427832383] <Event name="StateInfo" time="15.427365425" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.431483175] <Event name="StateInfo" time="15.431041592" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.434223676] <Event name="StateInfo" time="15.433735426" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.436376467] <Event name="StateInfo" time="15.435944217" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.438014176] <Event name="StateInfo" time="15.437630051" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.439385301] <Event name="StateInfo" time="15.439023926" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.440916551] <Event name="StateInfo" time="15.440525135" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.44338901] <Event name="StateInfo" time="15.44258751" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.44551351] <Event name="StateInfo" time="15.445176635" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.44720226] <Event name="StateInfo" time="15.44685751" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.451222011] <Event name="StateInfo" time="15.450845761" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.453027427] <Event name="StateInfo" time="15.452605386" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.456278344] <Event name="StateInfo" time="15.455906761" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.458504636] <Event name="StateInfo" time="15.458045553" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.460006428] <Event name="StateInfo" time="15.459609178" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.461960012] <Event name="StateInfo" time="15.461615553" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.463895804] <Event name="StateInfo" time="15.463550762" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.467473387] <Event name="StateInfo" time="15.467088971" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.469186054] <Event name="StateInfo" time="15.468816804" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.470922054] <Event name="StateInfo" time="15.470589554" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.472845304] <Event name="StateInfo" time="15.472506096" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.474316763] <Event name="StateInfo" time="15.473972888" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.476616263] <Event name="StateInfo" time="15.476180805" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.47816968] <Event name="StateInfo" time="15.47778643" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.479136263] <Event name="StateInfo" time="15.478811638" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.483548597] <Event name="StateInfo" time="15.483232431" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.484534722] <Event name="StateInfo" time="15.484179472" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.485472722] <Event name="StateInfo" time="15.485130889" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.486489181] <Event name="StateInfo" time="15.486119347" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.487377014] <Event name="StateInfo" time="15.487031681" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.488680473] <Event name="StateInfo" time="15.487952181" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.489554598] <Event name="StateInfo" time="15.489236681" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.49246164] <Event name="StateInfo" time="15.490202973" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.49371464] <Event name="StateInfo" time="15.49337164" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.495109098] <Event name="StateInfo" time="15.494760848" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.496046515] <Event name="StateInfo" time="15.495712848" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.500499682] <Event name="StateInfo" time="15.500175057" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.501440016] <Event name="StateInfo" time="15.501112182" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.502497599] <Event name="StateInfo" time="15.502090724" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.503719974] <Event name="StateInfo" time="15.503383099" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.504550933] <Event name="StateInfo" time="15.504245266" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.507349475] <Event name="StateInfo" time="15.506977016" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.508323933] <Event name="StateInfo" time="15.507973641" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.509293433] <Event name="StateInfo" time="15.508954808" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.510795225] <Event name="StateInfo" time="15.5099806" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.512367892] <Event name="StateInfo" time="15.511849017" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.51419285] <Event name="StateInfo" time="15.513848684" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.516493809] <Event name="StateInfo" time="15.515600434" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.518062976] <Event name="StateInfo" time="15.517736601" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.519419517] <Event name="StateInfo" time="15.519080892" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.521088434] <Event name="StateInfo" time="15.520564018" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.523221685] <Event name="StateInfo" time="15.522736059" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.52485006] <Event name="StateInfo" time="15.524444643" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.526409893] <Event name="StateInfo" time="15.526016143" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.528008227] <Event name="StateInfo" time="15.527655602" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.529491352] <Event name="StateInfo" time="15.529168768" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.531212477] <Event name="StateInfo" time="15.530854019" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.532659435] <Event name="StateInfo" time="15.532338602" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.533909519] <Event name="StateInfo" time="15.533565352" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.534955144] <Event name="StateInfo" time="15.534538644" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.535912394] <Event name="StateInfo" time="15.535577852" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.537361686] <Event name="StateInfo" time="15.536589644" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.538343144] <Event name="StateInfo" time="15.538013561" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.539415603] <Event name="StateInfo" time="15.539084561" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.54115627] <Event name="StateInfo" time="15.540338728" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.542209478] <Event name="StateInfo" time="15.541801145" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.543905812] <Event name="StateInfo" time="15.543566603" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.544907978] <Event name="StateInfo" time="15.544545728" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.545844812] <Event name="StateInfo" time="15.545527187" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.546968312] <Event name="StateInfo" time="15.546636395" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.547973979] <Event name="StateInfo" time="15.547612604" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.549362895] <Event name="StateInfo" time="15.549020479" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.551956396] <Event name="StateInfo" time="15.551644021" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.552883021] <Event name="StateInfo" time="15.552548479" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.553824521] <Event name="StateInfo" time="15.553492021" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.554827563] <Event name="StateInfo" time="15.554478146" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.555896813] <Event name="StateInfo" time="15.555547979" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.557120063] <Event name="StateInfo" time="15.556796896" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.558671146] <Event name="StateInfo" time="15.558301605" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.563809147] <Event name="StateInfo" time="15.563359397" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.565054855] <Event name="StateInfo" time="15.564683855" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.566266731] <Event name="StateInfo" time="15.565883189" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.567526439] <Event name="StateInfo" time="15.567205022" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.568372856] <Event name="StateInfo" time="15.568043856" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.569388731] <Event name="StateInfo" time="15.569075772" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.570280356] <Event name="StateInfo" time="15.569977606" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.571168481] <Event name="StateInfo" time="15.570812064" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.572190481] <Event name="StateInfo" time="15.571863231" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.573083565] <Event name="StateInfo" time="15.572728606" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.574143773] <Event name="StateInfo" time="15.573809523" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.575097231] <Event name="StateInfo" time="15.57474169" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.576403023] <Event name="StateInfo" time="15.576028523" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.577319732] <Event name="StateInfo" time="15.576974982" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.578203773] <Event name="StateInfo" time="15.577884398" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.57904319] <Event name="StateInfo" time="15.578739565" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.580185065] <Event name="StateInfo" time="15.579859274" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.581076107] <Event name="StateInfo" time="15.580782982" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.581906774] <Event name="StateInfo" time="15.581600815" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.582893191] <Event name="StateInfo" time="15.582468815" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.583968857] <Event name="StateInfo" time="15.583645107" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.585075441] <Event name="StateInfo" time="15.584754607" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.585980483] <Event name="StateInfo" time="15.585672774" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.586919066] <Event name="StateInfo" time="15.586593858" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.589042983] <Event name="StateInfo" time="15.588643983" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.590669608] <Event name="StateInfo" time="15.590350816" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.592171108] <Event name="StateInfo" time="15.591487733" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.593444233] <Event name="StateInfo" time="15.593054275" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.594628983] <Event name="StateInfo" time="15.594301442" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.598996109] <Event name="StateInfo" time="15.598629775" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.602074067] <Event name="StateInfo" time="15.601712984" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.605198693] <Event name="StateInfo" time="15.604861526" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.60717386] <Event name="StateInfo" time="15.606794401" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.609362235] <Event name="StateInfo" time="15.609026235" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.611908777] <Event name="StateInfo" time="15.611575985" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.61395511] <Event name="StateInfo" time="15.613587027" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.617286527] <Event name="StateInfo" time="15.615794361" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.619051986] <Event name="StateInfo" time="15.618635777" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.621008486] <Event name="StateInfo" time="15.620634278" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.622884195] <Event name="StateInfo" time="15.622465945" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.62510582] <Event name="StateInfo" time="15.624644695" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.62702032] <Event name="StateInfo" time="15.626560945" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.628857237] <Event name="StateInfo" time="15.628482445" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.630658279] <Event name="StateInfo" time="15.630219029" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.632464862] <Event name="StateInfo" time="15.63205507" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.634001362] <Event name="StateInfo" time="15.633663029" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.635706446] <Event name="StateInfo" time="15.635007612" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.637372154] <Event name="StateInfo" time="15.636947779" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.639101446] <Event name="StateInfo" time="15.638731904" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.64069803] <Event name="StateInfo" time="15.640361155" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.64270003] <Event name="StateInfo" time="15.642299572" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.644937405] <Event name="StateInfo" time="15.64453578" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.646404489] <Event name="StateInfo" time="15.64602328" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.650336739] <Event name="StateInfo" time="15.650007447" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.652157031] <Event name="StateInfo" time="15.651835906" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.653897989] <Event name="StateInfo" time="15.653526114" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.655728781] <Event name="StateInfo" time="15.655402114" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.657336448] <Event name="StateInfo" time="15.656990823" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.658844073] <Event name="StateInfo" time="15.658503115" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.660543032] <Event name="StateInfo" time="15.660193323" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.662041323] <Event name="StateInfo" time="15.661726032" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.663473407] <Event name="StateInfo" time="15.663128365" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.664896449] <Event name="StateInfo" time="15.66457649" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.666425366] <Event name="StateInfo" time="15.666046199" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.667902949] <Event name="StateInfo" time="15.667571616" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.669411741] <Event name="StateInfo" time="15.669106366" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.670970116] <Event name="StateInfo" time="15.670666783" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.672302741] <Event name="StateInfo" time="15.671932324" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.6739212] <Event name="StateInfo" time="15.673598033" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.675391491] <Event name="StateInfo" time="15.675064533" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.676866742] <Event name="StateInfo" time="15.6765392" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.678488992] <Event name="StateInfo" time="15.678178658" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.6802562] <Event name="StateInfo" time="15.679915242" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.68185395] <Event name="StateInfo" time="15.681536617" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.683618242] <Event name="StateInfo" time="15.683254242" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.685311367] <Event name="StateInfo" time="15.684952326" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.687887368] <Event name="StateInfo" time="15.687378701" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.690511785] <Event name="StateInfo" time="15.690118035" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.692763743] <Event name="StateInfo" time="15.692339952" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.694749702] <Event name="StateInfo" time="15.694420118" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.696385077] <Event name="StateInfo" time="15.696005327" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.69801491] <Event name="StateInfo" time="15.697606577" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.699422202] <Event name="StateInfo" time="15.699098452" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.700944411] <Event name="StateInfo" time="15.700614244" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.702637536] <Event name="StateInfo" time="15.702305619" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.704290703] <Event name="StateInfo" time="15.703978619" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.705924036] <Event name="StateInfo" time="15.705592995" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.707472203] <Event name="StateInfo" time="15.70714787" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.709204703] <Event name="StateInfo" time="15.708890578" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.710924953] <Event name="StateInfo" time="15.710578453" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.712648704] <Event name="StateInfo" time="15.71231912" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.714278245] <Event name="StateInfo" time="15.713940495" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.716421704] <Event name="StateInfo" time="15.716003746" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.718104329] <Event name="StateInfo" time="15.717744704" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.719828954] <Event name="StateInfo" time="15.719457663" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.721497871] <Event name="StateInfo" time="15.721156329" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.723440371] <Event name="StateInfo" time="15.722688163" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.724926705] <Event name="StateInfo" time="15.724591288" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.726774997] <Event name="StateInfo" time="15.725977288" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.728345622] <Event name="StateInfo" time="15.728028872" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.729799289] <Event name="StateInfo" time="15.72944958" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.73123808] <Event name="StateInfo" time="15.730900622" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.732633414] <Event name="StateInfo" time="15.732326289" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.734196164] <Event name="StateInfo" time="15.733874456" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.735664414] <Event name="StateInfo" time="15.735351164" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.737160373] <Event name="StateInfo" time="15.736842456" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.739215165] <Event name="StateInfo" time="15.73884679" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.740948831] <Event name="StateInfo" time="15.74059854" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.742453832] <Event name="StateInfo" time="15.741869915" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.744314082] <Event name="StateInfo" time="15.743986832" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.74597629] <Event name="StateInfo" time="15.745628332" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.747830707] <Event name="StateInfo" time="15.747472249" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.749475999] <Event name="StateInfo" time="15.749132707" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.751075207] <Event name="StateInfo" time="15.750744166" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.752684041] <Event name="StateInfo" time="15.752336666" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.754346249] <Event name="StateInfo" time="15.754020458" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.755636291] <Event name="StateInfo" time="15.755315166" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.756606958] <Event name="StateInfo" time="15.756263958" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.757398833] <Event name="StateInfo" time="15.757095791" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.759584] <Event name="StateInfo" time="15.758651833" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.761075583] <Event name="StateInfo" time="15.760749208" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.762661084] <Event name="StateInfo" time="15.762330334" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.764320667] <Event name="StateInfo" time="15.763908834" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.765181667] <Event name="StateInfo" time="15.764842459" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.766031584] <Event name="StateInfo" time="15.765720376" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.766895209] <Event name="StateInfo" time="15.766604709" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.767860042] <Event name="StateInfo" time="15.767534251" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.770182293] <Event name="StateInfo" time="15.768464668" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.77216271] <Event name="StateInfo" time="15.771802501" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.773834251] <Event name="StateInfo" time="15.773509626" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.775422085] <Event name="StateInfo" time="15.775091627" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.777000293] <Event name="StateInfo" time="15.77666896" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.778553127] <Event name="StateInfo" time="15.778213627" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.78024071] <Event name="StateInfo" time="15.779905585" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.781839919] <Event name="StateInfo" time="15.781480294" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.783576211] <Event name="StateInfo" time="15.783191502" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.785256211] <Event name="StateInfo" time="15.784931586" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.787093419] <Event name="StateInfo" time="15.786760044" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.78867017] <Event name="StateInfo" time="15.788363336" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.790257711] <Event name="StateInfo" time="15.78994067" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.791683378] <Event name="StateInfo" time="15.791385878" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.79334617] <Event name="StateInfo" time="15.792963503" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.794589837] <Event name="StateInfo" time="15.794248003" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.795917504] <Event name="StateInfo" time="15.795571004" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.796968087] <Event name="StateInfo" time="15.796637337" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.798080795] <Event name="StateInfo" time="15.797748004" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.799034254] <Event name="StateInfo" time="15.798713129" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.799988587] <Event name="StateInfo" time="15.799643837" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.800923962] <Event name="StateInfo" time="15.800611587" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.802440629] <Event name="StateInfo" time="15.802082171" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.803975671] <Event name="StateInfo" time="15.803672046" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.805646921] <Event name="StateInfo" time="15.805340088" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.807289296] <Event name="StateInfo" time="15.806947755" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.808850297] <Event name="StateInfo" time="15.808529463" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.811310505] <Event name="StateInfo" time="15.810958463" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.813049714] <Event name="StateInfo" time="15.812645464" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.814870589] <Event name="StateInfo" time="15.814499589" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.816466881] <Event name="StateInfo" time="15.816096172" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.817611381] <Event name="StateInfo" time="15.817258756" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.819598798] <Event name="StateInfo" time="15.819287589" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.821054798] <Event name="StateInfo" time="15.820731923" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.822506423] <Event name="StateInfo" time="15.822157006" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.824046131] <Event name="StateInfo" time="15.823747465" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.825407048] <Event name="StateInfo" time="15.825094965" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.826974173] <Event name="StateInfo" time="15.826637882" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.828435424] <Event name="StateInfo" time="15.828095049" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.829798965] <Event name="StateInfo" time="15.82910334" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.831323215] <Event name="StateInfo" time="15.831009382" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.832717674] <Event name="StateInfo" time="15.832416382" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.834155591] <Event name="StateInfo" time="15.833829507" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.835696758] <Event name="StateInfo" time="15.835354049" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.837170258] <Event name="StateInfo" time="15.836850591" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.838562675] <Event name="StateInfo" time="15.838265466" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.840178216] <Event name="StateInfo" time="15.839840758" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.841611175] <Event name="StateInfo" time="15.841294133" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.843123758] <Event name="StateInfo" time="15.8427723" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.844782175] <Event name="StateInfo" time="15.84441905" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.846542967] <Event name="StateInfo" time="15.846170509" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.848551092] <Event name="StateInfo" time="15.848201967" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.850283301] <Event name="StateInfo" time="15.849915509" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.852000634] <Event name="StateInfo" time="15.851675426" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.853652634] <Event name="StateInfo" time="15.853326259" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.855280135] <Event name="StateInfo" time="15.854914385" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.85680876] <Event name="StateInfo" time="15.85649026" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.858193593] <Event name="StateInfo" time="15.857882093" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.859712593] <Event name="StateInfo" time="15.859351218" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.autoTask_INFO [15.861073802] <Event name="StateInfo" time="15.860762593" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+TaskAutoPlacePixel.runTaskState_INFO [15.862440844] No AprilTag found.
+TaskAutoPlacePixel.autoTask_INFO [15.863561427] <Event name="StateInfo" time="15.86323126" tag="^^^^^" TaskAutoPlacePixel.state="FIND_APRILTAG" />
+ElevatorArm.setScoringPosition_INFO [15.865271469] owner=PlacePixelTask, delay=0.000, elevatorPos=15.0, event=(TaskAutoPlacePixel.elevatorArmEvent=CLEARED), timeout=4.000 (elevatorPos=12.32, armPos=26.78)
+ElevatorArm.cancel_INFO [15.866252052] owner=PlacePixelTask
+ElevatorArm.acquireOwnership_INFO [15.867594594] Acquired ownership on behalf of PlacePixelTask
+ElevatorArm.elevatorSetPosition_INFO [15.869381928] owner=PlacePixelTask, delay=0.000, pos=15.0, powerLimit=1.0, event=(setScoringPosition.actionEvent=CLEARED), timeout=1.000 (elevatorPos=12.32, armPos=26.78)
+ElevatorArm.performAction_INFO [15.87117422] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=15.0
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setScoringPosition.actionEvent=CLEARED)
+	expiredTime=1705263610.534
+)
+TaskAutoPlacePixel.autoTask_INFO [15.873145303] <Event name="StateInfo" time="15.872718303" tag="^^^^^" TaskAutoPlacePixel.state="SET_SCORING_POS" />
+elevator.motor.pidCtrlTask_INFO [16.274529718] onTarget=true(14.751532/15.0), stalled=false, expired=false, event=(setScoringPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [16.274973052] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=(setScoringPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=270.0
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=1705263613.530
+)
+arm.servo.posPidCtrl.isStalled_INFO [18.417756392] PID stalled.
+ElevatorArm.releaseOwnership_INFO [18.423050434] Released ownership on behalf of PlacePixelTask
+arm.servo.pidCtrlTask_INFO [18.422974018] onTarget=false(267.981829/270.0), stalled=true, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [18.425175809] Signal completion event (TaskAutoPlacePixel.elevatorArmEvent=SIGNALED)
+TaskAutoPlacePixelStart.runTaskState_INFO [18.426691601] RobotFieldPose ****** =(x=39.7,y=-21.4,angle=-98.2)
+TaskAutoPlacePixel.runTaskState_INFO [18.42814556] Drive to AprilTag 5 using absolute odometry (pose=(x=60.3,y=-35.4,angle=90.0)).
+purePursuitDrive.start_INFO [18.480955607] Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=39.7,y=-21.4,angle=-98.2),vel=0.000000), TrcWaypoint(pose=(x=39.7,y=-30.2,angle=-90.0),vel=0.000000), TrcWaypoint(pose=(x=54.4,y=-30.2,angle=-90.0),vel=0.000000)])
+TaskAutoPlacePixel.autoTask_INFO [18.483815982] <Event name="StateInfo" time="18.483444399" tag="^^^^^" TaskAutoPlacePixel.state="DRIVE_TO_APRILTAG" />
+purePursuitDrive.xPosPid.isStalled_INFO [21.168595085] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [21.16931696] PID stalled.
+purePursuitDrive.turnPid.isStalled_INFO [21.169879294] PID stalled.
+purePursuitDrive.driveTask_INFO [21.172579544] Done: index=2/3, stalled=true, timeout=false, posOnTarget=false,headingOnTarget=true,robotPose=(x=52.2,y=-31.4,angle=-90.0)
+purePursuitDrive.driveTask_INFO [21.18207942] Signal completion event (TaskAutoPlacePixel.event=CLEARED).
+ElevatorArm.elevatorSetPosition_INFO [21.185006587] owner=PlacePixelTask, delay=0.000, pos=12.4, powerLimit=1.0, event=(TaskAutoPlacePixel.elevatorArmEvent=SIGNALED), timeout=0.000 (elevatorPos=14.82, armPos=266.78)
+ElevatorArm.cancel_INFO [21.186183462] owner=PlacePixelTask
+ElevatorArm.acquireOwnership_INFO [21.187034254] Acquired ownership on behalf of PlacePixelTask
+ElevatorArm.performAction_INFO [21.190337087] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+TaskAutoPlacePixel.autoTask_INFO [21.201146838] <Event name="StateInfo" time="21.200726547" tag="^^^^^" TaskAutoPlacePixel.state="LOWER_ELEVATOR" />
+ElevatorArm.releaseOwnership_INFO [21.568520584] Released ownership on behalf of PlacePixelTask
+elevator.motor.pidCtrlTask_INFO [21.568471584] onTarget=true(12.362690/12.4), stalled=false, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [21.569230792] Signal completion event (TaskAutoPlacePixel.elevatorArmEvent=SIGNALED)
+pixelTray.setUpperGateOpened_INFO [21.590744711] upperGateOpened=true, event=(TaskAutoPlacePixel.event=CLEARED)
+TaskAutoPlacePixel.autoTask_INFO [21.592632378] <Event name="StateInfo" time="21.592254086" tag="^^^^^" TaskAutoPlacePixel.state="PLACE_PIXEL_1" />
+purePursuitDrive.start_INFO [21.798451648] Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=52.0,y=-31.4,angle=-90.1),vel=0.000000), TrcWaypoint(pose=(x=42.0,y=-31.4,angle=-90.1),vel=0.000000), TrcWaypoint(pose=(x=44.4,y=-36.2,angle=-90.0),vel=0.000000), TrcWaypoint(pose=(x=54.4,y=-36.2,angle=-90.0),vel=0.000000)])
+TaskAutoPlacePixel.autoTask_INFO [21.801290732] <Event name="StateInfo" time="21.800885315" tag="^^^^^" TaskAutoPlacePixel.state="DRIVE_TO_POS_2" />
+purePursuitDrive.xPosPid.isStalled_INFO [23.397502059] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [23.398477101] PID stalled.
+purePursuitDrive.turnPid.isStalled_INFO [23.400017393] PID stalled.
+purePursuitDrive.driveTask_INFO [23.401415934] Done: index=3/4, stalled=true, timeout=false, posOnTarget=false,headingOnTarget=true,robotPose=(x=52.4,y=-36.3,angle=-89.9)
+purePursuitDrive.driveTask_INFO [23.449930023] Signal completion event (TaskAutoPlacePixel.event=CLEARED).
+pixelTray.setLowerGateOpened_INFO [23.461644816] lowerGateOpened=true, event=(TaskAutoPlacePixel.event=CLEARED)
+TaskAutoPlacePixel.autoTask_INFO [23.464441899] <Event name="StateInfo" time="23.464023941" tag="^^^^^" TaskAutoPlacePixel.state="PLACE_PIXEL_2" />
+ElevatorArm.elevatorSetPosition_INFO [23.661094669] owner=PlacePixelTask, delay=0.000, pos=21.5, powerLimit=1.0, event=(TaskAutoPlacePixel.elevatorArmEvent=SIGNALED), timeout=0.000 (elevatorPos=12.36, armPos=266.13)
+ElevatorArm.cancel_INFO [23.663506752] owner=PlacePixelTask
+ElevatorArm.acquireOwnership_INFO [23.665169544] Acquired ownership on behalf of PlacePixelTask
+ElevatorArm.performAction_INFO [23.66905892] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=21.5
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(ElevatorArm.releaseOwnership=CLEARED)
+	expiredTime=0.000
+)
+TaskAutoPlacePixel.autoTask_INFO [23.67019642] <Event name="StateInfo" time="23.669811711" tag="^^^^^" TaskAutoPlacePixel.state="RAISE_ELEVATOR" />
+elevator.motor.posPidCtrl.isStalled_INFO [24.460250333] PID stalled.
+elevator.motor.pidCtrlTask_INFO [24.461152166] onTarget=false(21.138195/21.5), stalled=true, expired=false, event=(ElevatorArm.releaseOwnership=SIGNALED)
+ElevatorArm.releaseOwnership_INFO [24.461245208] Released ownership on behalf of PlacePixelTask
+ElevatorArm.releaseOwnership_INFO [24.461797624] Signal completion event (TaskAutoPlacePixel.elevatorArmEvent=SIGNALED)
+ElevatorArm.setLoadingPosition_INFO [24.464459083] owner=null, delay=0.000, event=(TaskAutoPlacePixel.elevatorArmEvent=SIGNALED), timeout=0.000 (elevatorPos=21.14, armPos=265.15)
+ElevatorArm.cancel_INFO [24.465052625] owner=null
+ElevatorArm.armSetPosition_INFO [24.493845669] owner=null, delay=0.000, pos=27.3, powerLimit=0.1, event=(setLoadingPosition.actionEvent=CLEARED), timeout=3.000 (elevatorPos=21.14, armPos=265.15)
+ElevatorArm.performAction_INFO [24.494996586] actionParams=
+(	actionType=ArmSetPosition
+	actionEvent=null
+	delay=0.000
+	pos=27.3
+	powerLimit=0.1
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(setLoadingPosition.actionEvent=CLEARED)
+	expiredTime=1705263621.158
+)
+TaskAutoPlacePixel.autoTask_INFO [24.496680086] <Event name="StateInfo" time="24.496283711" tag="^^^^^" TaskAutoPlacePixel.state="RETRACT_ALL" />
+arm.servo.posPidCtrl.isStalled_INFO [26.693757474] PID stalled.
+arm.servo.pidCtrlTask_INFO [26.700216433] onTarget=true(27.654556/27.3), stalled=true, expired=false, event=(setLoadingPosition.actionEvent=SIGNALED)
+ElevatorArm.performAction_INFO [26.700742308] actionParams=
+(	actionType=ElevatorSetPosition
+	actionEvent=(setLoadingPosition.actionEvent=SIGNALED)
+	delay=0.000
+	pos=12.4
+	powerLimit=1.0
+	power=0.0
+	duration=0.0
+	posRange=0.0/0.0
+	event=(TaskAutoPlacePixel.elevatorArmEvent=CLEARED)
+	expiredTime=0.000
+)
+elevator.motor.pidCtrlTask_INFO [27.329280537] onTarget=true(12.370900/12.4), stalled=false, expired=false, event=(TaskAutoPlacePixel.elevatorArmEvent=SIGNALED)
+TaskAutoPlacePixel.stopSubsystems_INFO [27.330642329] Stopping subsystems.
+ElevatorArm.cancel_INFO [27.343318456] owner=PlacePixelTask
+TaskAutoPlacePixel.releaseSubsystemsOwnership_INFO [27.344832789] Releasing subsystem ownership (currOwner=PlacePixelTask, robotDrive=PlacePixelTask).
+TaskAutoPlacePixel.autoTask_INFO [27.346530873] <Event name="StateInfo" time="27.346123706" tag="^^^^^" TaskAutoPlacePixel.state="DONE" />
+purePursuitDrive.start_INFO [27.349643831] Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=51.9,y=-36.3,angle=-89.9),vel=0.000000), TrcWaypoint(pose=(x=40.0,y=-11.8,angle=270.0),vel=0.000000), TrcWaypoint(pose=(x=61.2,y=-11.8,angle=270.0),vel=0.000000)])
+CmdAuto.cmdPeriodic_INFO [27.35288629] <Event name="StateInfo" time="27.352483498" tag="^^^^^" CmdAuto.state="PARK_AT_BACKSTAGE" RobotPose=(x=51.9,y=-36.3,angle=-89.9) TargetPose=(x=61.2,y=-11.8,angle=270.0) vel=(x=-0.3,y=0.0,angle=0.1) Path=TrcPath(degrees=true, [TrcWaypoint(pose=(x=0.0,y=0.0,angle=0.0),vel=0.000000), TrcWaypoint(pose=(x=24.6,y=11.9,angle=359.9),vel=0.000000), TrcWaypoint(pose=(x=24.6,y=-9.3,angle=359.9),vel=0.000000)]) />
+purePursuitDrive.xPosPid.isStalled_INFO [29.634470311] PID stalled.
+purePursuitDrive.yPosPid.isStalled_INFO [29.635267436] PID stalled.
+purePursuitDrive.turnPid.isStalled_INFO [29.636208353] PID stalled.
+purePursuitDrive.driveTask_INFO [29.63902877] Done: index=2/3, stalled=true, timeout=false, posOnTarget=false,headingOnTarget=true,robotPose=(x=59.8,y=-13.1,angle=-89.3)
+purePursuitDrive.driveTask_INFO [29.671352731] Signal completion event (CmdAuto=CLEARED).
+CmdAuto.cmdPeriodic_INFO [29.675368107] <Event name="StateInfo" time="29.674554065" tag="^^^^^" CmdAuto.state="DONE" />
+Robot.stopMode_INFO [30.091716482] Update Status average elapsed times:
+DriveBase=NaNs
+ Elevator=NaNs
+      Arm=NaNs
+    Wrist=NaNs
+   Intake=NaNs
+PixelTray=NaNs
+
+imu.getGyroData.printElapsedTime_INFO [30.094065565] imu.getGyroData: avgElapsed=0.000012, minElapsed=0.000003, maxElapsed=0.000370
+TrcDigitalInput.getInput.printElapsedTime_INFO [30.09528444] TrcDigitalInput.getInput: avgElapsed=0.008582, minElapsed=0.008538, maxElapsed=0.008625
+TrcMotor.getPos.printElapsedTime_INFO [30.096908732] TrcMotor.getPos: avgElapsed=0.000711, minElapsed=0.000012, maxElapsed=0.025467
+TrcMotor.setPower.printElapsedTime_INFO [30.098401191] TrcMotor.setPower: avgElapsed=0.002646, minElapsed=0.000006, maxElapsed=0.019333
+TrcMotor.setVel.printElapsedTime_INFO [30.099839691] TrcMotor.setVel: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+TrcMotor.setPos.printElapsedTime_INFO [30.100985941] TrcMotor.setPos: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+TrcMotor.setCurrent.printElapsedTime_INFO [30.101776941] TrcMotor.setCurrent: avgElapsed=0.000000, minElapsed=0.000000, maxElapsed=0.000000
+TrcServo.setPos.printElapsedTime_INFO [30.102738858] TrcServo.setPos: avgElapsed=0.011549, minElapsed=0.004915, maxElapsed=0.019176
+Robot.stopMode_INFO [30.103437108] Disabling AprilTagVision.
+Robot.stopMode_INFO [30.104613983] Disabling PurplePixelVision.
+Robot.stopMode_INFO [30.1060414] Disabling GreenPixelVision.
+Robot.stopMode_INFO [30.107203108] Disabling YellowPixelVision.
+Robot.stopMode_INFO [30.108221317] Disabling WhitePixelVision.
+Robot.stopMode_INFO [30.109280067] Disabling RedBlobVision.
+Robot.stopMode_INFO [30.110422234] Disabling BlueBlobVision.
+Robot.stopMode_INFO [30.112599817] Saved robot pose=(x=59.8,y=-13.2,angle=-89.4)
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.120670818] TrcWatchdogMgr: STANDALONE_TASK=0.000148/0.995441
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.122334776] blinkin: OUTPUT_TASK=0.000050/0.011944
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.123862235] imu.converterTask: INPUT_TASK=0.000086/0.031000
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.125333693] imu.gyroTask: INPUT_TASK=0.021081/0.031000
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.126840152] lfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000012/0.011943
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.128335527] TrcMotor.odometryTask: STANDALONE_TASK=0.001551/0.001653
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.129974111] rfDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000005/0.011943
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.131608902] lbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000012/0.011943
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.133085027] rbDriveMotor.pidCtrlTask: OUTPUT_TASK=0.000004/0.011943
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.134518569] TrcDriveBase.odometryTask: INPUT_TASK=0.002285/0.030999
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.136133236] purePursuitDrive.driveTask: POST_PERIODIC_TASK=0.046172/0.075573
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.137771236] elevator.motor.pidCtrlTask: OUTPUT_TASK=0.000064/0.011943
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.139092486] arm.encoder.converterTask: INPUT_TASK=0.003509/0.011944
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.140544695] arm.servo.pidCtrlTask: OUTPUT_TASK=0.002319/0.011944
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.142191445] arm.followerServo.pidCtrlTask: OUTPUT_TASK=0.000004/0.011942
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.143851904] wrist.analogTrigger.triggerTask: PRE_PERIODIC_TASK=0.033383/0.077797
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.145190945] intake.motor.pidCtrlTask: OUTPUT_TASK=0.000005/0.011942
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.146772946] intake.analogTrigger.triggerTask: PRE_PERIODIC_TASK=0.023804/0.071848
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.148459071] launcher.pidCtrlTask: OUTPUT_TASK=0.000003/0.011942
+TrcTaskMgr.printTaskPerformanceMetrics_INFO [30.149929363] TaskAutoPlacePixel: POST_PERIODIC_TASK=0.000043/0.000526
+FtcOpMode.printPerformanceMetrics_INFO [30.151759863] [FtcAutonomous] Main robot thread average elapsed times:
+       robotInit=15.716485s
+    initPeriodic=0.000003s
+       startMode=0.000055s
+    loopInterval=0.001040s (961.856Hz)
+             sdk=0.000033s
+ prePeriodicTask=0.000099s
+        periodic=0.000126s
+postPeriodicTask=0.000712s
+         loopSum=0.001007s
+        stopMode=0.000000s
+FtcAuto.stopMode_INFO [30.157350822] ***** Stopping autonomous: 20240114@122023 *****
