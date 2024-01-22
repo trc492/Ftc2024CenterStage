@@ -299,9 +299,9 @@ public class Vision
      */
     public void setFpsMeterEnabled(boolean enabled)
     {
-        if (openCvCamera != null)
+        if (rawColorBlobVision != null)
         {
-            openCvCamera.showFpsMeterOnViewport(enabled);
+            rawColorBlobVision.setFpsMeterEnabled(enabled);
         }
         else if (vision != null)
         {
