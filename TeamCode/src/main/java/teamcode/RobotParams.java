@@ -74,6 +74,7 @@ public class RobotParams
         public static boolean useTensorFlowVision = false;
         public static boolean useTfodModelAsset = false;
         public static boolean showVisionView = !inCompetition;
+        public static boolean showVisionStat = false;
         // Drive Base
         public static boolean useExternalOdometry = robotType == RobotType.CenterStageRobot ||
                                                     robotType == RobotType.PowerPlayRobot;

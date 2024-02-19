@@ -119,7 +119,6 @@ public class Vision
     private final TrcDbgTrace tracer;
     private final Robot robot;
     private final WebcamName webcam1, webcam2;
-    private OpenCvCamera openCvCamera = null;
     private FtcRawEocvColorBlobPipeline rawColorBlobPipeline;
     public FtcRawEocvVision rawColorBlobVision;
     public FtcVisionAprilTag aprilTagVision;
@@ -157,6 +156,8 @@ public class Vision
             opMode.hardwareMap.get(WebcamName.class, RobotParams.HWNAME_WEBCAM2): null;
         if (RobotParams.Preferences.tuneColorBlobVision)
         {
+            OpenCvCamera openCvCamera;
+
             if (RobotParams.Preferences.showVisionView)
             {
                 int cameraViewId = opMode.hardwareMap.appContext.getResources().getIdentifier(
@@ -177,6 +178,7 @@ public class Vision
             rawColorBlobVision = new FtcRawEocvVision(
                 "rawColorBlobVision", RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT, null, null,
                 openCvCamera, RobotParams.CAM_ORIENTATION);
+            rawColorBlobVision.setFpsMeterEnabled(RobotParams.Preferences.showVisionStat);
             setRawColorBlobVisionEnabled(false);
         }
         else
@@ -260,7 +262,7 @@ public class Vision
                 // Use USB webcams.
                 vision = new FtcVision(
                     webcam1, webcam2, RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT,
-                    RobotParams.Preferences.showVisionView, visionProcessors);
+                    RobotParams.Preferences.showVisionView, RobotParams.Preferences.showVisionStat, visionProcessors);
             }
             else
             {
@@ -269,7 +271,7 @@ public class Vision
                     RobotParams.Preferences.useBuiltinCamBack?
                         BuiltinCameraDirection.BACK: BuiltinCameraDirection.FRONT,
                     RobotParams.CAM_IMAGE_WIDTH, RobotParams.CAM_IMAGE_HEIGHT,
-                    RobotParams.Preferences.showVisionView, visionProcessors);
+                    RobotParams.Preferences.showVisionView, RobotParams.Preferences.showVisionStat, visionProcessors);
             }
             // Disable all vision until they are needed.
             for (VisionProcessor processor: visionProcessors)
@@ -277,8 +279,6 @@ public class Vision
                 vision.setProcessorEnabled(processor, false);
             }
         }
-
-        setFpsMeterEnabled(false);
     }   //Vision
 
     /**
@@ -803,7 +803,7 @@ public class Vision
 
         if (teamPropInfo != null)
         {
-            double teamPropXPos = teamPropInfo.rect.x + teamPropInfo.rect.width/2.0;
+            double teamPropXPos = teamPropInfo.objRect.x + teamPropInfo.objRect.width/2.0;
             double oneThirdScreenWidth = RobotParams.CAM_IMAGE_WIDTH/3.0;
             String ledLabel = null;
 
