@@ -25,6 +25,7 @@ package teamcode.subsystems;
 import TrcCommonLib.trclib.TrcDbgTrace;
 import TrcCommonLib.trclib.TrcEvent;
 import TrcCommonLib.trclib.TrcSensor;
+import TrcCommonLib.trclib.TrcTrigger;
 import TrcCommonLib.trclib.TrcTriggerThresholdZones;
 import TrcFtcLib.ftclib.FtcDcMotor;
 import TrcFtcLib.ftclib.FtcDistanceSensor;
@@ -116,7 +117,7 @@ public class Intake
             if (on)
             {
                 completionEvent = event;
-                analogTrigger.enableTrigger(this::analogTriggerCallback);
+                analogTrigger.enableTrigger(TrcTrigger.TriggerMode.OnBoth, this::analogTriggerCallback);
             }
             else
             {

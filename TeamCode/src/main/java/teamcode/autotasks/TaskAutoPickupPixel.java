@@ -229,10 +229,10 @@ public class TaskAutoPickupPixel extends TrcAutoTask<TaskAutoPickupPixel.State>
                     if (pixelInfo != null)
                     {
                         pixelPose = new TrcPose2D(
-                            pixelInfo.objPose.x, pixelInfo.objPose.y - 6.0, pixelInfo.objPose.yaw);
+                            pixelInfo.objPose.x, pixelInfo.objPose.y - 6.0, pixelInfo.objPose.angle);
                         String msg = String.format(
                             Locale.US, "%s is found at x %.1f, y %.1f, angle=%.1f",
-                            taskParams.pixelType, pixelInfo.objPose.x, pixelInfo.objPose.y, pixelInfo.objPose.yaw);
+                            taskParams.pixelType, pixelInfo.objPose.x, pixelInfo.objPose.y, pixelInfo.objPose.angle);
                         tracer.traceInfo(moduleName, msg);
                         robot.speak(msg);
                         sm.setState(State.ALIGN_TO_PIXEL);

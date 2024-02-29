@@ -29,6 +29,7 @@ import TrcCommonLib.trclib.TrcPose2D;
 import TrcCommonLib.trclib.TrcRobot;
 import TrcCommonLib.trclib.TrcTaskMgr;
 import TrcCommonLib.trclib.TrcTimer;
+import TrcCommonLib.trclib.TrcTrigger;
 import TrcCommonLib.trclib.TrcTriggerThresholdZones;
 import TrcCommonLib.trclib.TrcVisionTargetInfo;
 import TrcFtcLib.ftclib.FtcVisionAprilTag;
@@ -353,7 +354,8 @@ public class TaskAutoPlacePixel extends TrcAutoTask<TaskAutoPlacePixel.State>
                 {
                     if (robot.elevatorArm != null && robot.elevatorArm.wristTrigger != null)
                     {
-                        robot.elevatorArm.wristTrigger.enableTrigger(this::wristSensorTriggered);
+                        robot.elevatorArm.wristTrigger.enableTrigger(
+                            TrcTrigger.TriggerMode.OnBoth, this::wristSensorTriggered);
                     }
                     // Account for end-effector offset from the camera.
                     // Clone aprilTagPose before changing it, or we will corrupt the AprilTag location array.

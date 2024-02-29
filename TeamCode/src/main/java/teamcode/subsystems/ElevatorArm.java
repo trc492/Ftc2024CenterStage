@@ -804,7 +804,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     {
         if (elevator.validatePresetIndex(presetIndex))
         {
-            elevatorSetPosition(owner, delay, elevator.getPresetPosition(presetIndex), powerLimit, event, timeout);
+            elevatorSetPosition(owner, delay, elevator.getPresetValue(presetIndex), powerLimit, event, timeout);
         }
     }   //elevatorSetPresetPosition
 
@@ -822,7 +822,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
 
         if (index != -1)
         {
-            elevatorSetPosition(owner, 0.0, elevator.getPresetPosition(index), powerLimit, null, 1.0);
+            elevatorSetPosition(owner, 0.0, elevator.getPresetValue(index), powerLimit, null, 1.0);
         }
     }   //elevatorPresetPositionUp
 
@@ -840,7 +840,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
 
         if (index != -1)
         {
-            elevatorSetPosition(owner, 0.0, elevator.getPresetPosition(index), powerLimit, null, 1.0);
+            elevatorSetPosition(owner, 0.0, elevator.getPresetValue(index), powerLimit, null, 1.0);
         }
     }   //elevatorPresetPositionDown
 
@@ -1055,7 +1055,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
     {
         if (arm.validatePresetIndex(presetIndex))
         {
-            armSetPosition(owner, delay, arm.getPresetPosition(presetIndex), powerLimit, event, timeout);
+            armSetPosition(owner, delay, arm.getPresetValue(presetIndex), powerLimit, event, timeout);
         }
     }   //armSetPresetPosition
 
@@ -1073,7 +1073,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
 
         if (index != -1)
         {
-            armSetPosition(owner, 0.0, arm.getPresetPosition(index), powerLimit, null, 5.0);
+            armSetPosition(owner, 0.0, arm.getPresetValue(index), powerLimit, null, 5.0);
         }
     }   //armPresetPositionUp
 
@@ -1091,7 +1091,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
 
         if (index != -1)
         {
-            armSetPosition(owner, 0.0, arm.getPresetPosition(index), powerLimit, null, 5.0);
+            armSetPosition(owner, 0.0, arm.getPresetValue(index), powerLimit, null, 5.0);
         }
     }   //armPresetPositionDown
 
