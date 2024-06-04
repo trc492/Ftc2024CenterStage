@@ -181,26 +181,31 @@ public class FtcTeleOp extends FtcOpMode
             //
             if (robot.robotDrive != null)
             {
-                double[] inputs = driverGamepad.getDriveInputs(
-                    RobotParams.ROBOT_DRIVE_MODE, true, drivePowerScale, turnPowerScale);
-
-                if (robot.robotDrive.driveBase.supportsHolonomicDrive())
+                // We are trying to re-localize the robot and vision hasn't seen AprilTag yet.
+                if (relocalizing)
                 {
-                    robot.robotDrive.driveBase.holonomicDrive(
-                        null, inputs[0], inputs[1], inputs[2], robot.robotDrive.driveBase.getDriveGyroAngle());
+                    if (robotFieldPose == null)
+                    {
+                        robotFieldPose = robot.vision.getRobotFieldPose();
+                    }
                 }
                 else
                 {
-                    robot.robotDrive.driveBase.arcadeDrive(inputs[1], inputs[2]);
-                }
-                robot.dashboard.displayPrintf(
-                    1, "RobotDrive: Power=(%.2f,y=%.2f,rot=%.2f),Mode:%s",
-                    inputs[0], inputs[1], inputs[2], robot.robotDrive.driveBase.getDriveOrientation());
+                    double[] inputs = driverGamepad.getDriveInputs(
+                        RobotParams.ROBOT_DRIVE_MODE, true, drivePowerScale, turnPowerScale);
 
-                // We are trying to re-localize the robot and vision hasn't seen AprilTag yet.
-                if (relocalizing && robotFieldPose == null)
-                {
-                    robotFieldPose = robot.vision.getRobotFieldPose();
+                    if (robot.robotDrive.driveBase.supportsHolonomicDrive())
+                    {
+                        robot.robotDrive.driveBase.holonomicDrive(
+                            null, inputs[0], inputs[1], inputs[2], robot.robotDrive.driveBase.getDriveGyroAngle());
+                    }
+                    else
+                    {
+                        robot.robotDrive.driveBase.arcadeDrive(inputs[1], inputs[2]);
+                    }
+                    robot.dashboard.displayPrintf(
+                        1, "RobotDrive: Power=(%.2f,y=%.2f,rot=%.2f),Mode:%s",
+                        inputs[0], inputs[1], inputs[2], robot.robotDrive.driveBase.getDriveOrientation());
                 }
             }
             //
