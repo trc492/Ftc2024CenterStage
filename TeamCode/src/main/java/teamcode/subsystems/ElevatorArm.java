@@ -158,10 +158,9 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             elevator =
                 new FtcMotorActuator(RobotParams.HWNAME_ELEVATOR, elevatorParams).getActuator();
             elevator.setSoftwarePidEnabled(true);
-            elevator.setPositionPidCoefficients(
+            elevator.setPositionPidParameters(
                 RobotParams.ELEVATOR_KP, RobotParams.ELEVATOR_KI, RobotParams.ELEVATOR_KD, RobotParams.ELEVATOR_KF,
-                RobotParams.ELEVATOR_IZONE);
-            elevator.setPositionPidTolerance(RobotParams.ELEVATOR_TOLERANCE);
+                RobotParams.ELEVATOR_IZONE, RobotParams.ELEVATOR_TOLERANCE);
             elevator.setStallDetectionEnabled(
                 RobotParams.ELEVATOR_STALL_DETECTION_DELAY, RobotParams.ELEVATOR_STALL_DETECTION_TIMEOUT,
                 RobotParams.ELEVATOR_STALL_ERR_RATE_THRESHOLD);
@@ -188,8 +187,9 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                                            RobotParams.ARM_ZERO_OFFSET)
                 .setPositionPresets(RobotParams.ARM_PRESET_TOLERANCE, RobotParams.ARM_PRESETS);
             arm = new FtcMotorActuator(RobotParams.HWNAME_ARM, true, armParams).getActuator();
-            arm.setPositionPidCoefficients(
-                RobotParams.ARM_KP, RobotParams.ARM_KI, RobotParams.ARM_KD, RobotParams.ARM_KF, RobotParams.ARM_IZONE);
+            arm.setPositionPidParameters(
+                RobotParams.ARM_KP, RobotParams.ARM_KI, RobotParams.ARM_KD, RobotParams.ARM_KF,
+                RobotParams.ARM_IZONE, RobotParams.ARM_TOLERANCE);
             arm.setPositionPidTolerance(RobotParams.ARM_TOLERANCE);
             arm.setPositionPidPowerComp(this::armGetPowerComp);
             arm.setStallDetectionEnabled(
