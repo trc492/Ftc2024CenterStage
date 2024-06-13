@@ -24,20 +24,12 @@ package teamcode;
 
 import java.util.Arrays;
 
-import TrcCommonLib.trclib.TrcDbgTrace;
-import TrcCommonLib.trclib.TrcDigitalInput;
-import TrcCommonLib.trclib.TrcMotor;
-import TrcCommonLib.trclib.TrcPose2D;
-import TrcCommonLib.trclib.TrcRobot;
-import TrcCommonLib.trclib.TrcServo;
-import TrcCommonLib.trclib.TrcTimer;
-import TrcCommonLib.trclib.TrcUtil;
-import TrcFtcLib.ftclib.FtcDashboard;
-import TrcFtcLib.ftclib.FtcDcMotor;
-import TrcFtcLib.ftclib.FtcMatchInfo;
-import TrcFtcLib.ftclib.FtcOctoQuad;
-import TrcFtcLib.ftclib.FtcOpMode;
-import TrcFtcLib.ftclib.FtcRobotBattery;
+import ftclib.archive.FtcDashboard;
+import ftclib.archive.FtcDcMotor;
+import ftclib.archive.FtcMatchInfo;
+import ftclib.archive.FtcOctoQuad;
+import ftclib.archive.FtcOpMode;
+import ftclib.archive.FtcRobotBattery;
 import teamcode.autotasks.TaskAutoPlacePixel;
 import teamcode.drivebases.MecanumDrive;
 import teamcode.drivebases.RobotDrive;
@@ -47,6 +39,14 @@ import teamcode.subsystems.ElevatorArm;
 import teamcode.subsystems.Intake;
 import teamcode.subsystems.PixelTray;
 import teamcode.vision.Vision;
+import trclib.archive.TrcDbgTrace;
+import trclib.archive.TrcDigitalInput;
+import trclib.archive.TrcMotor;
+import trclib.archive.TrcPose2D;
+import trclib.archive.TrcRobot;
+import trclib.archive.TrcServo;
+import trclib.archive.TrcTimer;
+import trclib.archive.TrcUtil;
 
 /**
  * This class creates the robot object that consists of sensors, indicators, drive base and all the subsystems.

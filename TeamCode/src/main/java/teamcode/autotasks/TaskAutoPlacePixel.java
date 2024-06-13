@@ -22,21 +22,21 @@
 
 package teamcode.autotasks;
 
-import TrcCommonLib.trclib.TrcAutoTask;
-import TrcCommonLib.trclib.TrcEvent;
-import TrcCommonLib.trclib.TrcOwnershipMgr;
-import TrcCommonLib.trclib.TrcPose2D;
-import TrcCommonLib.trclib.TrcRobot;
-import TrcCommonLib.trclib.TrcTaskMgr;
-import TrcCommonLib.trclib.TrcTimer;
-import TrcCommonLib.trclib.TrcTrigger;
-import TrcCommonLib.trclib.TrcTriggerThresholdZones;
-import TrcCommonLib.trclib.TrcVisionTargetInfo;
-import TrcFtcLib.ftclib.FtcVisionAprilTag;
+import ftclib.archive.FtcVisionAprilTag;
 import teamcode.FtcAuto;
 import teamcode.Robot;
 import teamcode.RobotParams;
 import teamcode.subsystems.BlinkinLEDs;
+import trclib.archive.TrcAutoTask;
+import trclib.archive.TrcEvent;
+import trclib.archive.TrcOwnershipMgr;
+import trclib.archive.TrcPose2D;
+import trclib.archive.TrcRobot;
+import trclib.archive.TrcTaskMgr;
+import trclib.archive.TrcTimer;
+import trclib.archive.TrcTrigger;
+import trclib.archive.TrcTriggerThresholdZones;
+import trclib.archive.TrcVisionTargetInfo;
 
 /**
  * This class implements auto-assist place pixel task.

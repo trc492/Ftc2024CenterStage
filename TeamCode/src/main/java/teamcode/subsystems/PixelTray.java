@@ -22,10 +22,10 @@
 
 package teamcode.subsystems;
 
-import TrcCommonLib.trclib.TrcDbgTrace;
-import TrcCommonLib.trclib.TrcEvent;
-import TrcFtcLib.ftclib.FtcServo;
+import ftclib.archive.FtcServo;
 import teamcode.RobotParams;
+import trclib.archive.TrcDbgTrace;
+import trclib.archive.TrcEvent;
 
 public class PixelTray
 {

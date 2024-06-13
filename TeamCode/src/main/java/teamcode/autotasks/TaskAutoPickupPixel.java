@@ -24,18 +24,18 @@ package teamcode.autotasks;
 
 import java.util.Locale;
 
-import TrcCommonLib.trclib.TrcAutoTask;
-import TrcCommonLib.trclib.TrcEvent;
-import TrcCommonLib.trclib.TrcOpenCvColorBlobPipeline;
-import TrcCommonLib.trclib.TrcOwnershipMgr;
-import TrcCommonLib.trclib.TrcPose2D;
-import TrcCommonLib.trclib.TrcRobot;
-import TrcCommonLib.trclib.TrcTaskMgr;
-import TrcCommonLib.trclib.TrcTimer;
-import TrcCommonLib.trclib.TrcVisionTargetInfo;
 import teamcode.Robot;
 import teamcode.subsystems.BlinkinLEDs;
 import teamcode.vision.Vision;
+import trclib.archive.TrcAutoTask;
+import trclib.archive.TrcEvent;
+import trclib.archive.TrcOpenCvColorBlobPipeline;
+import trclib.archive.TrcOwnershipMgr;
+import trclib.archive.TrcPose2D;
+import trclib.archive.TrcRobot;
+import trclib.archive.TrcTaskMgr;
+import trclib.archive.TrcTimer;
+import trclib.archive.TrcVisionTargetInfo;
 
 /**
  * This class implements auto-assist pickup pixel task.

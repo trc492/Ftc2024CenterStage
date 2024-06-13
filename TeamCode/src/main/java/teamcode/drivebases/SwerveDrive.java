@@ -29,16 +29,16 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import TrcCommonLib.trclib.TrcDbgTrace;
-import TrcCommonLib.trclib.TrcOdometryWheels;
-import TrcCommonLib.trclib.TrcPidDrive;
-import TrcCommonLib.trclib.TrcPurePursuitDrive;
-import TrcCommonLib.trclib.TrcSwerveDriveBase;
-import TrcCommonLib.trclib.TrcSwerveModule;
-import TrcFtcLib.ftclib.FtcAnalogEncoder;
-import TrcFtcLib.ftclib.FtcCRServo;
-import TrcFtcLib.ftclib.FtcDcMotor;
+import ftclib.archive.FtcAnalogEncoder;
+import ftclib.archive.FtcCRServo;
+import ftclib.archive.FtcDcMotor;
 import teamcode.RobotParams;
+import trclib.archive.TrcDbgTrace;
+import trclib.archive.TrcOdometryWheels;
+import trclib.archive.TrcPidDrive;
+import trclib.archive.TrcPurePursuitDrive;
+import trclib.archive.TrcSwerveDriveBase;
+import trclib.archive.TrcSwerveModule;
 
 /**
  * This class creates the RobotDrive subsystem that consists of wheel motors and related objects for driving the

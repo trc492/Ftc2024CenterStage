@@ -22,15 +22,15 @@
 
 package teamcode.subsystems;
 
-import TrcCommonLib.trclib.TrcDbgTrace;
-import TrcCommonLib.trclib.TrcEvent;
-import TrcCommonLib.trclib.TrcSensor;
-import TrcCommonLib.trclib.TrcTrigger;
-import TrcCommonLib.trclib.TrcTriggerThresholdZones;
-import TrcFtcLib.ftclib.FtcDcMotor;
-import TrcFtcLib.ftclib.FtcDistanceSensor;
+import ftclib.archive.FtcDcMotor;
+import ftclib.archive.FtcDistanceSensor;
 import teamcode.Robot;
 import teamcode.RobotParams;
+import trclib.archive.TrcDbgTrace;
+import trclib.archive.TrcEvent;
+import trclib.archive.TrcSensor;
+import trclib.archive.TrcTrigger;
+import trclib.archive.TrcTriggerThresholdZones;
 
 public class Intake
 {
