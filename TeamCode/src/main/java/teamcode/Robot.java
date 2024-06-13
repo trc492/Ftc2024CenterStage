@@ -27,7 +27,7 @@ import java.util.Arrays;
 import ftclib.archive.FtcDashboard;
 import ftclib.archive.FtcDcMotor;
 import ftclib.archive.FtcMatchInfo;
-import ftclib.archive.FtcOctoQuad;
+import ftclib.sensor.FtcOctoQuad;
 import ftclib.archive.FtcOpMode;
 import ftclib.archive.FtcRobotBattery;
 import teamcode.autotasks.TaskAutoPlacePixel;
