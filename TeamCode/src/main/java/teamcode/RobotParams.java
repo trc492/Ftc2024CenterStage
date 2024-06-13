@@ -62,6 +62,7 @@ public class RobotParams
         public static boolean useBlinkin = robotType == RobotType.CenterStageRobot ||
                                            robotType == RobotType.PowerPlayRobot;
         public static boolean useBatteryMonitor = false;
+        public static boolean useOctoQuad = true;
         public static boolean doStatusUpdate = !inCompetition;
         // Vision
         public static boolean useWebCam = robotType == RobotType.CenterStageRobot ||
@@ -113,6 +114,7 @@ public class RobotParams
     public static final String HWNAME_WEBCAM1                   = "Webcam 1";
     public static final String HWNAME_WEBCAM2                   = "Webcam 2";
     public static final String HWNAME_BLINKIN                   = "blinkin";
+    public static final String HWNAME_OCTOQUAD                  = "octoquad";
     // Drive Base.
     public static final String HWNAME_LFDRIVE_MOTOR             = "lfDriveMotor";
     public static final String HWNAME_RFDRIVE_MOTOR             = "rfDriveMotor";

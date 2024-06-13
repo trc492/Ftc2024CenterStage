@@ -35,6 +35,7 @@ import TrcCommonLib.trclib.TrcUtil;
 import TrcFtcLib.ftclib.FtcDashboard;
 import TrcFtcLib.ftclib.FtcDcMotor;
 import TrcFtcLib.ftclib.FtcMatchInfo;
+import TrcFtcLib.ftclib.FtcOctoQuad;
 import TrcFtcLib.ftclib.FtcOpMode;
 import TrcFtcLib.ftclib.FtcRobotBattery;
 import teamcode.autotasks.TaskAutoPlacePixel;
@@ -72,6 +73,7 @@ public class Robot
     //
     public BlinkinLEDs blinkin;
     public FtcRobotBattery battery;
+    public FtcOctoQuad octoQuad;
     //
     // Subsystems.
     //
@@ -109,6 +111,11 @@ public class Robot
             RobotParams.Preferences.useTensorFlowVision)
         {
             vision = new Vision(this);
+        }
+
+        if (RobotParams.Preferences.useOctoQuad)
+        {
+            octoQuad = new FtcOctoQuad(RobotParams.HWNAME_OCTOQUAD, 0);
         }
         //
         // If robotType is NoRobot, the robot controller is disconnected from the robot for testing vision.

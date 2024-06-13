@@ -79,7 +79,8 @@ public class FtcTest extends FtcTeleOp
         TUNE_TURN_PID,
         PURE_PURSUIT_DRIVE,
         CALIBRATE_SWERVE_STEERING,
-        TUNE_LAUNCHER_POWER
+        TUNE_LAUNCHER_POWER,
+        TEST_OCTOQUAD
     }   //enum Test
 
     /**
@@ -565,6 +566,13 @@ public class FtcTest extends FtcTeleOp
                 case TUNE_LAUNCHER_POWER:
                     robot.dashboard.displayPrintf(lineNum++, "LauncherPower=%.3f", launchPower);
                     break;
+
+                case TEST_OCTOQUAD:
+                    if (robot.octoQuad != null)
+                    {
+                        robot.dashboard.displayPrintf(lineNum++, "OctoQuad: enc=%f", robot.octoQuad.getRawPosition());
+                    }
+                    break;
             }
         }
     }   //periodic
@@ -952,6 +960,7 @@ public class FtcTest extends FtcTeleOp
         testMenu.addChoice("Pure Pursuit Drive", Test.PURE_PURSUIT_DRIVE, false);
         testMenu.addChoice("Calibrate Swerve Steering", Test.CALIBRATE_SWERVE_STEERING, false);
         testMenu.addChoice("Tune Launcher Power", Test.TUNE_LAUNCHER_POWER, false);
+        testMenu.addChoice("Test OctoQuad", Test.TEST_OCTOQUAD, false);
 
         xTargetMenu.setChildMenu(yTargetMenu);
         yTargetMenu.setChildMenu(turnTargetMenu);
