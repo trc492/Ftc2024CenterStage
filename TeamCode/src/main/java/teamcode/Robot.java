@@ -39,14 +39,14 @@ import teamcode.subsystems.ElevatorArm;
 import teamcode.subsystems.Intake;
 import teamcode.subsystems.PixelTray;
 import teamcode.vision.Vision;
-import trclib.archive.TrcDbgTrace;
+import trclib.robotcore.TrcDbgTrace;
 import trclib.sensor.TrcDigitalInput;
-import trclib.archive.TrcMotor;
-import trclib.archive.TrcPose2D;
-import trclib.archive.TrcRobot;
-import trclib.archive.TrcServo;
+import trclib.motor.TrcMotor;
+import trclib.path.TrcPose2D;
+import trclib.robotcore.TrcRobot;
+import trclib.motor.TrcServo;
 import trclib.timer.TrcTimer;
-import trclib.archive.TrcUtil;
+import trclib.robotcore.TrcUtil;
 
 /**
  * This class creates the robot object that consists of sensors, indicators, drive base and all the subsystems.

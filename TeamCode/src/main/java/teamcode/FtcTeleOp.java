@@ -28,11 +28,11 @@ import java.util.Locale;
 
 import ftclib.inputoutput.FtcGamepad;
 import ftclib.robotcore.FtcOpMode;
-import trclib.archive.TrcDbgTrace;
+import trclib.robotcore.TrcDbgTrace;
 import trclib.drivebase.TrcDriveBase;
-import trclib.archive.TrcGameController;
-import trclib.archive.TrcPose2D;
-import trclib.archive.TrcRobot;
+import trclib.inputoutput.TrcGameController;
+import trclib.path.TrcPose2D;
+import trclib.robotcore.TrcRobot;
 import trclib.timer.TrcTimer;
 
 /**

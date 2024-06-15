@@ -30,10 +30,10 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import ftclib.inputoutput.FtcGamepad;
 import trclib.drivebase.TrcDriveBase.DriveOrientation;
-import trclib.archive.TrcHomographyMapper;
-import trclib.archive.TrcPidController;
-import trclib.archive.TrcPose2D;
-import trclib.archive.TrcUtil;
+import trclib.vision.TrcHomographyMapper;
+import trclib.robotcore.TrcPidController;
+import trclib.path.TrcPose2D;
+import trclib.robotcore.TrcUtil;
 
 /**
  * This class contains robot and subsystem constants and parameters.

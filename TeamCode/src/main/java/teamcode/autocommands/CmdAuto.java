@@ -25,10 +25,10 @@ package teamcode.autocommands;
 import teamcode.FtcAuto;
 import teamcode.Robot;
 import teamcode.RobotParams;
-import trclib.archive.TrcEvent;
-import trclib.archive.TrcPose2D;
-import trclib.archive.TrcRobot;
-import trclib.archive.TrcStateMachine;
+import trclib.robotcore.TrcEvent;
+import trclib.path.TrcPose2D;
+import trclib.robotcore.TrcRobot;
+import trclib.robotcore.TrcStateMachine;
 import trclib.timer.TrcTimer;
 
 /**
