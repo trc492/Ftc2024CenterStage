@@ -30,9 +30,9 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import ftclib.inputoutput.FtcGamepad;
 import trclib.drivebase.TrcDriveBase.DriveOrientation;
+import trclib.pathdrive.TrcPose2D;
 import trclib.vision.TrcHomographyMapper;
 import trclib.robotcore.TrcPidController;
-import trclib.path.TrcPose2D;
 import trclib.robotcore.TrcUtil;
 
 /**

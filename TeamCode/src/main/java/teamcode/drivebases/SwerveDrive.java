@@ -33,10 +33,10 @@ import ftclib.sensor.FtcAnalogEncoder;
 import ftclib.motor.FtcCRServo;
 import ftclib.motor.FtcDcMotor;
 import teamcode.RobotParams;
+import trclib.pathdrive.TrcPidDrive;
+import trclib.pathdrive.TrcPurePursuitDrive;
 import trclib.robotcore.TrcDbgTrace;
 import trclib.sensor.TrcOdometryWheels;
-import trclib.path.TrcPidDrive;
-import trclib.path.TrcPurePursuitDrive;
 import trclib.drivebase.TrcSwerveDriveBase;
 import trclib.drivebase.TrcSwerveModule;
 

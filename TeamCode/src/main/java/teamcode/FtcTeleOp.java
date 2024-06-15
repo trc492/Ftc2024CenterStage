@@ -31,7 +31,7 @@ import ftclib.robotcore.FtcOpMode;
 import trclib.robotcore.TrcDbgTrace;
 import trclib.drivebase.TrcDriveBase;
 import trclib.inputoutput.TrcGameController;
-import trclib.path.TrcPose2D;
+import trclib.pathdrive.TrcPose2D;
 import trclib.robotcore.TrcRobot;
 import trclib.timer.TrcTimer;
 

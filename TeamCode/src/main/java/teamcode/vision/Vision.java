@@ -48,10 +48,10 @@ import teamcode.FtcAuto;
 import teamcode.Robot;
 import teamcode.RobotParams;
 import teamcode.subsystems.BlinkinLEDs;
+import trclib.pathdrive.TrcPose2D;
 import trclib.robotcore.TrcDbgTrace;
 import trclib.vision.TrcOpenCvColorBlobPipeline;
 import trclib.vision.TrcOpenCvDetector;
-import trclib.path.TrcPose2D;
 import trclib.vision.TrcVisionTargetInfo;
 
 /**
