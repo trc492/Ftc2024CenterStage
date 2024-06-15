@@ -26,9 +26,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import ftclib.sensor.FtcDistanceSensor;
-import ftclib.motor.FtcMotorActuator;
+import ftclib.subsystem.FtcMotorActuator;
 import ftclib.motor.FtcServo;
-import ftclib.motor.FtcServoActuator;
+import ftclib.subsystem.FtcServoActuator;
 import teamcode.RobotParams;
 import trclib.robotcore.TrcDbgTrace;
 import trclib.robotcore.TrcEvent;

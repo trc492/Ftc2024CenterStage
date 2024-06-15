@@ -28,7 +28,7 @@ import teamcode.RobotParams;
 import trclib.drivebase.TrcDriveBase;
 import trclib.pathdrive.TrcPidDrive;
 import trclib.pathdrive.TrcPurePursuitDrive;
-import trclib.robotcore.TrcUtil;
+import trclib.dataprocessor.TrcUtil;
 
 /**
  * This class is intended to be extended by subclasses implementing different robot drive bases.

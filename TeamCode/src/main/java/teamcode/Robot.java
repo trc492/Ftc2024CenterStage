@@ -24,9 +24,9 @@ package teamcode;
 
 import java.util.Arrays;
 
-import ftclib.inputoutput.FtcDashboard;
+import ftclib.output.FtcDashboard;
 import ftclib.motor.FtcDcMotor;
-import ftclib.inputoutput.FtcMatchInfo;
+import ftclib.input.FtcMatchInfo;
 import ftclib.sensor.FtcOctoQuad;
 import ftclib.robotcore.FtcOpMode;
 import ftclib.sensor.FtcRobotBattery;
@@ -46,7 +46,7 @@ import trclib.motor.TrcMotor;
 import trclib.robotcore.TrcRobot;
 import trclib.motor.TrcServo;
 import trclib.timer.TrcTimer;
-import trclib.robotcore.TrcUtil;
+import trclib.dataprocessor.TrcUtil;
 
 /**
  * This class creates the robot object that consists of sensors, indicators, drive base and all the subsystems.
