@@ -22,10 +22,10 @@
 
 package teamcode.drivebases;
 
-import ftclib.archive.FtcDcMotor;
-import ftclib.archive.FtcImu;
+import ftclib.motor.FtcDcMotor;
+import ftclib.sensor.FtcImu;
 import teamcode.RobotParams;
-import trclib.archive.TrcDriveBase;
+import trclib.drivebase.TrcDriveBase;
 import trclib.archive.TrcPidDrive;
 import trclib.archive.TrcPurePursuitDrive;
 import trclib.archive.TrcUtil;

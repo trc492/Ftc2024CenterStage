@@ -24,12 +24,12 @@ package teamcode;
 
 import java.util.Arrays;
 
-import ftclib.archive.FtcDashboard;
-import ftclib.archive.FtcDcMotor;
-import ftclib.archive.FtcMatchInfo;
+import ftclib.inputoutput.FtcDashboard;
+import ftclib.motor.FtcDcMotor;
+import ftclib.inputoutput.FtcMatchInfo;
 import ftclib.sensor.FtcOctoQuad;
-import ftclib.archive.FtcOpMode;
-import ftclib.archive.FtcRobotBattery;
+import ftclib.robotcore.FtcOpMode;
+import ftclib.sensor.FtcRobotBattery;
 import teamcode.autotasks.TaskAutoPlacePixel;
 import teamcode.drivebases.MecanumDrive;
 import teamcode.drivebases.RobotDrive;
@@ -40,12 +40,12 @@ import teamcode.subsystems.Intake;
 import teamcode.subsystems.PixelTray;
 import teamcode.vision.Vision;
 import trclib.archive.TrcDbgTrace;
-import trclib.archive.TrcDigitalInput;
+import trclib.sensor.TrcDigitalInput;
 import trclib.archive.TrcMotor;
 import trclib.archive.TrcPose2D;
 import trclib.archive.TrcRobot;
 import trclib.archive.TrcServo;
-import trclib.archive.TrcTimer;
+import trclib.timer.TrcTimer;
 import trclib.archive.TrcUtil;
 
 /**

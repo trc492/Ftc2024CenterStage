@@ -34,8 +34,8 @@ import trclib.archive.TrcOwnershipMgr;
 import trclib.archive.TrcPose2D;
 import trclib.archive.TrcRobot;
 import trclib.archive.TrcTaskMgr;
-import trclib.archive.TrcTimer;
-import trclib.archive.TrcVisionTargetInfo;
+import trclib.timer.TrcTimer;
+import trclib.vision.TrcVisionTargetInfo;
 
 /**
  * This class implements auto-assist pickup pixel task.

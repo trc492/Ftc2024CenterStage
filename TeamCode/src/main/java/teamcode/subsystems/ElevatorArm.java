@@ -25,18 +25,18 @@ package teamcode.subsystems;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import ftclib.archive.FtcDistanceSensor;
-import ftclib.archive.FtcMotorActuator;
-import ftclib.archive.FtcServo;
-import ftclib.archive.FtcServoActuator;
+import ftclib.sensor.FtcDistanceSensor;
+import ftclib.motor.FtcMotorActuator;
+import ftclib.motor.FtcServo;
+import ftclib.motor.FtcServoActuator;
 import teamcode.RobotParams;
 import trclib.archive.TrcDbgTrace;
 import trclib.archive.TrcEvent;
 import trclib.archive.TrcExclusiveSubsystem;
 import trclib.archive.TrcMotor;
-import trclib.archive.TrcSensor;
-import trclib.archive.TrcTimer;
-import trclib.archive.TrcTriggerThresholdZones;
+import trclib.sensor.TrcSensor;
+import trclib.timer.TrcTimer;
+import trclib.dataprocessor.TrcTriggerThresholdZones;
 
 public class ElevatorArm implements TrcExclusiveSubsystem
 {

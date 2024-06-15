@@ -22,8 +22,8 @@
 
 package teamcode.subsystems;
 
-import ftclib.archive.FtcRevBlinkin;
-import trclib.archive.TrcDriveBase;
+import ftclib.inputoutput.FtcRevBlinkin;
+import trclib.drivebase.TrcDriveBase;
 import trclib.archive.TrcRevBlinkin;
 
 /**

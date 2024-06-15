@@ -22,7 +22,7 @@
 
 package teamcode.subsystems;
 
-import ftclib.archive.FtcServo;
+import ftclib.motor.FtcServo;
 import teamcode.RobotParams;
 import trclib.archive.TrcDbgTrace;
 import trclib.archive.TrcEvent;
