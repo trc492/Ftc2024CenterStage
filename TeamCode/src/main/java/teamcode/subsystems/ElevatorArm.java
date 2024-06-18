@@ -221,7 +221,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 wristSensor = null;
                 wristTrigger = null;
             }
-            wrist.setTraceLevel(TrcDbgTrace.MsgLevel.INFO);
+            wrist.tracer.setTraceLevel(TrcDbgTrace.MsgLevel.INFO);
         }
         else
         {

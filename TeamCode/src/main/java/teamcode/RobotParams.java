@@ -28,7 +28,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import ftclib.input.FtcGamepad;
+import ftclib.driverio.FtcGamepad;
 import trclib.drivebase.TrcDriveBase.DriveOrientation;
 import trclib.pathdrive.TrcPose2D;
 import trclib.vision.TrcHomographyMapper;
@@ -40,7 +40,7 @@ import trclib.dataprocessor.TrcUtil;
  */
 public class RobotParams
 {
-    public static enum RobotType
+    public enum RobotType
     {
         CenterStageRobot,
         PowerPlayRobot,

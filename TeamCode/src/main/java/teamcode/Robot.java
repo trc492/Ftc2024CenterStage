@@ -24,9 +24,9 @@ package teamcode;
 
 import java.util.Arrays;
 
-import ftclib.output.FtcDashboard;
+import ftclib.driverio.FtcDashboard;
 import ftclib.motor.FtcDcMotor;
-import ftclib.input.FtcMatchInfo;
+import ftclib.driverio.FtcMatchInfo;
 import ftclib.sensor.FtcOctoQuad;
 import ftclib.robotcore.FtcOpMode;
 import ftclib.sensor.FtcRobotBattery;
@@ -382,73 +382,82 @@ public class Robot
     {
         if (TrcTimer.getCurrentTime() > nextStatusUpdateTime)
         {
-            int lineNum = 2;
+            int lineNum = 1;
             long startNanoTime;
 
             nextStatusUpdateTime += STATUS_UPDATE_INTERVAL;
-            startNanoTime = TrcTimer.getNanoTime();
             if (robotDrive != null)
             {
-                dashboard.displayPrintf(lineNum++, "DriveBase: Pose=%s", robotDrive.driveBase.getFieldPosition());
+                startNanoTime = TrcTimer.getNanoTime();
+                dashboard.displayPrintf(
+                    ++lineNum,
+                    "DriveBase: Pose=" + robotDrive.driveBase.getFieldPosition());
+                totalElapsedTime[0] += TrcTimer.getNanoTime() - startNanoTime;
             }
-            totalElapsedTime[0] += TrcTimer.getNanoTime() - startNanoTime;
 
             if (elevatorArm != null)
             {
-                startNanoTime = TrcTimer.getNanoTime();
                 if (elevatorArm.elevator != null)
                 {
+                    startNanoTime = TrcTimer.getNanoTime();
                     dashboard.displayPrintf(
-                        lineNum++, "Elevator: power=%.3f, pos=%.1f, target=%.1f, lowerLimitSw=%s",
-                        elevatorArm.elevator.getPower(), elevatorArm.elevator.getPosition(),
-                        elevatorArm.elevator.getPidTarget(), elevatorArm.elevator.isLowerLimitSwitchActive());
+                        ++lineNum,
+                        "Elevator: power=" + elevatorArm.elevator.getPower() +
+                        ",pos=" + elevatorArm.elevator.getPosition() +
+                        ",target=" + elevatorArm.elevator.getPidTarget() +
+                        ",lowerLimitSw=" + elevatorArm.elevator.isLowerLimitSwitchActive());
+                    totalElapsedTime[1] += TrcTimer.getNanoTime() - startNanoTime;
                 }
-                totalElapsedTime[1] += TrcTimer.getNanoTime() - startNanoTime;
 
-                startNanoTime = TrcTimer.getNanoTime();
                 if (elevatorArm.arm != null)
                 {
+                    startNanoTime = TrcTimer.getNanoTime();
                     dashboard.displayPrintf(
-                        lineNum++, "Arm: power=%.3f, pos=%.1f/%f, target=%.1f",
-                        elevatorArm.arm.getPower(), elevatorArm.arm.getPosition(),
-                        elevatorArm.arm.getEncoderRawPosition(), elevatorArm.arm.getPidTarget());
+                        ++lineNum,
+                        "Arm: power=" + elevatorArm.arm.getPower() +
+                        ",pos=" + elevatorArm.arm.getPosition() + "/" + elevatorArm.arm.getEncoderRawPosition() +
+                        ",target=" + elevatorArm.arm.getPidTarget());
+                    totalElapsedTime[2] += TrcTimer.getNanoTime() - startNanoTime;
                 }
-                totalElapsedTime[2] += TrcTimer.getNanoTime() - startNanoTime;
 
-                startNanoTime = TrcTimer.getNanoTime();
                 if (elevatorArm.wrist != null)
                 {
+                    startNanoTime = TrcTimer.getNanoTime();
                     if (elevatorArm.wristSensor != null)
                     {
                         dashboard.displayPrintf(
-                            lineNum++, "Wrist: pos=%.1f, distance=%.1f",
-                            elevatorArm.wrist.getPosition(), elevatorArm.wristGetDistance());
+                            ++lineNum,
+                            "Wrist: pos=" + elevatorArm.wrist.getPosition() +
+                            ",distance=" + elevatorArm.wristGetDistance());
                     }
                     else
                     {
-                        dashboard.displayPrintf(lineNum++, "Wrist: pos=%.1f", elevatorArm.wrist.getPosition());
+                        dashboard.displayPrintf(++lineNum, "Wrist: pos=" + elevatorArm.wrist.getPosition());
                     }
+                    totalElapsedTime[3] += TrcTimer.getNanoTime() - startNanoTime;
                 }
-                totalElapsedTime[3] += TrcTimer.getNanoTime() - startNanoTime;
             }
 
-            startNanoTime = TrcTimer.getNanoTime();
             if (intake != null)
             {
+                startNanoTime = TrcTimer.getNanoTime();
                 dashboard.displayPrintf(
-                    lineNum++, "Intake: power=%.1f, sensor=%f, has2Pixels=%s",
-                    intake.getIntakeMotor().getPower(), intake.getDistance(), intake.hasTwoPixels());
+                    ++lineNum,
+                    "Intake: power=" + intake.getIntakeMotor().getPower() +
+                    ",sensor=" + intake.getDistance() +
+                    ",has2Pixels=" + intake.hasTwoPixels());
+                totalElapsedTime[4] += TrcTimer.getNanoTime() - startNanoTime;
             }
-            totalElapsedTime[4] += TrcTimer.getNanoTime() - startNanoTime;
 
-            startNanoTime = TrcTimer.getNanoTime();
             if (pixelTray != null)
             {
+                startNanoTime = TrcTimer.getNanoTime();
                 dashboard.displayPrintf(
-                    lineNum++, "PixelTray: lowerGateOpened=%s, upperGateOpened=%s",
-                    pixelTray.isLowerGateOpened(), pixelTray.isUpperGateOpened());
+                    ++lineNum,
+                    "PixelTray: lowerGateOpened=" + pixelTray.isLowerGateOpened() +
+                    ",upperGateOpened=" + pixelTray.isUpperGateOpened());
+                totalElapsedTime[5] += TrcTimer.getNanoTime() - startNanoTime;
             }
-            totalElapsedTime[5] += TrcTimer.getNanoTime() - startNanoTime;
             loopCount++;
         }
     }   //updateStatus

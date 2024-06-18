@@ -26,11 +26,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.Locale;
 
-import ftclib.input.FtcGamepad;
+import ftclib.driverio.FtcGamepad;
 import ftclib.robotcore.FtcOpMode;
 import trclib.robotcore.TrcDbgTrace;
 import trclib.drivebase.TrcDriveBase;
-import trclib.input.TrcGameController;
+import trclib.driverio.TrcGameController;
 import trclib.pathdrive.TrcPose2D;
 import trclib.robotcore.TrcRobot;
 import trclib.timer.TrcTimer;
