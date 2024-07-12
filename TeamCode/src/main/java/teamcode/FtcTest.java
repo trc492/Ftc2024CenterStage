@@ -29,26 +29,25 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import java.util.Arrays;
 import java.util.Locale;
 
-import TrcCommonLib.command.CmdDriveMotorsTest;
-import TrcCommonLib.command.CmdPidDrive;
-import TrcCommonLib.command.CmdTimedDrive;
-
-import TrcCommonLib.trclib.TrcDbgTrace;
-import TrcCommonLib.trclib.TrcElapsedTimer;
-import TrcCommonLib.trclib.TrcGameController;
-import TrcCommonLib.trclib.TrcPidController;
-import TrcCommonLib.trclib.TrcPose2D;
-import TrcCommonLib.trclib.TrcRobot;
-import TrcCommonLib.trclib.TrcTimer;
-import TrcCommonLib.trclib.TrcUtil;
-import TrcFtcLib.ftclib.FtcChoiceMenu;
-import TrcFtcLib.ftclib.FtcGamepad;
-import TrcFtcLib.ftclib.FtcMenu;
-import TrcFtcLib.ftclib.FtcPidCoeffCache;
-import TrcFtcLib.ftclib.FtcValueMenu;
+import ftclib.driverio.FtcChoiceMenu;
+import ftclib.driverio.FtcGamepad;
+import ftclib.driverio.FtcMenu;
+import ftclib.robotcore.FtcPidCoeffCache;
+import ftclib.driverio.FtcValueMenu;
 import teamcode.drivebases.RobotDrive;
 import teamcode.drivebases.SwerveDrive;
 import teamcode.vision.Vision;
+import trclib.pathdrive.TrcPose2D;
+import trclib.robotcore.TrcDbgTrace;
+import trclib.timer.TrcElapsedTimer;
+import trclib.driverio.TrcGameController;
+import trclib.robotcore.TrcPidController;
+import trclib.robotcore.TrcRobot;
+import trclib.timer.TrcTimer;
+import trclib.dataprocessor.TrcUtil;
+import trclib.command.CmdDriveMotorsTest;
+import trclib.command.CmdPidDrive;
+import trclib.command.CmdTimedDrive;
 
 /**
  * This class contains the Test Mode program. It extends FtcTeleOp so that we can teleop control the robot for
@@ -79,7 +78,8 @@ public class FtcTest extends FtcTeleOp
         TUNE_TURN_PID,
         PURE_PURSUIT_DRIVE,
         CALIBRATE_SWERVE_STEERING,
-        TUNE_LAUNCHER_POWER
+        TUNE_LAUNCHER_POWER,
+        TEST_OCTOQUAD
     }   //enum Test
 
     /**
@@ -565,6 +565,13 @@ public class FtcTest extends FtcTeleOp
                 case TUNE_LAUNCHER_POWER:
                     robot.dashboard.displayPrintf(lineNum++, "LauncherPower=%.3f", launchPower);
                     break;
+
+                case TEST_OCTOQUAD:
+                    if (robot.octoQuad != null)
+                    {
+                        robot.dashboard.displayPrintf(lineNum++, "OctoQuad: enc=%f", robot.octoQuad.getRawPosition());
+                    }
+                    break;
             }
         }
     }   //periodic
@@ -581,7 +588,7 @@ public class FtcTest extends FtcTeleOp
      * @param pressed specifies true if the button is pressed, false otherwise.
      */
     @Override
-    public void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
+    protected void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
         boolean passToTeleOp = true;
         //
@@ -844,7 +851,7 @@ public class FtcTest extends FtcTeleOp
      * @param pressed specifies true if the button is pressed, false otherwise.
      */
     @Override
-    public void operatorButtonEvent(TrcGameController gamepad, int button, boolean pressed)
+    protected void operatorButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
         boolean passToTeleOp = true;
         //
@@ -952,6 +959,7 @@ public class FtcTest extends FtcTeleOp
         testMenu.addChoice("Pure Pursuit Drive", Test.PURE_PURSUIT_DRIVE, false);
         testMenu.addChoice("Calibrate Swerve Steering", Test.CALIBRATE_SWERVE_STEERING, false);
         testMenu.addChoice("Tune Launcher Power", Test.TUNE_LAUNCHER_POWER, false);
+        testMenu.addChoice("Test OctoQuad", Test.TEST_OCTOQUAD, false);
 
         xTargetMenu.setChildMenu(yTargetMenu);
         yTargetMenu.setChildMenu(turnTargetMenu);

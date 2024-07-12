@@ -22,14 +22,14 @@
 
 package teamcode.autocommands;
 
-import TrcCommonLib.trclib.TrcEvent;
-import TrcCommonLib.trclib.TrcPose2D;
-import TrcCommonLib.trclib.TrcRobot;
-import TrcCommonLib.trclib.TrcStateMachine;
-import TrcCommonLib.trclib.TrcTimer;
 import teamcode.FtcAuto;
 import teamcode.Robot;
 import teamcode.RobotParams;
+import trclib.pathdrive.TrcPose2D;
+import trclib.robotcore.TrcEvent;
+import trclib.robotcore.TrcRobot;
+import trclib.robotcore.TrcStateMachine;
+import trclib.timer.TrcTimer;
 
 /**
  * This class implements an autonomous strategy.

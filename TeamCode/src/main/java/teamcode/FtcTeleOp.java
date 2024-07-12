@@ -26,15 +26,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.Locale;
 
-import TrcCommonLib.trclib.TrcDbgTrace;
-import TrcCommonLib.trclib.TrcDriveBase;
-import TrcCommonLib.trclib.TrcGameController;
-import TrcCommonLib.trclib.TrcPose2D;
-import TrcCommonLib.trclib.TrcRobot;
-import TrcCommonLib.trclib.TrcTimer;
-import TrcFtcLib.ftclib.FtcGamepad;
-import TrcFtcLib.ftclib.FtcOpMode;
-import teamcode.drivebases.SwerveDrive;
+import ftclib.driverio.FtcGamepad;
+import ftclib.robotcore.FtcOpMode;
+import trclib.robotcore.TrcDbgTrace;
+import trclib.drivebase.TrcDriveBase;
+import trclib.driverio.TrcGameController;
+import trclib.pathdrive.TrcPose2D;
+import trclib.robotcore.TrcRobot;
+import trclib.timer.TrcTimer;
 
 /**
  * This class contains the TeleOp Mode program.
@@ -297,7 +296,7 @@ public class FtcTeleOp extends FtcOpMode
      * @param button specifies the button ID that generates the event.
      * @param pressed specifies true if the button is pressed, false otherwise.
      */
-    public void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
+    protected void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
         robot.dashboard.displayPrintf(8, "%s: %04x->%s", gamepad, button, pressed? "Pressed": "Released");
 
@@ -455,7 +454,7 @@ public class FtcTeleOp extends FtcOpMode
      * @param button specifies the button ID that generates the event.
      * @param pressed specifies true if the button is pressed, false otherwise.
      */
-    public void operatorButtonEvent(TrcGameController gamepad, int button, boolean pressed)
+    protected void operatorButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
         robot.dashboard.displayPrintf(8, "%s: %04x->%s", gamepad, button, pressed? "Pressed": "Released");
 

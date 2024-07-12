@@ -28,19 +28,19 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import TrcCommonLib.trclib.TrcDriveBase.DriveOrientation;
-import TrcCommonLib.trclib.TrcHomographyMapper;
-import TrcCommonLib.trclib.TrcPidController;
-import TrcCommonLib.trclib.TrcPose2D;
-import TrcCommonLib.trclib.TrcUtil;
-import TrcFtcLib.ftclib.FtcGamepad;
+import ftclib.driverio.FtcGamepad;
+import trclib.drivebase.TrcDriveBase.DriveOrientation;
+import trclib.pathdrive.TrcPose2D;
+import trclib.vision.TrcHomographyMapper;
+import trclib.robotcore.TrcPidController;
+import trclib.dataprocessor.TrcUtil;
 
 /**
  * This class contains robot and subsystem constants and parameters.
  */
 public class RobotParams
 {
-    public static enum RobotType
+    public enum RobotType
     {
         CenterStageRobot,
         PowerPlayRobot,
@@ -62,6 +62,7 @@ public class RobotParams
         public static boolean useBlinkin = robotType == RobotType.CenterStageRobot ||
                                            robotType == RobotType.PowerPlayRobot;
         public static boolean useBatteryMonitor = false;
+        public static boolean useOctoQuad = true;
         public static boolean doStatusUpdate = !inCompetition;
         // Vision
         public static boolean useWebCam = robotType == RobotType.CenterStageRobot ||
@@ -113,6 +114,7 @@ public class RobotParams
     public static final String HWNAME_WEBCAM1                   = "Webcam 1";
     public static final String HWNAME_WEBCAM2                   = "Webcam 2";
     public static final String HWNAME_BLINKIN                   = "blinkin";
+    public static final String HWNAME_OCTOQUAD                  = "octoquad";
     // Drive Base.
     public static final String HWNAME_LFDRIVE_MOTOR             = "lfDriveMotor";
     public static final String HWNAME_RFDRIVE_MOTOR             = "rfDriveMotor";

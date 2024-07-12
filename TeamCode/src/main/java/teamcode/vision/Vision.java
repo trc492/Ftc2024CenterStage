@@ -36,23 +36,23 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import TrcCommonLib.trclib.TrcDbgTrace;
-import TrcCommonLib.trclib.TrcOpenCvColorBlobPipeline;
-import TrcCommonLib.trclib.TrcOpenCvDetector;
-import TrcCommonLib.trclib.TrcPose2D;
-import TrcCommonLib.trclib.TrcVisionTargetInfo;
-import TrcFtcLib.ftclib.FtcEocvColorBlobProcessor;
-import TrcFtcLib.ftclib.FtcOpMode;
-import TrcFtcLib.ftclib.FtcRawEocvColorBlobPipeline;
-import TrcFtcLib.ftclib.FtcRawEocvVision;
-import TrcFtcLib.ftclib.FtcVision;
-import TrcFtcLib.ftclib.FtcVisionAprilTag;
-import TrcFtcLib.ftclib.FtcVisionEocvColorBlob;
-import TrcFtcLib.ftclib.FtcVisionTensorFlow;
+import ftclib.vision.FtcEocvColorBlobProcessor;
+import ftclib.robotcore.FtcOpMode;
+import ftclib.vision.FtcRawEocvColorBlobPipeline;
+import ftclib.vision.FtcRawEocvVision;
+import ftclib.vision.FtcVision;
+import ftclib.vision.FtcVisionAprilTag;
+import ftclib.vision.FtcVisionEocvColorBlob;
+import ftclib.vision.FtcVisionTensorFlow;
 import teamcode.FtcAuto;
 import teamcode.Robot;
 import teamcode.RobotParams;
 import teamcode.subsystems.BlinkinLEDs;
+import trclib.pathdrive.TrcPose2D;
+import trclib.robotcore.TrcDbgTrace;
+import trclib.vision.TrcOpenCvColorBlobPipeline;
+import trclib.vision.TrcOpenCvDetector;
+import trclib.vision.TrcVisionTargetInfo;
 
 /**
  * This class implements AprilTag/TensorFlow/Eocv Vision for the game season. It creates and initializes all the

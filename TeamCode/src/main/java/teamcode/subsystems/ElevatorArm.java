@@ -25,18 +25,18 @@ package teamcode.subsystems;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import TrcCommonLib.trclib.TrcDbgTrace;
-import TrcCommonLib.trclib.TrcEvent;
-import TrcCommonLib.trclib.TrcExclusiveSubsystem;
-import TrcCommonLib.trclib.TrcMotor;
-import TrcCommonLib.trclib.TrcSensor;
-import TrcCommonLib.trclib.TrcTimer;
-import TrcCommonLib.trclib.TrcTriggerThresholdZones;
-import TrcFtcLib.ftclib.FtcDistanceSensor;
-import TrcFtcLib.ftclib.FtcMotorActuator;
-import TrcFtcLib.ftclib.FtcServo;
-import TrcFtcLib.ftclib.FtcServoActuator;
+import ftclib.sensor.FtcDistanceSensor;
+import ftclib.subsystem.FtcMotorActuator;
+import ftclib.motor.FtcServo;
+import ftclib.subsystem.FtcServoActuator;
 import teamcode.RobotParams;
+import trclib.robotcore.TrcDbgTrace;
+import trclib.robotcore.TrcEvent;
+import trclib.robotcore.TrcExclusiveSubsystem;
+import trclib.motor.TrcMotor;
+import trclib.sensor.TrcSensor;
+import trclib.timer.TrcTimer;
+import trclib.dataprocessor.TrcTriggerThresholdZones;
 
 public class ElevatorArm implements TrcExclusiveSubsystem
 {
@@ -161,7 +161,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             elevator.setPositionPidParameters(
                 RobotParams.ELEVATOR_KP, RobotParams.ELEVATOR_KI, RobotParams.ELEVATOR_KD, RobotParams.ELEVATOR_KF,
                 RobotParams.ELEVATOR_IZONE, RobotParams.ELEVATOR_TOLERANCE);
-            elevator.setStallDetectionEnabled(
+            elevator.setPidStallDetectionEnabled(
                 RobotParams.ELEVATOR_STALL_DETECTION_DELAY, RobotParams.ELEVATOR_STALL_DETECTION_TIMEOUT,
                 RobotParams.ELEVATOR_STALL_ERR_RATE_THRESHOLD);
             elevator.setTraceLevel(TrcDbgTrace.MsgLevel.INFO, false, false, null);
@@ -192,7 +192,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 RobotParams.ARM_IZONE, RobotParams.ARM_TOLERANCE);
             arm.setPositionPidTolerance(RobotParams.ARM_TOLERANCE);
             arm.setPositionPidPowerComp(this::armGetPowerComp);
-            arm.setStallDetectionEnabled(
+            arm.setPidStallDetectionEnabled(
                 RobotParams.ARM_STALL_DETECTION_DELAY, RobotParams.ARM_STALL_DETECTION_TIMEOUT,
                 RobotParams.ARM_STALL_ERR_RATE_THRESHOLD);
             arm.setTraceLevel(TrcDbgTrace.MsgLevel.INFO, false, false, null);
@@ -221,7 +221,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 wristSensor = null;
                 wristTrigger = null;
             }
-            wrist.setTraceLevel(TrcDbgTrace.MsgLevel.INFO);
+            wrist.tracer.setTraceLevel(TrcDbgTrace.MsgLevel.INFO);
         }
         else
         {

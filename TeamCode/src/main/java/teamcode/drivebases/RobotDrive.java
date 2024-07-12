@@ -22,13 +22,13 @@
 
 package teamcode.drivebases;
 
-import TrcCommonLib.trclib.TrcDriveBase;
-import TrcCommonLib.trclib.TrcPidDrive;
-import TrcCommonLib.trclib.TrcPurePursuitDrive;
-import TrcCommonLib.trclib.TrcUtil;
-import TrcFtcLib.ftclib.FtcDcMotor;
-import TrcFtcLib.ftclib.FtcImu;
+import ftclib.motor.FtcDcMotor;
+import ftclib.sensor.FtcImu;
 import teamcode.RobotParams;
+import trclib.drivebase.TrcDriveBase;
+import trclib.pathdrive.TrcPidDrive;
+import trclib.pathdrive.TrcPurePursuitDrive;
+import trclib.dataprocessor.TrcUtil;
 
 /**
  * This class is intended to be extended by subclasses implementing different robot drive bases.

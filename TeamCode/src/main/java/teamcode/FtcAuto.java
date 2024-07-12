@@ -26,18 +26,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import java.util.Locale;
 
-import TrcCommonLib.command.CmdPidDrive;
-import TrcCommonLib.command.CmdTimedDrive;
-import TrcCommonLib.trclib.TrcDbgTrace;
-import TrcCommonLib.trclib.TrcPose2D;
-import TrcCommonLib.trclib.TrcRobot;
-import TrcCommonLib.trclib.TrcTimer;
-import TrcFtcLib.ftclib.FtcChoiceMenu;
-import TrcFtcLib.ftclib.FtcMatchInfo;
-import TrcFtcLib.ftclib.FtcMenu;
-import TrcFtcLib.ftclib.FtcOpMode;
-import TrcFtcLib.ftclib.FtcValueMenu;
+import ftclib.driverio.FtcChoiceMenu;
+import ftclib.driverio.FtcMatchInfo;
+import ftclib.driverio.FtcMenu;
+import ftclib.robotcore.FtcOpMode;
+import ftclib.driverio.FtcValueMenu;
 import teamcode.autocommands.CmdAuto;
+import trclib.pathdrive.TrcPose2D;
+import trclib.robotcore.TrcDbgTrace;
+import trclib.robotcore.TrcRobot;
+import trclib.timer.TrcTimer;
+import trclib.command.CmdPidDrive;
+import trclib.command.CmdTimedDrive;
 
 /**
  * This class contains the Autonomous Mode program.

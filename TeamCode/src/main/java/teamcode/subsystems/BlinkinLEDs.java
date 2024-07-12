@@ -22,9 +22,9 @@
 
 package teamcode.subsystems;
 
-import TrcCommonLib.trclib.TrcDriveBase;
-import TrcCommonLib.trclib.TrcRevBlinkin;
-import TrcFtcLib.ftclib.FtcRevBlinkin;
+import ftclib.driverio.FtcRevBlinkin;
+import trclib.drivebase.TrcDriveBase;
+import trclib.driverio.TrcRevBlinkin;
 
 /**
  * This class encapsulates the REV Blinkin LED controller to provide a priority indicator showing the status of the
