@@ -296,7 +296,7 @@ public class FtcTeleOp extends FtcOpMode
      * @param button specifies the button ID that generates the event.
      * @param pressed specifies true if the button is pressed, false otherwise.
      */
-    public void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
+    protected void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
         robot.dashboard.displayPrintf(8, "%s: %04x->%s", gamepad, button, pressed? "Pressed": "Released");
 
@@ -454,7 +454,7 @@ public class FtcTeleOp extends FtcOpMode
      * @param button specifies the button ID that generates the event.
      * @param pressed specifies true if the button is pressed, false otherwise.
      */
-    public void operatorButtonEvent(TrcGameController gamepad, int button, boolean pressed)
+    protected void operatorButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
         robot.dashboard.displayPrintf(8, "%s: %04x->%s", gamepad, button, pressed? "Pressed": "Released");
 

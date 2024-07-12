@@ -161,7 +161,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
             elevator.setPositionPidParameters(
                 RobotParams.ELEVATOR_KP, RobotParams.ELEVATOR_KI, RobotParams.ELEVATOR_KD, RobotParams.ELEVATOR_KF,
                 RobotParams.ELEVATOR_IZONE, RobotParams.ELEVATOR_TOLERANCE);
-            elevator.setStallDetectionEnabled(
+            elevator.setPidStallDetectionEnabled(
                 RobotParams.ELEVATOR_STALL_DETECTION_DELAY, RobotParams.ELEVATOR_STALL_DETECTION_TIMEOUT,
                 RobotParams.ELEVATOR_STALL_ERR_RATE_THRESHOLD);
             elevator.setTraceLevel(TrcDbgTrace.MsgLevel.INFO, false, false, null);
@@ -192,7 +192,7 @@ public class ElevatorArm implements TrcExclusiveSubsystem
                 RobotParams.ARM_IZONE, RobotParams.ARM_TOLERANCE);
             arm.setPositionPidTolerance(RobotParams.ARM_TOLERANCE);
             arm.setPositionPidPowerComp(this::armGetPowerComp);
-            arm.setStallDetectionEnabled(
+            arm.setPidStallDetectionEnabled(
                 RobotParams.ARM_STALL_DETECTION_DELAY, RobotParams.ARM_STALL_DETECTION_TIMEOUT,
                 RobotParams.ARM_STALL_ERR_RATE_THRESHOLD);
             arm.setTraceLevel(TrcDbgTrace.MsgLevel.INFO, false, false, null);

@@ -588,7 +588,7 @@ public class FtcTest extends FtcTeleOp
      * @param pressed specifies true if the button is pressed, false otherwise.
      */
     @Override
-    public void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
+    protected void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
         boolean passToTeleOp = true;
         //
@@ -851,7 +851,7 @@ public class FtcTest extends FtcTeleOp
      * @param pressed specifies true if the button is pressed, false otherwise.
      */
     @Override
-    public void operatorButtonEvent(TrcGameController gamepad, int button, boolean pressed)
+    protected void operatorButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
         boolean passToTeleOp = true;
         //
