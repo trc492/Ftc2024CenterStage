@@ -30,6 +30,7 @@ import ftclib.driverio.FtcMatchInfo;
 import ftclib.sensor.FtcOctoQuad;
 import ftclib.robotcore.FtcOpMode;
 import ftclib.sensor.FtcRobotBattery;
+import ftclib.sensor.FtcSparkFunOtos;
 import teamcode.autotasks.TaskAutoPlacePixel;
 import teamcode.drivebases.MecanumDrive;
 import teamcode.drivebases.RobotDrive;
@@ -74,6 +75,7 @@ public class Robot
     public BlinkinLEDs blinkin;
     public FtcRobotBattery battery;
     public FtcOctoQuad octoQuad;
+    public FtcSparkFunOtos sparkfunOtos;
     //
     // Subsystems.
     //
@@ -116,6 +118,11 @@ public class Robot
         if (RobotParams.Preferences.useOctoQuad)
         {
             octoQuad = new FtcOctoQuad(RobotParams.HWNAME_OCTOQUAD, 0);
+        }
+
+        if (RobotParams.Preferences.useSparkfunOtos)
+        {
+            sparkfunOtos = new FtcSparkFunOtos(RobotParams.HWNAME_SPARKFUNOTOS);
         }
         //
         // If robotType is NoRobot, the robot controller is disconnected from the robot for testing vision.

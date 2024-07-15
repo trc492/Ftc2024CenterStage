@@ -79,7 +79,8 @@ public class FtcTest extends FtcTeleOp
         PURE_PURSUIT_DRIVE,
         CALIBRATE_SWERVE_STEERING,
         TUNE_LAUNCHER_POWER,
-        TEST_OCTOQUAD
+        TEST_OCTOQUAD,
+        TEST_SPARKFUNOTOS
     }   //enum Test
 
     /**
@@ -572,6 +573,14 @@ public class FtcTest extends FtcTeleOp
                         robot.dashboard.displayPrintf(lineNum++, "OctoQuad: enc=%f", robot.octoQuad.getRawPosition());
                     }
                     break;
+
+                case TEST_SPARKFUNOTOS:
+                    if (robot.sparkfunOtos != null)
+                    {
+                        robot.dashboard.displayPrintf(
+                            lineNum++, "SparkFunOtos: pos=" + robot.sparkfunOtos.getPosition());
+                    }
+                    break;
             }
         }
     }   //periodic
@@ -959,7 +968,14 @@ public class FtcTest extends FtcTeleOp
         testMenu.addChoice("Pure Pursuit Drive", Test.PURE_PURSUIT_DRIVE, false);
         testMenu.addChoice("Calibrate Swerve Steering", Test.CALIBRATE_SWERVE_STEERING, false);
         testMenu.addChoice("Tune Launcher Power", Test.TUNE_LAUNCHER_POWER, false);
-        testMenu.addChoice("Test OctoQuad", Test.TEST_OCTOQUAD, false);
+        if (robot.octoQuad != null)
+        {
+            testMenu.addChoice("Test OctoQuad", Test.TEST_OCTOQUAD, false);
+        }
+        if (robot.sparkfunOtos != null)
+        {
+            testMenu.addChoice("Test SparkfunOtos", Test.TEST_SPARKFUNOTOS, false);
+        }
 
         xTargetMenu.setChildMenu(yTargetMenu);
         yTargetMenu.setChildMenu(turnTargetMenu);

@@ -32,6 +32,7 @@ SOFTWARE.
             <Servo name="wrist.followerServo" port="1" />
             <RevBlinkinLedDriver name="blinkin" port="5" />
             <REV_VL53L0X_RANGE_SENSOR name="intake.sensor" port="0" bus="1"/>
+            <SparkFunOTOS name="otos" port="0" bus="2"/>
             <OctoQuadFTC name="octoquad" port="0" bus="3"/>
             <!--
             <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
